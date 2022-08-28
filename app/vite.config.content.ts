@@ -17,7 +17,7 @@ export default defineConfig({
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,
     lib: {
-      entry: r('src/contentScripts/index.ts'),
+      entry: r('src/contentScripts/index.tsx'),
       name: packageJson.name,
       formats: ['iife'],
     },
@@ -28,9 +28,11 @@ export default defineConfig({
       },
     },
   },
+  define: {
+    'process.env': {},
+  },
   plugins: [
     ...sharedConfig.plugins!,
-
     // https://github.com/antfu/vite-plugin-windicss
     WindiCSS({
       config: {
