@@ -70,6 +70,25 @@ importers:
       webext-bridge: 5.0.5
       webextension-polyfill: 0.10.0
 
+  examples/recoil-dev-tools:
+    specifiers:
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      '@vitejs/plugin-react': ^2.0.1
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.6.4
+      vite: ^3.0.9
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    devDependencies:
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      '@vitejs/plugin-react': 2.0.1_vite@3.0.9
+      typescript: 4.8.2
+      vite: 3.0.9
+
 packages:
 
   /@ampproject/remapping/2.2.0:

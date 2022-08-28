@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "pnpm --filter app dev",
-    "open-chrome": "pnpm --filter app start:chromium"
+    "open-chrome": "pnpm --filter app start:chromium",
+    "start:recoil": "pnpm --filter recoil dev"
   },
   "repository": {
     "type": "git",
