@@ -29,6 +29,7 @@
     "https://*/",
     "webNavigation"
   ],
+  "devtools_page": "./dist/devtools/index.html",
   "web_accessible_resources": [
     "dist/contentScripts/style.css"
   ],

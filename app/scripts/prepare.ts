@@ -12,6 +12,7 @@ async function stubIndexHtml() {
     'options',
     'popup',
     'background',
+    'devtools',
   ]
 
   for (const view of views) {
@@ -24,6 +25,14 @@ async function stubIndexHtml() {
     await fs.writeFile(r(`extension/dist/${view}/index.html`), data, 'utf-8')
     log('PRE', `stub ${view}`)
   }
+
+  await fs.ensureDir(r('extension/dist/devtools'))
+  let data = await fs.readFile(r('src/devtools/panel.html'), 'utf-8')
+  data = data
+    .replace('"./panel.tsx"', `"http://localhost:${port}/devtools/panel.tsx"`)
+    .replace('<div id="app"></div>', '<div id="app">Vite server did not start</div>')
+  await fs.writeFile(r('extension/dist/devtools/panel.html'), data, 'utf-8')
+  log('PRE', 'stub devtools/panel')
 }
 
 function writeManifest() {

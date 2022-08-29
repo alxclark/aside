@@ -52,3 +52,5 @@ onMessage('get-current-tab', async () => {
     }
   }
 })
+
+browser.devtools.panels.create('Companion', '', '../devtools.index.html')
