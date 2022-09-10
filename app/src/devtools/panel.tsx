@@ -1,5 +1,6 @@
-import ReactDOM from 'react-dom/client'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import { DevTools } from './DevTools'
 import '../styles'
 
-ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(<DevTools />)
+ReactDOM.render(<DevTools />, document.getElementById('app') as HTMLElement)

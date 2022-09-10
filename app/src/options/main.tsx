@@ -1,5 +1,6 @@
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import { Options } from './Options'
 import '../styles'
 
-ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(<Options />)
+ReactDOM.render(<Options />, document.getElementById('app') as HTMLElement)
+

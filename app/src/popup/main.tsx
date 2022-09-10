@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import { Popup } from './Popup'
 import '../styles'
 
-ReactDOM.createRoot(document.getElementById('app') as HTMLElement).render(<Popup />)
+ReactDOM.render(<Popup />, document.getElementById('app') as HTMLElement)

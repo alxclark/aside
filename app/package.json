@@ -18,7 +18,7 @@
     "pack:zip": "rimraf extension.zip && jszip-cli add extension/* -o ./extension.zip",
     "pack:crx": "crx pack extension -o ./extension.crx",
     "pack:xpi": "cross-env WEB_EXT_ARTIFACTS_DIR=./ web-ext build --source-dir ./extension --filename extension.xpi --overwrite-dest",
-    "start:chromium": "web-ext run --source-dir ./extension --target=chromium",
+    "start:chromium": "web-ext run --start-url http://www.localhost:3000/ --source-dir ./extension --target=chromium",
     "start:firefox": "web-ext run --source-dir ./extension --target=firefox-desktop",
     "clear": "rimraf extension/dist extension/manifest.json extension.*",
     "lint": "eslint .",
@@ -30,8 +30,8 @@
     "@iconify/json": "^2.1.96",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.7.11",
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@types/webextension-polyfill": "^0.9.0",
     "@typescript-eslint/eslint-plugin": "^5.34.0",
     "@vitejs/plugin-react": "^2.0.1",
@@ -55,7 +55,9 @@
     "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@remote-ui/react": "^4.5.7",
+    "@remote-ui/rpc": "^1.3.3",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
   }
 }

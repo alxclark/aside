@@ -1,27 +1,34 @@
-/* eslint-disable no-console */
 import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { onMessage } from 'webext-bridge'
+import ReactDOM from 'react-dom'
 import { App } from './views/App'
 
 const __DEV__ = true;
 
 // Firefox `browser.tabs.executeScript()` requires scripts return a primitive value
 (() => {
-  console.info('[vitesse-webext] Hello world from content script')
+  // Listen to messages from the extension
+  const port = browser.runtime.connect()
 
-  // communication example: send previous tab title from background page
-  onMessage('tab-prev', ({ data }) => {
-    console.log(`[vitesse-webext] Navigate from page "${data.title}"`)
+  port.onMessage.addListener((message) => {
+    // Forward the message to the webpage
+    console.log({ message })
+    window.postMessage(message, '*')
   })
 
-  // mount component to context window
+  port.postMessage({ type: 'content_script_connected' })
+})()
+
+// Currently content scripts rendering is not supported.
+// The use case of using remote rendering to render back UI
+// in the primary context doesn't seem to be adding value.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function render() {
   const container = document.createElement('div')
   const root = document.createElement('div')
   const shadowDOM = container.attachShadow?.({ mode: __DEV__ ? 'open' : 'closed' }) || container
   shadowDOM.appendChild(root)
   document.body.appendChild(container)
 
-  ReactDOM.createRoot(root).render(<App />)
-})()
+  ReactDOM.render(<App />, root)
+}
 
