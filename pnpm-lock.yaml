@@ -8,6 +8,7 @@ importers:
   app:
     specifiers:
       '@antfu/eslint-config': ^0.26.1
+      '@companion/core': workspace:*
       '@ffflorian/jszip-cli': ^3.1.6
       '@iconify/json': ^2.1.96
       '@remote-ui/react': ^4.5.7
@@ -40,6 +41,7 @@ importers:
       webext-bridge: ^5.0.5
       webextension-polyfill: ^0.10.0
     dependencies:
+      '@companion/core': link:../packages/core
       '@remote-ui/react': 4.5.7_react@17.0.2
       '@remote-ui/rpc': 1.3.3
       react: 17.0.2
@@ -76,6 +78,7 @@ importers:
 
   examples/recoil-dev-tools:
     specifiers:
+      '@companion/react': workspace:*
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
       '@vitejs/plugin-react': ^2.0.1
@@ -84,6 +87,7 @@ importers:
       typescript: ^4.6.4
       vite: ^3.0.9
     dependencies:
+      '@companion/react': link:../../packages/react
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
@@ -95,22 +99,43 @@ importers:
 
   packages/core:
     specifiers:
+      '@remote-ui/rpc': ^1.3.3
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
-      '@vitejs/plugin-react': ^2.0.1
       react: ^18.2.0
       react-dom: ^18.2.0
       typescript: ^4.6.4
-      vite: ^3.0.9
+      webextension-polyfill: ^0.10.0
     dependencies:
+      '@remote-ui/rpc': 1.3.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      webextension-polyfill: 0.10.0
     devDependencies:
       '@types/react': 18.0.17
       '@types/react-dom': 18.0.6
-      '@vitejs/plugin-react': 2.0.1_vite@3.0.9
       typescript: 4.8.2
-      vite: 3.0.9
+
+  packages/react:
+    specifiers:
+      '@companion/core': workspace:*
+      '@remote-ui/rpc': ^1.3.3
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.6.4
+      webextension-polyfill: ^0.10.0
+    dependencies:
+      '@companion/core': link:../core
+      '@remote-ui/rpc': 1.3.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      webextension-polyfill: 0.10.0
+    devDependencies:
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      typescript: 4.8.2
 
 packages:
 
@@ -6509,7 +6534,6 @@ packages:
 
   /webextension-polyfill/0.10.0:
     resolution: {integrity: sha512-c5s35LgVa5tFaHhrZDnr3FpQpjj1BB+RXhLTYUxGqBVN460HkbM8TBtEqdXWbpTKfzwCcjAZVF7zXCYSKtcp9g==}
-    dev: true
 
   /webextension-polyfill/0.9.0:
     resolution: {integrity: sha512-LTtHb0yR49xa9irkstDxba4GATDAcDw3ncnFH9RImoFwDlW47U95ME5sn5IiQX2ghfaECaf6xyXM8yvClIBkkw==}

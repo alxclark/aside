@@ -1,5 +1,2 @@
-import React from "react";
-
-export function DevTools() {
-  
-}
+export {fromWebpage} from './adaptor';
+export * from './types';

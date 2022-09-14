@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.build.json",
+  "include": ["packages", "examples", "app",],
+  "compilerOptions": {
+    "allowJs": false,
+    "baseUrl": ".",
+    "typeRoots": ["./node_modules/@types", "./config/typescript"],
+    "paths": {
+      "@companion/*": ["packages/*/src"],
+    }
+  },
+}

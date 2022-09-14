@@ -7,7 +7,7 @@ import type { MessageEndpoint } from '@remote-ui/rpc'
 import { createEndpoint, fromMessagePort } from '@remote-ui/rpc'
 import { useEffect, useMemo } from 'react'
 import type { Runtime } from 'webextension-polyfill'
-import { Button } from '~/components/Buttons'
+import { Button } from '../components/Buttons'
 
 export function BrowserExtensionRenderer() {
   useEffect(() => {

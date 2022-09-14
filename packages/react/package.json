@@ -1,17 +1,18 @@
 {
-  "name": "@companion/core",
+  "name": "@companion/react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "source": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "source": "src/index.tsx",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
   "scripts": {},
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "webextension-polyfill": "^0.10.0",
-    "@remote-ui/rpc": "^1.3.3"
+    "@remote-ui/rpc": "^1.3.3",
+    "@companion/core": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

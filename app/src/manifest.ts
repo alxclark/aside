@@ -39,7 +39,7 @@ export async function getManifest() {
       'https://*/',
     ],
     content_scripts: [{
-      matches: ['http://*/*', 'https://*/*'],
+      matches: ['<all_urls>'],
       js: ['./dist/contentScripts/index.global.js'],
     }],
     devtools_page: './dist/devtools/index.html',
