@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fromWebpage, WebpageApi, ContentScriptApi } from "@companion/core";
 import {createEndpoint} from '@remote-ui/rpc'
 
+const contentScript = createEndpoint<WebpageApi>(fromWebpage({context: 'webpage'}), {
+  callable: ['init']
+})
+
 export function Companion() {
   const [mounted, setMounted] = useState(false);
-
-  const contentScript = useMemo(() => createEndpoint<WebpageApi>(fromWebpage({context: 'webpage'}), {
-    callable: ['init']
-  }), [])
 
   useEffect(() => {
     const contentScriptApi: ContentScriptApi = {

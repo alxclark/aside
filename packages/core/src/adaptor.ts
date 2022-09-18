@@ -17,28 +17,24 @@ export function fromWebpage({targetOrigin = '*', context}: Options): MessageEndp
   return {
     postMessage(message, transfer) {
       if(Array.isArray(message)) {
-        message.push({context})
+        message.push({from: context})
       } else {
         console.error('message is not an array')
       }
 
-      // console.log({message})
       window.postMessage(message, targetOrigin, transfer);
     },
     addEventListener(event, listener) {
       const wrappedListener = (event: MessageEvent) => {
         if (event.source !== window) return;
-        // console.log({eventData: event.data})
 
         const last = event.data[event.data.length - 1]
 
-        if(last?.context) {
-          // console.log(last.context)
+        if(last?.from) {
           event.data.pop();
-          // console.log(event)
         }
 
-        if(last?.context === context) return;
+        if(last?.from === context || !last?.from) return;
 
         listener(event);
       };
