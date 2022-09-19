@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fromWebpage, WebpageApi, ContentScriptApi } from "@companion/core";
+import { WebpageApi, ContentScriptApi, fromWebpage } from "@companion/web";
 import {createEndpoint} from '@remote-ui/rpc'
 
 const contentScript = createEndpoint<WebpageApi>(fromWebpage({context: 'webpage'}), {

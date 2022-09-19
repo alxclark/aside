@@ -1,5 +1,6 @@
-import { onMessage, sendMessage } from 'webext-bridge'
-import type { Tabs } from 'webextension-polyfill'
+import type { Endpoint } from '@remote-ui/rpc'
+import { createEndpoint } from '@remote-ui/rpc'
+import { fromPort } from '../../../packages/background/src/adaptor'
 
 // only on dev mode
 if (import.meta.hot) {
@@ -9,46 +10,38 @@ if (import.meta.hot) {
   import('./contentScriptHMR')
 }
 
-browser.runtime.onInstalled.addListener((): void => {
-  // eslint-disable-next-line no-console
-  console.log('Extension installed')
-})
+const devToolsMap = new Map<number, Endpoint<any>>()
 
-let previousTabId = 0
+browser.runtime.onConnect.addListener((port) => {
+  console.log('connection', { port })
+  const listener = (message: any): any => {
+    console.log({ message })
+    if (message.name === 'init' && message.tabId) {
+      switch (port.name) {
+        case 'dev-tools':
+        {
+          const endpoint = createEndpoint(fromPort({ port }), {
+            callable: ['init'],
+          })
 
-// communication example: send previous tab title from background page
-// see shim.d.ts for type declaration
-browser.tabs.onActivated.addListener(async ({ tabId }) => {
-  if (!previousTabId) {
-    previousTabId = tabId
-    return
-  }
+          endpoint.expose({
+            init() {
+              console.log('[BG][dev] init()')
+            },
+          })
 
-  let tab: Tabs.Tab
+          console.log(Date.now())
 
-  try {
-    tab = await browser.tabs.get(previousTabId)
-    previousTabId = tabId
-  }
-  catch {
-    return
-  }
-
-  // eslint-disable-next-line no-console
-  console.log('previous tab', tab)
-  sendMessage('tab-prev', { title: tab.title }, { context: 'content-script', tabId })
-})
-
-onMessage('get-current-tab', async () => {
-  try {
-    const tab = await browser.tabs.get(previousTabId)
-    return {
-      title: tab?.title,
+          return devToolsMap.set(message.tabId, endpoint)
+        }
+      }
     }
   }
-  catch {
-    return {
-      title: undefined,
-    }
-  }
+
+  port.onMessage.addListener(listener)
+
+  port.onDisconnect.addListener((port) => {
+    port.onMessage.removeListener(listener)
+    // remove connection from the right map
+  })
 })

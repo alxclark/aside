@@ -8,7 +8,9 @@ importers:
   app:
     specifiers:
       '@antfu/eslint-config': ^0.26.1
-      '@companion/core': workspace:*
+      '@companion/content-script': workspace:*
+      '@companion/dev-tools': workspace:*
+      '@companion/web': workspace:*
       '@ffflorian/jszip-cli': ^3.1.6
       '@iconify/json': ^2.1.96
       '@remote-ui/react': ^4.5.7
@@ -41,7 +43,9 @@ importers:
       webext-bridge: ^5.0.5
       webextension-polyfill: ^0.10.0
     dependencies:
-      '@companion/core': link:../packages/core
+      '@companion/content-script': link:../packages/content-script
+      '@companion/dev-tools': link:../packages/dev-tools
+      '@companion/web': link:../packages/web
       '@remote-ui/react': 4.5.7_react@17.0.2
       '@remote-ui/rpc': 1.3.3
       react: 17.0.2
@@ -97,6 +101,27 @@ importers:
       typescript: 4.8.2
       vite: 3.0.9
 
+  packages/content-script:
+    specifiers:
+      '@companion/web': workspace:*
+      '@remote-ui/rpc': ^1.3.3
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.6.4
+      webextension-polyfill: ^0.10.0
+    dependencies:
+      '@companion/web': link:../web
+      '@remote-ui/rpc': 1.3.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      webextension-polyfill: 0.10.0
+    devDependencies:
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      typescript: 4.8.2
+
   packages/core:
     specifiers:
       '@remote-ui/rpc': ^1.3.3
@@ -116,9 +141,9 @@ importers:
       '@types/react-dom': 18.0.6
       typescript: 4.8.2
 
-  packages/react:
+  packages/dev-tools:
     specifiers:
-      '@companion/core': workspace:*
+      '@companion/web': workspace:*
       '@remote-ui/rpc': ^1.3.3
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
@@ -127,11 +152,49 @@ importers:
       typescript: ^4.6.4
       webextension-polyfill: ^0.10.0
     dependencies:
-      '@companion/core': link:../core
+      '@companion/web': link:../web
       '@remote-ui/rpc': 1.3.3
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       webextension-polyfill: 0.10.0
+    devDependencies:
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      typescript: 4.8.2
+
+  packages/react:
+    specifiers:
+      '@companion/web': workspace:*
+      '@remote-ui/rpc': ^1.3.3
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.6.4
+      webextension-polyfill: ^0.10.0
+    dependencies:
+      '@companion/web': link:../web
+      '@remote-ui/rpc': 1.3.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      webextension-polyfill: 0.10.0
+    devDependencies:
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      typescript: 4.8.2
+
+  packages/web:
+    specifiers:
+      '@remote-ui/rpc': ^1.3.3
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.6.4
+    dependencies:
+      '@remote-ui/rpc': 1.3.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     devDependencies:
       '@types/react': 18.0.17
       '@types/react-dom': 18.0.6
