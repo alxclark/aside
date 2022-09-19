@@ -13,9 +13,7 @@ if (import.meta.hot) {
 const devToolsMap = new Map<number, Endpoint<any>>()
 
 browser.runtime.onConnect.addListener((port) => {
-  console.log('connection', { port })
   const listener = (message: any): any => {
-    console.log({ message })
     if (message.name === 'init' && message.tabId) {
       switch (port.name) {
         case 'dev-tools':
@@ -29,8 +27,6 @@ browser.runtime.onConnect.addListener((port) => {
               console.log('[BG][dev] init()')
             },
           })
-
-          console.log(Date.now())
 
           return devToolsMap.set(message.tabId, endpoint)
         }
