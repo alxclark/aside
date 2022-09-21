@@ -1,9 +1,4 @@
-import { fromWebpage } from '@companion/web';
 import {MessageEndpoint} from '@remote-ui/rpc'
-
-interface Options {
-  
-}
 
 export function fromDevTools(): MessageEndpoint {
   const port = browser.runtime.connect({name: "dev-tools"});
@@ -11,7 +6,7 @@ export function fromDevTools(): MessageEndpoint {
   port.postMessage({
     name: 'init',
     tabId: browser.devtools.inspectedWindow.tabId
-});
+  });
 
   // We need to store the listener, because we wrap it to do some origin checking. Ideally,
   // we’d instead store an `AbortController`, and use its signal to cancel the listeners,
@@ -29,6 +24,8 @@ export function fromDevTools(): MessageEndpoint {
       const wrappedListener = (event: MessageEvent) => {
         listener(event);
       };
+
+      console.log({_event})
 
       listenerMap.set(listener, wrappedListener);
       port.onMessage.addListener(listener)

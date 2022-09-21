@@ -1,11 +1,12 @@
+import {RemoteChannel} from '@remote-ui/core'
+
 type AnyFunction = (...args: any[]) => any;
 type RemoteApi = Record<string, AnyFunction | undefined>;
 
-export interface ContentScriptApi extends RemoteApi {
-  mount(): void;
-  unmount(): void;
+export interface ContentScriptApiForWebpage extends RemoteApi {
+  placeholderForContentScript(): void;
 }
 
-export interface WebpageApi extends RemoteApi {
-  init(): void;
+export interface ContentScriptApiForBackground extends RemoteApi {
+  sendReceiverToWebpage(receiver: RemoteChannel): void;
 }

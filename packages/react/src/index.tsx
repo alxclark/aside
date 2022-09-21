@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { WebpageApi, ContentScriptApi, fromWebpage } from "@companion/web";
+import { WebpageApi, fromWebpage } from "@companion/web";
+import { ContentScriptApiForWebpage } from "@companion/content-script";
 import {createEndpoint} from '@remote-ui/rpc'
 
-const contentScript = createEndpoint<WebpageApi>(fromWebpage({context: 'webpage'}), {
-  callable: ['init']
+const contentScript = createEndpoint<ContentScriptApiForWebpage>(fromWebpage({context: 'webpage'}), {
+  callable: ['setReceiver']
 })
 
 export function Companion() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const contentScriptApi: ContentScriptApi = {
-      mount: () => {
-        setMounted(true);
-      },
-      unmount: () => {
-        setMounted(false);
-      },
+    const webpageApi: WebpageApi = {
+      setReceiver(receiver) {
+        console.log({receiver})
+      }
     }
 
-    contentScript.expose(contentScriptApi)
-
-    contentScript.call.init();
+    contentScript.expose(webpageApi)
   }, [contentScript, setMounted])
 
   if (mounted) {

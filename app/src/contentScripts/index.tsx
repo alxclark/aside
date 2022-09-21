@@ -1,40 +1,38 @@
 import { createEndpoint } from '@remote-ui/rpc'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import type { ContentScriptApi, WebpageApi } from '@companion/content-script'
+import type { ContentScriptApiForBackground, ContentScriptApiForWebpage } from '@companion/content-script'
 import { fromContentScript } from '@companion/content-script'
-import type { DevToolsApi } from '@companion/dev-tools'
+import type { WebpageApi } from '@companion/web'
+import type { BackgroundApiForContentScript } from '@companion/background'
 import { App } from './views/App'
 
 const __DEV__ = true;
 
 (() => {
-  const background = createEndpoint(fromContentScript({ to: 'background' }), {
-    callable: [],
+  const background = createEndpoint<BackgroundApiForContentScript>(fromContentScript({ to: 'background' }), {
+    callable: ['placeholderForBackground'],
   })
 
-  const devtools = createEndpoint(fromContentScript({ to: 'devtools' }), {
-    callable: [],
+  const webpage = createEndpoint<WebpageApi>(fromContentScript({ to: 'webpage' }), {
+    callable: ['setReceiver'],
   })
 
-  const webpage = createEndpoint<ContentScriptApi>(fromContentScript({ to: 'webpage' }), {
-    callable: ['mount', 'unmount', 'init'],
-  })
-
-  const webpageApi: WebpageApi = {
-    init() {
-      console.log('[CS][webpage] init()')
+  const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
+    placeholderForContentScript() {
+      console.log('[CS][webpage] placeholderForContentScript()')
     },
   }
 
-  const devToolsApi: DevToolsApi = {
-    init() {
-      console.log('[CS][devtools] init()')
+  const ContentScriptApiForBackground: ContentScriptApiForBackground = {
+    sendReceiverToWebpage(receiver) {
+      console.log('sending receiver')
+      webpage.call.setReceiver(receiver)
     },
   }
 
-  devtools.expose(devToolsApi)
-  webpage.expose(webpageApi)
+  webpage.expose(contentScriptApiForWebpage)
+  background.expose(ContentScriptApiForBackground)
 })()
 
 // Currently content scripts rendering is not supported.

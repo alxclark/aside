@@ -8,6 +8,7 @@ importers:
   app:
     specifiers:
       '@antfu/eslint-config': ^0.26.1
+      '@companion/background': workspace:*
       '@companion/content-script': workspace:*
       '@companion/dev-tools': workspace:*
       '@companion/web': workspace:*
@@ -43,6 +44,7 @@ importers:
       webext-bridge: ^5.0.5
       webextension-polyfill: ^0.10.0
     dependencies:
+      '@companion/background': link:../packages/background
       '@companion/content-script': link:../packages/content-script
       '@companion/dev-tools': link:../packages/dev-tools
       '@companion/web': link:../packages/web
@@ -100,6 +102,27 @@ importers:
       '@vitejs/plugin-react': 2.0.1_vite@3.0.9
       typescript: 4.8.2
       vite: 3.0.9
+
+  packages/background:
+    specifiers:
+      '@companion/web': workspace:*
+      '@remote-ui/rpc': ^1.3.3
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      typescript: ^4.6.4
+      webextension-polyfill: ^0.10.0
+    dependencies:
+      '@companion/web': link:../web
+      '@remote-ui/rpc': 1.3.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      webextension-polyfill: 0.10.0
+    devDependencies:
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      typescript: 4.8.2
 
   packages/content-script:
     specifiers:
@@ -164,6 +187,7 @@ importers:
 
   packages/react:
     specifiers:
+      '@companion/content-script': workspace:*
       '@companion/web': workspace:*
       '@remote-ui/rpc': ^1.3.3
       '@types/react': ^18.0.17
@@ -173,6 +197,7 @@ importers:
       typescript: ^4.6.4
       webextension-polyfill: ^0.10.0
     dependencies:
+      '@companion/content-script': link:../content-script
       '@companion/web': link:../web
       '@remote-ui/rpc': 1.3.3
       react: 18.2.0

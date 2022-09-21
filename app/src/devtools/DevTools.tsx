@@ -5,12 +5,13 @@ import {
 } from '@remote-ui/react/host'
 import { createEndpoint } from '@remote-ui/rpc'
 import React, { useEffect, useMemo } from 'react'
+import type { BackgroundApiForDevTools } from '@companion/background'
 import type { DevToolsApi } from '@companion/dev-tools'
 import { fromDevTools } from '@companion/dev-tools'
 import { Button } from '../components/Buttons'
 
-const background = createEndpoint<DevToolsApi>(fromDevTools(), {
-  callable: ['init'],
+const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
+  callable: ['sendReceiverToContentScript', 'placeholderForDevTools'],
 })
 
 export function BrowserExtensionRenderer() {
@@ -18,8 +19,14 @@ export function BrowserExtensionRenderer() {
   const receiver = useMemo(() => createRemoteReceiver(), [])
 
   useEffect(() => {
-    console.log(Date.now())
-    background.call.init()
+    const devToolsApi: DevToolsApi = {
+      placeholderForDevTools() {
+        console.log('placeholder for dev tools')
+      },
+    }
+
+    background.expose(devToolsApi)
+    background.call.sendReceiverToContentScript(receiver.receive)
   }, [receiver])
 
   return <RemoteRenderer receiver={receiver} controller={controller} />
