@@ -18,17 +18,17 @@ export function fromDevTools(): MessageEndpoint {
 
   return {
     postMessage(message) {
+      console.log({message})
       port.postMessage(message);
     },
     addEventListener(_event, listener) {
-      const wrappedListener = (event: MessageEvent) => {
-        listener(event);
+      const wrappedListener = (message: any) => {
+        const messageEvent = new MessageEvent('message', {data: message})
+        listener(messageEvent);
       };
 
-      console.log({_event})
-
       listenerMap.set(listener, wrappedListener);
-      port.onMessage.addListener(listener)
+      port.onMessage.addListener(wrappedListener)
     },
     removeEventListener(event, listener) {
       const wrappedListener = listenerMap.get(listener);

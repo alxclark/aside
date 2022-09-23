@@ -36,13 +36,13 @@ export function fromContentScriptToBackground(): MessageEndpoint {
     },
     addEventListener(_event, listener) {
       console.log({_event})
-      const wrappedListener = (event: MessageEvent) => {
-        console.log({event})
-        listener(event);
+      const wrappedListener = (message: any) => {
+        const messageEvent = new MessageEvent('message', {data: message})
+        listener(messageEvent);
       };
 
       listenerMap.set(listener, wrappedListener);
-      port.onMessage.addListener(listener)
+      port.onMessage.addListener(wrappedListener)
     },
     removeEventListener(event, listener) {
       const wrappedListener = listenerMap.get(listener);

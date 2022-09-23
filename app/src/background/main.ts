@@ -16,6 +16,8 @@ if (import.meta.hot) {
 const devToolsMap = new Map<number, Endpoint<DevToolsApi>>()
 const contentScriptMap = new Map<number, Endpoint<ContentScriptApiForBackground>>()
 
+console.log(Date.now())
+
 browser.runtime.onConnect.addListener((port) => {
   const listener = (message: any, senderPort: any): any => {
     const tabId = message?.tabId ?? senderPort?.sender?.tab?.id
@@ -24,8 +26,10 @@ browser.runtime.onConnect.addListener((port) => {
       switch (port.name) {
         case 'dev-tools':
         {
+          console.log('Received a dev tool port')
+          console.log(Date.now())
           const devTools = createEndpoint<DevToolsApi>(fromPort({ port }), {
-            callable: ['placeholderForDevTools'],
+            callable: ['getDevToolsChannel'],
           })
 
           const backgroundApiForDevTools: BackgroundApiForDevTools = {
@@ -47,7 +51,14 @@ browser.runtime.onConnect.addListener((port) => {
           })
 
           const backgroundApiForContentScript: BackgroundApiForContentScript = {
-            placeholderForBackground() {},
+            getDevToolsChannel() {
+              const devTools = devToolsMap.get(tabId)
+
+              if (!devTools)
+                throw new Error('Dev tools not available for this tab')
+
+              return devTools.call.getDevToolsChannel()
+            },
           }
 
           contentScript.expose(backgroundApiForContentScript)

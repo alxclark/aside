@@ -4,7 +4,7 @@ type AnyFunction = (...args: any[]) => any;
 type RemoteApi = Record<string, AnyFunction | undefined>;
 
 export interface ContentScriptApiForWebpage extends RemoteApi {
-  placeholderForContentScript(): void;
+  getDevToolsChannel(): Promise<RemoteChannel>;
 }
 
 export interface ContentScriptApiForBackground extends RemoteApi {

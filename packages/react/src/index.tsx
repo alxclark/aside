@@ -4,11 +4,16 @@ import { ContentScriptApiForWebpage } from "@companion/content-script";
 import {createEndpoint} from '@remote-ui/rpc'
 
 const contentScript = createEndpoint<ContentScriptApiForWebpage>(fromWebpage({context: 'webpage'}), {
-  callable: ['setReceiver']
+  callable: ['getDevToolsChannel']
 })
 
 export function Companion() {
   const [mounted, setMounted] = useState(false);
+
+  async function initializeRoot() {
+    const channel = await contentScript.call.getDevToolsChannel()
+    console.log({channel})
+  }
 
   useEffect(() => {
     const webpageApi: WebpageApi = {
@@ -18,6 +23,8 @@ export function Companion() {
     }
 
     contentScript.expose(webpageApi)
+
+    initializeRoot();
   }, [contentScript, setMounted])
 
   if (mounted) {

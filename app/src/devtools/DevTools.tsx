@@ -11,22 +11,23 @@ import { fromDevTools } from '@companion/dev-tools'
 import { Button } from '../components/Buttons'
 
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
-  callable: ['sendReceiverToContentScript', 'placeholderForDevTools'],
+  callable: ['getDevToolsChannel'],
 })
 
 export function BrowserExtensionRenderer() {
+  console.log(Date.now())
   const controller = useMemo(() => createController({ Button }), [])
   const receiver = useMemo(() => createRemoteReceiver(), [])
 
   useEffect(() => {
     const devToolsApi: DevToolsApi = {
-      placeholderForDevTools() {
-        console.log('placeholder for dev tools')
+      getDevToolsChannel() {
+        console.log('getgetDevToolsChannel called')
+        return receiver.receive
       },
     }
 
     background.expose(devToolsApi)
-    background.call.sendReceiverToContentScript(receiver.receive)
   }, [receiver])
 
   return <RemoteRenderer receiver={receiver} controller={controller} />

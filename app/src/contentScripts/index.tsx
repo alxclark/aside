@@ -11,7 +11,7 @@ const __DEV__ = true;
 
 (() => {
   const background = createEndpoint<BackgroundApiForContentScript>(fromContentScript({ to: 'background' }), {
-    callable: ['placeholderForBackground'],
+    callable: ['getDevToolsChannel'],
   })
 
   const webpage = createEndpoint<WebpageApi>(fromContentScript({ to: 'webpage' }), {
@@ -19,15 +19,14 @@ const __DEV__ = true;
   })
 
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
-    placeholderForContentScript() {
-      console.log('[CS][webpage] placeholderForContentScript()')
+    getDevToolsChannel() {
+      return background.call.getDevToolsChannel()
     },
   }
 
   const ContentScriptApiForBackground: ContentScriptApiForBackground = {
     sendReceiverToWebpage(receiver) {
-      console.log('sending receiver')
-      webpage.call.setReceiver(receiver)
+      console.log('sending receiver', receiver)
     },
   }
 
