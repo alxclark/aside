@@ -8,27 +8,27 @@ import React, { useEffect, useMemo } from 'react'
 import type { BackgroundApiForDevTools } from '@companion/background'
 import type { DevToolsApi } from '@companion/dev-tools'
 import { fromDevTools } from '@companion/dev-tools'
-import { Button } from '../components/Buttons'
+import { Button } from '../components/Button'
 
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
   callable: ['getDevToolsChannel'],
 })
 
 export function BrowserExtensionRenderer() {
-  console.log(Date.now())
   const controller = useMemo(() => createController({ Button }), [])
   const receiver = useMemo(() => createRemoteReceiver(), [])
 
   useEffect(() => {
     const devToolsApi: DevToolsApi = {
       getDevToolsChannel() {
-        console.log('getgetDevToolsChannel called')
         return receiver.receive
       },
     }
 
     background.expose(devToolsApi)
   }, [receiver])
+
+  console.log({ controller, receiver })
 
   return <RemoteRenderer receiver={receiver} controller={controller} />
 }

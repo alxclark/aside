@@ -62,6 +62,7 @@
     "@companion/content-script": "workspace:*",
     "@companion/web": "workspace:*",
     "@companion/dev-tools": "workspace:*",
-    "@companion/background": "workspace:*"
+    "@companion/background": "workspace:*",
+    "@companion/react": "workspace:*"
   }
 }

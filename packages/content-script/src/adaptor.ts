@@ -31,11 +31,9 @@ export function fromContentScriptToBackground(): MessageEndpoint {
 
   return {
     postMessage(message) {
-      console.log({message})
       port.postMessage(message);
     },
     addEventListener(_event, listener) {
-      console.log({_event})
       const wrappedListener = (message: any) => {
         const messageEvent = new MessageEvent('message', {data: message})
         listener(messageEvent);

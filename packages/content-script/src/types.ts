@@ -8,5 +8,6 @@ export interface ContentScriptApiForWebpage extends RemoteApi {
 }
 
 export interface ContentScriptApiForBackground extends RemoteApi {
-  sendReceiverToWebpage(receiver: RemoteChannel): void;
+  mountDevTools(): void;
+  unmountDevTools(): void;
 }

@@ -16,8 +16,6 @@ if (import.meta.hot) {
 const devToolsMap = new Map<number, Endpoint<DevToolsApi>>()
 const contentScriptMap = new Map<number, Endpoint<ContentScriptApiForBackground>>()
 
-console.log(Date.now())
-
 browser.runtime.onConnect.addListener((port) => {
   const listener = (message: any, senderPort: any): any => {
     const tabId = message?.tabId ?? senderPort?.sender?.tab?.id
@@ -26,42 +24,50 @@ browser.runtime.onConnect.addListener((port) => {
       switch (port.name) {
         case 'dev-tools':
         {
-          console.log('Received a dev tool port')
-          console.log(Date.now())
           const devTools = createEndpoint<DevToolsApi>(fromPort({ port }), {
             callable: ['getDevToolsChannel'],
           })
 
           const backgroundApiForDevTools: BackgroundApiForDevTools = {
-            sendReceiverToContentScript(receiver) {
-              const contentScript = contentScriptMap.get(tabId)
-              console.log('[BG] sendReceiverToContentScript', { receiver, contentScript })
-              contentScript?.call.sendReceiverToWebpage(receiver)
-              devTools.call.placeholderForDevTools()
-            },
+            sendReceiverToContentScript(_receiver) {},
           }
 
           devTools.expose(backgroundApiForDevTools)
+
+          port.onDisconnect.addListener(() => {
+            devToolsMap.delete(tabId)
+            contentScriptMap.get(tabId)?.call.unmountDevTools()
+          })
+
+          if (contentScriptMap.get(tabId))
+            contentScriptMap.get(tabId)?.call.mountDevTools()
 
           return devToolsMap.set(tabId, devTools)
         }
         case 'content-script': {
           const contentScript = createEndpoint<ContentScriptApiForBackground>(fromPort({ port }), {
-            callable: ['sendReceiverToWebpage'],
+            callable: ['mountDevTools', 'unmountDevTools'],
           })
 
           const backgroundApiForContentScript: BackgroundApiForContentScript = {
-            getDevToolsChannel() {
+            async getDevToolsChannel() {
               const devTools = devToolsMap.get(tabId)
 
               if (!devTools)
                 throw new Error('Dev tools not available for this tab')
 
-              return devTools.call.getDevToolsChannel()
+              return await devTools.call.getDevToolsChannel()
             },
           }
 
           contentScript.expose(backgroundApiForContentScript)
+
+          port.onDisconnect.addListener(() => {
+            contentScriptMap.delete(tabId)
+          })
+
+          if (devToolsMap.get(tabId))
+            contentScript.call.mountDevTools()
 
           return contentScriptMap.set(tabId, contentScript)
         }
@@ -70,10 +76,4 @@ browser.runtime.onConnect.addListener((port) => {
   }
 
   port.onMessage.addListener(listener)
-
-  port.onDisconnect.addListener((port) => {
-    // console.log('removing listener')
-    // port.onMessage.removeListener(listener)
-    // remove connection from the right map
-  })
 })
