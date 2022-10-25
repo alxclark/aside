@@ -18,7 +18,6 @@ export function fromDevTools(): MessageEndpoint {
 
   return {
     postMessage(message) {
-      console.log({message})
       port.postMessage(message);
     },
     addEventListener(_event, listener) {

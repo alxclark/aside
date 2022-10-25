@@ -26,14 +26,11 @@ export function fromPort({port}: {port: Runtime.Port}): MessageEndpoint {
 
   return {
     postMessage(message) {
-      console.log({message})
-      console.log({port})
       port.postMessage(message);
     },
     addEventListener(_event, listener) {
       const wrappedListener = (message: any) => {
         const messageEvent = new MessageEvent('message', {data: message})
-        console.log({messageEvent})
         listener(messageEvent);
       };
 

@@ -39,7 +39,7 @@ browser.runtime.onConnect.addListener((port) => {
             contentScriptMap.get(tabId)?.call.unmountDevTools()
           })
 
-          if (contentScriptMap.get(tabId))
+          if (contentScriptMap.has(tabId))
             contentScriptMap.get(tabId)?.call.mountDevTools()
 
           return devToolsMap.set(tabId, devTools)
@@ -66,7 +66,7 @@ browser.runtime.onConnect.addListener((port) => {
             contentScriptMap.delete(tabId)
           })
 
-          if (devToolsMap.get(tabId))
+          if (devToolsMap.has(tabId))
             contentScript.call.mountDevTools()
 
           return contentScriptMap.set(tabId, contentScript)

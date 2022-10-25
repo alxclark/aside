@@ -25,8 +25,6 @@ export function DevTools({children} : PropsWithChildren<{}>) {
         const channel = await contentScript.call.getDevToolsChannel()
         retain(channel);
 
-        console.log({channel})
-
         const root = createRemoteRoot(channel, {
           components: [Button],
         });
@@ -50,7 +48,6 @@ export function DevTools({children} : PropsWithChildren<{}>) {
 
 export function RemoteRenderer({children, root}: PropsWithChildren<{root: RemoteRoot}>) {
   useEffect(() => {
-    console.log('Rendering with remote renderer', root)
     render(
       <>{children}</>,
       root,

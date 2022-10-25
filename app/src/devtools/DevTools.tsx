@@ -28,8 +28,6 @@ export function BrowserExtensionRenderer() {
     background.expose(devToolsApi)
   }, [receiver])
 
-  console.log({ controller, receiver })
-
   return <RemoteRenderer receiver={receiver} controller={controller} />
 }
 
