@@ -3,6 +3,7 @@ import type { ContentScriptApiForBackground, ContentScriptApiForWebpage } from '
 import { fromContentScript } from '@companion/content-script'
 import type { WebpageApi } from '@companion/web'
 import type { BackgroundApiForContentScript } from '@companion/background'
+import { createUnsafeEncoder } from '@companion/core'
 
 (() => {
   window.__companion = { log: () => {} }
@@ -13,6 +14,7 @@ import type { BackgroundApiForContentScript } from '@companion/background'
 
   const webpage = createEndpoint<WebpageApi>(fromContentScript({ to: 'webpage' }), {
     callable: ['mountDevTools', 'unmountDevTools', 'log'],
+    createEncoder: createUnsafeEncoder,
   })
 
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {

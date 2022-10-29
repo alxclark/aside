@@ -1,5 +1,6 @@
 import type { BackgroundApiForContentScript, BackgroundApiForDevTools } from '@companion/background'
 import type { ContentScriptApiForBackground } from '@companion/content-script'
+import { createUnsafeEncoder } from '@companion/core'
 import type { DevToolsApi } from '@companion/dev-tools'
 import type { Endpoint } from '@remote-ui/rpc'
 import { createEndpoint } from '@remote-ui/rpc'
@@ -73,6 +74,7 @@ browser.runtime.onConnect.addListener((port) => {
         case 'content-script': {
           const contentScript = createEndpoint<ContentScriptApiForBackground>(fromPort({ port }), {
             callable: ['mountDevTools', 'unmountDevTools', 'log'],
+            createEncoder: createUnsafeEncoder,
           })
 
           const backgroundApiForContentScript: BackgroundApiForContentScript = {

@@ -19,6 +19,7 @@ importers:
       '@antfu/eslint-config': ^0.26.1
       '@companion/background': workspace:*
       '@companion/content-script': workspace:*
+      '@companion/core': workspace:*
       '@companion/dev-tools': workspace:*
       '@companion/react': workspace:*
       '@companion/web': workspace:*
@@ -53,6 +54,7 @@ importers:
     dependencies:
       '@companion/background': link:../packages/background
       '@companion/content-script': link:../packages/content-script
+      '@companion/core': link:../packages/core
       '@companion/dev-tools': link:../packages/dev-tools
       '@companion/react': link:../packages/react
       '@companion/web': link:../packages/web
