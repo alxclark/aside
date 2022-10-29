@@ -10,4 +10,5 @@ export interface ContentScriptApiForWebpage extends RemoteApi {
 export interface ContentScriptApiForBackground extends RemoteApi {
   mountDevTools(): void;
   unmountDevTools(): void;
+  log(source: string, ...params: any[]): void;
 }

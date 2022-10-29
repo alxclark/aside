@@ -10,8 +10,20 @@ import type { DevToolsApi } from '@companion/dev-tools'
 import { fromDevTools } from '@companion/dev-tools'
 import { Button } from '../components/Button'
 
+function log(...message: any[]) {
+  const event = new CustomEvent('companion-log', {
+    detail: {
+      message,
+    },
+  })
+
+  window.dispatchEvent(event)
+}
+
+window.__companion = { log }
+
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
-  callable: ['getDevToolsChannel'],
+  callable: ['getDevToolsChannel', 'log'],
 })
 
 export function BrowserExtensionRenderer() {
@@ -25,7 +37,17 @@ export function BrowserExtensionRenderer() {
       },
     }
 
+    const listener = (event: any) => {
+      background.call.log('devtools', ...(event as CustomEvent<any>).detail.message)
+    }
+
+    window.addEventListener('companion-log', listener)
+
     background.expose(devToolsApi)
+
+    return () => {
+      window.removeEventListener('companion-log', listener)
+    }
   }, [receiver])
 
   return <RemoteRenderer receiver={receiver} controller={controller} />

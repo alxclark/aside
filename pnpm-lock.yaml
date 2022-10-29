@@ -41,6 +41,7 @@ importers:
       kolorist: ^1.5.1
       npm-run-all: ^4.1.5
       rimraf: ^3.0.2
+      tslib: latest
       typescript: ^4.7.4
       unplugin-auto-import: ^0.11.2
       vite: ^3.0.9
@@ -76,6 +77,7 @@ importers:
       kolorist: 1.5.1
       npm-run-all: 4.1.5
       rimraf: 3.0.2
+      tslib: 2.4.0
       typescript: 4.8.2
       unplugin-auto-import: 0.11.2_vite@3.0.9
       vite: 3.0.9
@@ -6091,6 +6093,10 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: true
+
+  /tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
     dev: true
 
   /tsutils/3.21.0_typescript@4.8.2:

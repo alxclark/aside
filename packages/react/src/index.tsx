@@ -6,6 +6,8 @@ import { createRemoteRoot, RemoteRoot } from "@remote-ui/core";
 import { Button } from "./components";
 import { render } from "@remote-ui/react";
 
+window.__companion = {log: () => {}}
+
 const contentScript = createEndpoint<ContentScriptApiForWebpage>(fromWebpage({context: 'webpage'}), {
   callable: ['getDevToolsChannel']
 })
@@ -34,6 +36,11 @@ export function DevTools({children} : PropsWithChildren<{}>) {
       unmountDevTools() {
         setDevToolsRoot(undefined);
       },
+      log(source, ...params: any[]) {
+        const sourcePrefix = `[${source}]`;
+        
+        console.log(sourcePrefix, ...params)
+      }
     }
 
     contentScript.expose(webpageApi)

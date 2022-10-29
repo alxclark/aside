@@ -5,12 +5,14 @@ import type { WebpageApi } from '@companion/web'
 import type { BackgroundApiForContentScript } from '@companion/background'
 
 (() => {
+  window.__companion = { log: () => {} }
+
   const background = createEndpoint<BackgroundApiForContentScript>(fromContentScript({ to: 'background' }), {
     callable: ['getDevToolsChannel'],
   })
 
   const webpage = createEndpoint<WebpageApi>(fromContentScript({ to: 'webpage' }), {
-    callable: ['mountDevTools', 'unmountDevTools'],
+    callable: ['mountDevTools', 'unmountDevTools', 'log'],
   })
 
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
@@ -25,6 +27,9 @@ import type { BackgroundApiForContentScript } from '@companion/background'
     },
     unmountDevTools() {
       return webpage.call.unmountDevTools()
+    },
+    log(source, ...params) {
+      return webpage.call.log(source, ...params)
     },
   }
 

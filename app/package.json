@@ -22,7 +22,8 @@
     "start:firefox": "web-ext run --source-dir ./extension --target=firefox-desktop",
     "clear": "rimraf extension/dist extension/manifest.json extension.*",
     "lint": "eslint .",
-    "test": "vitest test"
+    "test": "vitest test",
+    "clean-vite": "rm -rf ./node_modules/.vite"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.26.1",
@@ -52,7 +53,8 @@
     "vitest": "^0.22.1",
     "web-ext": "^7.2.0",
     "webext-bridge": "^5.0.5",
-    "webextension-polyfill": "^0.10.0"
+    "webextension-polyfill": "^0.10.0",
+    "tslib": "latest"
   },
   "dependencies": {
     "@companion/content-script": "workspace:*",

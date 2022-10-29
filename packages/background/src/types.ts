@@ -8,5 +8,5 @@ export interface BackgroundApiForContentScript extends RemoteApi {
 }
 
 export interface BackgroundApiForDevTools extends RemoteApi {
-  sendReceiverToContentScript(receiver: RemoteChannel): void;
+  log(source: string, ...params: any[]): void;
 }
