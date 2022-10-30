@@ -8,7 +8,7 @@ import React, { useEffect, useMemo } from 'react'
 import type { BackgroundApiForDevTools } from '@companion/background'
 import type { DevToolsApi } from '@companion/dev-tools'
 import { fromDevTools } from '@companion/dev-tools'
-import { Button } from '../components/Button'
+import { Button } from '../../components/Button'
 
 function log(...message: any[]) {
   const event = new CustomEvent('companion-log', {

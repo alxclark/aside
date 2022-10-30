@@ -1,2 +1,2 @@
 export * from './types';
-export {fromContentScript} from './adaptor'
+export {fromPort} from './adaptor'

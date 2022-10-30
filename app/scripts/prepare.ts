@@ -17,19 +17,21 @@ async function stubIndexHtml() {
 
   for (const view of views) {
     await fs.ensureDir(r(`extension/dist/${view}`))
-    let data = await fs.readFile(r(`src/${view}/index.html`), 'utf-8')
+    let data = await fs.readFile(r(`src/pages/${view}/index.html`), 'utf-8')
     data = data
-      .replace('"./main.tsx"', `"http://localhost:${port}/${view}/main.tsx"`)
-      .replace('"./main.ts"', `"http://localhost:${port}/${view}/main.ts"`)
+      .replace('"./main.tsx"', `"http://localhost:${port}/pages/${view}/main.tsx"`)
+      .replace('"./main.ts"', `"http://localhost:${port}/pages/${view}/main.ts"`)
+      .replace('"./index.ts"', `"http://localhost:${port}/pages/${view}/index.ts"`)
+      .replace('"./index.tsx"', `"http://localhost:${port}/pages/${view}/index.tsx"`)
       .replace('<div id="app"></div>', '<div id="app">Vite server did not start</div>')
     await fs.writeFile(r(`extension/dist/${view}/index.html`), data, 'utf-8')
     log('PRE', `stub ${view}`)
   }
 
   await fs.ensureDir(r('extension/dist/devtools'))
-  let data = await fs.readFile(r('src/devtools/panel.html'), 'utf-8')
+  let data = await fs.readFile(r('src/pages/devtools/panel.html'), 'utf-8')
   data = data
-    .replace('"./panel.tsx"', `"http://localhost:${port}/devtools/panel.tsx"`)
+    .replace('"./panel.tsx"', `"http://localhost:${port}/pages/devtools/panel.tsx"`)
     .replace('<div id="app"></div>', '<div id="app">Vite server did not start</div>')
   await fs.writeFile(r('extension/dist/devtools/panel.html'), data, 'utf-8')
   log('PRE', 'stub devtools/panel')

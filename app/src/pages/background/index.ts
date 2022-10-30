@@ -4,15 +4,10 @@ import { createUnsafeEncoder } from '@companion/core'
 import type { DevToolsApi } from '@companion/dev-tools'
 import type { Endpoint } from '@remote-ui/rpc'
 import { createEndpoint } from '@remote-ui/rpc'
-import { fromPort } from '../../../packages/background/src/adaptor'
+import { fromPort } from '@companion/background'
+import { setupContentScriptHMR } from '../../foundation/ContentScript'
 
-// only on dev mode
-if (import.meta.hot) {
-  // @ts-expect-error for background HMR
-  import('/@vite/client')
-  // load latest content script
-  import('./contentScriptHMR')
-}
+setupContentScriptHMR()
 
 const devToolsMap = new Map<number, Endpoint<DevToolsApi>>()
 const contentScriptMap = new Map<number, Endpoint<ContentScriptApiForBackground>>()
