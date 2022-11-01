@@ -3,7 +3,7 @@ import { WebpageApi, fromWebpage } from "@companion/web";
 import type { ContentScriptApiForWebpage } from "@companion/extension";
 import {createEndpoint, retain} from '@remote-ui/rpc'
 import { createRemoteRoot, RemoteRoot } from "@remote-ui/core";
-import { Button } from "./components";
+import { AllComponents } from "./components";
 import { render } from "@remote-ui/react";
 
 window.__companion = {log: () => {}}
@@ -28,7 +28,7 @@ export function DevTools({children} : PropsWithChildren<{}>) {
         retain(channel);
 
         const root = createRemoteRoot(channel, {
-          components: [Button],
+          components: AllComponents,
         });
 
         setDevToolsRoot(root);

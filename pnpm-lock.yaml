@@ -88,17 +88,21 @@ importers:
   examples/recoil-dev-tools:
     specifiers:
       '@companion/react': workspace:*
+      '@companion/recoil': workspace:*
       '@types/react': ^17.0.0
       '@types/react-dom': ^17.0.0
       '@vitejs/plugin-react': ^2.0.1
       react: ^17.0.0
       react-dom: ^17.0.0
+      recoil: latest
       typescript: ^4.6.4
       vite: ^3.0.9
     dependencies:
       '@companion/react': link:../../packages/react
+      '@companion/recoil': link:../../packages/recoil
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+      recoil: 0.7.6_sfoxds7t5ydpegc3knd667wn6m
     devDependencies:
       '@types/react': 17.0.48
       '@types/react-dom': 17.0.17
@@ -141,6 +145,25 @@ importers:
       typescript: ^4.6.4
     dependencies:
       '@companion/web': link:../web
+    devDependencies:
+      '@companion/extension': link:../extension
+      '@types/react': 18.0.17
+      '@types/react-dom': 18.0.6
+      typescript: 4.8.2
+
+  packages/recoil:
+    specifiers:
+      '@companion/extension': workspace:*
+      '@companion/react': workspace:*
+      '@companion/web': workspace:*
+      '@types/react': ^18.0.17
+      '@types/react-dom': ^18.0.6
+      recoil: latest
+      typescript: ^4.6.4
+    dependencies:
+      '@companion/react': link:../react
+      '@companion/web': link:../web
+      recoil: 0.7.6_react@17.0.2
     devDependencies:
       '@companion/extension': link:../extension
       '@types/react': 18.0.17
@@ -3618,6 +3641,10 @@ packages:
     resolution: {integrity: sha512-+xGQY0YyAWCnqy7Cd++hc2JqMYzlm0dG30Jd0beaA64sROr8C4nt8Yc9V5Ro3avlSUDTN0ulqP/VBKi1/lLygw==}
     dev: true
 
+  /hamt_plus/1.0.2:
+    resolution: {integrity: sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA==}
+    dev: false
+
   /har-schema/2.0.0:
     resolution: {integrity: sha512-Oqluz6zhGX8cyRaTQlFMPw80bSJVG2x/cFb8ZPhUILGgHka9SsokCCOQgpveePerqidZOrT14ipqfJb7ILcW5Q==}
     engines: {node: '>=4'}
@@ -5364,6 +5391,39 @@ packages:
     resolution: {integrity: sha512-57frrGM/OCTLqLOAh0mhVA9VBMHd+9U7Zb2THMGdBUoZVOtGbJzjxsYGDJ3A9AYYCP4hn6y1TVbaOfzWtm5GFg==}
     engines: {node: '>= 12.13.0'}
     dev: true
+
+  /recoil/0.7.6_react@17.0.2:
+    resolution: {integrity: sha512-hsBEw7jFdpBCY/tu2GweiyaqHKxVj6EqF2/SfrglbKvJHhpN57SANWvPW+gE90i3Awi+A5gssOd3u+vWlT+g7g==}
+    peerDependencies:
+      react: '>=16.13.1'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      hamt_plus: 1.0.2
+      react: 17.0.2
+    dev: false
+
+  /recoil/0.7.6_sfoxds7t5ydpegc3knd667wn6m:
+    resolution: {integrity: sha512-hsBEw7jFdpBCY/tu2GweiyaqHKxVj6EqF2/SfrglbKvJHhpN57SANWvPW+gE90i3Awi+A5gssOd3u+vWlT+g7g==}
+    peerDependencies:
+      react: '>=16.13.1'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      hamt_plus: 1.0.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}

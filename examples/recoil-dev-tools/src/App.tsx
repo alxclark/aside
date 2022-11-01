@@ -1,8 +1,17 @@
-import { useState } from 'react'
-import {Companion, DevTools, Button} from '@companion/react';
+import {RecoilDevTools} from '@companion/recoil'
+import {RecoilRoot, atom, useRecoilState, selector, useRecoilValue} from 'recoil'
 
 export function App() {
-  const [count, setCount] = useState(0)
+  return (
+    <RecoilRoot>
+      <RecoilApp />
+    </RecoilRoot>
+  )
+}
+
+export function RecoilApp() {
+  const [count, setCount] = useRecoilState(countAtom)
+  const countTen = useRecoilValue(countTimesTenAtom);
 
   return (
     <div className="App">
@@ -11,6 +20,7 @@ export function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        {countTen}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -18,11 +28,17 @@ export function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <Companion>
-        <DevTools>
-          <Button onPress={() => console.log('Eureka!')}>Click me!</Button>
-        </DevTools>
-      </Companion>
+      <RecoilDevTools />
     </div>
   )
 }
+
+const countAtom = atom({
+  default: 0,
+  key: 'count',
+})
+
+const countTimesTenAtom = selector({
+  key: 'count10',
+  get: ({get}) => get(countAtom) * 10
+})

@@ -7,7 +7,7 @@ import { createEndpoint } from '@remote-ui/rpc'
 import React, { useEffect, useMemo } from 'react'
 import type { BackgroundApiForDevTools, DevToolsApi } from '@companion/extension'
 import { fromDevTools } from '@companion/extension'
-import { Button } from '../../components/Button'
+import { Button, List, ListItem } from '../../components'
 import { setupDebug } from '../../foundation/Debug'
 
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
@@ -21,7 +21,7 @@ setupDebug({
 })
 
 export function BrowserExtensionRenderer() {
-  const controller = useMemo(() => createController({ Button }), [])
+  const controller = useMemo(() => createController({ Button, List, ListItem }), [])
   const receiver = useMemo(() => createRemoteReceiver(), [])
 
   useEffect(() => {

@@ -1,0 +1,21 @@
+{
+  "name": "@companion/recoil",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "source": "src/index.tsx",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "scripts": {},
+  "dependencies": {
+    "@companion/web": "workspace:*",
+    "@companion/react": "workspace:*",
+    "recoil": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@companion/extension": "workspace:*",
+    "typescript": "^4.6.4"
+  }
+}
