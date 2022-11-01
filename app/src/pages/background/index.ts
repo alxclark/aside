@@ -1,10 +1,8 @@
-import type { BackgroundApiForContentScript, BackgroundApiForDevTools } from '@companion/background'
-import type { ContentScriptApiForBackground } from '@companion/content-script'
+import { fromPort } from '@companion/extension'
+import type { BackgroundApiForContentScript, BackgroundApiForDevTools, ContentScriptApiForBackground, DevToolsApi } from '@companion/extension'
 import { createUnsafeEncoder } from '@companion/core'
-import type { DevToolsApi } from '@companion/dev-tools'
 import type { Endpoint } from '@remote-ui/rpc'
 import { createEndpoint } from '@remote-ui/rpc'
-import { fromPort } from '@companion/background'
 import { setupContentScriptHMR } from '../../foundation/ContentScript'
 import { setupDebug } from '../../foundation/Debug'
 
@@ -28,7 +26,7 @@ browser.runtime.onConnect.addListener((port) => {
       switch (port.name) {
         case 'dev-tools':
         {
-          const devTools = createEndpoint<DevToolsApi>(fromPort({ port }), {
+          const devTools = createEndpoint<DevToolsApi>(fromPort(port), {
             callable: ['getDevToolsChannel'],
           })
 
@@ -55,7 +53,7 @@ browser.runtime.onConnect.addListener((port) => {
           return devtoolsCache.set(tabId, devTools)
         }
         case 'content-script': {
-          const contentScript = createEndpoint<ContentScriptApiForBackground>(fromPort({ port }), {
+          const contentScript = createEndpoint<ContentScriptApiForBackground>(fromPort(port), {
             callable: ['mountDevTools', 'unmountDevTools', 'log'],
             createEncoder: createUnsafeEncoder,
           })

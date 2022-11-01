@@ -5,9 +5,8 @@ import {
 } from '@remote-ui/react/host'
 import { createEndpoint } from '@remote-ui/rpc'
 import React, { useEffect, useMemo } from 'react'
-import type { BackgroundApiForDevTools } from '@companion/background'
-import type { DevToolsApi } from '@companion/dev-tools'
-import { fromDevTools } from '@companion/dev-tools'
+import type { BackgroundApiForDevTools, DevToolsApi } from '@companion/extension'
+import { fromDevTools } from '@companion/extension'
 import { Button } from '../../components/Button'
 import { setupDebug } from '../../foundation/Debug'
 

@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { WebpageApi, fromWebpage } from "@companion/web";
-import { ContentScriptApiForWebpage } from "@companion/content-script";
+import type { ContentScriptApiForWebpage } from "@companion/extension";
 import {createEndpoint, retain} from '@remote-ui/rpc'
 import { createRemoteRoot, RemoteRoot } from "@remote-ui/core";
 import { Button } from "./components";

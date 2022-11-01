@@ -1,5 +1,5 @@
 {
-  "name": "@companion/dev-tools",
+  "name": "@companion/extension",
   "private": true,
   "version": "0.0.0",
   "type": "module",

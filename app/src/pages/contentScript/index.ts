@@ -1,8 +1,7 @@
 import { createEndpoint } from '@remote-ui/rpc'
-import type { ContentScriptApiForBackground, ContentScriptApiForWebpage } from '@companion/content-script'
-import { fromContentScript } from '@companion/content-script'
+import type { BackgroundApiForContentScript, ContentScriptApiForBackground, ContentScriptApiForWebpage } from '@companion/extension'
+import { fromContentScript } from '@companion/extension'
 import type { WebpageApi } from '@companion/web'
-import type { BackgroundApiForContentScript } from '@companion/background'
 import { createUnsafeEncoder } from '@companion/core'
 
 (() => {

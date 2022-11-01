@@ -1,13 +1,7 @@
 import {MessageEndpoint} from '@remote-ui/rpc'
+import type {Runtime} from 'webextension-polyfill'
 
-export function fromDevTools(): MessageEndpoint {
-  const port = browser.runtime.connect({name: "dev-tools"});
-
-  port.postMessage({
-    name: 'init',
-    tabId: browser.devtools.inspectedWindow.tabId
-  });
-
+export function fromPort(port: Runtime.Port): MessageEndpoint {
   // We need to store the listener, because we wrap it to do some origin checking. Ideally,
   // we’d instead store an `AbortController`, and use its signal to cancel the listeners,
   // but that isn’t widely supported.
@@ -38,6 +32,3 @@ export function fromDevTools(): MessageEndpoint {
     },
   };
 }
-
-
-

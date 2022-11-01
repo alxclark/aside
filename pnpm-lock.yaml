@@ -17,10 +17,8 @@ importers:
   app:
     specifiers:
       '@antfu/eslint-config': ^0.26.1
-      '@companion/background': workspace:*
-      '@companion/content-script': workspace:*
       '@companion/core': workspace:*
-      '@companion/dev-tools': workspace:*
+      '@companion/extension': workspace:*
       '@companion/react': workspace:*
       '@companion/web': workspace:*
       '@ffflorian/jszip-cli': ^3.1.6
@@ -52,10 +50,8 @@ importers:
       webext-bridge: ^5.0.5
       webextension-polyfill: ^0.10.0
     dependencies:
-      '@companion/background': link:../packages/background
-      '@companion/content-script': link:../packages/content-script
       '@companion/core': link:../packages/core
-      '@companion/dev-tools': link:../packages/dev-tools
+      '@companion/extension': link:../packages/extension
       '@companion/react': link:../packages/react
       '@companion/web': link:../packages/web
     devDependencies:
@@ -79,7 +75,7 @@ importers:
       kolorist: 1.5.1
       npm-run-all: 4.1.5
       rimraf: 3.0.2
-      tslib: 2.4.0
+      tslib: 2.4.1
       typescript: 4.8.2
       unplugin-auto-import: 0.11.2_vite@3.0.9
       vite: 3.0.9
@@ -110,34 +106,6 @@ importers:
       typescript: 4.8.2
       vite: 3.0.9
 
-  packages/background:
-    specifiers:
-      '@companion/web': workspace:*
-      '@types/react': ^18.0.17
-      '@types/react-dom': ^18.0.6
-      typescript: ^4.6.4
-      webextension-polyfill: ^0.10.0
-    dependencies:
-      '@companion/web': link:../web
-      webextension-polyfill: 0.10.0
-    devDependencies:
-      '@types/react': 18.0.17
-      '@types/react-dom': 18.0.6
-      typescript: 4.8.2
-
-  packages/content-script:
-    specifiers:
-      '@companion/web': workspace:*
-      '@types/react': ^18.0.17
-      '@types/react-dom': ^18.0.6
-      typescript: ^4.6.4
-    dependencies:
-      '@companion/web': link:../web
-    devDependencies:
-      '@types/react': 18.0.17
-      '@types/react-dom': 18.0.6
-      typescript: 4.8.2
-
   packages/core:
     specifiers:
       '@types/react': ^18.0.17
@@ -151,7 +119,7 @@ importers:
       '@types/react-dom': 18.0.6
       typescript: 4.8.2
 
-  packages/dev-tools:
+  packages/extension:
     specifiers:
       '@companion/web': workspace:*
       '@types/react': ^18.0.17
@@ -166,15 +134,15 @@ importers:
 
   packages/react:
     specifiers:
-      '@companion/content-script': workspace:*
+      '@companion/extension': workspace:*
       '@companion/web': workspace:*
       '@types/react': ^18.0.17
       '@types/react-dom': ^18.0.6
       typescript: ^4.6.4
     dependencies:
-      '@companion/content-script': link:../content-script
       '@companion/web': link:../web
     devDependencies:
+      '@companion/extension': link:../extension
       '@types/react': 18.0.17
       '@types/react-dom': 18.0.6
       typescript: 4.8.2
@@ -6097,8 +6065,8 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
-  /tslib/2.4.0:
-    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+  /tslib/2.4.1:
+    resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
     dev: true
 
   /tsutils/3.21.0_typescript@4.8.2:
