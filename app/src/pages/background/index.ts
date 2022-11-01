@@ -6,30 +6,18 @@ import type { Endpoint } from '@remote-ui/rpc'
 import { createEndpoint } from '@remote-ui/rpc'
 import { fromPort } from '@companion/background'
 import { setupContentScriptHMR } from '../../foundation/ContentScript'
+import { setupDebug } from '../../foundation/Debug'
+
+const devtoolsCache = new Map<number, Endpoint<DevToolsApi>>()
+const contentScriptCache = new Map<number, Endpoint<ContentScriptApiForBackground>>()
 
 setupContentScriptHMR()
-
-const devToolsMap = new Map<number, Endpoint<DevToolsApi>>()
-const contentScriptMap = new Map<number, Endpoint<ContentScriptApiForBackground>>()
-
-function log(...message: any[]) {
-  console.log('inside log from background')
-
-  const event = new CustomEvent('companion-log', {
-    detail: {
-      message,
-    },
-  })
-
-  window.dispatchEvent(event)
-}
-
-window.__companion = { log }
-
-window.addEventListener('companion-log', (event) => {
-  contentScriptMap.forEach((contentScript) => {
-    contentScript.call.log('background', ...(event as CustomEvent<any>).detail.message)
-  })
+setupDebug({
+  onMessage: (event) => {
+    contentScriptCache.forEach((contentScript) => {
+      contentScript.call.log('background', ...(event as CustomEvent<any>).detail.message)
+    })
+  },
 })
 
 browser.runtime.onConnect.addListener((port) => {
@@ -46,25 +34,25 @@ browser.runtime.onConnect.addListener((port) => {
 
           const backgroundApiForDevTools: BackgroundApiForDevTools = {
             log(source, ...params) {
-              contentScriptMap.get(tabId)?.call.log(source, ...params)
+              contentScriptCache.get(tabId)?.call.log(source, ...params)
             },
           }
 
           devTools.expose(backgroundApiForDevTools)
 
           port.onDisconnect.addListener(() => {
-            devToolsMap.delete(tabId)
-            contentScriptMap.get(tabId)?.call.unmountDevTools()
+            devtoolsCache.delete(tabId)
+            contentScriptCache.get(tabId)?.call.unmountDevTools()
           })
 
-          if (contentScriptMap.has(tabId)) {
-            const contentScript = contentScriptMap.get(tabId)!
+          if (contentScriptCache.has(tabId)) {
+            const contentScript = contentScriptCache.get(tabId)!
 
             contentScript.call.log('background', 'mounting dev tools')
             contentScript.call.mountDevTools()
           }
 
-          return devToolsMap.set(tabId, devTools)
+          return devtoolsCache.set(tabId, devTools)
         }
         case 'content-script': {
           const contentScript = createEndpoint<ContentScriptApiForBackground>(fromPort({ port }), {
@@ -74,7 +62,7 @@ browser.runtime.onConnect.addListener((port) => {
 
           const backgroundApiForContentScript: BackgroundApiForContentScript = {
             async getDevToolsChannel() {
-              const devTools = devToolsMap.get(tabId)
+              const devTools = devtoolsCache.get(tabId)
 
               if (!devTools)
                 throw new Error('Dev tools not available for this tab')
@@ -88,17 +76,17 @@ browser.runtime.onConnect.addListener((port) => {
           contentScript.expose(backgroundApiForContentScript)
 
           port.onDisconnect.addListener(() => {
-            contentScriptMap.delete(tabId)
+            contentScriptCache.delete(tabId)
           })
 
-          if (devToolsMap.has(tabId)) {
+          if (devtoolsCache.has(tabId)) {
             contentScript.call.log('background', 'mounting dev tools')
             contentScript.call.mountDevTools()
           }
 
           console.log('Adding contentScript for tab:', tabId)
 
-          return contentScriptMap.set(tabId, contentScript)
+          return contentScriptCache.set(tabId, contentScript)
         }
       }
     }
