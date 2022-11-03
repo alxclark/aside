@@ -12,8 +12,8 @@
   "dependencies": {
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "@companion/react": "workspace:*",
-    "@companion/recoil": "workspace:*",
+    "@companion/react": "0.0.0",
+    "@companion/recoil": "0.0.0",
     "recoil": "latest"
   },
   "devDependencies": {

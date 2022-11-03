@@ -8,14 +8,11 @@
   "types": "src/index.tsx",
   "scripts": {},
   "dependencies": {
-    "@companion/web": "workspace:*",
-    "@companion/react": "workspace:*",
+    "@companion/web": "0.0.0",
+    "@companion/react": "0.0.0",
     "recoil": "latest"
   },
   "devDependencies": {
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
-    "@companion/extension": "workspace:*",
-    "typescript": "^4.6.4"
+    "@companion/extension": "0.0.0"
   }
 }

@@ -1,13 +1,14 @@
 {
   "name": "companion",
   "version": "0.0.0",
+  "private": true,
   "description": "Composable browser extension",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "pnpm --filter app dev",
-    "open-chrome": "pnpm --filter app start:chromium",
-    "start:recoil": "pnpm --filter recoil dev",
-    "clean-vite": "pnpm --filter recoil clean-vite && pnpm --filter app clean-vite"
+    "dev": "yarn workspace app dev",
+    "open-chrome": "yarn workspace app start:chromium",
+    "start:recoil": "yarn workspace recoil dev",
+    "clean-vite": "yarn workspace recoil clean-vite && yarn workspace app clean-vite"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,10 @@
     "@wide-web/eslint-plugin": "^0.1.0",
     "prettier": "^2.5.1",
     "eslint": "^8.3.0"
-  }
+  },
+  "workspaces": [
+    "app",
+    "packages/*",
+    "examples/*"
+  ]
 }
