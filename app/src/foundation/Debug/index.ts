@@ -1,13 +1,17 @@
-export function setupDebug({ onMessage }: { onMessage: (event: CustomEvent) => void }) {
-  window.__companion = { log }
+export function setupDebug({
+  onMessage,
+}: {
+  onMessage: (event: CustomEvent) => void;
+}) {
+  window.__companion = {log};
 
   const listener = (event: any) => {
-    onMessage(event)
-  }
+    onMessage(event);
+  };
 
-  window.addEventListener('companion-log', listener)
+  window.addEventListener('companion-log', listener);
 
-  return () => window.removeEventListener('companion-log', listener)
+  return () => window.removeEventListener('companion-log', listener);
 }
 
 export function log(...message: any[]) {
@@ -15,6 +19,6 @@ export function log(...message: any[]) {
     detail: {
       message,
     },
-  })
-  window.dispatchEvent(event)
+  });
+  window.dispatchEvent(event);
 }

@@ -1,2 +1,2 @@
 export * from './types';
-export {createUnsafeEncoder} from './rpc'
+export {createUnsafeEncoder} from './rpc';

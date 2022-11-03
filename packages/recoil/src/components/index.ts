@@ -1,2 +1,2 @@
-export {StateTree} from './StateTree'
-export {StateDiffs} from './StateDiffs'
+export {StateTree} from './StateTree';
+export {StateDiffs} from './StateDiffs';

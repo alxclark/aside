@@ -1,7 +1,9 @@
-import {RemoteChannel} from '@remote-ui/core'
+import {RemoteChannel} from '@remote-ui/core';
 
 type AnyFunction = (...args: any[]) => any;
-type RemoteApi = Record<string, AnyFunction | undefined>;
+interface RemoteApi {
+  [key: string]: AnyFunction | undefined;
+}
 
 // Content-script
 

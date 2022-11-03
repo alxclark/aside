@@ -1,9 +1,9 @@
 export interface Snapshot {
   createdAt: Date;
-  nodes: Record<string, any>
+  nodes: {[key: string]: any};
 }
 
-export type PrimaryNavigation = 'state-tree' | 'state-diff'
+export type PrimaryNavigation = 'state-tree' | 'state-diff';
 
 export interface DevToolsApi {
   snapshots: Snapshot[];

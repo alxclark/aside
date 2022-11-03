@@ -1,18 +1,22 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference, spaced-comment
 /// <reference types="vitest" />
 
-import { dirname, relative } from 'path'
-import type { UserConfig } from 'vite'
-import { defineConfig } from 'vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import WindiCSS from 'vite-plugin-windicss'
-import react from '@vitejs/plugin-react'
-import windiConfig from './windi.config'
-import { isDev, port, r } from './scripts/utils'
+import {dirname, relative} from 'path';
+
+import type {UserConfig} from 'vite';
+import {defineConfig} from 'vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import WindiCSS from 'vite-plugin-windicss';
+import react from '@vitejs/plugin-react';
+
+import windiConfig from './windi.config';
+import {isDev, port, r} from './scripts/utils';
 
 export const sharedConfig: UserConfig = {
   root: r('src'),
   resolve: {
     alias: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       '~/': `${r('src')}/`,
     },
   },
@@ -23,9 +27,8 @@ export const sharedConfig: UserConfig = {
     AutoImport({
       imports: [
         {
-          'webextension-polyfill': [
-            ['*', 'browser'],
-          ],
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          'webextension-polyfill': [['*', 'browser']],
         },
       ],
       dts: r('src/auto-imports.d.ts'),
@@ -36,21 +39,20 @@ export const sharedConfig: UserConfig = {
       name: 'assets-rewrite',
       enforce: 'post',
       apply: 'build',
-      transformIndexHtml(html, { path }) {
-        return html.replace(/"\/assets\//g, `"${relative(dirname(path), '/assets')}/`)
+      transformIndexHtml(html, {path}) {
+        return html.replace(
+          /"\/assets\//g,
+          `"${relative(dirname(path), '/assets')}/`,
+        );
       },
     },
   ],
   optimizeDeps: {
-    include: [
-      'webextension-polyfill',
-      '@remote-ui/react/host',
-      'react',
-    ],
+    include: ['webextension-polyfill', '@remote-ui/react/host', 'react'],
   },
-}
+};
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({command}) => ({
   ...sharedConfig,
   base: command === 'serve' ? `http://localhost:${port}/` : '/dist/',
   server: {
@@ -77,7 +79,7 @@ export default defineConfig(({ command }) => ({
   },
   plugins: [
     ...sharedConfig.plugins!,
-    react({ fastRefresh: false }),
+    react({fastRefresh: false}),
     // https://github.com/antfu/vite-plugin-windicss
     WindiCSS({
       config: windiConfig,
@@ -87,4 +89,4 @@ export default defineConfig(({ command }) => ({
     globals: true,
     environment: 'jsdom',
   },
-}))
+}));

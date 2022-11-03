@@ -1,1 +1,1 @@
-export {StateDiffs} from './StateDiffs'
+export {StateDiffs} from './StateDiffs';

@@ -1,1 +1,1 @@
-export {createUnsafeEncoder} from './encoding'
+export {createUnsafeEncoder} from './encoding';

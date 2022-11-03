@@ -1,1 +1,1 @@
-export {StateTree} from './StateTree'
+export {StateTree} from './StateTree';

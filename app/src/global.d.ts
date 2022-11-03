@@ -1,11 +1,11 @@
-declare const __DEV__: boolean
+declare const __DEV__: boolean;
 
 declare global {
-  interface Window { 
+  interface Window {
     __companion: {
-      log(...message: any[]): void
-    } 
+      log(...message: any[]): void;
+    };
   }
 }
 
-export {}
+export {};

@@ -5,6 +5,7 @@ import {
   EncodingStrategy,
   EncodingStrategyApi,
 } from '@remote-ui/rpc';
+
 import type {Retainer} from './memory';
 import {StackFrame, isMemoryManageable} from './memory';
 
@@ -12,7 +13,9 @@ type AnyFunction = (...args: any[]) => any;
 
 const FUNCTION = '_@f';
 
-export function createUnsafeEncoder(api: EncodingStrategyApi): EncodingStrategy {
+export function createUnsafeEncoder(
+  api: EncodingStrategyApi,
+): EncodingStrategy {
   const functionsToId = new Map<AnyFunction, string>();
   const idsToFunction = new Map<string, AnyFunction>();
   const idsToProxy = new Map<string, AnyFunction>();
@@ -134,7 +137,7 @@ export function createUnsafeEncoder(api: EncodingStrategyApi): EncodingStrategy 
         const release = () => {
           retainCount -= 1;
 
-          console.log('release called', {id})
+          console.log('release called', {id});
           if (retainCount === 0) {
             released = true;
             idsToProxy.delete(id);

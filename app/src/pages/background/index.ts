@@ -1,94 +1,108 @@
-import { fromPort } from '@companion/extension'
-import type { BackgroundApiForContentScript, BackgroundApiForDevTools, ContentScriptApiForBackground, DevToolsApi } from '@companion/extension'
-import { createUnsafeEncoder } from '@companion/core'
-import type { Endpoint } from '@remote-ui/rpc'
-import { createEndpoint } from '@remote-ui/rpc'
-import { setupContentScriptHMR } from '../../foundation/ContentScript'
-import { setupDebug } from '../../foundation/Debug'
+import {fromPort} from '@companion/extension';
+import type {
+  BackgroundApiForContentScript,
+  BackgroundApiForDevTools,
+  ContentScriptApiForBackground,
+  DevToolsApi,
+} from '@companion/extension';
+import {createUnsafeEncoder} from '@companion/core';
+import type {Endpoint} from '@remote-ui/rpc';
+import {createEndpoint} from '@remote-ui/rpc';
 
-const devtoolsCache = new Map<number, Endpoint<DevToolsApi>>()
-const contentScriptCache = new Map<number, Endpoint<ContentScriptApiForBackground>>()
+import {setupContentScriptHMR} from '../../foundation/ContentScript';
+import {setupDebug} from '../../foundation/Debug';
 
-setupContentScriptHMR()
+const devtoolsCache = new Map<number, Endpoint<DevToolsApi>>();
+const contentScriptCache = new Map<
+  number,
+  Endpoint<ContentScriptApiForBackground>
+>();
+
+setupContentScriptHMR();
 setupDebug({
   onMessage: (event) => {
     contentScriptCache.forEach((contentScript) => {
-      contentScript.call.log('background', ...(event as CustomEvent<any>).detail.message)
-    })
+      contentScript.call.log(
+        'background',
+        ...(event as CustomEvent<any>).detail.message,
+      );
+    });
   },
-})
+});
 
 browser.runtime.onConnect.addListener((port) => {
   const listener = (message: any, senderPort: any): any => {
-    const tabId = message?.tabId ?? senderPort?.sender?.tab?.id
+    const tabId = message?.tabId ?? senderPort?.sender?.tab?.id;
 
     if (message.name === 'init' && tabId) {
       switch (port.name) {
-        case 'dev-tools':
-        {
+        case 'dev-tools': {
           const devTools = createEndpoint<DevToolsApi>(fromPort(port), {
             callable: ['getDevToolsChannel'],
-          })
+          });
 
           const backgroundApiForDevTools: BackgroundApiForDevTools = {
             log(source, ...params) {
-              contentScriptCache.get(tabId)?.call.log(source, ...params)
+              contentScriptCache.get(tabId)?.call.log(source, ...params);
             },
-          }
+          };
 
-          devTools.expose(backgroundApiForDevTools)
+          devTools.expose(backgroundApiForDevTools);
 
           port.onDisconnect.addListener(() => {
-            devtoolsCache.delete(tabId)
-            contentScriptCache.get(tabId)?.call.unmountDevTools()
-          })
+            devtoolsCache.delete(tabId);
+            contentScriptCache.get(tabId)?.call.unmountDevTools();
+          });
 
           if (contentScriptCache.has(tabId)) {
-            const contentScript = contentScriptCache.get(tabId)!
+            const contentScript = contentScriptCache.get(tabId)!;
 
-            contentScript.call.log('background', 'mounting dev tools')
-            contentScript.call.mountDevTools()
+            contentScript.call.log('background', 'mounting dev tools');
+            contentScript.call.mountDevTools();
           }
 
-          return devtoolsCache.set(tabId, devTools)
+          return devtoolsCache.set(tabId, devTools);
         }
         case 'content-script': {
-          const contentScript = createEndpoint<ContentScriptApiForBackground>(fromPort(port), {
-            callable: ['mountDevTools', 'unmountDevTools', 'log'],
-            createEncoder: createUnsafeEncoder,
-          })
+          const contentScript = createEndpoint<ContentScriptApiForBackground>(
+            fromPort(port),
+            {
+              callable: ['mountDevTools', 'unmountDevTools', 'log'],
+              createEncoder: createUnsafeEncoder,
+            },
+          );
 
           const backgroundApiForContentScript: BackgroundApiForContentScript = {
             async getDevToolsChannel() {
-              const devTools = devtoolsCache.get(tabId)
+              const devTools = devtoolsCache.get(tabId);
 
               if (!devTools)
-                throw new Error('Dev tools not available for this tab')
+                throw new Error('Dev tools not available for this tab');
 
-              const channel = await devTools.call.getDevToolsChannel()
+              const channel = await devTools.call.getDevToolsChannel();
 
-              return channel
+              return channel;
             },
-          }
+          };
 
-          contentScript.expose(backgroundApiForContentScript)
+          contentScript.expose(backgroundApiForContentScript);
 
           port.onDisconnect.addListener(() => {
-            contentScriptCache.delete(tabId)
-          })
+            contentScriptCache.delete(tabId);
+          });
 
           if (devtoolsCache.has(tabId)) {
-            contentScript.call.log('background', 'mounting dev tools')
-            contentScript.call.mountDevTools()
+            contentScript.call.log('background', 'mounting dev tools');
+            contentScript.call.mountDevTools();
           }
 
-          console.log('Adding contentScript for tab:', tabId)
+          console.log('Adding contentScript for tab:', tabId);
 
-          return contentScriptCache.set(tabId, contentScript)
+          return contentScriptCache.set(tabId, contentScript);
         }
       }
     }
-  }
+  };
 
-  port.onMessage.addListener(listener)
-})
+  port.onMessage.addListener(listener);
+});

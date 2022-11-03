@@ -1,30 +1,34 @@
-import React, { PropsWithChildren, useEffect, useState } from "react";
-import { WebpageApi, fromWebpage } from "@companion/web";
-import type { ContentScriptApiForWebpage } from "@companion/extension";
-import {createEndpoint, retain} from '@remote-ui/rpc'
-import { createRemoteRoot, RemoteRoot } from "@remote-ui/core";
-import { AllComponents } from "./components";
-import { render } from "@remote-ui/react";
+import React, {PropsWithChildren, useEffect, useState} from 'react';
+import {WebpageApi, fromWebpage} from '@companion/web';
+import type {ContentScriptApiForWebpage} from '@companion/extension';
+import {createEndpoint, retain} from '@remote-ui/rpc';
+import {createRemoteRoot, RemoteRoot} from '@remote-ui/core';
+import {render} from '@remote-ui/react';
 
-window.__companion = {log: () => {}}
+import {AllComponents} from './components';
 
-const contentScript = createEndpoint<ContentScriptApiForWebpage>(fromWebpage({context: 'webpage'}), {
-  callable: ['getDevToolsChannel']
-})
+window.__companion = {log: () => {}};
 
-export function Companion({children} : PropsWithChildren<{}>) {
+const contentScript = createEndpoint<ContentScriptApiForWebpage>(
+  fromWebpage({context: 'webpage'}),
+  {
+    callable: ['getDevToolsChannel'],
+  },
+);
+
+export function Companion({children}: PropsWithChildren<{}>) {
   return <>{children}</>;
 }
 
-export function DevTools({children} : PropsWithChildren<{}>) {
+export function DevTools({children}: PropsWithChildren<{}>) {
   const [devToolsRoot, setDevToolsRoot] = useState<RemoteRoot | undefined>();
 
   useEffect(() => {
     const webpageApi: WebpageApi = {
       async mountDevTools() {
-        if(devToolsRoot) return
+        if (devToolsRoot) return;
 
-        const channel = await contentScript.call.getDevToolsChannel()
+        const channel = await contentScript.call.getDevToolsChannel();
         retain(channel);
 
         const root = createRemoteRoot(channel, {
@@ -38,31 +42,30 @@ export function DevTools({children} : PropsWithChildren<{}>) {
       },
       log(source, ...params: any[]) {
         const sourcePrefix = `[${source}]`;
-        
-        console.log(sourcePrefix, ...params)
-      }
-    }
 
-    contentScript.expose(webpageApi)
-  }, [setDevToolsRoot, devToolsRoot])
+        console.log(sourcePrefix, ...params);
+      },
+    };
+
+    contentScript.expose(webpageApi);
+  }, [setDevToolsRoot, devToolsRoot]);
 
   if (devToolsRoot) {
-    return <RemoteRenderer root={devToolsRoot}>{children}</RemoteRenderer>
+    return <RemoteRenderer root={devToolsRoot}>{children}</RemoteRenderer>;
   }
 
   return null;
 }
 
-export function RemoteRenderer({children, root}: PropsWithChildren<{root: RemoteRoot}>) {
+export function RemoteRenderer({
+  children,
+  root,
+}: PropsWithChildren<{root: RemoteRoot}>) {
   useEffect(() => {
-    render(
-      <>{children}</>,
-      root,
-      root.mount
-    );
-  }, [children]);
+    render(<>{children}</>, root, root.mount);
+  }, [children, root]);
 
   return null;
 }
 
-export * from './components'
+export * from './components';

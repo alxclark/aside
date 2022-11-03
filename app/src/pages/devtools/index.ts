@@ -1,5 +1,1 @@
-browser.devtools.panels.create(
-  'Companion',
-  '',
-  'dist/devtools/panel.html',
-)
+browser.devtools.panels.create('Companion', '', 'dist/devtools/panel.html');

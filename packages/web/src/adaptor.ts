@@ -1,11 +1,14 @@
-import {MessageEndpoint} from '@remote-ui/rpc'
+import {MessageEndpoint} from '@remote-ui/rpc';
 
 interface Options {
   targetOrigin?: string;
   context: string;
 }
 
-export function fromWebpage({targetOrigin = '*', context}: Options): MessageEndpoint {
+export function fromWebpage({
+  targetOrigin = '*',
+  context,
+}: Options): MessageEndpoint {
   // We need to store the listener, because we wrap it to do some origin checking. Ideally,
   // we’d instead store an `AbortController`, and use its signal to cancel the listeners,
   // but that isn’t widely supported.
@@ -16,10 +19,10 @@ export function fromWebpage({targetOrigin = '*', context}: Options): MessageEndp
 
   return {
     postMessage(message, transfer) {
-      if(Array.isArray(message)) {
-        message.push({from: context})
+      if (Array.isArray(message)) {
+        message.push({from: context});
       } else {
-        console.error('message is not an array')
+        console.error('message is not an array');
       }
 
       window.postMessage(message, targetOrigin, transfer);
@@ -28,13 +31,13 @@ export function fromWebpage({targetOrigin = '*', context}: Options): MessageEndp
       const wrappedListener = (event: MessageEvent) => {
         if (event.source !== window) return;
 
-        const last = event.data[event.data.length - 1]
+        const last = event.data[event.data.length - 1];
 
-        if(last?.from) {
+        if (last?.from) {
           event.data.pop();
         }
 
-        if(last?.from === context || !last?.from) return;
+        if (last?.from === context || !last?.from) return;
 
         listener(event);
       };

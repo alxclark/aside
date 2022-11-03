@@ -1,8 +1,7 @@
 import React from 'react';
-import { Snapshot } from '../../types';
+
+import {Snapshot} from '../../types';
 
 export function StateTree({currentState}: {currentState: Snapshot}) {
-  return (
-    <>{JSON.stringify(currentState.nodes)}</>
-  )
+  return <>{JSON.stringify(currentState.nodes)}</>;
 }

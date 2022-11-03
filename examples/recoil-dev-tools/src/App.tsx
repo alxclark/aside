@@ -1,16 +1,23 @@
-import {DevTools} from '@companion/recoil'
-import {RecoilRoot, atom, useRecoilState, selector, useRecoilValue} from 'recoil'
+import React from 'react';
+import {DevTools} from '@companion/recoil';
+import {
+  RecoilRoot,
+  atom,
+  useRecoilState,
+  selector,
+  useRecoilValue,
+} from 'recoil';
 
 export function App() {
   return (
     <RecoilRoot>
       <RecoilApp />
     </RecoilRoot>
-  )
+  );
 }
 
 export function RecoilApp() {
-  const [count, setCount] = useRecoilState(countAtom)
+  const [count, setCount] = useRecoilState(countAtom);
   const countTen = useRecoilValue(countTimesTenAtom);
   const otherCount = useRecoilValue(otherCountAtom);
 
@@ -32,20 +39,20 @@ export function RecoilApp() {
       </p>
       <DevTools />
     </div>
-  )
+  );
 }
 
 const countAtom = atom({
   default: 0,
   key: 'count',
-})
+});
 
 const countTimesTenAtom = selector({
   key: 'count10',
-  get: ({get}) => get(countAtom) * 10
-})
+  get: ({get}) => get(countAtom) * 10,
+});
 
 const otherCountAtom = atom({
   default: 22,
   key: 'other',
-})
+});
