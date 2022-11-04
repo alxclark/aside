@@ -14,9 +14,6 @@
     "resolveJsonModule": true,
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "vite/client",
-    ]
   },
   "exclude": ["dist", "node_modules"]
 }
