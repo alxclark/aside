@@ -60,6 +60,7 @@
     "@companion/extension": "0.0.0",
     "@companion/web": "0.0.0",
     "@companion/react": "0.0.0",
-    "@companion/core": "0.0.0"
+    "@companion/core": "0.0.0",
+    "@companion/chrome-ui": "0.0.0"
   }
 }

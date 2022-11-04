@@ -5,9 +5,11 @@
   "description": "Composable browser extension",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "yarn workspace app dev",
+    "dev": "yarn dev:app & yarn dev:recoil & yarn dev:chrome-ui",
+    "dev:app": "yarn workspace app dev",
+    "dev:recoil": "yarn workspace recoil dev",
+    "dev:chrome-ui": "yarn workspace @companion/chrome-ui dev",
     "open-chrome": "yarn workspace app start:chromium",
-    "start:recoil": "yarn workspace recoil dev",
     "clean-vite": "yarn workspace recoil clean-vite && yarn workspace app clean-vite"
   },
   "repository": {
