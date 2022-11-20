@@ -3,6 +3,7 @@ import {
   Button,
   Companion,
   DevTools as CompanionDevTools,
+  Navigation,
 } from '@companion/react';
 import {useRecoilSnapshot} from 'recoil';
 
@@ -55,13 +56,13 @@ function RemoteDevTools({api}: {api: DevToolsApi}) {
   const [tab, setTab] = useState<PrimaryNavigation>('state-tree');
 
   return (
-    <>
+    <Navigation>
       <Button onPress={() => setTab('state-tree')}>State tree</Button>
       <Button onPress={() => setTab('state-diff')}>State diffs</Button>
       {tab === 'state-tree' && (
         <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
       )}
       {tab === 'state-diff' && <StateDiffs diffs={api.diffs} />}
-    </>
+    </Navigation>
   );
 }

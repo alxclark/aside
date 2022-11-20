@@ -7,12 +7,12 @@ import {createEndpoint} from '@remote-ui/rpc';
 import React, {useEffect, useMemo} from 'react';
 import type {BackgroundApiForDevTools, DevToolsApi} from '@companion/extension';
 import {fromDevTools} from '@companion/extension';
-import {Button} from '@companion/chrome-ui'
+import {Button, Navigation} from '@companion/chrome-ui';
 
 import {List, ListItem} from '../../components';
 import {setupDebug} from '../../foundation/Debug';
 
-import '@companion/chrome-ui/dist/styles.css'
+import '@companion/chrome-ui/dist/styles.css';
 
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
   callable: ['getDevToolsChannel', 'log'],
@@ -29,7 +29,7 @@ setupDebug({
 
 export function BrowserExtensionRenderer() {
   const controller = useMemo(
-    () => createController({Button, List, ListItem}),
+    () => createController({Button, List, ListItem, Navigation}),
     [],
   );
   const receiver = useMemo(() => createRemoteReceiver(), []);
