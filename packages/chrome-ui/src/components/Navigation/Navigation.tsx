@@ -1,14 +1,39 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, useState} from 'react';
 
-export interface NavigationComponents {}
-export type NavigationProps = PropsWithChildren<{}>;
+import {NavigationContext, NavigationContextType} from './context';
 
-// eslint-disable-next-line func-style
-export const Navigation: React.FunctionComponent<NavigationProps> &
-  NavigationComponents = function Navigation({children}: NavigationProps) {
-  return (
-    <nav className="bg-gray-500 w-full min-h-[26px] border-b border-gray-300">
-      {children}
-    </nav>
+export type Props = PropsWithChildren<{
+  initial?: string;
+  selected?: string;
+  navigate?: (value: string) => void;
+}>;
+
+export function Navigation({
+  children,
+  initial,
+  navigate: explicitNavigate,
+  selected: explicitSelected,
+}: Props) {
+  const [selected, setSelected] = useState<string>(
+    initial ?? explicitSelected ?? '',
   );
-};
+
+  useEffect(() => {
+    if (explicitSelected && explicitSelected !== selected) {
+      setSelected(explicitSelected);
+    }
+  }, [explicitSelected, selected]);
+
+  const navigation = useMemo<NavigationContextType>(
+    () => ({selected, navigate: explicitNavigate ?? setSelected}),
+    [explicitNavigate, selected],
+  );
+
+  return (
+    <NavigationContext.Provider value={navigation}>
+      <nav className="bg-gray-500 w-full min-h-[26px] border-b border-gray-400">
+        {children}
+      </nav>
+    </NavigationContext.Provider>
+  );
+}

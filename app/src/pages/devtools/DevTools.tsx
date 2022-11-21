@@ -7,7 +7,7 @@ import {createEndpoint} from '@remote-ui/rpc';
 import React, {useEffect, useMemo} from 'react';
 import type {BackgroundApiForDevTools, DevToolsApi} from '@companion/extension';
 import {fromDevTools} from '@companion/extension';
-import {Button, Navigation} from '@companion/chrome-ui';
+import {Button, Navigation, NavigationTab} from '@companion/chrome-ui';
 
 import {List, ListItem} from '../../components';
 import {setupDebug} from '../../foundation/Debug';
@@ -29,7 +29,7 @@ setupDebug({
 
 export function BrowserExtensionRenderer() {
   const controller = useMemo(
-    () => createController({Button, List, ListItem, Navigation}),
+    () => createController({Button, List, ListItem, Navigation, NavigationTab}),
     [],
   );
   const receiver = useMemo(() => createRemoteReceiver(), []);

@@ -1,2 +1,3 @@
 export {Button} from './Button';
-export {Navigation} from './Navigation';
+export {Navigation, NavigationTab} from './Navigation';
+export type {NavigationProps, NavigationTabProps} from './Navigation';

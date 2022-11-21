@@ -1,1 +1,1 @@
-export {DevTools} from './Devtools';
+export {DevTools} from './host';

@@ -11,6 +11,7 @@
     "@companion/web": "0.0.0"
   },
   "devDependencies": {
-    "@companion/extension": "0.0.0"
+    "@companion/extension": "0.0.0",
+    "@companion/chrome-ui": "0.0.0"
   }
 }
