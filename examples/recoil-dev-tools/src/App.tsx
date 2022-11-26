@@ -10,7 +10,7 @@ import {
 
 export function App() {
   return (
-    <RecoilRoot>
+    <RecoilRoot key="recoil-example">
       <RecoilApp />
     </RecoilRoot>
   );

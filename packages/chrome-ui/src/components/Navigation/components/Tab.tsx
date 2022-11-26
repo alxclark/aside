@@ -11,9 +11,11 @@ export interface Props {
 export function Tab({label, value}: Props) {
   const {navigate, selected} = useNavigation();
 
+  window.__companion.log({selected});
+
   const className = classNames(
     'h-[26px] text-gray-300 px-3 font-sans',
-    selected && 'bg-black',
+    selected === value && 'bg-black text-white',
   );
 
   const handleClick = useCallback(() => {

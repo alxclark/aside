@@ -137,7 +137,6 @@ export function createUnsafeEncoder(
         const release = () => {
           retainCount -= 1;
 
-          console.log('release called', {id});
           if (retainCount === 0) {
             released = true;
             idsToProxy.delete(id);

@@ -10,6 +10,8 @@ module.exports = {
         400: '#4a4c50',
         500: '#292a2d',
       },
+      black: 'black',
+      white: 'white',
     },
     fontFamily: {
       sans: ['sans-serif'],
