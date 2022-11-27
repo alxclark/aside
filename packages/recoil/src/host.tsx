@@ -4,6 +4,7 @@ import {useRecoilSnapshot} from 'recoil';
 
 import {Snapshot} from './types';
 import {RemoteDevTools} from './remote';
+import {isInternalAtom} from './utilities/recoil';
 
 export function DevTools({children}: PropsWithChildren<{}>) {
   const recoilSnapshot = useRecoilSnapshot();
@@ -19,6 +20,7 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     };
 
     for (const node of recoilSnapshot.getNodes_UNSTABLE()) {
+      if (isInternalAtom(node.key)) continue;
       snapshot.nodes[node.key] = recoilSnapshot.getLoadable(node).getValue();
     }
 
@@ -28,6 +30,7 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     };
 
     for (const node of recoilSnapshot.getNodes_UNSTABLE({isModified: true})) {
+      if (isInternalAtom(node.key)) continue;
       diff.nodes[node.key] = recoilSnapshot.getLoadable(node).getValue();
     }
 
