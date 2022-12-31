@@ -20,6 +20,7 @@ module.exports = {
           gray: '#9aa0a6',
           purple: '#9980ff',
           cyan: '#2fbbaf',
+          blue: '#5db0d7',
         },
       },
     },

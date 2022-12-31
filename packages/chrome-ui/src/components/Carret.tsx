@@ -1,9 +1,15 @@
 import React from 'react';
 
-export function Carret() {
+export function Carret({direction}: {direction: 'down' | 'right'}) {
+  let className = 'h-[8px] inline w-[7px] mr-[3px]';
+
+  if (direction === 'down') {
+    className += ' rotate-90';
+  }
+
   return (
     <svg
-      className="h-[8px] inline w-[7px] mr-[3px]"
+      className={className}
       width="50"
       height="71"
       viewBox="0 0 50 71"

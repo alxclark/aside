@@ -13,7 +13,7 @@ export interface Props {
 
 export function Log({items}: Props) {
   return (
-    <div className="px-6 py-[2px] font-menlo text-code-gray text-[11px] border-b flex flex-wrap">
+    <div className="px-6 py-[2px] font-menlo text-code-gray text-[11px] border-b">
       {items.map((item) => (
         <LogItem item={item} />
       ))}
@@ -24,63 +24,60 @@ export function Log({items}: Props) {
 export function LogItem({item}: {item: LogItem}) {
   return (
     <>
-      <Renderer value={item.value} name="hey" />
+      <Renderer value={item.value} />
     </>
   );
 }
 
-export function ObjectRenderer({
-  value,
-  name,
-}: {
-  value: {[key: string]: any};
-  name: string;
-}) {
+export function ObjectRenderer({value}: {value: {[key: string]: any}}) {
   const [collapsed, setCollapsed] = useState(true);
 
   const keys = Object.keys(value);
 
   return (
-    <button className="italic" onClick={() => setCollapsed((prev) => !prev)}>
-      <Carret />
-      <span className="text-white">{'{'}</span>
-      {keys.map((key, index) => (
-        <React.Fragment key={key}>
-          <Renderer name={key} value={value[key]} />
-          {index !== keys.length - 1 && <>, </>}
-        </React.Fragment>
-      ))}
-      <span className="text-white">{'}'}</span>
-    </button>
-  );
-}
-
-export function StringRenderer({value, name}: {value: string; name: string}) {
-  return (
     <>
-      <span className="text-console-object-gray">{name}</span>:{' '}
-      <span className="text-console-object-cyan">&apos;{value}&apos;</span>
+      <button className="italic" onClick={() => setCollapsed((prev) => !prev)}>
+        <Carret direction={collapsed ? 'right' : 'down'} />
+        <span className="text-white">{'{'}</span>
+        {keys.map((key, index) => (
+          <React.Fragment key={key}>
+            <span className="text-console-object-gray">{key}</span>:{' '}
+            <Renderer value={value[key]} />
+            {index !== keys.length - 1 && <>, </>}
+          </React.Fragment>
+        ))}
+        <span className="text-white">{'}'}</span>
+      </button>
+      {!collapsed && (
+        <div className="flex flex-col items-start pl-[23px]">
+          {keys.map((key) => (
+            <div key={key}>
+              <span className="text-console-object-blue font-bold">{key}</span>:{' '}
+              <Renderer value={value[key]} />
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }
 
-export function NumberRenderer({value, name}: {value: number; name: string}) {
-  return (
-    <>
-      <span className="text-console-object-gray">{name}</span>:{' '}
-      <span className="text-console-object-purple">{value}</span>
-    </>
-  );
+export function StringRenderer({value}: {value: string}) {
+  return <span className="text-console-object-cyan">&apos;{value}&apos;</span>;
 }
 
-export function Renderer({value, name}: {value: any; name: string}) {
+export function NumberRenderer({value}: {value: number}) {
+  return <span className="text-console-object-purple">{value}</span>;
+}
+
+export function Renderer({value}: {value: any}) {
   switch (typeof value) {
     case 'object':
-      return <ObjectRenderer value={value} name={name} />;
+      return <ObjectRenderer value={value} />;
     case 'string':
-      return <StringRenderer value={value} name={name} />;
+      return <StringRenderer value={value} />;
     case 'number':
-      return <NumberRenderer value={value} name={name} />;
+      return <NumberRenderer value={value} />;
     default:
       return <>?</>;
   }
