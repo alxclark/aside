@@ -12,9 +12,20 @@ module.exports = {
       },
       black: 'black',
       white: 'white',
+      code: {
+        gray: '#bec6cf',
+      },
+      console: {
+        object: {
+          gray: '#9aa0a6',
+          purple: '#9980ff',
+          cyan: '#2fbbaf',
+        },
+      },
     },
     fontFamily: {
       sans: ['sans-serif'],
+      menlo: ['Menlo'],
     },
   },
   plugins: [],
