@@ -1,9 +1,9 @@
-import React, {PropsWithChildren, useEffect, useState} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, useState} from 'react';
 import {WebpageApi, fromWebpage} from '@companion/web';
 import type {ContentScriptApiForWebpage} from '@companion/extension';
 import {createEndpoint, retain} from '@remote-ui/rpc';
 import {createRemoteRoot, RemoteRoot} from '@remote-ui/core';
-import {render} from '@remote-ui/react';
+import {createReconciler, render} from '@remote-ui/react';
 
 import {AllComponents} from './components';
 
@@ -61,9 +61,11 @@ export function RemoteRenderer({
   children,
   root,
 }: PropsWithChildren<{root: RemoteRoot}>) {
+  const reconciler = useMemo(() => createReconciler({primary: false}), []);
+
   useEffect(() => {
-    render(<>{children}</>, root, root.mount);
-  }, [children, root]);
+    render(<>{children}</>, root, root.mount, reconciler);
+  }, [children, root, reconciler]);
 
   return null;
 }
