@@ -7,26 +7,29 @@ import {StringRenderer} from './StringRenderer';
 
 export function Renderer({
   value,
-  collapsedParent,
+  collapsed,
   nested,
+  path = [],
 }: {
   value: any;
-  collapsedParent?: boolean;
+  collapsed?: boolean;
   nested?: boolean;
+  path: string[];
 }) {
   switch (typeof value) {
     case 'object':
       return (
         <ObjectRenderer
           value={value}
-          collapsedParent={collapsedParent}
+          collapsed={collapsed}
           nested={nested}
+          path={path}
         />
       );
     case 'string':
-      return <StringRenderer value={value} />;
+      return <StringRenderer value={value} path={path} collapsed={collapsed} />;
     case 'number':
-      return <NumberRenderer value={value} />;
+      return <NumberRenderer value={value} path={path} collapsed={collapsed} />;
     default:
       return <>?</>;
   }
