@@ -30,6 +30,7 @@
     "react-reconciler": "0.26.2"
   },
   "devDependencies": {
+    "@types/react-dom": "^18.0.10",
     "@wide-web/eslint-plugin": "^0.1.0",
     "eslint": "^8.3.0",
     "prettier": "^2.5.1"
