@@ -8,7 +8,11 @@ export function StateTree({currentState}: {currentState?: Snapshot}) {
   return (
     <Log
       items={[
-        {value: currentState.nodes, onPress: () => console.log('pressed')},
+        {
+          id: 'currentState',
+          value: currentState.nodes,
+          onPress: () => console.log('pressed'),
+        },
       ]}
     />
   );

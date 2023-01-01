@@ -19,7 +19,8 @@ export function App() {
 export function RecoilApp() {
   const [count, setCount] = useRecoilState(countAtom);
   const countTen = useRecoilValue(countTimesTenAtom);
-  const otherCount = useRecoilValue(otherCountAtom);
+  const string = useRecoilValue(stringAtom);
+  const object = useRecoilValue(objectAtom);
 
   return (
     <div className="App">
@@ -29,7 +30,8 @@ export function RecoilApp() {
           count is {count}
         </button>
         {countTen}
-        {otherCount}
+        {string}
+        {object.something.nested}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -52,7 +54,16 @@ const countTimesTenAtom = selector({
   get: ({get}) => get(countAtom) * 10,
 });
 
-const otherCountAtom = atom({
-  default: 22,
+const stringAtom = atom({
+  default: 'hello',
   key: 'other',
+});
+
+const objectAtom = atom({
+  default: {
+    something: {
+      nested: 3,
+    },
+  },
+  key: 'object',
 });

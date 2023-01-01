@@ -19,7 +19,7 @@ module.exports = {
         object: {
           gray: '#9aa0a6',
           purple: '#9980ff',
-          cyan: '#2fbbaf',
+          cyan: '#36d4c7',
           blue: '#5db0d7',
         },
       },
