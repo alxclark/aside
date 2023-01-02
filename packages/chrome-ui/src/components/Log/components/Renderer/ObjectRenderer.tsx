@@ -17,7 +17,7 @@ export function ObjectRenderer({
   nested?: boolean;
   path: string[];
 }) {
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(nested);
   const lastKey = path[path.length - 1];
 
   if (value === null || value === undefined) {
