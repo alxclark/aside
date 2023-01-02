@@ -14,7 +14,7 @@ export function Renderer({
   value: any;
   collapsed?: boolean;
   nested?: boolean;
-  path: string[];
+  path?: string[];
 }) {
   switch (typeof value) {
     case 'string':
