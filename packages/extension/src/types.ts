@@ -31,4 +31,5 @@ export interface BackgroundApiForDevTools extends RemoteApi {
 
 export interface DevToolsApi extends RemoteApi {
   getDevToolsChannel(): RemoteChannel;
+  renewReceiver(): void;
 }

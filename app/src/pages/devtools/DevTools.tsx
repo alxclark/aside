@@ -4,7 +4,7 @@ import {
   createRemoteReceiver,
 } from '@remote-ui/react/host';
 import {createEndpoint} from '@remote-ui/rpc';
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import type {BackgroundApiForDevTools, DevToolsApi} from '@companion/extension';
 import {fromDevTools} from '@companion/extension';
 import {Button, Navigation, NavigationTab, Log} from '@companion/chrome-ui';
@@ -15,7 +15,7 @@ import {setupDebug} from '../../foundation/Debug';
 import '@companion/chrome-ui/dist/styles.css';
 
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
-  callable: ['getDevToolsChannel', 'log'],
+  callable: ['getDevToolsChannel', 'log', 'renewReceiver'],
 });
 
 setupDebug({
@@ -40,12 +40,15 @@ export function BrowserExtensionRenderer() {
       }),
     [],
   );
-  const receiver = useMemo(() => createRemoteReceiver(), []);
+  const [receiver, setReceiver] = useState(createRemoteReceiver());
 
   useEffect(() => {
     const devToolsApi: DevToolsApi = {
       getDevToolsChannel() {
         return receiver.receive;
+      },
+      renewReceiver() {
+        setReceiver(createRemoteReceiver());
       },
     };
 

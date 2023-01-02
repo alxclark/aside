@@ -66,7 +66,7 @@ export function ObjectRenderer({
       {!collapsed && (
         <div
           className={classNames(
-            'flex flex-col items-start pl-[23px]',
+            'flex flex-col items-start pl-[12px]',
             nested && 'pl-[10px]',
           )}
         >

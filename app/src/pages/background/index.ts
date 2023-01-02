@@ -38,7 +38,7 @@ browser.runtime.onConnect.addListener((port) => {
       switch (port.name) {
         case 'dev-tools': {
           const devTools = createEndpoint<DevToolsApi>(fromPort(port), {
-            callable: ['getDevToolsChannel'],
+            callable: ['getDevToolsChannel', 'renewReceiver'],
           });
 
           const backgroundApiForDevTools: BackgroundApiForDevTools = {
@@ -89,6 +89,13 @@ browser.runtime.onConnect.addListener((port) => {
 
           port.onDisconnect.addListener(() => {
             contentScriptCache.delete(tabId);
+
+            const devTools = devtoolsCache.get(tabId);
+
+            if (!devTools)
+              throw new Error('Dev tools not available for this tab');
+
+            devTools.call.renewReceiver();
           });
 
           if (devtoolsCache.has(tabId)) {
