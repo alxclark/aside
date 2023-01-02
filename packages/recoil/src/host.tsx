@@ -21,7 +21,20 @@ export function DevTools({children}: PropsWithChildren<{}>) {
 
     for (const node of recoilSnapshot.getNodes_UNSTABLE()) {
       if (isInternalAtom(node.key)) continue;
-      snapshot.nodes[node.key] = recoilSnapshot.getLoadable(node).getValue();
+
+      const parts = node.key.split('__');
+      const hasAtomFamilyPrefix = parts.length > 1;
+      if (hasAtomFamilyPrefix) {
+        const [prefix, ...rest] = parts;
+        const itemKey = rest.join('');
+
+        snapshot.nodes[prefix] ||= {};
+        snapshot.nodes[prefix][itemKey] = recoilSnapshot
+          .getLoadable(node)
+          .getValue();
+      } else {
+        snapshot.nodes[node.key] = recoilSnapshot.getLoadable(node).getValue();
+      }
     }
 
     const diff: Snapshot = {

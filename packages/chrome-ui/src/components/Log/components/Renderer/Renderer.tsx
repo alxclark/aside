@@ -17,6 +17,10 @@ export function Renderer({
   path: string[];
 }) {
   switch (typeof value) {
+    case 'string':
+      return <StringRenderer value={value} path={path} collapsed={collapsed} />;
+    case 'number':
+      return <NumberRenderer value={value} path={path} collapsed={collapsed} />;
     case 'object':
       return (
         <ObjectRenderer
@@ -26,10 +30,6 @@ export function Renderer({
           path={path}
         />
       );
-    case 'string':
-      return <StringRenderer value={value} path={path} collapsed={collapsed} />;
-    case 'number':
-      return <NumberRenderer value={value} path={path} collapsed={collapsed} />;
     default:
       return <>?</>;
   }
