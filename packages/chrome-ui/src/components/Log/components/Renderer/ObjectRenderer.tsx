@@ -12,15 +12,35 @@ export function ObjectRenderer({
   nested,
   path,
 }: {
-  value: {[key: string]: any};
+  value: {[key: string]: any} | null;
   collapsed?: boolean;
   nested?: boolean;
   path: string[];
 }) {
   const [collapsed, setCollapsed] = useState(true);
+  const lastKey = path[path.length - 1];
+
+  if (value === null || value === undefined) {
+    return (
+      <>
+        <span
+          className={classNames(
+            collapsedParent
+              ? 'text-console-object-gray'
+              : 'text-console-object-blue font-bold',
+          )}
+        >
+          {lastKey}
+        </span>
+        {': '}
+        <span className="text-console-object-gray">
+          {value === null ? 'null' : 'undefined'}
+        </span>
+      </>
+    );
+  }
 
   const keys = Object.keys(value).sort();
-  const lastKey = path[path.length - 1];
 
   if (collapsedParent) {
     return (

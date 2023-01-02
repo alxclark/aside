@@ -6,6 +6,7 @@ import {
   useRecoilState,
   selector,
   useRecoilValue,
+  atomFamily,
 } from 'recoil';
 
 export function App() {
@@ -21,6 +22,8 @@ export function RecoilApp() {
   const countTen = useRecoilValue(countTimesTenAtom);
   const string = useRecoilValue(stringAtom);
   const object = useRecoilValue(objectAtom);
+  const family = useRecoilValue(familyAtom('1'));
+  const family2 = useRecoilValue(familyAtom('2'));
 
   return (
     <div className="App">
@@ -32,6 +35,8 @@ export function RecoilApp() {
         {countTen}
         {string}
         {object.something.nested}
+        {family?.id}
+        {family2?.id}
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
@@ -66,4 +71,9 @@ const objectAtom = atom({
     },
   },
   key: 'object',
+});
+
+const familyAtom = atomFamily<{id: number} | null, string>({
+  default: null,
+  key: 'family',
 });
