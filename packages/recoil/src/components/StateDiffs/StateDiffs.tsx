@@ -7,7 +7,7 @@ export function StateDiffs({diffs}: {diffs: Snapshot[]}) {
   return (
     <List>
       {diffs.map((diff) => (
-        <ListItem>
+        <ListItem key={diff.createdAt.toISOString()}>
           {diff.createdAt.toLocaleTimeString()}: {JSON.stringify(diff.nodes)}
         </ListItem>
       ))}

@@ -26,10 +26,10 @@ export function PrimaryPanel({api}: {api: DevToolsApi}) {
           value={PrimaryNavigationTab.StateTree}
           label="State tree"
         />
-        <NavigationTab
+        {/* <NavigationTab
           value={PrimaryNavigationTab.StateDiffs}
           label="State diffs"
-        />
+        /> */}
       </Navigation>
       {primaryNavigation.tab === PrimaryNavigationTab.StateTree && (
         <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
