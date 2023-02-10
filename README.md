@@ -1,4 +1,4 @@
-# companion
+# aside
 
 Modular browser extension controlled by rendering applications.
 
@@ -7,17 +7,17 @@ Modular browser extension controlled by rendering applications.
 1. Install dependencies.
 
 ```sh
-pnpm install
+yarn
 ```
 
 2. Start the development server of the browser extension.
 
 ```sh
-pnpm dev
+yarn dev
 ```
 
 3. Start a Chrome instance with the extension installed in development mode.
 
 ```sh
-pnpm open-chrome
+yarn open-chrome
 ```
