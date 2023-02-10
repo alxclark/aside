@@ -1,6 +1,6 @@
 # aside
 
-Modular browser extension controlled by rendering applications.
+Modular browser extension powered by [remote-ui](https://github.com/Shopify/remote-ui)
 
 ## Getting started
 
