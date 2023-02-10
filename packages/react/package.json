@@ -1,5 +1,5 @@
 {
-  "name": "@companion/react",
+  "name": "@aside/react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,10 +8,10 @@
   "types": "src/index.tsx",
   "scripts": {},
   "dependencies": {
-    "@companion/web": "0.0.0"
+    "@aside/web": "0.0.0"
   },
   "devDependencies": {
-    "@companion/extension": "0.0.0",
-    "@companion/chrome-ui": "0.0.0"
+    "@aside/extension": "0.0.0",
+    "@aside/chrome-ui": "0.0.0"
   }
 }

@@ -1,11 +1,11 @@
-import {fromPort} from '@companion/extension';
+import {fromPort} from '@aside/extension';
 import type {
   BackgroundApiForContentScript,
   BackgroundApiForDevTools,
   ContentScriptApiForBackground,
   DevToolsApi,
-} from '@companion/extension';
-import {createUnsafeEncoder} from '@companion/core';
+} from '@aside/extension';
+import {createUnsafeEncoder} from '@aside/core';
 import type {Endpoint} from '@remote-ui/rpc';
 import {createEndpoint} from '@remote-ui/rpc';
 

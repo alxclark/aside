@@ -1,13 +1,13 @@
 import React, {PropsWithChildren, useEffect, useMemo, useState} from 'react';
-import {WebpageApi, fromWebpage} from '@companion/web';
-import type {ContentScriptApiForWebpage} from '@companion/extension';
+import {WebpageApi, fromWebpage} from '@aside/web';
+import type {ContentScriptApiForWebpage} from '@aside/extension';
 import {createEndpoint, retain} from '@remote-ui/rpc';
 import {createRemoteRoot, RemoteRoot} from '@remote-ui/core';
 import {createReconciler, render} from '@remote-ui/react';
 
 import {AllComponents} from './components';
 
-window.__companion = {log: () => {}};
+window.__aside = {log: () => {}};
 
 const contentScript = createEndpoint<ContentScriptApiForWebpage>(
   fromWebpage({context: 'webpage'}),
@@ -16,7 +16,7 @@ const contentScript = createEndpoint<ContentScriptApiForWebpage>(
   },
 );
 
-export function Companion({children}: PropsWithChildren<{}>) {
+export function Aside({children}: PropsWithChildren<{}>) {
   return <>{children}</>;
 }
 

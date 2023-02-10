@@ -1,5 +1,5 @@
 {
-  "name": "companion",
+  "name": "aside",
   "version": "0.0.0",
   "private": true,
   "description": "Composable browser extension",
@@ -8,20 +8,20 @@
     "dev": "yarn dev:app & yarn dev:recoil & yarn dev:chrome-ui",
     "dev:app": "yarn workspace app dev",
     "dev:recoil": "yarn workspace recoil dev",
-    "dev:chrome-ui": "yarn workspace @companion/chrome-ui dev",
+    "dev:chrome-ui": "yarn workspace @aside/chrome-ui dev",
     "open-chrome": "yarn workspace app start:chromium",
     "clean-vite": "yarn workspace recoil clean-vite && yarn workspace app clean-vite"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alxclark/companion.git"
+    "url": "git+https://github.com/alxclark/aside.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/alxclark/companion/issues"
+    "url": "https://github.com/alxclark/aside/issues"
   },
-  "homepage": "https://github.com/alxclark/companion#readme",
+  "homepage": "https://github.com/alxclark/aside#readme",
   "dependencies": {
     "@remote-ui/react": "^5.0.0",
     "@remote-ui/rpc": "^1.4.1",

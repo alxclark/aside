@@ -1,4 +1,4 @@
-import {Log} from '@companion/react';
+import {Log} from '@aside/react';
 import React from 'react';
 
 import {Snapshot} from '../../types';

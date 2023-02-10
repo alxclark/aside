@@ -6,7 +6,7 @@ import {PrimaryPanel} from './components';
 
 export function RemoteDevTools({api}: {api: DevToolsApi}) {
   return (
-    <RecoilRoot key="@companion/recoil">
+    <RecoilRoot key="@aside/recoil">
       <PrimaryPanel api={api} />
     </RecoilRoot>
   );

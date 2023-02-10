@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navigation, NavigationTab} from '@companion/react';
+import {Navigation, NavigationTab} from '@aside/react';
 import {useRecoilState} from 'recoil';
 
 import {DevToolsApi} from '../../types';

@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "typeRoots": ["./node_modules/@types", "./config/typescript"],
     "paths": {
-      "@companion/*": ["packages/*/src"],
+      "@aside/*": ["packages/*/src"],
     }
   },
 }

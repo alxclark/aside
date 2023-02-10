@@ -2,7 +2,7 @@ declare const __DEV__: boolean;
 
 declare global {
   interface Window {
-    __companion: {
+    __aside: {
       log(...message: any[]): void;
     };
   }

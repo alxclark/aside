@@ -1,4 +1,4 @@
-export const KEY_PREFIX = '__companion';
+export const KEY_PREFIX = '__aside';
 
 export function createKey(key: string) {
   return `${KEY_PREFIX}__${key}`;

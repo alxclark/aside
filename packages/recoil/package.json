@@ -1,5 +1,5 @@
 {
-  "name": "@companion/recoil",
+  "name": "@aside/recoil",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,11 +8,11 @@
   "types": "src/index.tsx",
   "scripts": {},
   "dependencies": {
-    "@companion/web": "0.0.0",
-    "@companion/react": "0.0.0",
+    "@aside/web": "0.0.0",
+    "@aside/react": "0.0.0",
     "recoil": "latest"
   },
   "devDependencies": {
-    "@companion/extension": "0.0.0"
+    "@aside/extension": "0.0.0"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@companion/extension",
+  "name": "@aside/extension",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,7 @@
   "types": "src/index.ts",
   "scripts": {},
   "dependencies": {
-    "@companion/web": "0.0.0"
+    "@aside/web": "0.0.0"
   },
   "devDependencies": {}
 }

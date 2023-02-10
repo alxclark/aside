@@ -3,13 +3,13 @@ import type {
   BackgroundApiForContentScript,
   ContentScriptApiForBackground,
   ContentScriptApiForWebpage,
-} from '@companion/extension';
-import {fromContentScript} from '@companion/extension';
-import type {WebpageApi} from '@companion/web';
-import {createUnsafeEncoder} from '@companion/core';
+} from '@aside/extension';
+import {fromContentScript} from '@aside/extension';
+import type {WebpageApi} from '@aside/web';
+import {createUnsafeEncoder} from '@aside/core';
 
 (() => {
-  window.__companion = {log: () => {}};
+  window.__aside = {log: () => {}};
 
   const background = createEndpoint<BackgroundApiForContentScript>(
     fromContentScript({to: 'background'}),

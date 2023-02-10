@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useEffect, useState} from 'react';
-import {Companion, DevTools as CompanionDevTools} from '@companion/react';
+import {Aside, DevTools as AsideDevTools} from '@aside/react';
 import {useRecoilSnapshot} from 'recoil';
 
 import {Snapshot} from './types';
@@ -52,11 +52,11 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   }, [recoilSnapshot]);
 
   return (
-    <Companion>
-      <CompanionDevTools>
+    <Aside>
+      <AsideDevTools>
         <RemoteDevTools api={{snapshots, diffs}} />
         {children}
-      </CompanionDevTools>
-    </Companion>
+      </AsideDevTools>
+    </Aside>
   );
 }

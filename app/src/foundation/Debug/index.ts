@@ -3,19 +3,19 @@ export function setupDebug({
 }: {
   onMessage: (event: CustomEvent) => void;
 }) {
-  window.__companion = {log};
+  window.__aside = {log};
 
   const listener = (event: any) => {
     onMessage(event);
   };
 
-  window.addEventListener('companion-log', listener);
+  window.addEventListener('aside-log', listener);
 
-  return () => window.removeEventListener('companion-log', listener);
+  return () => window.removeEventListener('aside-log', listener);
 }
 
 export function log(...message: any[]) {
-  const event = new CustomEvent('companion-log', {
+  const event = new CustomEvent('aside-log', {
     detail: {
       message,
     },

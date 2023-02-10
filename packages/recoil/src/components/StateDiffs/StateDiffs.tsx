@@ -1,4 +1,4 @@
-import {ListItem, List} from '@companion/react';
+import {ListItem, List} from '@aside/react';
 import React from 'react';
 
 import {Snapshot} from '../../types';

@@ -4,11 +4,11 @@
 
 ### Simple use case
 
-Consumers can pass in any components from `@companion/react` to the `Companion` component, which will render its children using the remote renderer.
+Consumers can pass in any components from `@aside/react` to the `Aside` component, which will render its children using the remote renderer.
 
 ```tsx
 import React, {useState} from 'react';
-import {Companion, DevTools, Button} from '@companion/react';
+import {Aside, DevTools, Button} from '@aside/react';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -20,11 +20,11 @@ function App() {
   return (
     <>
       <p>Count: {count}</p>
-      <Companion>
+      <Aside>
         <DevTools>
           <Button onPress={increment}>Increment</Button>
         </DevTools>
-      </Companion>
+      </Aside>
     </>
   )
 }
@@ -36,7 +36,7 @@ In some cases, you might want to run a component lifecycle in the background pag
 
 ```tsx
 import React, {useState, useEffect} from 'react';
-import {Companion, Button, useSharedState} from '@companion/react';
+import {Aside, Button, useSharedState} from '@aside/react';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -48,14 +48,14 @@ function App() {
   return (
     <>
       <p>Count: {count}</p>
-      <Companion>
+      <Aside>
         <DevTools>
           <Button onPress={increment}>Increment</Button>
         </DevTools>
         <Background>
           <StateObserver state={{count}} />
         </Background>
-      </Companion>
+      </Aside>
     </>
   )
 }
@@ -87,12 +87,12 @@ function StateLogs() {
 
 ### Devtools example
 
-If you need the remote to have access to context providers or internal state from your application, you can wrap over the companion components to read from your data source and send the subset of data your remote needs through props.
+If you need the remote to have access to context providers or internal state from your application, you can wrap over the Aside components to read from your data source and send the subset of data your remote needs through props.
 
 ```tsx
 import React, {useState} from 'react';
-import {Companion, DevTools, Button} from '@companion/react';
-import {RecoilDevTools} from '@companion/recoil';
+import {Aside, DevTools, Button} from '@aside/react';
+import {RecoilDevTools} from '@aside/recoil';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -109,9 +109,9 @@ function App() {
   )
 };
 
-// @companion/recoil
+// @aside/recoil
 import React, {useState} from 'react';
-import {Companion, DevTools, List, ListItem} from '@companion/react';
+import {Aside, DevTools, List, ListItem} from '@aside/react';
 import {useRecoilTransactionObserver_UNSTABLE} from 'recoil';
 
 export function RecoilDevTools({children}) {
@@ -122,7 +122,7 @@ export function RecoilDevTools({children}) {
   });
 
   return (
-    <Companion>
+    <Aside>
       <DevTools>
         <List>
           {snapshots.map(snapshot => (
@@ -133,7 +133,7 @@ export function RecoilDevTools({children}) {
           {children}
         </List>
       </DevTools>
-    </Companion>
+    </Aside>
   )
 }
 ```
@@ -142,8 +142,8 @@ For library authors, we recommend to allow your users to extend your own UI. The
 
 ```tsx
 import React, {useState} from 'react';
-import {Panel, Button} from '@companion/react';
-import {RecoilDevTools} from '@companion/recoil';
+import {Panel, Button} from '@aside/react';
+import {RecoilDevTools} from '@aside/recoil';
 
 function App() {
   const [count, setCount] = useState(0);

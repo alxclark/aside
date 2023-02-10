@@ -1,5 +1,5 @@
 import {createRemoteReactComponent} from '@remote-ui/react';
-import {NavigationProps, NavigationTabProps} from '@companion/chrome-ui';
+import {NavigationProps, NavigationTabProps} from '@aside/chrome-ui';
 
 export const Navigation = createRemoteReactComponent<
   'Navigation',

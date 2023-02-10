@@ -10,8 +10,8 @@
     "clean-vite": "rm -rf ./node_modules/.vite"
   },
   "dependencies": {
-    "@companion/react": "0.0.0",
-    "@companion/recoil": "0.0.0",
+    "@aside/react": "0.0.0",
+    "@aside/recoil": "0.0.0",
     "recoil": "latest"
   },
   "devDependencies": {

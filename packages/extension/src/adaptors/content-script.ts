@@ -1,4 +1,4 @@
-import {fromWebpage} from '@companion/web';
+import {fromWebpage} from '@aside/web';
 import {MessageEndpoint} from '@remote-ui/rpc';
 
 import {fromPort} from './port';

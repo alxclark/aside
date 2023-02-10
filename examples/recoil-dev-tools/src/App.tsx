@@ -1,5 +1,5 @@
 import React from 'react';
-import {DevTools} from '@companion/recoil';
+import {DevTools} from '@aside/recoil';
 import {
   RecoilRoot,
   atom,
