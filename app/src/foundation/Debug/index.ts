@@ -3,7 +3,7 @@ export function setupDebug({
 }: {
   onMessage: (event: CustomEvent) => void;
 }) {
-  window.__aside = {log};
+  console.log = log;
 
   const listener = (event: any) => {
     onMessage(event);

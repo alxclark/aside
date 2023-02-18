@@ -9,8 +9,6 @@ import type {WebpageApi} from '@aside/web';
 import {createUnsafeEncoder} from '@aside/core';
 
 (() => {
-  window.__aside = {log: () => {}};
-
   const background = createEndpoint<BackgroundApiForContentScript>(
     fromContentScript({to: 'background'}),
     {

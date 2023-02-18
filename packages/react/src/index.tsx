@@ -7,8 +7,6 @@ import {createReconciler, render} from '@remote-ui/react';
 
 import {AllComponents} from './components';
 
-window.__aside = {log: () => {}};
-
 const contentScript = createEndpoint<ContentScriptApiForWebpage>(
   fromWebpage({context: 'webpage'}),
   {

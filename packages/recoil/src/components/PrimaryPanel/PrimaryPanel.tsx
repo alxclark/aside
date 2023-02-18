@@ -22,13 +22,10 @@ export function PrimaryPanel({api}: {api: DevToolsApi}) {
           setPrimaryNavigation({tab: value as PrimaryNavigationTab});
         }}
       >
-        <NavigationTab
-          value={PrimaryNavigationTab.StateTree}
-          label="State tree"
-        />
+        <NavigationTab value={PrimaryNavigationTab.StateTree} label="State" />
         {/* <NavigationTab
           value={PrimaryNavigationTab.StateDiffs}
-          label="State diffs"
+          label="Timeline"
         /> */}
       </Navigation>
       {primaryNavigation.tab === PrimaryNavigationTab.StateTree && (
