@@ -54,8 +54,6 @@ export function ObjectRenderer({
 
   const showCollapsed = !nested || collapsed;
 
-  console.log('hey');
-
   return (
     <>
       <button
@@ -72,7 +70,7 @@ export function ObjectRenderer({
           </>
         )}
         {showCollapsed && (
-          <span className={classNames(nested && 'italic')}>
+          <span className={classNames(!nested && 'italic')}>
             <span className="text-white">{'{'}</span>
             {keys.map((key, index) => (
               <React.Fragment key={key}>
