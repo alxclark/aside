@@ -7,7 +7,15 @@ import {createEndpoint} from '@remote-ui/rpc';
 import React, {useEffect, useMemo, useState} from 'react';
 import type {BackgroundApiForDevTools, DevToolsApi} from '@aside/extension';
 import {fromDevTools} from '@aside/extension';
-import {Button, Navigation, NavigationTab, Log} from '@aside/chrome-ui';
+import {
+  Button,
+  Navigation,
+  NavigationTab,
+  Log,
+  Table,
+  TableRow,
+  TableCell,
+} from '@aside/chrome-ui';
 
 import {List, ListItem} from '../../components';
 import {setupDebug} from '../../foundation/Debug';
@@ -37,6 +45,9 @@ export function BrowserExtensionRenderer() {
         Navigation,
         NavigationTab,
         Log,
+        Table,
+        TableRow,
+        TableCell,
       }),
     [],
   );

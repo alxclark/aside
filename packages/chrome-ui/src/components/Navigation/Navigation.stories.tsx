@@ -27,6 +27,5 @@ const Children = () => {
 export const Default = Template.bind({}) as any;
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
-  selected: 'state',
   children: <Children />,
 };

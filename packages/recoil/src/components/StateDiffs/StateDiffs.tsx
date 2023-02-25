@@ -1,16 +1,23 @@
-import {ListItem, List} from '@aside/react';
+import {Table, TableRow, TableCell} from '@aside/react';
 import React from 'react';
 
 import {Snapshot} from '../../types';
 
 export function StateDiffs({diffs}: {diffs: Snapshot[]}) {
+  const columns = [{title: 'Name'}];
+
+  // {JSON.stringify(diff.nodes)}
+
   return (
-    <List>
+    <Table columns={columns}>
       {diffs.map((diff) => (
-        <ListItem key={diff.createdAt.toISOString()}>
-          {diff.createdAt.toLocaleTimeString()}: {JSON.stringify(diff.nodes)}
-        </ListItem>
+        <TableRow
+          key={diff.createdAt.toISOString()}
+          id={diff.createdAt.toISOString()}
+        >
+          <TableCell>{diff.createdAt.toLocaleTimeString()}</TableCell>
+        </TableRow>
       ))}
-    </List>
+    </Table>
   );
 }

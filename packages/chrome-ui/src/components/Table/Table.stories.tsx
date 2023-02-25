@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import React from 'react';
+import React, {useState} from 'react';
 
 import {TableRow} from './components';
 import {TableCell} from './components/TableCell';
@@ -59,3 +59,21 @@ Default.args = {
   ],
   children: <Children />,
 } as Props;
+
+const TimelineTemplate = () => <TimelineExample />;
+
+export const Timeline = TimelineTemplate.bind({}) as any;
+
+function TimelineExample() {
+  const [selected, setSelected] = useState();
+
+  return (
+    <>
+      <Table columns={[{title: 'Name'}]}>
+        <TableRow id="1">
+          <TableCell>todo:0, todos</TableCell>
+        </TableRow>
+      </Table>
+    </>
+  );
+}
