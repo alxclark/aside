@@ -11,7 +11,7 @@
     "dev:chrome-ui": "yarn workspace @aside/chrome-ui dev",
     "open-chrome": "yarn workspace app start:chromium",
     "clean-vite": "yarn workspace recoil clean-vite && yarn workspace app clean-vite",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "NODE_OPTIONS='--openssl-legacy-provider' start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "repository": {
