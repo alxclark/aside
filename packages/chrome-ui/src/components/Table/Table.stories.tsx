@@ -1,9 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React, {useState} from 'react';
 
-import {TableRow} from './components';
-import {TableCell} from './components/TableCell';
+import {Flex, Log, View} from '..';
+
+import '../../../../../.storybook/styles.css';
+
 import {Table, Props} from './Table';
+import {TableRow, TableCell} from './components';
 
 export default {
   title: 'ChromeUI/Table',
@@ -68,12 +71,25 @@ function TimelineExample() {
   const [selected, setSelected] = useState();
 
   return (
-    <>
-      <Table columns={[{title: 'Name'}]}>
-        <TableRow id="1">
-          <TableCell>todo:0, todos</TableCell>
-        </TableRow>
-      </Table>
-    </>
+    <Flex fullHeight>
+      <View width={150}>
+        <Table columns={[{title: 'Name', width: 30}]} border={false}>
+          <TableRow id="3">
+            <TableCell>todo:2</TableCell>
+          </TableRow>
+          <TableRow id="2">
+            <TableCell>todo:2, todos</TableCell>
+          </TableRow>
+          <TableRow id="1">
+            <TableCell>todo:1, todos</TableCell>
+          </TableRow>
+        </Table>
+      </View>
+      <View flexGrow border="left">
+        <Log
+          items={[{id: 'first', value: {something: {else: 'hey'}, else: 5}}]}
+        />
+      </View>
+    </Flex>
   );
 }

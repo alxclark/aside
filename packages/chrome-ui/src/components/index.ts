@@ -9,3 +9,7 @@ export {TableRow} from './Table';
 export type {TableRowProps} from './Table';
 export {TableCell} from './Table';
 export type {TableCellProps} from './Table';
+export {Flex} from './Flex';
+export type {FlexProps} from './Flex';
+export {View} from './View';
+export type {ViewProps} from './View';
