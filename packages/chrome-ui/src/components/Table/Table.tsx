@@ -39,10 +39,13 @@ export function Table({columns, children, onSelect, border = true}: Props) {
   const tableContext: TableContext = useMemo(
     () => ({
       selectedId,
-      setSelectedId,
+      setSelectedId: (id: string) => {
+        setSelectedId(id);
+        onSelect?.(id);
+      },
       border,
     }),
-    [selectedId, border],
+    [selectedId, border, onSelect],
   );
 
   return (

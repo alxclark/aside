@@ -15,6 +15,8 @@ import {
   Table,
   TableRow,
   TableCell,
+  View,
+  Flex,
 } from '@aside/chrome-ui';
 
 import {List, ListItem} from '../../components';
@@ -48,6 +50,8 @@ export function BrowserExtensionRenderer() {
         Table,
         TableRow,
         TableCell,
+        View,
+        Flex,
       }),
     [],
   );
