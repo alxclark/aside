@@ -4,17 +4,14 @@ import React, {useState} from 'react';
 import {Snapshot} from '../../types';
 
 export function StateDiffs({diffs}: {diffs: Snapshot[]}) {
-  // {JSON.stringify(diff.nodes)}
-  const [selectedDiff, setSelectedDiff] = useState<number>(0);
-
-  console.log(diffs[selectedDiff].nodes);
-  console.log({diffs, selectedDiff});
+  const [selectedDiff, setSelectedDiff] = useState<number>(diffs.length - 1);
 
   return (
     <Flex fullHeight>
       <View width={150}>
         <Table
           onSelect={(index) => setSelectedDiff(parseInt(index, 10))}
+          selected={selectedDiff.toString()}
           columns={[{title: 'Name', width: 30}]}
           border={false}
           scrollable

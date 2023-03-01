@@ -6,6 +6,7 @@ import {TableContext} from './context';
 export type Props = PropsWithChildren<{
   columns: Column[];
   onSelect?(rowId: string): void;
+  selected?: string;
   border?: boolean;
   scrollable?: boolean;
   maxHeight?: string;
@@ -29,8 +30,11 @@ export function Table({
   border = true,
   scrollable,
   maxHeight,
+  selected,
 }: Props) {
-  const [selectedId, setSelectedId] = useState<string | undefined>();
+  const [selectedId, setSelectedId] = useState<string | undefined>(selected);
+
+  console.log({selectedId});
 
   const headings = columns.map(({title, width}) => (
     <th
