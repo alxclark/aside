@@ -1,5 +1,11 @@
 import classNames from 'classnames';
-import React, {PropsWithChildren, useMemo, useState} from 'react';
+import React, {
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import {TableContext} from './context';
 
@@ -33,8 +39,13 @@ export function Table({
   selected,
 }: Props) {
   const [selectedId, setSelectedId] = useState<string | undefined>(selected);
+  const tablebodyRef = useRef<HTMLTableSectionElement | null>(null);
 
-  console.log({selectedId});
+  useEffect(() => {
+    if (scrollable && tablebodyRef.current) {
+      tablebodyRef.current.scrollTo({top: tablebodyRef.current.scrollHeight});
+    }
+  }, [scrollable]);
 
   const headings = columns.map(({title, width}) => (
     <th
@@ -78,6 +89,7 @@ export function Table({
           <tr>{headings}</tr>
         </thead>
         <tbody
+          ref={tablebodyRef}
           style={{maxHeight}}
           className={classNames(scrollable && 'overflow-scroll', 'block')}
         >
@@ -87,7 +99,3 @@ export function Table({
     </TableContext.Provider>
   );
 }
-
-// max-height: calc(100vh - 54px);
-//     display: block;
-//     overflow: scroll;
