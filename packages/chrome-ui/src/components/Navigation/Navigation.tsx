@@ -31,7 +31,7 @@ export function Navigation({
 
   return (
     <NavigationContext.Provider value={navigation}>
-      <nav className="bg-gray-500 w-full min-h-[26px] border-b border-gray-400">
+      <nav className="bg-gray-500 w-full border-b border-gray-400">
         {children}
       </nav>
     </NavigationContext.Provider>

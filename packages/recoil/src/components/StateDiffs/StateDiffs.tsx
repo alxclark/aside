@@ -17,6 +17,8 @@ export function StateDiffs({diffs}: {diffs: Snapshot[]}) {
           onSelect={(index) => setSelectedDiff(parseInt(index, 10))}
           columns={[{title: 'Name', width: 30}]}
           border={false}
+          scrollable
+          maxHeight="calc(100vh - 54px)"
         >
           {diffs.map((diff, index) => (
             <TableRow key={diff.createdAt.toISOString()} id={index.toString()}>

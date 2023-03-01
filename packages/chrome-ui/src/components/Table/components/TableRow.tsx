@@ -14,7 +14,7 @@ export function TableRow({children, id}: Props) {
   return (
     <tr
       className={classNames(
-        'bg-[#292929] text-gray-200',
+        'bg-[#292929] text-gray-200 block',
         selectedId === id
           ? 'bg-[#10639d]'
           : 'even:bg-[#232323] hover:bg-[#172436]',

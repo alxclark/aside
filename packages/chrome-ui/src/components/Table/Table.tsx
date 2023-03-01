@@ -7,6 +7,8 @@ export type Props = PropsWithChildren<{
   columns: Column[];
   onSelect?(rowId: string): void;
   border?: boolean;
+  scrollable?: boolean;
+  maxHeight?: string;
 }>;
 
 export interface Column {
@@ -20,7 +22,14 @@ export interface Column {
 
 export type SortDirection = 'ascending' | 'descending';
 
-export function Table({columns, children, onSelect, border = true}: Props) {
+export function Table({
+  columns,
+  children,
+  onSelect,
+  border = true,
+  scrollable,
+  maxHeight,
+}: Props) {
   const [selectedId, setSelectedId] = useState<string | undefined>();
 
   const headings = columns.map(({title, width}) => (
@@ -64,8 +73,17 @@ export function Table({columns, children, onSelect, border = true}: Props) {
         >
           <tr>{headings}</tr>
         </thead>
-        <tbody>{children}</tbody>
+        <tbody
+          style={{maxHeight}}
+          className={classNames(scrollable && 'overflow-scroll', 'block')}
+        >
+          {children}
+        </tbody>
       </table>
     </TableContext.Provider>
   );
 }
+
+// max-height: calc(100vh - 54px);
+//     display: block;
+//     overflow: scroll;
