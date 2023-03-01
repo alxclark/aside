@@ -6,9 +6,10 @@ export interface Props {
   flexGrow?: boolean;
   width?: number;
   border?: 'left';
+  fullHeight?: boolean;
 }
 
-export function View({children, flexGrow, width, border}: Props) {
+export function View({children, flexGrow, width, border, fullHeight}: Props) {
   return (
     <div
       style={{width}}
@@ -16,6 +17,7 @@ export function View({children, flexGrow, width, border}: Props) {
         flexGrow && 'grow',
         border && 'border-gray-400',
         border === 'left' && 'border-l',
+        fullHeight && 'h-full',
       )}
     >
       {children}

@@ -1,4 +1,17 @@
+html {
+  height: 100vh;
+}
+
 body {
-  height: 100%;
   background: #202124;
+}
+
+body,
+#app, html {
+  margin: 0;
+  padding: 0;
+}
+
+#app, body {
+  height: 100%;
 }

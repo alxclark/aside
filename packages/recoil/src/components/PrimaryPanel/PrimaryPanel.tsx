@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navigation, NavigationTab} from '@aside/react';
+import {Flex, Navigation, NavigationTab, View} from '@aside/react';
 import {useRecoilState} from 'recoil';
 
 import {DevToolsApi} from '../../types';
@@ -15,7 +15,7 @@ export function PrimaryPanel({api}: {api: DevToolsApi}) {
   );
 
   return (
-    <>
+    <Flex direction="column" fullHeight>
       <Navigation
         selected={primaryNavigation.tab}
         navigate={(value) => {
@@ -28,12 +28,14 @@ export function PrimaryPanel({api}: {api: DevToolsApi}) {
           label="Timeline"
         />
       </Navigation>
-      {primaryNavigation.tab === PrimaryNavigationTab.StateTree && (
-        <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
-      )}
-      {primaryNavigation.tab === PrimaryNavigationTab.StateDiffs && (
-        <StateDiffs diffs={api.diffs} />
-      )}
-    </>
+      <View flexGrow>
+        {primaryNavigation.tab === PrimaryNavigationTab.StateTree && (
+          <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
+        )}
+        {primaryNavigation.tab === PrimaryNavigationTab.StateDiffs && (
+          <StateDiffs diffs={api.diffs} />
+        )}
+      </View>
+    </Flex>
   );
 }
