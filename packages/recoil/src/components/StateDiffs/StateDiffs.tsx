@@ -3,7 +3,13 @@ import React, {useState} from 'react';
 
 import {Snapshot} from '../../types';
 
-export function StateDiffs({diffs}: {diffs: Snapshot[]}) {
+export function StateDiffs({
+  diffs,
+  initial,
+}: {
+  diffs: Snapshot[];
+  initial: Snapshot;
+}) {
   const [selectedDiff, setSelectedDiff] = useState<number>(diffs.length - 1);
 
   return (
@@ -19,14 +25,28 @@ export function StateDiffs({diffs}: {diffs: Snapshot[]}) {
         >
           {diffs.map((diff, index) => (
             <TableRow key={diff.createdAt.toISOString()} id={index.toString()}>
-              <TableCell>{diff.createdAt.toLocaleTimeString()}</TableCell>
+              <TableCell>{getDiffName(diffs[index])}</TableCell>
             </TableRow>
           ))}
         </Table>
       </View>
       <View flexGrow border="left">
-        <Log items={[{id: 'state', value: diffs[selectedDiff].nodes}]} />
+        <Log
+          items={[
+            {
+              id: 'state',
+              value:
+                selectedDiff === 0 ? initial.nodes : diffs[selectedDiff].nodes,
+            },
+          ]}
+        />
       </View>
     </Flex>
   );
+}
+
+function getDiffName(snapshot: Snapshot): string {
+  if (Object.keys(snapshot.nodes).length === 0) return 'initial';
+
+  return Object.keys(snapshot.nodes).join(', ');
 }

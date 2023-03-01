@@ -33,7 +33,7 @@ export function PrimaryPanel({api}: {api: DevToolsApi}) {
           <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
         )}
         {primaryNavigation.tab === PrimaryNavigationTab.StateDiffs && (
-          <StateDiffs diffs={api.diffs} />
+          <StateDiffs diffs={api.diffs} initial={api.snapshots[0]} />
         )}
       </View>
     </Flex>
