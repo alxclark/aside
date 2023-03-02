@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React from 'react';
+import React, {CSSProperties} from 'react';
 
 export interface Props {
   children: React.ReactNode;
@@ -7,12 +7,20 @@ export interface Props {
   width?: number;
   border?: 'left';
   fullHeight?: boolean;
+  margin?: CSSProperties['margin'];
 }
 
-export function View({children, flexGrow, width, border, fullHeight}: Props) {
+export function View({
+  children,
+  flexGrow,
+  width,
+  border,
+  fullHeight,
+  margin,
+}: Props) {
   return (
     <div
-      style={{width}}
+      style={{width, margin}}
       className={classNames(
         flexGrow && 'grow',
         border && 'border-gray-400',

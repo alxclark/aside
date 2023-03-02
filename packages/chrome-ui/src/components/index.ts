@@ -13,3 +13,5 @@ export {Flex} from './Flex';
 export type {FlexProps} from './Flex';
 export {View} from './View';
 export type {ViewProps} from './View';
+export {Icon} from './Icon';
+export type {IconProps} from './Icon';

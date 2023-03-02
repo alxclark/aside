@@ -1,4 +1,4 @@
-import {Table, TableRow, TableCell, Flex, View, Log} from '@aside/react';
+import {Table, TableRow, TableCell, Flex, View, Log, Icon} from '@aside/react';
 import React, {useState} from 'react';
 
 import {Snapshot} from '../../types';
@@ -25,7 +25,20 @@ export function StateDiffs({
         >
           {diffs.map((diff, index) => (
             <TableRow key={diff.createdAt.toISOString()} id={index.toString()}>
-              <TableCell>{getDiffName(diffs[index])}</TableCell>
+              <TableCell>
+                <Flex gap="5px" alignItems="center">
+                  {index === 0 ? (
+                    <View margin="0 0 0 2px">
+                      <Icon source="start" color="#2883ff" height={13} />
+                    </View>
+                  ) : (
+                    <View margin="0 0 0 1px">
+                      <Icon source="curly" color="#e5ab04" height={15} />
+                    </View>
+                  )}
+                  {getDiffName(diffs[index])}
+                </Flex>
+              </TableCell>
             </TableRow>
           ))}
         </Table>

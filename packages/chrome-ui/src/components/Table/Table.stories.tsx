@@ -1,9 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React, {useState} from 'react';
 
-import {Flex, Log, View} from '..';
-
 import '../../../../../.storybook/styles.css';
+import {Flex, Log, View} from '..';
+import {Icon} from '../Icon';
 
 import {Table, Props} from './Table';
 import {TableRow, TableCell} from './components';
@@ -74,14 +74,35 @@ function TimelineExample() {
     <Flex fullHeight>
       <View width={150}>
         <Table columns={[{title: 'Name', width: 30}]} border={false}>
-          <TableRow id="3">
-            <TableCell>todo:2</TableCell>
+          <TableRow id="1">
+            <TableCell>
+              <Flex gap="5px" alignItems="center">
+                <View margin="0 0 0 2px">
+                  <Icon source="start" color="#2883ff" height={13} />
+                </View>
+                todo:1, todos
+              </Flex>
+            </TableCell>
           </TableRow>
           <TableRow id="2">
-            <TableCell>todo:2, todos</TableCell>
+            <TableCell>
+              <Flex gap="5px" alignItems="center">
+                <View margin="0 0 0 1px">
+                  <Icon source="curly" color="#e5ab04" height={15} />
+                </View>
+                todo:2, todos
+              </Flex>
+            </TableCell>
           </TableRow>
-          <TableRow id="1">
-            <TableCell>todo:1, todos</TableCell>
+          <TableRow id="3">
+            <TableCell>
+              <Flex gap="5px" alignItems="center">
+                <View margin="0 0 0 1px">
+                  <Icon source="curly" color="#e5ab04" height={15} />
+                </View>
+                todo:2
+              </Flex>
+            </TableCell>
           </TableRow>
         </Table>
       </View>

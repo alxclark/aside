@@ -6,6 +6,7 @@ import {Log} from './Log';
 import {Table, TableCell, TableRow} from './Table';
 import {Flex} from './Flex';
 import {View} from './View';
+import {Icon} from './Icon';
 
 export {Button} from './Button';
 export {List} from './List';
@@ -15,6 +16,7 @@ export {Log} from './Log';
 export {Table, TableCell, TableRow} from './Table';
 export {Flex} from './Flex';
 export {View} from './View';
+export {Icon} from './Icon';
 
 export const AllComponents = [
   Button,
@@ -28,4 +30,5 @@ export const AllComponents = [
   TableCell,
   Flex,
   View,
+  Icon,
 ];
