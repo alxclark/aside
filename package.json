@@ -7,12 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "yarn dev:app & yarn dev:recoil & yarn dev:chrome-ui",
     "dev:app": "yarn workspace app dev",
-    "dev:recoil": "yarn workspace recoil dev",
+    "dev:recoil": "yarn workspace recoil-example dev",
     "dev:chrome-ui": "yarn workspace @aside/chrome-ui dev",
     "open-chrome": "yarn workspace app start:chromium",
     "clean-vite": "yarn workspace recoil clean-vite && yarn workspace app clean-vite",
     "storybook": "NODE_OPTIONS='--openssl-legacy-provider' start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "build": "turbo run build",
+    "turbo-dev": "turbo run dev",
+    "lint": "turbo run lint"
   },
   "repository": {
     "type": "git",
@@ -45,7 +48,8 @@
     "@wide-web/eslint-plugin": "^0.1.0",
     "babel-loader": "^8.3.0",
     "eslint": "^8.3.0",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "turbo": "latest"
   },
   "workspaces": [
     "app",
