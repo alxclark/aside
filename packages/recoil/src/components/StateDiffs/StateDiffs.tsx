@@ -29,11 +29,19 @@ export function StateDiffs({
                 <Flex gap="5px" alignItems="center">
                   {index === 0 ? (
                     <View margin="0 0 0 2px">
-                      <Icon source="start" color="#2883ff" height={13} />
+                      <Icon
+                        source="start"
+                        color={index === selectedDiff ? 'white' : '#2883ff'}
+                        height={13}
+                      />
                     </View>
                   ) : (
                     <View margin="0 0 0 1px">
-                      <Icon source="curly" color="#e5ab04" height={15} />
+                      <Icon
+                        source="curly"
+                        color={index === selectedDiff ? 'white' : '#e5ab04'}
+                        height={15}
+                      />
                     </View>
                   )}
                   {getDiffName(diffs[index])}
