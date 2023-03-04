@@ -9,6 +9,7 @@
 *.xpi
 *.zip
 dist
+build
 dist-ssr
 app/extension/manifest.json
 node_modules

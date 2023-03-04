@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 export default defineConfig({
   build: {
     emptyOutDir: false,
+    outDir: 'build/js',
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'web',

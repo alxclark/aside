@@ -4,19 +4,19 @@
   "version": "0.0.0",
   "type": "module",
   "files": [
-    "dist"
+    "build"
   ],
-  "main": "./dist/web.umd.js",
-  "module": "./dist/web.es.js",
-  "types": "./dist/index.d.ts",
+  "main": "./build/js/web.umd.js",
+  "module": "./build/js/web.es.js",
+  "types": "./build/ts/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/web.es.js",
-      "require": "./dist/web.umd.js"
+      "import": "./build/js/web.es.js",
+      "require": "./build/js/web.umd.js"
     }
   },
   "scripts": {
-    "lint-x": "tsc",
+    "lint": "tsc",
     "build": "vite build"
   },
   "dependencies": {},

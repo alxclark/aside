@@ -33,7 +33,7 @@
     "build:react": "vite build",
     "build:remote": "vite build --config vite.config.remote.ts",
     "build:css": "postcss ./src/styles.css --dir dist",
-    "lint": "tsc"
+    "lint-x": "tsc"
   },
   "dependencies": {
     "@aside/web": "0.0.0"

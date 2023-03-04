@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.build.json",
-  "include": ["packages", "examples", "app",],
+  "include": ["packages", "examples", "app"],
   "compilerOptions": {
     "target": "ESNext",
     "allowJs": false,
