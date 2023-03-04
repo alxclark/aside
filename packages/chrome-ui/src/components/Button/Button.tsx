@@ -1,5 +1,7 @@
 import React, {PropsWithChildren} from 'react';
 
-export function Button({children}: PropsWithChildren<{}>) {
+export type Props = PropsWithChildren<{}>;
+
+export function Button({children}: Props) {
   return <button className="">{children}</button>;
 }

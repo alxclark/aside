@@ -7,20 +7,8 @@ import {createEndpoint} from '@remote-ui/rpc';
 import React, {useEffect, useMemo, useState} from 'react';
 import type {BackgroundApiForDevTools, DevToolsApi} from '@aside/extension';
 import {fromDevTools} from '@aside/extension';
-import {
-  Button,
-  Navigation,
-  NavigationTab,
-  Log,
-  Table,
-  TableRow,
-  TableCell,
-  View,
-  Flex,
-  Icon,
-} from '@aside/chrome-ui';
+import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui';
 
-import {List, ListItem} from '../../components';
 import {setupDebug} from '../../foundation/Debug';
 
 import '@aside/chrome-ui/dist/styles.css';
@@ -42,18 +30,7 @@ export function BrowserExtensionRenderer() {
   const controller = useMemo(
     () =>
       createController({
-        Button,
-        List,
-        ListItem,
-        Navigation,
-        NavigationTab,
-        Log,
-        Table,
-        TableRow,
-        TableCell,
-        View,
-        Flex,
-        Icon,
+        ...prefixComponents(ChromeUIComponents, 'ChromeUI'),
       }),
     [],
   );
@@ -77,4 +54,13 @@ export function BrowserExtensionRenderer() {
 
 export function DevTools() {
   return <BrowserExtensionRenderer />;
+}
+
+function prefixComponents(components: {[key: string]: any}, prefix: string) {
+  return Object.keys(components).reduce<{[key: string]: any}>((prev, key) => {
+    const prefixedKey = prefix + key;
+    prev[prefixedKey] = components[key];
+
+    return prev;
+  }, {});
 }

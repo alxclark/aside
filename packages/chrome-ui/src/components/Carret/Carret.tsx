@@ -1,6 +1,10 @@
 import React from 'react';
 
-export function Carret({direction}: {direction: 'down' | 'right'}) {
+export interface Props {
+  direction: 'down' | 'right';
+}
+
+export function Carret({direction}: Props) {
   let className = 'h-[8px] inline w-[7px] mr-[3px]';
 
   if (direction === 'down') {
