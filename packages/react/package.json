@@ -3,9 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "source": "src/index.tsx",
-  "main": "src/index.tsx",
-  "types": "src/index.tsx",
+  "files": [
+    "build"
+  ],
+  "main": "./build/js/react.umd.js",
+  "module": "./build/js/react.es.js",
+  "exports": {
+    ".": {
+      "import": "./build/js/react.es.js",
+      "require": "./build/js/react.umd.js"
+    }
+  },
+  "types": "build/ts/index.d.ts",
   "scripts": {
     "lint": "tsc",
     "build": "vite build"
