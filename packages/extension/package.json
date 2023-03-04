@@ -3,10 +3,22 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "source": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "scripts": {},
+  "files": [
+    "build"
+  ],
+  "main": "./build/js/extension.umd.js",
+  "module": "./build/js/extension.es.js",
+  "types": "./build/ts/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./build/js/extension.es.js",
+      "require": "./build/js/extension.umd.js"
+    }
+  },
+  "scripts": {
+    "lint": "tsc",
+    "build": "vite build"
+  },
   "dependencies": {
     "@aside/web": "0.0.0"
   },

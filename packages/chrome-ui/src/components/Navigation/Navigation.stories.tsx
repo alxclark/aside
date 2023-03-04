@@ -4,7 +4,7 @@ import React from 'react';
 import {NavigationTab} from './components';
 import {Navigation} from './Navigation';
 
-import '../../../dist/styles.css';
+import '../../../build/css/styles.css';
 
 export default {
   title: 'ChromeUI/Navigation',

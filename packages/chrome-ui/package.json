@@ -2,20 +2,46 @@
   "name": "@aside/chrome-ui",
   "private": true,
   "version": "0.0.0",
-  "source": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "scripts": {
-    "dev": "postcss ./src/styles.css --dir dist --watch"
+  "files": [
+    "build"
+  ],
+  "main": "./build/remote/js/chrome-ui.umd.js",
+  "module": "./build/remote/js/chrome-ui.es.js",
+  "exports": {
+    ".": {
+      "import": "./build/remote/js/chrome-ui.es.js",
+      "require": "./build/remote/js/chrome-ui.umd.js"
+    },
+    "./react": {
+      "import": "./build/react/js/chrome-ui.es.js",
+      "require": "./build/react/js/chrome-ui.umd.js"
+    }
   },
+  "types": "build/ts/remote/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "build/ts/remote/index.d.ts"
+      ],
+      "react": [
+        "build/ts/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "dev": "postcss ./src/styles.css --dir build/css --watch",
+    "build": "cross-env NODE_ENV=production run-p build:react build:remote build:css",
+    "build:react": "vite build",
+    "build:remote": "vite build --config vite.config.remote.ts",
+    "build:css": "postcss ./src/styles.css --dir build/css",
+    "lint": "tsc"
+  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "classnames": "latest",
     "postcss": "^8.4.18",
     "postcss-cli": "^10.0.0",
     "tailwindcss": "^3.2.1"
-  },
-  "files": [
-    "dist/*.css"
-  ]
+  }
 }

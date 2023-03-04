@@ -3,7 +3,7 @@ import React from 'react';
 
 import {Icon, Props} from './Icon';
 
-import '../../../dist/styles.css';
+import '../../../build/css/styles.css';
 
 export default {
   title: 'ChromeUI/Icon',
