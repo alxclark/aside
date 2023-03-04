@@ -3,37 +3,37 @@
   "private": true,
   "version": "0.0.0",
   "files": [
-    "dist"
+    "build"
   ],
-  "main": "./dist/chrome-ui-remote.umd.js",
-  "module": "./dist/chrome-ui-remote.es.js",
+  "main": "./build/remote/js/chrome-ui.umd.js",
+  "module": "./build/remote/js/chrome-ui.es.js",
   "exports": {
     ".": {
-      "import": "./dist/chrome-ui-remote.es.js",
-      "require": "./dist/chrome-ui-remote.umd.js"
+      "import": "./build/remote/js/chrome-ui.es.js",
+      "require": "./build/remote/js/chrome-ui.umd.js"
     },
     "./react": {
-      "import": "./dist/chrome-ui-react.es.js",
-      "require": "./dist/chrome-ui-react.umd.js"
+      "import": "./build/react/js/chrome-ui.es.js",
+      "require": "./build/react/js/chrome-ui.umd.js"
     }
   },
   "typesVersions": {
     "*": {
       "*": [
-        "dist/chrome-ui-remote.d.ts"
+        "build/ts/remote/index.d.ts"
       ],
       "react": [
-        "dist/chrome-ui-react.d.ts"
+        "build/ts/index.d.ts"
       ]
     }
   },
   "scripts": {
-    "dev": "postcss ./src/styles.css --dir dist --watch",
+    "dev": "postcss ./src/styles.css --dir build/css --watch",
     "build": "cross-env NODE_ENV=production run-p build:react build:remote build:css",
     "build:react": "vite build",
     "build:remote": "vite build --config vite.config.remote.ts",
-    "build:css": "postcss ./src/styles.css --dir dist",
-    "lint-x": "tsc"
+    "build:css": "postcss ./src/styles.css --dir build/css",
+    "lint": "tsc"
   },
   "dependencies": {
     "@aside/web": "0.0.0"

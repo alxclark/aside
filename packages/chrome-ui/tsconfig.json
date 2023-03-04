@@ -1,11 +1,12 @@
 {
   "extends": "../../tsconfig.json",
   "include": ["src"],
-  "exclude": ["dist", "build", "node_modules"],
+  "exclude": ["dist", "build", "node_modules", "**/*.stories.tsx"],
   "compilerOptions": {
     "noEmit": false,
     "emitDeclarationOnly": true,
     "outDir": "./build/ts",
     "rootDir": "./src",
+    "jsx": "preserve",
   }
 }
