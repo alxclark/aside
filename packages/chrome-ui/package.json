@@ -17,6 +17,7 @@
       "require": "./build/react/js/chrome-ui.umd.js"
     }
   },
+  "types": "build/ts/remote/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [
