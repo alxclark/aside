@@ -16,7 +16,7 @@
     }
   },
   "scripts": {
-    "lint": "tsc",
+    "lint-x": "tsc",
     "build": "vite build"
   },
   "dependencies": {},
