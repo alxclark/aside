@@ -6,7 +6,9 @@
   "source": "src/index.ts",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "scripts": {},
+  "scripts": {
+    "lint": "tsc"
+  },
   "dependencies": {
     "webextension-polyfill": "^0.10.0"
   }
