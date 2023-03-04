@@ -1,4 +1,12 @@
-import {Table, TableRow, TableCell, Flex, View, Log, Icon} from '@aside/react';
+import {
+  Table,
+  TableRow,
+  TableCell,
+  Flex,
+  View,
+  Log,
+  Icon,
+} from '@aside/chrome-ui';
 import React, {useState} from 'react';
 
 import {Snapshot} from '../../types';

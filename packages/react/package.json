@@ -6,11 +6,15 @@
   "source": "src/index.tsx",
   "main": "src/index.tsx",
   "types": "src/index.tsx",
-  "scripts": {},
+  "scripts": {
+    "lint": "tsc",
+    "build": "vite build"
+  },
   "dependencies": {
-    "@aside/web": "0.0.0"
+    "@aside/web": "0.0.0",
+    "@aside/chrome-ui": "0.0.0"
   },
   "devDependencies": {
-    "@aside/chrome-ui": "0.0.0"
+    "@aside/extension": "0.0.0"
   }
 }

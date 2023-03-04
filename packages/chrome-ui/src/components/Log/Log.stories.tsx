@@ -3,7 +3,7 @@ import React from 'react';
 
 import {Log, Props} from './Log';
 
-import '../../../dist/styles.css';
+import '../../../build/css/styles.css';
 
 export default {
   title: 'ChromeUI/Log',

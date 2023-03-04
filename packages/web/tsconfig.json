@@ -6,6 +6,5 @@
     "noEmit": false,
     "emitDeclarationOnly": true,
     "outDir": "./build/ts",
-    "rootDir": "./src",
   }
 }

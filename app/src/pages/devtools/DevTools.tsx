@@ -7,11 +7,11 @@ import {createEndpoint} from '@remote-ui/rpc';
 import React, {useEffect, useMemo, useState} from 'react';
 import type {BackgroundApiForDevTools, DevToolsApi} from '@aside/extension';
 import {fromDevTools} from '@aside/extension';
-import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui';
+import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui/react';
 
 import {setupDebug} from '../../foundation/Debug';
 
-import '@aside/chrome-ui/dist/styles.css';
+import '@aside/chrome-ui/build/css/styles.css';
 
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
   callable: ['getDevToolsChannel', 'log', 'renewReceiver'],
