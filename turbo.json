@@ -6,12 +6,16 @@
         "^build"
       ],
       "outputs": [
-        "dist/**"
+        "build/**/js/**/*",
+        "build/**/css/**/*"
       ]
     },
     "lint": {
       "dependsOn": [
         "^lint"
+      ],
+      "outputs": [
+        "build/ts/**/*"
       ]
     },
     "clean": {}
