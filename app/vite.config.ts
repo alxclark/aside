@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference, spaced-comment
 /// <reference types="vitest" />
 
@@ -16,8 +17,17 @@ export const sharedConfig: UserConfig = {
   root: r('src'),
   resolve: {
     alias: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       '~/': `${r('src')}/`,
+      // Alias packages to the index.
+      // Otherwise Vite defaults to resolve the entrypoints
+      // defined in the package.json files.
+      // This is a problem during development, since
+      // we don't want to rely on assets from the build directory.
+      '@aside/extension': `${r('../packages/extension/src')}`,
+      '@aside/web': `${r('../packages/web/src')}`,
+      '@aside/react': `${r('../packages/react/src')}`,
+      '@aside/core': `${r('../packages/core/src')}`,
+      '@aside/chrome-ui/react': `${r('../packages/chrome-ui/src')}`,
     },
   },
   define: {
@@ -27,7 +37,6 @@ export const sharedConfig: UserConfig = {
     AutoImport({
       imports: [
         {
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           'webextension-polyfill': [['*', 'browser']],
         },
       ],
@@ -49,6 +58,7 @@ export const sharedConfig: UserConfig = {
   ],
   optimizeDeps: {
     include: ['webextension-polyfill', '@remote-ui/react/host', 'react'],
+    exclude: ['@aside/chrome-ui'],
   },
 };
 

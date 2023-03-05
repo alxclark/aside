@@ -11,7 +11,7 @@ import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui/react';
 
 import {setupDebug} from '../../foundation/Debug';
 
-import '@aside/chrome-ui/build/css/styles.css';
+import '@aside/chrome-ui/css';
 
 const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
   callable: ['getDevToolsChannel', 'log', 'renewReceiver'],

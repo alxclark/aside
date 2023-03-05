@@ -1,4 +1,4 @@
-import {Log} from '@aside/react';
+import {Log} from '@aside/chrome-ui';
 import React from 'react';
 
 import {Snapshot} from '../../types';

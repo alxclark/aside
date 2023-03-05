@@ -6,12 +6,12 @@
   "files": [
     "build"
   ],
-  "main": "./build/js/react.umd.js",
-  "module": "./build/js/react.es.js",
+  "main": "./build/js/aside-react.umd.js",
+  "module": "./build/js/aside-react.es.js",
   "exports": {
     ".": {
-      "import": "./build/js/react.es.js",
-      "require": "./build/js/react.umd.js"
+      "import": "./build/js/aside-react.es.js",
+      "require": "./build/js/aside-react.umd.js"
     }
   },
   "types": "build/ts/index.d.ts",

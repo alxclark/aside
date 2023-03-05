@@ -15,6 +15,10 @@
     "./react": {
       "import": "./build/react/js/chrome-ui.es.js",
       "require": "./build/react/js/chrome-ui.umd.js"
+    },
+    "./css": {
+      "import": "./build/css/styles.css",
+      "require": "./build/css/styles.css"
     }
   },
   "types": "build/ts/remote/index.d.ts",

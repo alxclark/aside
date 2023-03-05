@@ -1,5 +1,5 @@
 import React from 'react';
-import {Flex, Navigation, NavigationTab, View} from '@aside/react';
+import {Flex, Navigation, NavigationTab, View} from '@aside/chrome-ui';
 import {useRecoilState} from 'recoil';
 
 import {DevToolsApi} from '../../types';
