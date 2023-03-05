@@ -8,5 +8,9 @@
     "outDir": "./build/ts",
     "rootDir": "./src",
     "jsx": "preserve",
-  }
+  },
+  "references": [
+    { "path": "../chrome-ui" },
+    { "path": "../web" },
+  ]
 }
