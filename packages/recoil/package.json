@@ -6,7 +6,9 @@
   "source": "src/index.tsx",
   "main": "src/index.tsx",
   "types": "src/index.tsx",
-  "scripts": {},
+  "scripts": {
+    "clean": "rm -rf build"
+  },
   "dependencies": {
     "@aside/web": "0.0.0",
     "@aside/react": "0.0.0",

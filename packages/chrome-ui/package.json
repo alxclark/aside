@@ -34,7 +34,8 @@
     "build:react": "vite build",
     "build:remote": "vite build --config vite.config.remote.ts",
     "build:css": "postcss ./src/styles.css --dir build/css",
-    "lint": "tsc"
+    "lint": "tsc",
+    "clean": "rm -rf build"
   },
   "dependencies": {},
   "devDependencies": {

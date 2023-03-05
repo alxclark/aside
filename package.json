@@ -15,7 +15,8 @@
     "build-storybook": "build-storybook",
     "build": "turbo run build",
     "turbo-dev": "turbo run dev",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "clean": "turbo run clean"
   },
   "repository": {
     "type": "git",

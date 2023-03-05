@@ -17,7 +17,8 @@
   "types": "build/ts/index.d.ts",
   "scripts": {
     "lint": "tsc",
-    "build": "vite build"
+    "build": "vite build",
+    "clean": "rm -rf build"
   },
   "dependencies": {
     "@aside/web": "0.0.0",
