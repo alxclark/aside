@@ -7,7 +7,6 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "strict": true,
     "esModuleInterop": true,
-    "incremental": false,
     "skipLibCheck": true,
     "jsx": "preserve",
     "moduleResolution": "node",
