@@ -76,8 +76,10 @@ browser.runtime.onConnect.addListener((port) => {
             async getDevToolsChannel() {
               const devTools = devtoolsCache.get(tabId);
 
-              if (!devTools)
-                throw new Error('Dev tools not available for this tab');
+              if (!devTools) {
+                console.error('Dev tools not available for this tab');
+                return;
+              }
 
               const channel = await devTools.call.getDevToolsChannel();
 
@@ -92,8 +94,10 @@ browser.runtime.onConnect.addListener((port) => {
 
             const devTools = devtoolsCache.get(tabId);
 
-            if (!devTools)
-              throw new Error('Dev tools not available for this tab');
+            if (!devTools) {
+              console.error('Dev tools not available for this tab');
+              return;
+            }
 
             devTools.call.renewReceiver();
           });

@@ -18,6 +18,11 @@
         "build/ts/**/*"
       ]
     },
-    "clean": {}
+    "clean": {},
+    "pack": {
+      "dependsOn": [
+        "^build"
+      ]
+    }
   }
 }

@@ -17,15 +17,15 @@ export async function getManifest() {
     description: pkg.description,
     browser_action: {
       default_icon: './assets/icon-512.png',
-      default_popup: './dist/popup/index.html',
+      default_popup: './dist/pages/popup/index.html',
     },
     options_ui: {
-      page: './dist/options/index.html',
+      page: './dist/pages/options/index.html',
       open_in_tab: true,
       chrome_style: false,
     },
     background: {
-      page: './dist/background/index.html',
+      page: './dist/pages/background/index.html',
       persistent: false,
     },
     icons: {

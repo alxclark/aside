@@ -84,6 +84,8 @@ export default defineConfig(({command}) => ({
         background: r('src/pages/background/index.html'),
         options: r('src/pages/options/index.html'),
         popup: r('src/pages/popup/index.html'),
+        devtools: r('src/pages/devtools/index.html'),
+        devtoolsPanel: r('src/pages/devtools/panel.html'),
       },
     },
   },

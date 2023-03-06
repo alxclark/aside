@@ -16,7 +16,8 @@
     "build": "turbo run build",
     "turbo-dev": "turbo run dev",
     "lint": "turbo run lint",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "bundle-extension": "turbo run pack"
   },
   "repository": {
     "type": "git",
