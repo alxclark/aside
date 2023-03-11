@@ -1,1 +1,1 @@
-browser.devtools.panels.create('Aside', '', 'dist/devtools/panel.html');
+browser.devtools.panels.create('Aside', '', 'dist/pages/devtools/panel.html');

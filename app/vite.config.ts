@@ -58,7 +58,7 @@ export const sharedConfig: UserConfig = {
   ],
   optimizeDeps: {
     include: ['webextension-polyfill', '@remote-ui/react/host', 'react'],
-    exclude: ['@aside/chrome-ui'],
+    exclude: ['@aside/chrome-ui', '@aside/react'],
   },
 };
 

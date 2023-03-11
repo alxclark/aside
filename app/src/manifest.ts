@@ -40,7 +40,7 @@ export async function getManifest() {
         js: ['./dist/contentScripts/index.global.js'],
       },
     ],
-    devtools_page: './dist/devtools/index.html',
+    devtools_page: './dist/pages/devtools/index.html',
     web_accessible_resources: ['dist/contentScripts/style.css'],
   };
 

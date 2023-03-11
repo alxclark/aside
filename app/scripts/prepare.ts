@@ -13,7 +13,7 @@ async function stubIndexHtml() {
   const views = ['options', 'popup', 'background', 'devtools'];
 
   for (const view of views) {
-    await fs.ensureDir(r(`extension/dist/${view}`));
+    await fs.ensureDir(r(`extension/dist/pages/${view}`));
     let data = await fs.readFile(r(`src/pages/${view}/index.html`), 'utf-8');
     data = data
       .replace(
@@ -36,11 +36,15 @@ async function stubIndexHtml() {
         '<div id="app"></div>',
         '<div id="app">Vite server did not start</div>',
       );
-    await fs.writeFile(r(`extension/dist/${view}/index.html`), data, 'utf-8');
+    await fs.writeFile(
+      r(`extension/dist/pages/${view}/index.html`),
+      data,
+      'utf-8',
+    );
     log('PRE', `stub ${view}`);
   }
 
-  await fs.ensureDir(r('extension/dist/devtools'));
+  await fs.ensureDir(r('extension/dist/pages/devtools'));
   let data = await fs.readFile(r('src/pages/devtools/panel.html'), 'utf-8');
   data = data
     .replace(
@@ -51,7 +55,11 @@ async function stubIndexHtml() {
       '<div id="app"></div>',
       '<div id="app">Vite server did not start</div>',
     );
-  await fs.writeFile(r('extension/dist/devtools/panel.html'), data, 'utf-8');
+  await fs.writeFile(
+    r('extension/dist/pages/devtools/panel.html'),
+    data,
+    'utf-8',
+  );
   log('PRE', 'stub devtools/panel');
 }
 
