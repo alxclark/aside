@@ -1,9 +1,7 @@
-/* eslint-disable import/no-absolute-path */
+import {setupHmr} from './hmr';
+
 export function setupContentScriptHMR() {
-  if (import.meta.hot) {
-    // @ts-expect-error for background HMR
-    import('/@vite/client');
-    // load latest content script
-    import('./hmr');
-  }
+  console.log('hey');
+
+  setupHmr();
 }

@@ -4,7 +4,7 @@ import {
   createRemoteReceiver,
 } from '@remote-ui/react/host';
 import {createEndpoint} from '@remote-ui/rpc';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import type {BackgroundApiForDevTools, DevToolsApi} from '@aside/extension';
 import {fromDevTools} from '@aside/extension';
 import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui/react';
@@ -13,18 +13,18 @@ import {setupDebug} from '../../foundation/Debug';
 
 import '@aside/chrome-ui/css';
 
-const background = createEndpoint<BackgroundApiForDevTools>(fromDevTools(), {
-  callable: ['getDevToolsChannel', 'log', 'renewReceiver'],
-});
+// const contentScript = createEndpoint<any>(fromDevTools(), {
+//   callable: ['getDevToolsChannel', 'log', 'renewReceiver', 'mountDevTools'],
+// });
 
-setupDebug({
-  onMessage: (event) => {
-    background.call.log(
-      'devtools',
-      ...(event as CustomEvent<any>).detail.message,
-    );
-  },
-});
+// setupDebug({
+//   onMessage: (event) => {
+//     contentScript.call.log(
+//       'devtools',
+//       ...(event as CustomEvent<any>).detail.message,
+//     );
+//   },
+// });
 
 export function BrowserExtensionRenderer() {
   const controller = useMemo(
@@ -37,22 +37,62 @@ export function BrowserExtensionRenderer() {
   const [receiver, setReceiver] = useState(createRemoteReceiver());
 
   useEffect(() => {
-    const devToolsApi: DevToolsApi = {
-      getDevToolsChannel() {
-        return receiver.receive;
-      },
-      renewReceiver() {
-        setReceiver(createRemoteReceiver());
-      },
-    };
+    async function setup() {
+      const messenger = await fromDevTools();
+      const contentScript = createEndpoint<any>(messenger, {
+        callable: [
+          'getDevToolsChannel',
+          'log',
+          'renewReceiver',
+          'mountDevTools',
+        ],
+      });
 
-    background.expose(devToolsApi);
+      const devToolsApi: DevToolsApi = {
+        getDevToolsChannel() {
+          return receiver.receive;
+        },
+        renewReceiver() {
+          setReceiver(createRemoteReceiver());
+        },
+      };
+
+      contentScript.expose(devToolsApi);
+
+      contentScript.call.mountDevTools();
+    }
+    setup();
   }, [receiver]);
 
   return <RemoteRenderer receiver={receiver} controller={controller} />;
 }
 
 export function DevTools() {
+  // const connect = useCallback(() => {
+  //   console.log('running effect');
+
+  //   const port = browser.runtime.connect({
+  //     name: `${browser.devtools.inspectedWindow.tabId}`,
+  //   });
+
+  //   console.log('[panel]', {port});
+
+  //   port.onMessage.addListener((msg) => {
+  //     // This prints in devtools-on-devtools: https://stackoverflow.com/q/12291138
+  //     // To print in tab's console see `chrome.devtools.inspectedWindow.eval`
+  //     console.log('[Panel] onMessage', {msg});
+  //   });
+
+  //   port.postMessage('foo');
+  // }, []);
+
+  // console.log('what');
+
+  // return (
+  //   <button onClick={connect}>
+  //     Click me please!!! {browser.devtools.inspectedWindow.tabId}
+  //   </button>
+  // );
   return <BrowserExtensionRenderer />;
 }
 

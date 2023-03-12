@@ -1,14 +1,42 @@
+import {Runtime} from 'webextension-polyfill';
 import {MessageEndpoint} from '@remote-ui/rpc';
 
 import {fromPort} from './port';
 
-export function fromDevTools(): MessageEndpoint {
-  const port = browser.runtime.connect({name: 'dev-tools'});
+export async function fromDevTools(): Promise<MessageEndpoint> {
+  return new Promise<MessageEndpoint>((resolve, reject) => {
+    // Attempt a connection in case content-script already loaded and can intercept the port.
+    const port = browser.runtime.connect({
+      name: `${browser.devtools.inspectedWindow.tabId}`,
+    });
+    // Wait to receive a message from content-script accepting to use the port.
+    port.onMessage.addListener(onAcceptedPortListener);
 
-  port.postMessage({
-    name: 'init',
-    tabId: browser.devtools.inspectedWindow.tabId,
+    // In case devtools loads first, we listen for content-script connection.
+    // Once content-script connect, we will accept the port sent.
+    browser.runtime.onConnect.addListener(onConnectListener);
+
+    // TODO: Race against timer and reject if takes too long
+
+    function onAcceptedPortListener(message: any, port: Runtime.Port) {
+      console.log({message});
+      if (
+        message?.type === 'accept-port' &&
+        message?.sender === 'content-script'
+      ) {
+        console.log('[dev] Agreed to use the new dev port');
+        resolve(fromPort(port));
+        port.onMessage.removeListener(onAcceptedPortListener);
+        browser.runtime.onConnect.removeListener(onConnectListener);
+      }
+    }
+
+    function onConnectListener(port: Runtime.Port) {
+      port.postMessage({type: 'accept-port', sender: 'dev'});
+      console.log('[dev] Agreed to use the new CS port');
+      resolve(fromPort(port));
+      browser.runtime.onConnect.removeListener(onConnectListener);
+      port.onMessage.removeListener(onAcceptedPortListener);
+    }
   });
-
-  return fromPort(port);
 }

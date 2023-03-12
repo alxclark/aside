@@ -11,29 +11,31 @@ export async function getManifest() {
   // update this file to update this manifest.json
   // can also be conditional based on your need
   const manifest: Manifest.WebExtensionManifest = {
-    manifest_version: 2,
+    manifest_version: 3,
     name: pkg.displayName || pkg.name,
     version: pkg.version,
     description: pkg.description,
-    browser_action: {
-      default_icon: './assets/icon-512.png',
-      default_popup: './dist/pages/popup/index.html',
-    },
+    // browser_action: {
+    //   default_icon: './assets/icon-512.png',
+    //   default_popup: './dist/pages/popup/index.html',
+    // },
     options_ui: {
       page: './dist/pages/options/index.html',
       open_in_tab: true,
-      chrome_style: false,
     },
     background: {
-      page: './dist/pages/background/index.html',
-      persistent: false,
-    },
+      // page: './dist/pages/background/index.html',
+      // persistent: false,
+      service_worker: './dist/background/index.global.js',
+      type: 'module',
+    } as any,
     icons: {
       16: './assets/icon-512.png',
       48: './assets/icon-512.png',
       128: './assets/icon-512.png',
     },
-    permissions: ['tabs', 'storage', 'activeTab', 'http://*/', 'https://*/'],
+    permissions: ['tabs', 'storage', 'activeTab', 'scripting'],
+    host_permissions: ['http://*/', 'https://*/'],
     content_scripts: [
       {
         matches: ['<all_urls>'],
@@ -41,7 +43,12 @@ export async function getManifest() {
       },
     ],
     devtools_page: './dist/pages/devtools/index.html',
-    web_accessible_resources: ['dist/contentScripts/style.css'],
+    // web_accessible_resources: [
+    //   {
+    //     resources: ['dist/contentScripts/style.css'],
+    //     matches: ['http://*/', 'https://*/'],
+    //   },
+    // ],
   };
 
   if (isDev) {
@@ -52,7 +59,9 @@ export async function getManifest() {
     manifest.permissions?.push('webNavigation');
 
     // this is required on dev for Vite script to load
-    manifest.content_security_policy = `script-src 'self' http://localhost:${port}; object-src 'self'`;
+    manifest.content_security_policy = {
+      extension_pages: `script-src 'self' http://localhost:${port}; object-src 'self'`,
+    };
   }
 
   return manifest;
