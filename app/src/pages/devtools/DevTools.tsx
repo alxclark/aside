@@ -5,13 +5,17 @@ import {
 } from '@remote-ui/react/host';
 import {createEndpoint} from '@remote-ui/rpc';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import type {BackgroundApiForDevTools, DevToolsApi} from '@aside/extension';
-import {fromDevTools} from '@aside/extension';
+import {
+  BackgroundApiForDevTools,
+  DevToolsApi,
+  fromPort,
+} from '@aside/extension';
 import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui/react';
 
 import {setupDebug} from '../../foundation/Debug';
 
 import '@aside/chrome-ui/css';
+import {Runtime} from 'webextension-polyfill';
 
 // const contentScript = createEndpoint<any>(fromDevTools(), {
 //   callable: ['getDevToolsChannel', 'log', 'renewReceiver', 'mountDevTools'],
@@ -27,6 +31,12 @@ import '@aside/chrome-ui/css';
 // });
 
 export function BrowserExtensionRenderer() {
+  useEffect(() => {
+    console.log('Mount BrowserExtensionRenderer');
+  }, []);
+
+  console.log('Render BrowserExtensionRenderer 1');
+
   const controller = useMemo(
     () =>
       createController({
@@ -35,64 +45,95 @@ export function BrowserExtensionRenderer() {
     [],
   );
   const [receiver, setReceiver] = useState(createRemoteReceiver());
+  const [port, setPort] = useState<Runtime.Port | undefined>();
+
+  console.log({port, receiver});
 
   useEffect(() => {
-    async function setup() {
-      const messenger = await fromDevTools();
-      const contentScript = createEndpoint<any>(messenger, {
-        callable: [
-          'getDevToolsChannel',
-          'log',
-          'renewReceiver',
-          'mountDevTools',
-        ],
-      });
+    const activeTab = browser.devtools.inspectedWindow.tabId;
 
-      const devToolsApi: DevToolsApi = {
-        getDevToolsChannel() {
-          return receiver.receive;
-        },
-        renewReceiver() {
-          setReceiver(createRemoteReceiver());
-        },
-      };
+    // Attempt a connection in case content-script already loaded and can intercept the port.
+    const contentScriptPort = browser.runtime.connect({
+      name: `${browser.devtools.inspectedWindow.tabId}`,
+    });
 
-      contentScript.expose(devToolsApi);
+    // Wait to receive a message from content-script accepting to use the port.
+    contentScriptPort.onMessage.addListener(onAcceptedPortListener);
 
-      contentScript.call.mountDevTools();
+    // In case devtools loads first, we listen for content-script connection.
+    // Once content-script connect, we will accept the port sent.
+    browser.runtime.onConnect.addListener(onConnectListener);
+
+    function onAcceptedPortListener(message: any, port: Runtime.Port) {
+      if (
+        message?.type === 'accept-port' &&
+        message?.sender === 'content-script'
+      ) {
+        console.log('[dev] Agreed to use the new dev port');
+        setPort(port);
+      }
     }
-    setup();
-  }, [receiver]);
+
+    function onConnectListener(port: Runtime.Port) {
+      if (activeTab !== port.sender?.tab?.id) {
+        console.log('[dev] Refused to use new CS port');
+        return;
+      }
+
+      port.postMessage({type: 'accept-port', sender: 'dev'});
+      console.log('[dev] Agreed to use the new CS port');
+
+      // Set a fresh receiver,
+      // since the connect listener will be called on page reload once the dev tools is loaded.
+      setReceiver(createRemoteReceiver());
+      setPort(port);
+    }
+
+    return () => {
+      contentScriptPort.onMessage.removeListener(onAcceptedPortListener);
+      browser.runtime.onConnect.removeListener(onConnectListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!port) return;
+
+    const contentScript = createEndpoint<any>(fromPort(port), {
+      callable: ['getDevToolsChannel', 'log', 'renewReceiver', 'mountDevTools'],
+    });
+
+    const devToolsApi: DevToolsApi = {
+      getDevToolsChannel() {
+        return receiver.receive;
+      },
+      renewReceiver() {
+        setReceiver(createRemoteReceiver());
+      },
+    };
+
+    contentScript.expose(devToolsApi);
+
+    contentScript.call.mountDevTools();
+  }, [receiver, port]);
+
+  useEffect(() => {
+    if (!port) return;
+
+    function listener() {
+      setPort(undefined);
+    }
+
+    port.onDisconnect.addListener(listener);
+
+    return () => {
+      port.onDisconnect.removeListener(listener);
+    };
+  }, [port]);
 
   return <RemoteRenderer receiver={receiver} controller={controller} />;
 }
 
 export function DevTools() {
-  // const connect = useCallback(() => {
-  //   console.log('running effect');
-
-  //   const port = browser.runtime.connect({
-  //     name: `${browser.devtools.inspectedWindow.tabId}`,
-  //   });
-
-  //   console.log('[panel]', {port});
-
-  //   port.onMessage.addListener((msg) => {
-  //     // This prints in devtools-on-devtools: https://stackoverflow.com/q/12291138
-  //     // To print in tab's console see `chrome.devtools.inspectedWindow.eval`
-  //     console.log('[Panel] onMessage', {msg});
-  //   });
-
-  //   port.postMessage('foo');
-  // }, []);
-
-  // console.log('what');
-
-  // return (
-  //   <button onClick={connect}>
-  //     Click me please!!! {browser.devtools.inspectedWindow.tabId}
-  //   </button>
-  // );
   return <BrowserExtensionRenderer />;
 }
 
