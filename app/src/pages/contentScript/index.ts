@@ -9,30 +9,6 @@ import type {WebpageApi} from '@aside/web';
 import {createUnsafeEncoder} from '@aside/core';
 
 (() => {
-  console.log('injected content script');
-
-  // let portDev: any;
-  // const onMessage = (msg: any) => {
-  //   console.log('[Content] received message', msg);
-  //   portDev.postMessage('bar');
-  // };
-  // const onDisconnect = () => {
-  //   console.log('[Content] disconnected');
-  //   portDev = null;
-  // };
-
-  // browser.runtime.onMessage.addListener((message, sender) => {
-  //   console.log({message});
-  // });
-
-  // browser.runtime.onConnect.addListener((port) => {
-  //   console.log('[Content] onConnect', {port});
-  //   if (port.name !== 'dev') return;
-  //   portDev = port;
-  //   portDev.onMessage.addListener(onMessage);
-  //   portDev.onDisconnect.addListener(onDisconnect);
-  // });
-
   async function setup() {
     try {
       const devtoolsMessenger = await fromContentScriptToDevtools();

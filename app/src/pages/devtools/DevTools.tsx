@@ -53,9 +53,10 @@ export function BrowserExtensionRenderer() {
     const activeTab = browser.devtools.inspectedWindow.tabId;
 
     // Attempt a connection in case content-script already loaded and can intercept the port.
-    const contentScriptPort = browser.runtime.connect({
-      name: `${browser.devtools.inspectedWindow.tabId}`,
-    });
+    const contentScriptPort = browser.tabs.connect(
+      browser.devtools.inspectedWindow.tabId,
+      {name: 'dev'},
+    );
 
     // Wait to receive a message from content-script accepting to use the port.
     contentScriptPort.onMessage.addListener(onAcceptedPortListener);
@@ -65,6 +66,7 @@ export function BrowserExtensionRenderer() {
     browser.runtime.onConnect.addListener(onConnectListener);
 
     function onAcceptedPortListener(message: any, port: Runtime.Port) {
+      console.log('Received message from CS', message);
       if (
         message?.type === 'accept-port' &&
         message?.sender === 'content-script'

@@ -40,9 +40,9 @@ export function fromContentScriptToDevtools(): Promise<MessageEndpoint> {
     // TODO: Race against timer and reject if takes too long
 
     function onAcceptedPortListener(message: any, port: Runtime.Port) {
+      console.log('5');
       if (message?.type === 'accept-port' && message?.sender === 'dev') {
         console.log('[CS] Agreed to use the new CS port');
-        console.log('5');
         resolve(fromPort(port));
         port.onMessage.removeListener(onAcceptedPortListener);
         browser.runtime.onConnect.removeListener(onConnectListener);
