@@ -1,4 +1,9 @@
-import React, {PropsWithChildren, useState, useEffect} from 'react';
+import React, {
+  PropsWithChildren,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import {fromWebpage, WebpageApi} from '@aside/web';
 import {RemoteRoot, createRemoteRoot} from '@remote-ui/react';
 import {createEndpoint, retain} from '@remote-ui/rpc';
@@ -18,19 +23,24 @@ const contentScript = createEndpoint<ContentScriptApiForWebpage>(
 export function DevTools({children}: PropsWithChildren<{}>) {
   const [devToolsRoot, setDevToolsRoot] = useState<RemoteRoot | undefined>();
 
+  const mountDevTools = useCallback(async () => {
+    console.log({devToolsRoot});
+    if (devToolsRoot) return;
+
+    const channel = await contentScript.call.getDevToolsChannel();
+    retain(channel);
+
+    const root = createRemoteRoot(channel, {
+      components: AllComponents,
+    });
+
+    setDevToolsRoot(root);
+  }, [devToolsRoot]);
+
   useEffect(() => {
     const webpageApi: WebpageApi = {
       async mountDevTools() {
-        if (devToolsRoot) return;
-
-        const channel = await contentScript.call.getDevToolsChannel();
-        retain(channel);
-
-        const root = createRemoteRoot(channel, {
-          components: AllComponents,
-        });
-
-        setDevToolsRoot(root);
+        mountDevTools();
       },
       unmountDevTools() {
         setDevToolsRoot(undefined);
@@ -40,10 +50,14 @@ export function DevTools({children}: PropsWithChildren<{}>) {
 
         console.log(sourcePrefix, ...params);
       },
+      resetChannel() {
+        setDevToolsRoot(undefined);
+        mountDevTools();
+      },
     };
 
     contentScript.expose(webpageApi);
-  }, [setDevToolsRoot, devToolsRoot]);
+  }, [setDevToolsRoot, devToolsRoot, mountDevTools]);
 
   if (devToolsRoot) {
     return <RemoteRenderer root={devToolsRoot}>{children}</RemoteRenderer>;

@@ -15,6 +15,7 @@
     "recoil": "latest"
   },
   "devDependencies": {
-    "@aside/extension": "0.0.0"
+    "@aside/extension": "0.0.0",
+    "@aside/chrome-ui": "0.0.0"
   }
 }
