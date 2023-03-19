@@ -1,4 +1,4 @@
-import {createEndpoint} from '@remote-ui/rpc';
+import {createEndpoint, Endpoint} from '@remote-ui/rpc';
 import {
   BackgroundApiForContentScript,
   ContentScriptApiForWebpage,
@@ -9,7 +9,15 @@ import type {WebpageApi} from '@aside/web';
 import {createUnsafeEncoder} from '@aside/core';
 import {Runtime} from 'webextension-polyfill';
 
+let count = 0;
+
 (() => {
+  let current: {
+    webpage?: Endpoint<WebpageApi>;
+    devtools?: Endpoint<BackgroundApiForContentScript>;
+    port?: Runtime.Port;
+  } = {};
+
   // Attempt a connection in case Devtools already loaded and can intercept the port.
   const contentScriptPort = browser.runtime.connect({name: 'content-script'});
   // Wait to receive a message from devtools accepting to use the port.
@@ -20,20 +28,31 @@ import {Runtime} from 'webextension-polyfill';
   browser.runtime.onConnect.addListener(onConnectListener);
 
   function onAcceptedPortListener(message: any, port: Runtime.Port) {
-    console.log('5');
     if (message?.type === 'accept-port' && message?.sender === 'dev') {
-      console.log('[CS] Agreed to use the new CS port');
+      const {webpage} = setup(port);
 
-      setup(port);
+      webpage.call.mountDevTools();
     }
   }
 
-  function onConnectListener(port: Runtime.Port) {
-    console.log('6');
+  async function onConnectListener(port: Runtime.Port) {
     port.postMessage({type: 'accept-port', sender: 'content-script'});
-    console.log('[CS] Agreed to use the new dev port');
 
-    setup(port);
+    if (current?.webpage) {
+      await current.webpage.call.resetChannel();
+
+      try {
+        current.devtools?.terminate();
+        current.webpage?.terminate();
+        current.port?.disconnect();
+      } catch (error) {
+        console.log('terminating endpoint failed');
+      }
+    }
+
+    const {webpage} = setup(port);
+
+    webpage.call.mountDevTools();
   }
 
   function setup(port: Runtime.Port) {
@@ -56,7 +75,7 @@ import {Runtime} from 'webextension-polyfill';
 
       const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
         getDevToolsChannel() {
-          return devtools.call.getDevToolsChannel();
+          return current.devtools?.call.getDevToolsChannel();
         },
       };
 
@@ -75,11 +94,10 @@ import {Runtime} from 'webextension-polyfill';
       webpage.expose(contentScriptApiForWebpage);
       devtools.expose(contentScriptApiForDevtools);
 
-      webpage.call.resetChannel();
+      current = {webpage, devtools, port};
+      count++;
 
-      port.onDisconnect.addListener(() => {
-        webpage.terminate();
-      });
+      return {webpage, devtools};
     } catch (error) {
       throw new Error(
         'Something happened when setting up the content script',

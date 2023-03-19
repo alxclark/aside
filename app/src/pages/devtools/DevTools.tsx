@@ -31,12 +31,6 @@ import {Runtime} from 'webextension-polyfill';
 // });
 
 export function BrowserExtensionRenderer() {
-  useEffect(() => {
-    console.log('Mount BrowserExtensionRenderer');
-  }, []);
-
-  console.log('Render BrowserExtensionRenderer 1');
-
   const controller = useMemo(
     () =>
       createController({
@@ -46,8 +40,6 @@ export function BrowserExtensionRenderer() {
   );
   const [receiver, setReceiver] = useState(createRemoteReceiver());
   const [port, setPort] = useState<Runtime.Port | undefined>();
-
-  console.log({port, receiver});
 
   useEffect(() => {
     const activeTab = browser.devtools.inspectedWindow.tabId;
@@ -115,7 +107,8 @@ export function BrowserExtensionRenderer() {
 
     contentScript.expose(devToolsApi);
 
-    contentScript.call.mountDevTools();
+    // Maybe this is called too quickly ?
+    // contentScript.call.mountDevTools();
   }, [receiver, port]);
 
   useEffect(() => {

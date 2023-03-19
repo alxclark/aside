@@ -19,12 +19,10 @@ export async function fromDevTools(): Promise<MessageEndpoint> {
     // TODO: Race against timer and reject if takes too long
 
     function onAcceptedPortListener(message: any, port: Runtime.Port) {
-      console.log({message});
       if (
         message?.type === 'accept-port' &&
         message?.sender === 'content-script'
       ) {
-        console.log('[dev] Agreed to use the new dev port');
         resolve(fromPort(port));
         port.onMessage.removeListener(onAcceptedPortListener);
         browser.runtime.onConnect.removeListener(onConnectListener);
@@ -33,7 +31,6 @@ export async function fromDevTools(): Promise<MessageEndpoint> {
 
     function onConnectListener(port: Runtime.Port) {
       port.postMessage({type: 'accept-port', sender: 'dev'});
-      console.log('[dev] Agreed to use the new CS port');
       resolve(fromPort(port));
       browser.runtime.onConnect.removeListener(onConnectListener);
       port.onMessage.removeListener(onAcceptedPortListener);
