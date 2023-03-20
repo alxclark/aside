@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useMemo, useEffect} from 'react';
+import React, {PropsWithChildren, useEffect} from 'react';
 import {RemoteRoot, createReconciler, render} from '@remote-ui/react';
 
 const reconciler = createReconciler({primary: false});

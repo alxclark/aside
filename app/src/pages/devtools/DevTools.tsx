@@ -106,9 +106,6 @@ export function BrowserExtensionRenderer() {
     };
 
     contentScript.expose(devToolsApi);
-
-    // Maybe this is called too quickly ?
-    // contentScript.call.mountDevTools();
   }, [receiver, port]);
 
   useEffect(() => {
