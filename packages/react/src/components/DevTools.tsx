@@ -43,7 +43,6 @@ export function DevTools({children}: PropsWithChildren<{}>) {
         return mountDevTools(contentScript);
       },
       unmountDevTools() {
-        console.log('unmount');
         setDevToolsRoot(undefined);
       },
       log(source, ...params: any[]) {
