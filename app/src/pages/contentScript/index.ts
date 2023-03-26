@@ -78,18 +78,21 @@ interface Current {
     exposeDevtools(devtools, webpage);
 
     port.onDisconnect.addListener(() => {
-      console.log('disconnect');
       if (current.port === port) {
-        console.log('clearing');
         current.port = undefined;
       }
+      current.webpage?.call.unmountDevTools();
     });
 
     current.devtools = devtools;
     current.webpage = webpage;
     current.port = port;
 
-    webpage.call.mountDevTools();
+    // TODO: Fix a timing issue when webpage attempts to request the devtools for a new RPC channel
+    // and the request is never answered by the devtools because its not ready in time.
+    setTimeout(() => {
+      webpage.call.mountDevTools();
+    }, 250);
   }
 })();
 
