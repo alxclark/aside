@@ -42,6 +42,17 @@ export function BrowserExtensionRenderer() {
   const [port, setPort] = useState<Runtime.Port | undefined>();
 
   useEffect(() => {
+    const listener = () => {
+      port?.disconnect();
+    };
+    window.addEventListener('beforeunload', listener);
+
+    return () => {
+      window.removeEventListener('beforeunload', listener);
+    };
+  }, [port]);
+
+  useEffect(() => {
     const activeTab = browser.devtools.inspectedWindow.tabId;
 
     // Attempt a connection in case content-script already loaded and can intercept the port.

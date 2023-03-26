@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useEffect, useState} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, useState} from 'react';
 import {Aside, DevTools as AsideDevTools} from '@aside/react';
 import {useRecoilSnapshot} from 'recoil';
 
@@ -10,6 +10,7 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   const recoilSnapshot = useRecoilSnapshot();
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
   const [diffs, setDiffs] = useState<Snapshot[]>([]);
+  const api = useMemo(() => ({snapshots, diffs}), [diffs, snapshots]);
 
   useEffect(() => {
     const createdAt = new Date();
@@ -54,7 +55,7 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   return (
     <Aside>
       <AsideDevTools>
-        <RemoteDevTools api={{snapshots, diffs}} />
+        <RemoteDevTools api={api} />
         {children}
       </AsideDevTools>
     </Aside>

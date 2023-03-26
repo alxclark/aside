@@ -6,14 +6,20 @@ const reconciler = createReconciler({primary: false});
 export function RemoteRenderer({
   children,
   root,
-}: PropsWithChildren<{root: RemoteRoot}>) {
+  onUnmount,
+}: PropsWithChildren<{root: RemoteRoot; onUnmount?: () => void}>) {
   useEffect(() => {
     render(<>{children}</>, root, root.mount, reconciler);
+  }, [children, root, onUnmount]);
 
+  useEffect(() => {
+    console.log('ran effect');
     return () => {
-      render(null, root);
+      // TODO: this should call unmount
+      // root.replaceChildren('');
+      // render(null, root);
     };
-  }, [children, root]);
+  }, [onUnmount, root]);
 
   return null;
 }

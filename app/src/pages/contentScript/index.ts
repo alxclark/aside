@@ -29,54 +29,67 @@ interface Current {
 
   function onAcceptedPortListener(message: any, port: Runtime.Port) {
     if (message?.type === 'accept-port' && message?.sender === 'dev') {
-      const devtools = createDevtoolsEndpoint(port);
-      const webpage = createWebpageEndpoint();
-
-      exposeWebpage(webpage, devtools);
-      exposeDevtools(devtools, webpage);
-
-      current.devtools = devtools;
-      current.webpage = webpage;
-      current.port = port;
-      webpage.call.mountDevTools();
+      setup(port);
     }
   }
 
   async function onConnectListener(port: Runtime.Port) {
     port.postMessage({type: 'accept-port', sender: 'content-script'});
-
     console.log('new dev tools connection');
 
-    try {
-      current.devtools?.terminate();
-    } catch (error) {
-      console.log('devtools terminate failed');
-    }
+    setup(port);
+  }
 
+  async function setup(port: Runtime.Port) {
+    // Unmount the client side remote-components.
+    // This wipes the devtools UI completely.
     try {
+      console.log('unmounting');
       await current.webpage?.call.unmountDevTools();
-      current.webpage?.terminate();
     } catch (error) {
       console.log('webpage terminate failed');
     }
 
-    try {
-      current.port?.disconnect();
-    } catch (error) {
-      console.log('port disconnect failed');
-    }
+    // DOESN'T SEEM TO BE NEEDED
+    // Terminate the previous devtools endpoint.
+    // try {
+    //   current.devtools?.terminate();
+    // } catch (error) {
+    //   console.log('devtools terminate failed');
+    // }
 
+    // // Terminate the previous devtools port.
+    // try {
+    //   console.log('disconnecting');
+    //   current.port?.disconnect();
+    // } catch (error) {
+    //   console.log('port disconnect failed');
+    // }
+
+    // Create a brand new devtools endpoint
     const devtools = createDevtoolsEndpoint(port);
-    const webpage = createWebpageEndpoint();
 
+    // Use the same webpage endpoint or create a new one if there's none.
+    const webpage = current.webpage ?? createWebpageEndpoint();
+
+    // Even if the webpage already existed, the methods exposed to the webpage
+    // depend on the new dev tools endpoint, so we need to re-expose all methods anyway.
     exposeWebpage(webpage, devtools);
     exposeDevtools(devtools, webpage);
+
+    port.onDisconnect.addListener(() => {
+      console.log('disconnect');
+      if (current.port === port) {
+        console.log('clearing');
+        current.port = undefined;
+      }
+    });
 
     current.devtools = devtools;
     current.webpage = webpage;
     current.port = port;
 
-    webpage.call.resetChannel();
+    webpage.call.mountDevTools();
   }
 })();
 

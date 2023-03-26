@@ -12,7 +12,12 @@ export function fromPort(port: Runtime.Port): MessageEndpoint {
 
   return {
     postMessage(message) {
-      port.postMessage(message);
+      console.log({message});
+      try {
+        port.postMessage(message);
+      } catch (error) {
+        console.log(error);
+      }
     },
     addEventListener(_event, listener) {
       const wrappedListener = (message: any) => {

@@ -38,7 +38,9 @@ export function createUnsafeEncoder(
           ? [stackFrame, ...(func as any)[RETAINED_BY]]
           : [stackFrame];
 
-        const result = await func(...(decode(args, retainedBy) as any[]));
+        const decodedArgs = decode(args, retainedBy) as any[];
+        console.log('decodedArgs', decodedArgs);
+        const result = await func(...decodedArgs);
 
         return result;
       } finally {
@@ -157,6 +159,7 @@ export function createUnsafeEncoder(
             );
           }
 
+          console.log('revoked yooo');
           if (!idsToProxy.has(id)) {
             throw new Error(
               'You attempted to call a function that was already revoked.',

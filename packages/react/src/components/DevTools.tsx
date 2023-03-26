@@ -15,19 +15,11 @@ import {AllComponents} from '../ui';
 
 import {RemoteRenderer} from './RemoteRenderer';
 
-const initialEndpoint = createContentScriptEndpoint();
+const contentScript = createContentScriptEndpoint();
 
 export function DevTools({children}: PropsWithChildren<{}>) {
   const [devToolsRoot, setDevToolsRoot] = useState<RemoteRoot | undefined>();
   const channelRef = useRef<RemoteChannel | null>(null);
-  const restartingRef = useRef(false);
-
-  console.log({devToolsRoot});
-
-  const [contentScript, setContentScript] =
-    useState<Endpoint<ContentScriptApiForWebpage>>(initialEndpoint);
-
-  console.log(contentScript);
 
   const mountDevTools = useCallback(
     async (endpoint: Endpoint<ContentScriptApiForWebpage>) => {
@@ -48,43 +40,9 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   );
 
   useEffect(() => {
-    console.log('checking restart', restartingRef.current);
-    if (!restartingRef.current) return;
-
-    mountDevTools(contentScript);
-  }, [contentScript, mountDevTools]);
-
-  const resetChannel = useCallback(() => {
-    console.log('resetting channel');
-
-    setContentScript((prev) => {
-      console.log(prev);
-      console.log('terminating previous endpoint');
-      prev.terminate();
-
-      release(channelRef.current);
-      console.log('setting channel = null');
-      channelRef.current = null;
-
-      console.log('overriding content script');
-
-      console.log('creating new endpoint');
-      const endpoint = createContentScriptEndpoint();
-
-      // somehow this causes weird shit, theres a second endpoint created in between
-      // and both endpoint answers messages going forward
-
-      return endpoint;
-    });
-
-    restartingRef.current = true;
-  }, []);
-
-  useEffect(() => {
     const webpageApi: WebpageApi = {
       async mountDevTools() {
-        console.log('mountDevtools');
-        mountDevTools(contentScript);
+        return mountDevTools(contentScript);
       },
       unmountDevTools() {
         console.log('unmount');
@@ -97,17 +55,24 @@ export function DevTools({children}: PropsWithChildren<{}>) {
       },
       async resetChannel() {
         console.log('reset channel');
-        resetChannel();
       },
     };
 
-    console.log('exposing');
-
     contentScript.expose(webpageApi);
-  }, [setDevToolsRoot, contentScript, mountDevTools, resetChannel]);
+  }, [setDevToolsRoot, mountDevTools]);
 
+  const handleUnmount = useCallback(() => {
+    release(channelRef.current);
+    channelRef.current = null;
+  }, []);
+
+  console.log({devToolsRoot});
   if (devToolsRoot) {
-    return <RemoteRenderer root={devToolsRoot}>{children}</RemoteRenderer>;
+    return (
+      <RemoteRenderer root={devToolsRoot} onUnmount={handleUnmount}>
+        {children}
+      </RemoteRenderer>
+    );
   }
 
   return null;
