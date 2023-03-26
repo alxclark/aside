@@ -35,7 +35,14 @@ interface Current {
 
   async function onConnectListener(port: Runtime.Port) {
     port.postMessage({type: 'accept-port', sender: 'content-script'});
-    setup(port);
+
+    const listener = (message: any) => {
+      console.log(message);
+      if (message.type === 'ready' && message.sender === 'dev') {
+        setup(port);
+      }
+    };
+    port.onMessage.addListener(listener);
   }
 
   async function setup(port: Runtime.Port) {
@@ -71,9 +78,7 @@ interface Current {
 
     // TODO: Fix a timing issue when webpage attempts to request the devtools for a new RPC channel
     // and the request is never answered by the devtools because its not ready in time.
-    setTimeout(() => {
-      webpage.call.mountDevTools();
-    }, 250);
+    webpage.call.mountDevTools();
   }
 })();
 

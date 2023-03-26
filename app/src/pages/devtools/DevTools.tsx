@@ -114,6 +114,8 @@ export function BrowserExtensionRenderer() {
     };
 
     contentScript.expose(devToolsApi);
+
+    port.postMessage({sender: 'dev', type: 'ready'});
   }, [receiver, port]);
 
   useEffect(() => {
