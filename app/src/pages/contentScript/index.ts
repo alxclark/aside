@@ -37,7 +37,6 @@ interface Current {
     port.postMessage({type: 'accept-port', sender: 'content-script'});
 
     const listener = (message: any) => {
-      console.log(message);
       if (message.type === 'ready' && message.sender === 'dev') {
         setup(port);
       }

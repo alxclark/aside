@@ -19,10 +19,10 @@ export async function getManifest() {
     //   default_icon: './assets/icon-512.png',
     //   default_popup: './dist/pages/popup/index.html',
     // },
-    options_ui: {
-      page: './dist/pages/options/index.html',
-      open_in_tab: true,
-    },
+    // options_ui: {
+    //   page: './dist/pages/options/index.html',
+    //   open_in_tab: true,
+    // },
     background: {
       // page: './dist/pages/background/index.html',
       // persistent: false,
@@ -30,9 +30,9 @@ export async function getManifest() {
       type: 'module',
     } as any,
     icons: {
-      16: './assets/icon-512.png',
-      48: './assets/icon-512.png',
-      128: './assets/icon-512.png',
+      16: './assets/logo-16.png',
+      48: './assets/logo-48.png',
+      128: './assets/logo-128.png',
     },
     permissions: ['tabs', 'storage', 'activeTab', 'scripting'],
     host_permissions: ['http://*/', 'https://*/'],
