@@ -13,11 +13,8 @@ export function RemoteRenderer({
   }, [children, root, onUnmount]);
 
   useEffect(() => {
-    console.log('ran effect');
     return () => {
-      // TODO: this should call unmount
-      // root.replaceChildren('');
-      // render(null, root);
+      onUnmount?.();
     };
   }, [onUnmount, root]);
 

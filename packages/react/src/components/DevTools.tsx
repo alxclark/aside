@@ -23,8 +23,6 @@ export function DevTools({children}: PropsWithChildren<{}>) {
 
   const mountDevTools = useCallback(
     async (endpoint: Endpoint<ContentScriptApiForWebpage>) => {
-      console.log('mounting dev tools');
-
       const channel = await endpoint.call.getDevToolsChannel();
       retain(channel);
 
@@ -66,7 +64,6 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     channelRef.current = null;
   }, []);
 
-  console.log({devToolsRoot});
   if (devToolsRoot) {
     return (
       <RemoteRenderer root={devToolsRoot} onUnmount={handleUnmount}>

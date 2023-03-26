@@ -74,19 +74,16 @@ export function BrowserExtensionRenderer() {
         message?.type === 'accept-port' &&
         message?.sender === 'content-script'
       ) {
-        console.log('[dev] Agreed to use the new dev port');
         setPort(port);
       }
     }
 
     function onConnectListener(port: Runtime.Port) {
       if (activeTab !== port.sender?.tab?.id) {
-        console.log('[dev] Refused to use new CS port');
         return;
       }
 
       port.postMessage({type: 'accept-port', sender: 'dev'});
-      console.log('[dev] Agreed to use the new CS port');
 
       // Set a fresh receiver,
       // since the connect listener will be called on page reload once the dev tools is loaded.

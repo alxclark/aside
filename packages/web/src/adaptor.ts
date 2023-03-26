@@ -1,3 +1,4 @@
+/* eslint-disable node/no-unsupported-features/node-builtins */
 import {MessageEndpoint} from '@remote-ui/rpc';
 
 interface Options {
@@ -43,14 +44,15 @@ export function fromWebpage({
 
         if (last?.from === context || !last?.from) return;
 
-        console.groupCollapsed(`[${context}]`, idToString(event.data?.[0]));
-        console.log(event.data?.[1]);
-        console.groupEnd();
-        try {
-          listener(event);
-        } catch (error) {
-          console.log('whats up gee');
+        // Use to debug
+        // eslint-disable-next-line no-constant-condition
+        if (false) {
+          console.groupCollapsed(`[${context}]`, idToString(event.data?.[0]));
+          console.log(event.data?.[1]);
+          console.groupEnd();
         }
+
+        listener(event);
       };
 
       listenerMap.set(listener, wrappedListener);
@@ -65,13 +67,6 @@ export function fromWebpage({
     },
   };
 }
-
-export const CALL = 0;
-export const RESULT = 1;
-export const TERMINATE = 2;
-export const RELEASE = 3;
-export const FUNCTION_APPLY = 5;
-export const FUNCTION_RESULT = 6;
 
 function idToString(something: unknown) {
   if (typeof something === 'number') {

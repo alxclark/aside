@@ -12,7 +12,6 @@ export function fromPort(port: Runtime.Port): MessageEndpoint {
 
   return {
     postMessage(message) {
-      console.log({message});
       try {
         port.postMessage(message);
       } catch (error) {

@@ -35,8 +35,6 @@ interface Current {
 
   async function onConnectListener(port: Runtime.Port) {
     port.postMessage({type: 'accept-port', sender: 'content-script'});
-    console.log('new dev tools connection');
-
     setup(port);
   }
 
@@ -44,27 +42,10 @@ interface Current {
     // Unmount the client side remote-components.
     // This wipes the devtools UI completely.
     try {
-      console.log('unmounting');
       await current.webpage?.call.unmountDevTools();
     } catch (error) {
       console.log('webpage terminate failed');
     }
-
-    // DOESN'T SEEM TO BE NEEDED
-    // Terminate the previous devtools endpoint.
-    // try {
-    //   current.devtools?.terminate();
-    // } catch (error) {
-    //   console.log('devtools terminate failed');
-    // }
-
-    // // Terminate the previous devtools port.
-    // try {
-    //   console.log('disconnecting');
-    //   current.port?.disconnect();
-    // } catch (error) {
-    //   console.log('port disconnect failed');
-    // }
 
     // Create a brand new devtools endpoint
     const devtools = createDevtoolsEndpoint(port);
