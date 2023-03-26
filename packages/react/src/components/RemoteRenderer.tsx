@@ -9,6 +9,10 @@ export function RemoteRenderer({
 }: PropsWithChildren<{root: RemoteRoot}>) {
   useEffect(() => {
     render(<>{children}</>, root, root.mount, reconciler);
+
+    return () => {
+      render(null, root);
+    };
   }, [children, root]);
 
   return null;
