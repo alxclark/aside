@@ -1,6 +1,8 @@
-# aside
+# aside <img src="./app/extension/assets/logo-16.png">
 
-Modular browser extension powered by [remote-ui](https://github.com/Shopify/remote-ui)
+Aside is a modular browser extension built to be a companion to any web application. The libraries provided by Aside allows users to render React components in their own application and uses a custom remote and reconciler to render those components into the Chrome developer tools.
+
+The chrome extension is powered by Shopify's [remote-ui](https://github.com/Shopify/remote-ui) which enables remote rendering.
 
 ## Getting started
 
