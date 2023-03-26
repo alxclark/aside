@@ -13,6 +13,7 @@ export function App() {
   return (
     <RecoilRoot key="recoil-example">
       <RecoilApp />
+      <DevTools />
     </RecoilRoot>
   );
 }
@@ -44,7 +45,6 @@ export function RecoilApp() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-      <DevTools />
     </div>
   );
 }

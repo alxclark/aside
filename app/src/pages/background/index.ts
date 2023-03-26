@@ -19,101 +19,101 @@ const contentScriptCache = new Map<
 >();
 
 setupContentScriptHMR();
-setupDebug({
-  onMessage: (event) => {
-    contentScriptCache.forEach((contentScript) => {
-      contentScript.call.log(
-        'background',
-        ...(event as CustomEvent<any>).detail.message,
-      );
-    });
-  },
-});
+// setupDebug({
+//   onMessage: (event) => {
+//     contentScriptCache.forEach((contentScript) => {
+//       contentScript.call.log(
+//         'background',
+//         ...(event as CustomEvent<any>).detail.message,
+//       );
+//     });
+//   },
+// });
 
-browser.runtime.onConnect.addListener((port) => {
-  const listener = (message: any, senderPort: any): any => {
-    const tabId = message?.tabId ?? senderPort?.sender?.tab?.id;
+// browser.runtime.onConnect.addListener((port) => {
+//   const listener = (message: any, senderPort: any): any => {
+//     const tabId = message?.tabId ?? senderPort?.sender?.tab?.id;
 
-    if (message.name === 'init' && tabId) {
-      switch (port.name) {
-        case 'dev-tools': {
-          const devTools = createEndpoint<DevToolsApi>(fromPort(port), {
-            callable: ['getDevToolsChannel', 'renewReceiver'],
-          });
+//     if (message.name === 'init' && tabId) {
+//       switch (port.name) {
+//         case 'dev-tools': {
+//           const devTools = createEndpoint<DevToolsApi>(fromPort(port), {
+//             callable: ['getDevToolsChannel', 'renewReceiver'],
+//           });
 
-          const backgroundApiForDevTools: BackgroundApiForDevTools = {
-            log(source, ...params) {
-              contentScriptCache.get(tabId)?.call.log(source, ...params);
-            },
-          };
+//           const backgroundApiForDevTools: BackgroundApiForDevTools = {
+//             log(source, ...params) {
+//               contentScriptCache.get(tabId)?.call.log(source, ...params);
+//             },
+//           };
 
-          devTools.expose(backgroundApiForDevTools);
+//           devTools.expose(backgroundApiForDevTools);
 
-          port.onDisconnect.addListener(() => {
-            devtoolsCache.delete(tabId);
-            contentScriptCache.get(tabId)?.call.unmountDevTools();
-          });
+//           port.onDisconnect.addListener(() => {
+//             devtoolsCache.delete(tabId);
+//             contentScriptCache.get(tabId)?.call.unmountDevTools();
+//           });
 
-          if (contentScriptCache.has(tabId)) {
-            const contentScript = contentScriptCache.get(tabId)!;
+//           if (contentScriptCache.has(tabId)) {
+//             const contentScript = contentScriptCache.get(tabId)!;
 
-            contentScript.call.log('background', 'mounting dev tools');
-            contentScript.call.mountDevTools();
-          }
+//             contentScript.call.log('background', 'mounting dev tools');
+//             contentScript.call.mountDevTools();
+//           }
 
-          return devtoolsCache.set(tabId, devTools);
-        }
-        case 'content-script': {
-          const contentScript = createEndpoint<ContentScriptApiForBackground>(
-            fromPort(port),
-            {
-              callable: ['mountDevTools', 'unmountDevTools', 'log'],
-              createEncoder: createUnsafeEncoder,
-            },
-          );
+//           return devtoolsCache.set(tabId, devTools);
+//         }
+//         case 'content-script': {
+//           const contentScript = createEndpoint<ContentScriptApiForBackground>(
+//             fromPort(port),
+//             {
+//               callable: ['mountDevTools', 'unmountDevTools', 'log'],
+//               createEncoder: createUnsafeEncoder,
+//             },
+//           );
 
-          const backgroundApiForContentScript: BackgroundApiForContentScript = {
-            async getDevToolsChannel() {
-              const devTools = devtoolsCache.get(tabId);
+//           const backgroundApiForContentScript: BackgroundApiForContentScript = {
+//             async getDevToolsChannel() {
+//               const devTools = devtoolsCache.get(tabId);
 
-              if (!devTools) {
-                console.error('Dev tools not available for this tab');
-                return;
-              }
+//               if (!devTools) {
+//                 console.error('Dev tools not available for this tab');
+//                 return;
+//               }
 
-              const channel = await devTools.call.getDevToolsChannel();
+//               const channel = await devTools.call.getDevToolsChannel();
 
-              return channel;
-            },
-          };
+//               return channel;
+//             },
+//           };
 
-          contentScript.expose(backgroundApiForContentScript);
+//           contentScript.expose(backgroundApiForContentScript);
 
-          port.onDisconnect.addListener(() => {
-            contentScriptCache.delete(tabId);
+//           port.onDisconnect.addListener(() => {
+//             contentScriptCache.delete(tabId);
 
-            const devTools = devtoolsCache.get(tabId);
+//             const devTools = devtoolsCache.get(tabId);
 
-            if (!devTools) {
-              console.error('Dev tools not available for this tab');
-              return;
-            }
+//             if (!devTools) {
+//               console.error('Dev tools not available for this tab');
+//               return;
+//             }
 
-            devTools.call.renewReceiver();
-          });
+//             devTools.call.renewReceiver();
+//           });
 
-          if (devtoolsCache.has(tabId)) {
-            contentScript.call.log('background', 'mounting dev tools');
-            contentScript.call.mountDevTools();
-          }
+//           if (devtoolsCache.has(tabId)) {
+//             contentScript.call.log('background', 'mounting dev tools');
+//             contentScript.call.mountDevTools();
+//           }
 
-          console.log('Adding contentScript for tab:', tabId);
+//           console.log('Adding contentScript for tab:', tabId);
 
-          return contentScriptCache.set(tabId, contentScript);
-        }
-      }
-    }
-  };
+//           return contentScriptCache.set(tabId, contentScript);
+//         }
+//       }
+//     }
+//   };
 
-  port.onMessage.addListener(listener);
-});
+//   port.onMessage.addListener(listener);
+// });

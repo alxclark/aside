@@ -39,6 +39,8 @@ export function fromWebpage({
 
         if (last?.from === context || !last?.from) return;
 
+        // console.log('from', context);
+        // console.log(event.data?.[0], event.data?.[1]);
         listener(event);
       };
 

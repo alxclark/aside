@@ -15,5 +15,10 @@
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
   },
-  "exclude": ["dist", "node_modules"]
+  "exclude": ["dist", "node_modules"],
+  "references": [
+    { "path": "../packages/extension" },
+    { "path": "../packages/web" },
+    { "path": "../packages/react" },
+  ]
 }

@@ -1,38 +1,93 @@
-import React, {PropsWithChildren, useState, useEffect} from 'react';
+import React, {
+  PropsWithChildren,
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+} from 'react';
 import {fromWebpage, WebpageApi} from '@aside/web';
 import {RemoteRoot, createRemoteRoot} from '@remote-ui/react';
-import {createEndpoint, retain} from '@remote-ui/rpc';
+import {createEndpoint, Endpoint, release, retain} from '@remote-ui/rpc';
 import {ContentScriptApiForWebpage} from '@aside/extension';
+import type {RemoteChannel} from '@remote-ui/core';
 
 import {AllComponents} from '../ui';
 
 import {RemoteRenderer} from './RemoteRenderer';
 
-const contentScript = createEndpoint<ContentScriptApiForWebpage>(
-  fromWebpage({context: 'webpage'}),
-  {
-    callable: ['getDevToolsChannel'],
-  },
-);
+const initialEndpoint = createContentScriptEndpoint();
 
 export function DevTools({children}: PropsWithChildren<{}>) {
   const [devToolsRoot, setDevToolsRoot] = useState<RemoteRoot | undefined>();
+  const channelRef = useRef<RemoteChannel | null>(null);
+  const restartingRef = useRef(false);
+
+  console.log({devToolsRoot});
+
+  const [contentScript, setContentScript] =
+    useState<Endpoint<ContentScriptApiForWebpage>>(initialEndpoint);
+
+  console.log(contentScript);
+
+  const mountDevTools = useCallback(
+    async (endpoint: Endpoint<ContentScriptApiForWebpage>) => {
+      console.log('mounting dev tools');
+
+      const channel = await endpoint.call.getDevToolsChannel();
+      retain(channel);
+
+      channelRef.current = channel;
+
+      const root = createRemoteRoot(channel, {
+        components: AllComponents,
+      });
+
+      setDevToolsRoot(root);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    console.log('checking restart', restartingRef.current);
+    if (!restartingRef.current) return;
+
+    mountDevTools(contentScript);
+  }, [contentScript, mountDevTools]);
+
+  const resetChannel = useCallback(() => {
+    console.log('resetting channel');
+
+    setContentScript((prev) => {
+      console.log(prev);
+      console.log('terminating previous endpoint');
+      prev.terminate();
+
+      release(channelRef.current);
+      console.log('setting channel = null');
+      channelRef.current = null;
+
+      console.log('overriding content script');
+
+      console.log('creating new endpoint');
+      const endpoint = createContentScriptEndpoint();
+
+      // somehow this causes weird shit, theres a second endpoint created in between
+      // and both endpoint answers messages going forward
+
+      return endpoint;
+    });
+
+    restartingRef.current = true;
+  }, []);
 
   useEffect(() => {
     const webpageApi: WebpageApi = {
       async mountDevTools() {
-        if (devToolsRoot) return;
-
-        const channel = await contentScript.call.getDevToolsChannel();
-        retain(channel);
-
-        const root = createRemoteRoot(channel, {
-          components: AllComponents,
-        });
-
-        setDevToolsRoot(root);
+        console.log('mountDevtools');
+        mountDevTools(contentScript);
       },
       unmountDevTools() {
+        console.log('unmount');
         setDevToolsRoot(undefined);
       },
       log(source, ...params: any[]) {
@@ -40,14 +95,29 @@ export function DevTools({children}: PropsWithChildren<{}>) {
 
         console.log(sourcePrefix, ...params);
       },
+      async resetChannel() {
+        console.log('reset channel');
+        resetChannel();
+      },
     };
 
+    console.log('exposing');
+
     contentScript.expose(webpageApi);
-  }, [setDevToolsRoot, devToolsRoot]);
+  }, [setDevToolsRoot, contentScript, mountDevTools, resetChannel]);
 
   if (devToolsRoot) {
     return <RemoteRenderer root={devToolsRoot}>{children}</RemoteRenderer>;
   }
 
   return null;
+}
+
+function createContentScriptEndpoint() {
+  return createEndpoint<ContentScriptApiForWebpage>(
+    fromWebpage({context: 'webpage'}),
+    {
+      callable: ['getDevToolsChannel'],
+    },
+  );
 }
