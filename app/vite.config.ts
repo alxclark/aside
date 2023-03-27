@@ -7,10 +7,8 @@ import {dirname, relative} from 'path';
 import type {UserConfig} from 'vite';
 import {defineConfig} from 'vite';
 import AutoImport from 'unplugin-auto-import/vite';
-import WindiCSS from 'vite-plugin-windicss';
 import react from '@vitejs/plugin-react';
 
-import windiConfig from './windi.config';
 import {isDev, port, r} from './scripts/utils';
 
 export const sharedConfig: UserConfig = {
@@ -89,14 +87,7 @@ export default defineConfig(({command}) => ({
       },
     },
   },
-  plugins: [
-    ...sharedConfig.plugins!,
-    react({fastRefresh: false}),
-    // https://github.com/antfu/vite-plugin-windicss
-    WindiCSS({
-      config: windiConfig,
-    }),
-  ],
+  plugins: [...sharedConfig.plugins!, react({fastRefresh: false})],
   test: {
     globals: true,
     environment: 'jsdom',

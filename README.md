@@ -7,6 +7,8 @@ This notably allows developers to build developer tools that can evolve based on
 * State persistence (Apollo cache, local storage)
 * App routes
 
+## [Example](https://github.com/alxclark/aside/tree/main/packages/recoil)
+
 <img src="./images/devtools.png">
 
 The chrome extension is powered by Shopify's [remote-ui](https://github.com/Shopify/remote-ui) which enables remote rendering.
