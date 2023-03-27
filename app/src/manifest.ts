@@ -34,7 +34,7 @@ export async function getManifest() {
       48: './assets/logo-48.png',
       128: './assets/logo-128.png',
     },
-    permissions: ['scripting'],
+    permissions: isDev ? ['scripting'] : [],
     host_permissions: ['http://*/', 'https://*/'],
     content_scripts: [
       {
