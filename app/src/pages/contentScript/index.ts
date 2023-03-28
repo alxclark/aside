@@ -1,9 +1,10 @@
 import {createEndpoint, Endpoint} from '@remote-ui/rpc';
 import {
-  BackgroundApiForContentScript,
   ContentScriptApiForWebpage,
   fromPort,
   fromContentScript,
+  ContentScriptApiForDevTools,
+  DevToolsApiForContentScript,
 } from '@aside/extension';
 import type {WebpageApi} from '@aside/web';
 import {createUnsafeEncoder} from '@aside/core';
@@ -11,7 +12,7 @@ import {Runtime} from 'webextension-polyfill';
 
 interface Current {
   webpage?: Endpoint<WebpageApi>;
-  devtools?: Endpoint<BackgroundApiForContentScript>;
+  devtools?: Endpoint<DevToolsApiForContentScript>;
   port?: Runtime.Port;
 }
 
@@ -75,14 +76,12 @@ interface Current {
     current.webpage = webpage;
     current.port = port;
 
-    // TODO: Fix a timing issue when webpage attempts to request the devtools for a new RPC channel
-    // and the request is never answered by the devtools because its not ready in time.
     webpage.call.mountDevTools();
   }
 })();
 
 function createDevtoolsEndpoint(port: Runtime.Port) {
-  return createEndpoint<BackgroundApiForContentScript>(fromPort(port), {
+  return createEndpoint<DevToolsApiForContentScript>(fromPort(port), {
     callable: ['getDevToolsChannel'],
   });
 }
@@ -96,7 +95,7 @@ function createWebpageEndpoint() {
 
 function exposeWebpage(
   webpage: Endpoint<WebpageApi>,
-  devtools: Endpoint<BackgroundApiForContentScript>,
+  devtools: Endpoint<DevToolsApiForContentScript>,
 ) {
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
     getDevToolsChannel() {
@@ -108,10 +107,10 @@ function exposeWebpage(
 }
 
 function exposeDevtools(
-  devtools: Endpoint<BackgroundApiForContentScript>,
+  devtools: Endpoint<DevToolsApiForContentScript>,
   webpage: Endpoint<WebpageApi>,
 ) {
-  const contentScriptApiForDevtools: any = {
+  const contentScriptApiForDevtools: ContentScriptApiForDevTools = {
     mountDevTools() {
       return webpage.call.mountDevTools();
     },

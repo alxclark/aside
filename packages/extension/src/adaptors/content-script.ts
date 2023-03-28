@@ -22,7 +22,7 @@ export function fromContentScriptToDevtools(): Promise<MessageEndpoint> {
 
   console.log('fromContentScriptToDevtools');
 
-  return new Promise<MessageEndpoint>((resolve, reject) => {
+  return new Promise<MessageEndpoint>((resolve) => {
     // Attempt a connection in case Devtools already loaded and can intercept the port.
     const port = browser.runtime.connect({name: 'content-script'});
     // Wait to receive a message from devtools accepting to use the port.
