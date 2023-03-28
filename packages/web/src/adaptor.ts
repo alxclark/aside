@@ -6,14 +6,10 @@ interface Options {
   context: string;
 }
 
-let count = 0;
-
 export function fromWebpage({
   targetOrigin = '*',
   context,
 }: Options): MessageEndpoint {
-  const id = count++;
-
   // We need to store the listener, because we wrap it to do some origin checking. Ideally,
   // we’d instead store an `AbortController`, and use its signal to cancel the listeners,
   // but that isn’t widely supported.

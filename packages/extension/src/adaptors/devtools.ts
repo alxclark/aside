@@ -4,7 +4,7 @@ import {MessageEndpoint} from '@remote-ui/rpc';
 import {fromPort} from './port';
 
 export async function fromDevTools(): Promise<MessageEndpoint> {
-  return new Promise<MessageEndpoint>((resolve, reject) => {
+  return new Promise<MessageEndpoint>((resolve) => {
     // Attempt a connection in case content-script already loaded and can intercept the port.
     const port = browser.runtime.connect({
       name: `${browser.devtools.inspectedWindow.tabId}`,

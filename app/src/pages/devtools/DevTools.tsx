@@ -4,31 +4,16 @@ import {
   createRemoteReceiver,
 } from '@remote-ui/react/host';
 import {createEndpoint} from '@remote-ui/rpc';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
-  BackgroundApiForDevTools,
-  DevToolsApi,
+  ContentScriptApiForDevTools,
+  DevToolsApiForContentScript,
   fromPort,
 } from '@aside/extension';
 import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui/react';
-
-import {setupDebug} from '../../foundation/Debug';
-
-import '@aside/chrome-ui/css';
 import {Runtime} from 'webextension-polyfill';
 
-// const contentScript = createEndpoint<any>(fromDevTools(), {
-//   callable: ['getDevToolsChannel', 'log', 'renewReceiver', 'mountDevTools'],
-// });
-
-// setupDebug({
-//   onMessage: (event) => {
-//     contentScript.call.log(
-//       'devtools',
-//       ...(event as CustomEvent<any>).detail.message,
-//     );
-//   },
-// });
+import '@aside/chrome-ui/css';
 
 export function BrowserExtensionRenderer() {
   const controller = useMemo(
@@ -100,11 +85,19 @@ export function BrowserExtensionRenderer() {
   useEffect(() => {
     if (!port) return;
 
-    const contentScript = createEndpoint<any>(fromPort(port), {
-      callable: ['getDevToolsChannel', 'log', 'renewReceiver', 'mountDevTools'],
-    });
+    const contentScript = createEndpoint<ContentScriptApiForDevTools>(
+      fromPort(port),
+      {
+        callable: [
+          'getDevToolsChannel',
+          'log',
+          'renewReceiver',
+          'mountDevTools',
+        ],
+      },
+    );
 
-    const devToolsApi: DevToolsApi = {
+    const devToolsApi: DevToolsApiForContentScript = {
       getDevToolsChannel() {
         return receiver.receive;
       },
