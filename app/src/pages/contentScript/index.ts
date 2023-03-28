@@ -2,11 +2,10 @@ import {createEndpoint, Endpoint} from '@remote-ui/rpc';
 import {
   ContentScriptApiForWebpage,
   fromPort,
-  fromContentScript,
   ContentScriptApiForDevTools,
   DevToolsApiForContentScript,
 } from '@aside/extension';
-import type {WebpageApi} from '@aside/web';
+import {fromWebpage, WebpageApi} from '@aside/web';
 import {createUnsafeEncoder} from '@aside/core';
 import {Runtime} from 'webextension-polyfill';
 
@@ -87,7 +86,7 @@ function createDevtoolsEndpoint(port: Runtime.Port) {
 }
 
 function createWebpageEndpoint() {
-  return createEndpoint<WebpageApi>(fromContentScript({to: 'webpage'}), {
+  return createEndpoint<WebpageApi>(fromWebpage({context: 'content-script'}), {
     callable: ['mountDevTools', 'unmountDevTools', 'log', 'resetChannel'],
     createEncoder: createUnsafeEncoder,
   });

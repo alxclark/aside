@@ -1,9 +1,11 @@
+/**
+ * Monkeypatch console.log to instead send a custom event and proxy logs from an extension script to the main webpage.
+ */
 export function setupDebug({
   onMessage,
 }: {
   onMessage: (event: CustomEvent) => void;
 }) {
-  return;
   console.log = log;
 
   const listener = (event: any) => {

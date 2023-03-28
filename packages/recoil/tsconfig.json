@@ -3,6 +3,7 @@
   "include": ["src"],
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
+    "target": "ESNext",
     "noEmit": false,
     "emitDeclarationOnly": true,
     "outDir": "./build/ts",
