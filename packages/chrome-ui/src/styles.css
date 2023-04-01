@@ -10,5 +10,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 0;
-  background: transparent;
+  background: red;
+  padding: 0;
+  height: 0;
 }
