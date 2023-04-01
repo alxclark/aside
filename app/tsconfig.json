@@ -15,8 +15,12 @@
     "noUnusedLocals": true,
     "forceConsistentCasingInFileNames": true,
     "types": [
-      "vite/client"
+      "vite/client",
+      "vitest/globals"
     ],
+    "paths": {
+      "tests/*": ["src/tests/*"],
+    }
   },
   "exclude": ["dist", "node_modules"],
   "references": [

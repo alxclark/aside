@@ -4,7 +4,7 @@
   "private": true,
   "description": "Composable browser extension",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "turbo test",
     "dev": "yarn dev:app & yarn dev:recoil & yarn dev:chrome-ui",
     "dev:app": "yarn workspace app dev",
     "dev:recoil": "yarn workspace recoil-example dev",
@@ -17,7 +17,8 @@
     "turbo-dev": "turbo run dev",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
-    "bundle-extension": "turbo run pack"
+    "bundle-extension": "turbo run pack",
+    "test:app": "yarn workspace app test"
   },
   "repository": {
     "type": "git",
@@ -51,7 +52,9 @@
     "babel-loader": "^8.3.0",
     "eslint": "^8.3.0",
     "prettier": "^2.5.1",
-    "turbo": "latest"
+    "ts-essentials": "^9.3.1",
+    "turbo": "latest",
+    "vitest": "^0.29.8"
   },
   "workspaces": [
     "app",

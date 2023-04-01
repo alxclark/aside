@@ -1,5 +1,2 @@
-import {setupHmr} from './hmr';
-
-export function setupContentScriptHMR() {
-  setupHmr();
-}
+export {setupContentScriptHMR} from './hmr';
+export {contentScript} from './ContentScript';

@@ -16,6 +16,7 @@ export const sharedConfig: UserConfig = {
   resolve: {
     alias: {
       '~/': `${r('src')}/`,
+      'tests/': `${r('src/tests')}/`,
       // Alias packages to the index.
       // Otherwise Vite defaults to resolve the entrypoints
       // defined in the package.json files.
@@ -60,36 +61,48 @@ export const sharedConfig: UserConfig = {
   },
 };
 
-export default defineConfig(({command}) => ({
-  ...sharedConfig,
-  base: command === 'serve' ? `http://localhost:${port}/` : '/dist/',
-  server: {
-    port,
-    hmr: {
-      host: 'localhost',
-    },
-  },
-  build: {
-    outDir: r('extension/dist'),
-    emptyOutDir: false,
-    sourcemap: isDev ? 'inline' : false,
-    // https://developer.chrome.com/docs/webstore/program_policies/#:~:text=Code%20Readability%20Requirements
-    terserOptions: {
-      mangle: false,
-    },
-    rollupOptions: {
-      input: {
-        background: r('src/pages/background/index.html'),
-        options: r('src/pages/options/index.html'),
-        popup: r('src/pages/popup/index.html'),
-        devtools: r('src/pages/devtools/index.html'),
-        devtoolsPanel: r('src/pages/devtools/panel.html'),
+export default defineConfig(({command, mode}) => {
+  console.log(mode);
+  return {
+    ...sharedConfig,
+    base: command === 'serve' ? `http://localhost:${port}/` : '/dist/',
+    server: {
+      port,
+      hmr: {
+        host: 'localhost',
       },
     },
-  },
-  plugins: [...sharedConfig.plugins!, react({fastRefresh: false})],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-  },
-}));
+    build: {
+      outDir: r('extension/dist'),
+      emptyOutDir: false,
+      sourcemap: isDev ? 'inline' : false,
+      // https://developer.chrome.com/docs/webstore/program_policies/#:~:text=Code%20Readability%20Requirements
+      terserOptions: {
+        mangle: false,
+      },
+      rollupOptions: {
+        input: {
+          background: r('src/pages/background/index.html'),
+          options: r('src/pages/options/index.html'),
+          popup: r('src/pages/popup/index.html'),
+          devtools: r('src/pages/devtools/index.html'),
+          devtoolsPanel: r('src/pages/devtools/panel.html'),
+        },
+      },
+    },
+    plugins:
+      mode === 'test'
+        ? [
+            AutoImport({
+              imports: ['vitest'],
+              dts: r('src/vitest.d.ts'),
+            }),
+          ]
+        : [...sharedConfig.plugins!, react({fastRefresh: false})],
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: [`${r('./src/tests/setup.ts')}`],
+    },
+  };
+});
