@@ -57,7 +57,7 @@ export function ObjectRenderer({
   return (
     <>
       <button
-        className="ml-[-10px]"
+        className="ml-[-10px] text-left"
         onClick={() => setCollapsed((prev) => !prev)}
       >
         <Carret direction={collapsed ? 'right' : 'down'} />
