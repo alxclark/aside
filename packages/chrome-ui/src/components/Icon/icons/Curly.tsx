@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Props} from '../Icon';
+import type {Props} from '../Icon';
 
 export function Curly({height, width, color}: Omit<Props, 'source'>) {
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Curly, Start} from './icons';
+import {Curly, Start, Filter, Cancel, Cog} from './icons';
 
 export interface Props {
   source: IconSource;
@@ -9,7 +9,7 @@ export interface Props {
   width?: number;
 }
 
-export type IconSource = 'start' | 'curly';
+export type IconSource = 'start' | 'curly' | 'filter' | 'cancel' | 'cog';
 
 export function Icon({source, ...props}: Props) {
   switch (source) {
@@ -17,6 +17,12 @@ export function Icon({source, ...props}: Props) {
       return <Curly {...props} />;
     case 'start':
       return <Start {...props} />;
+    case 'filter':
+      return <Filter {...props} />;
+    case 'cancel':
+      return <Cancel {...props} />;
+    case 'cog':
+      return <Cog {...props} />;
     default:
       return null;
   }

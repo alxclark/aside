@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Props} from '../Icon';
+import type {Props} from '../Icon';
 
 export function Start({height, width, color}: Omit<Props, 'source'>) {
   return (
