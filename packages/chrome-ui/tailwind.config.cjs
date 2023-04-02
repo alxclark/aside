@@ -23,6 +23,11 @@ module.exports = {
           blue: '#5db0d7',
         },
       },
+      elevation: {
+        1: 'rgb(41, 42, 45)',
+        2: 'rgb(53, 54, 58)',
+      },
+      hairline: 'rgb(73, 76, 80)',
     },
     fontFamily: {
       sans: ['sans-serif'],
