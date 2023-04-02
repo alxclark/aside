@@ -28,6 +28,9 @@ module.exports = {
         2: 'rgb(53, 54, 58)',
       },
       hairline: 'rgb(73, 76, 80)',
+      checkbox: {
+        accent: 'rgb(255, 165, 0)',
+      },
     },
     fontFamily: {
       sans: ['sans-serif'],
