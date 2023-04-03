@@ -1,6 +1,14 @@
 import React from 'react';
 
-import {Curly, Start, Filter, Cancel, Cog} from './icons';
+import {
+  Curly,
+  Start,
+  Filter,
+  Cancel,
+  Cog,
+  VerticalEllipsis,
+  Close,
+} from './icons';
 
 export interface Props {
   source: IconSource;
@@ -9,7 +17,14 @@ export interface Props {
   width?: number;
 }
 
-export type IconSource = 'start' | 'curly' | 'filter' | 'cancel' | 'cog';
+export type IconSource =
+  | 'start'
+  | 'curly'
+  | 'filter'
+  | 'cancel'
+  | 'cog'
+  | 'vertical-ellipsis'
+  | 'close';
 
 export function Icon({source, ...props}: Props) {
   switch (source) {
@@ -23,6 +38,10 @@ export function Icon({source, ...props}: Props) {
       return <Cancel {...props} />;
     case 'cog':
       return <Cog {...props} />;
+    case 'vertical-ellipsis':
+      return <VerticalEllipsis {...props} />;
+    case 'close':
+      return <Close {...props} />;
     default:
       return null;
   }

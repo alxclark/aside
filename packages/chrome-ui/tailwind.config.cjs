@@ -31,6 +31,7 @@ module.exports = {
       checkbox: {
         accent: 'rgb(255, 165, 0)',
       },
+      lightblue: 'rgb(138, 180, 248)',
     },
     fontFamily: {
       sans: ['sans-serif'],

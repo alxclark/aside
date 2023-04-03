@@ -6,7 +6,9 @@ export interface Props {
   direction?: 'row' | 'column';
   fullHeight?: boolean;
   gap?: string;
-  alignItems?: 'center';
+  alignItems?: 'center' | 'start';
+  justifyContent?: 'space-between';
+  wrap?: boolean;
 }
 
 export function Flex({
@@ -15,6 +17,8 @@ export function Flex({
   fullHeight,
   gap,
   alignItems,
+  justifyContent,
+  wrap,
 }: Props) {
   return (
     <div
@@ -25,6 +29,9 @@ export function Flex({
         direction === 'column' && 'flex-col',
         fullHeight && 'h-full',
         alignItems === 'center' && 'items-center',
+        alignItems === 'start' && 'items-start',
+        justifyContent === 'space-between' && 'justify-between',
+        wrap && 'flex-wrap',
       )}
     >
       {children}
