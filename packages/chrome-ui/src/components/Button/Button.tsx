@@ -9,6 +9,7 @@ export type Props = PropsWithChildren<{
   pressed?: boolean;
   title?: string;
   iconHeight?: number;
+  color?: string;
 }>;
 
 export function Button({
@@ -18,6 +19,7 @@ export function Button({
   pressed,
   title,
   iconHeight = 13,
+  color,
 }: Props) {
   if (icon) {
     return (
@@ -25,12 +27,12 @@ export function Button({
         title={title}
         aria-label={title}
         className={classNames(
-          'w-[28px] h-[26px] flex items-center justify-center text-gray-300 hover:text-white',
+          'w-[28px] h-[26px] flex items-center justify-center text-gray-300 hover:text-white cursor-default',
           pressed && 'text-lightblue',
         )}
         onClick={onPress}
       >
-        <Icon source={icon} height={iconHeight} />
+        <Icon source={icon} height={iconHeight} color={color} />
       </button>
     );
   }

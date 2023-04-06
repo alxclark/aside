@@ -5,3 +5,6 @@ export {Cancel} from './Cancel';
 export {Cog} from './Cog';
 export {VerticalEllipsis} from './VerticalEllipsis';
 export {Close} from './Close';
+export {RecordOn} from './RecordOn';
+export {RecordOff} from './RecordOff';
+export {Search} from './Search';

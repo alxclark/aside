@@ -36,11 +36,16 @@ const Children = () => {
       <PaneHeader>
         <Flex justifyContent="space-between" alignItems="start">
           <Flex alignItems="center" wrap>
+            <Button
+              icon="record-on"
+              color="rgb(242, 139, 130)"
+              title="Stop recording"
+              iconHeight={19}
+            />
             <Button icon="cancel" title="Clear" />
-            <Button icon="cancel" />
             <Divider />
             <Button icon="filter" iconHeight={12} pressed title="Filter" />
-            <Button icon="filter" title="Search" />
+            <Button icon="search" title="Search" iconHeight={20} />
             <Divider />
             <Checkbox
               id="log"
@@ -54,17 +59,14 @@ const Children = () => {
               label="Disable caching"
               onChange={console.log}
             />
-            <Icon source="filter" height={12} color="#919191" />
-            <Divider />
-            <Icon source="filter" height={12} color="#919191" />
-            <Icon source="filter" height={12} color="#919191" />
           </Flex>
           <Flex alignItems="center">
             <Divider />
-            <Icon source="cog" height={14} color="#919191" />
+            <Button icon="cog" iconHeight={14} />
           </Flex>
         </Flex>
       </PaneHeader>
+      <PaneHeader>hey</PaneHeader>
     </>
   );
 };

@@ -8,6 +8,9 @@ import {
   Cog,
   VerticalEllipsis,
   Close,
+  RecordOn,
+  RecordOff,
+  Search,
 } from './icons';
 
 export interface Props {
@@ -24,7 +27,10 @@ export type IconSource =
   | 'cancel'
   | 'cog'
   | 'vertical-ellipsis'
-  | 'close';
+  | 'close'
+  | 'record-on'
+  | 'record-off'
+  | 'search';
 
 export function Icon({source, ...props}: Props) {
   switch (source) {
@@ -42,6 +48,12 @@ export function Icon({source, ...props}: Props) {
       return <VerticalEllipsis {...props} />;
     case 'close':
       return <Close {...props} />;
+    case 'record-on':
+      return <RecordOn {...props} />;
+    case 'record-off':
+      return <RecordOff {...props} />;
+    case 'search':
+      return <Search {...props} />;
     default:
       return null;
   }

@@ -32,6 +32,10 @@ module.exports = {
         accent: 'rgb(255, 165, 0)',
       },
       lightblue: 'rgb(138, 180, 248)',
+      background: 'rgb(32, 33, 36)',
+      text: {
+        secondary: 'rgb(154, 160, 166)',
+      },
     },
     fontFamily: {
       sans: ['sans-serif'],
