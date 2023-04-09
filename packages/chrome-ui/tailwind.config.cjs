@@ -5,6 +5,7 @@ module.exports = {
     extend: {},
     colors: {
       gray: {
+        100: 'rgb(189, 198, 207)',
         200: '#bcc5ce',
         300: '#9aa0a6',
         400: '#4a4c50',
@@ -35,6 +36,9 @@ module.exports = {
       background: 'rgb(32, 33, 36)',
       text: {
         secondary: 'rgb(154, 160, 166)',
+      },
+      input: {
+        active: '#106099',
       },
     },
     fontFamily: {

@@ -3,14 +3,14 @@ import React from 'react';
 
 import {Tabs, Tab} from '../../../Tabs';
 
-import {PaneHeader} from './PaneHeader';
+import {PaneToolbar} from './PaneToolbar';
 
 export default {
   title: 'ChromeUI/Pane/Header',
-  component: PaneHeader,
+  component: PaneToolbar,
 };
 
-const Template = (args: any) => <PaneHeader {...args} />;
+const Template = (args: any) => <PaneToolbar {...args} />;
 
 const Children = () => {
   return (

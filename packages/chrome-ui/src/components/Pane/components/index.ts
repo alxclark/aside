@@ -1,2 +1,2 @@
-export {PaneHeader} from './PaneHeader';
-export type {Props as PaneHeaderProps} from './PaneHeader';
+export {PaneToolbar, PaneToolbarSection} from './PaneToolbar';
+export type {PaneToolbarProps, PaneToolbarSectionProps} from './PaneToolbar';
