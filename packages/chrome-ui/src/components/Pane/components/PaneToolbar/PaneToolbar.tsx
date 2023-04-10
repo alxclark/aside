@@ -29,3 +29,15 @@ export function PaneToolbarSection({
     </Flex>
   );
 }
+
+export interface PaneToolbarItemProps extends PropsWithChildren {}
+
+export function PaneToolbarItem({children}: PaneToolbarItemProps) {
+  return (
+    <div className="h-[26px]">
+      <Flex alignItems="center" fullHeight>
+        {children}
+      </Flex>
+    </div>
+  );
+}

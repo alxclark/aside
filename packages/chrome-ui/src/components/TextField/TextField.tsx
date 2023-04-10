@@ -9,13 +9,17 @@ export interface Props {
 }
 
 export function TextField({id, placeholder, onChange, value}: Props) {
+  const hasValue = value && value.length > 0;
+
   return (
     <input
       className={classNames(
         'text-gray-100 bg-background h-[20px] pl-[3px]',
-        'border border-elevation-1',
-        'placeholder:text-text-secondary focus-visible:outline-none hover:border-gray-400 focus:border-input-active',
-        value && value.length > 0 && 'border-input-active',
+        hasValue
+          ? 'border-input-active'
+          : 'border-elevation-1 hover:border-gray-400',
+        'border',
+        'placeholder:text-text-secondary focus-visible:outline-none focus:border-input-active',
       )}
       value={value}
       placeholder={placeholder}

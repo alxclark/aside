@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import React, {useState} from 'react';
+import React from 'react';
 
 import '../../../../../.storybook/styles.css';
 import {Flex, Log, View} from '..';
@@ -68,8 +68,6 @@ const TimelineTemplate = () => <TimelineExample />;
 export const Timeline = TimelineTemplate.bind({}) as any;
 
 function TimelineExample() {
-  const [selected, setSelected] = useState();
-
   return (
     <Flex fullHeight>
       <View width={150}>
