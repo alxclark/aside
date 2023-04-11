@@ -82,8 +82,8 @@ export function Table({
       >
         <thead
           className={classNames(
-            'bg-gray-500 w-full border-gray-400',
-            border ? 'border' : 'border-y',
+            'bg-gray-500 w-full sticky top-0',
+            'shadow-table',
           )}
         >
           <tr>{headings}</tr>

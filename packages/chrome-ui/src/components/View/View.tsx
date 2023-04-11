@@ -9,6 +9,8 @@ export interface Props {
   fullHeight?: boolean;
   margin?: CSSProperties['margin'];
   padding?: CSSProperties['padding'];
+  maxHeight?: CSSProperties['maxHeight'];
+  overflow?: CSSProperties['overflow'];
 }
 
 export function View({
@@ -19,10 +21,12 @@ export function View({
   fullHeight,
   margin,
   padding,
+  maxHeight,
+  overflow,
 }: Props) {
   return (
     <div
-      style={{width, margin, padding}}
+      style={{width, margin, padding, maxHeight, overflow}}
       className={classNames(
         flexGrow && 'grow',
         border && 'border-gray-400',

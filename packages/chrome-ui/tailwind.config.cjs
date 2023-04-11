@@ -2,7 +2,11 @@
 module.exports = {
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        table: 'inset 0px 0px 0px 1px #4a4c50',
+      },
+    },
     colors: {
       gray: {
         100: 'rgb(189, 198, 207)',

@@ -7,5 +7,9 @@ export interface Props {
 }
 
 export function PaneContent({children}: Props) {
-  return <View flexGrow>{children}</View>;
+  return (
+    <View flexGrow maxHeight="100%" overflow="scroll">
+      {children}
+    </View>
+  );
 }
