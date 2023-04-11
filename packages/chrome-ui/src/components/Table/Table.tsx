@@ -16,6 +16,7 @@ export type Props = PropsWithChildren<{
   border?: boolean;
   scrollable?: boolean;
   maxHeight?: string;
+  rowHeight?: string;
 }>;
 
 export interface Column {
@@ -37,6 +38,7 @@ export function Table({
   scrollable,
   maxHeight,
   selected,
+  rowHeight,
 }: Props) {
   const [selectedId, setSelectedId] = useState<string | undefined>(selected);
   const tablebodyRef = useRef<HTMLTableSectionElement | null>(null);
@@ -68,17 +70,15 @@ export function Table({
         onSelect?.(id);
       },
       border,
+      rowHeight,
     }),
-    [selectedId, border, onSelect],
+    [selectedId, border, onSelect, rowHeight],
   );
 
   return (
     <TableContext.Provider value={tableContext}>
       <table
-        className={classNames(
-          'w-full border-collapse border-gray-400',
-          border && 'border-b',
-        )}
+        className={classNames('w-full border-collapse border-gray-400 h-full')}
       >
         <thead
           className={classNames(
@@ -91,9 +91,16 @@ export function Table({
         <tbody
           ref={tablebodyRef}
           style={{maxHeight}}
-          className={classNames(scrollable && 'overflow-scroll', 'block')}
+          className={classNames(scrollable && 'overflow-scroll')}
         >
           {children}
+          <tr>
+            {headings.map(() => (
+              <td
+                className={classNames('border-gray-400', border && 'border-x')}
+              />
+            ))}
+          </tr>
         </tbody>
       </table>
     </TableContext.Provider>

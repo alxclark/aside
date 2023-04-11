@@ -15,22 +15,13 @@ export default {
 
 const Template = (args: any) => <Table {...args} />;
 
-const data = [
-  {
-    name: 'progress',
-    status: 200,
-    type: 'eventsource',
-    initiator: 'Other',
-    time: '232 ms',
-  },
-  {
-    name: 'main.js',
-    status: 200,
-    type: 'script',
-    initiator: 'iframe.html',
-    time: '6 ms',
-  },
-];
+const data = Array.from(Array(5)).map(() => ({
+  name: 'progress',
+  status: 200,
+  type: 'eventsource',
+  initiator: 'Other',
+  time: '232 ms',
+}));
 
 function Children() {
   return (
@@ -60,6 +51,7 @@ Default.args = {
     {title: 'Time', width: 50},
     {title: 'Waterfall'},
   ],
+  rowHeight: '20px',
   children: <Children />,
 } as Props;
 
@@ -71,7 +63,11 @@ function TimelineExample() {
   return (
     <Flex fullHeight>
       <View width={150}>
-        <Table columns={[{title: 'Name', width: 30}]} border={false}>
+        <Table
+          columns={[{title: 'Name', width: 30}]}
+          border={false}
+          rowHeight="17px"
+        >
           <TableRow id="1">
             <TableCell>
               <Flex gap="5px" alignItems="center">

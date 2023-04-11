@@ -14,7 +14,7 @@ export function TextField({id, placeholder, onChange, value}: Props) {
   return (
     <input
       className={classNames(
-        'text-gray-100 bg-background h-[20px] pl-[3px]',
+        'text-gray-100 bg-background h-[20px] pl-[3px] w-full',
         hasValue
           ? 'border-input-active'
           : 'border-elevation-1 hover:border-gray-400',

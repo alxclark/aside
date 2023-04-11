@@ -7,8 +7,15 @@ import {Tab, Tabs} from '../Tabs';
 import {Flex} from '../Flex';
 import {TextField} from '../TextField';
 import {View} from '../View';
+// eslint-disable-next-line @shopify/strict-component-boundaries
+import {Default} from '../Table/Table.stories';
 
-import {PaneToolbar, PaneToolbarItem, PaneToolbarSection} from './components';
+import {
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+} from './components';
 import {Pane} from './Pane';
 
 const meta: Meta<typeof Pane> = {
@@ -61,18 +68,22 @@ const Children = () => {
               <Button icon="search" title="Search" iconHeight={20} />
             </PaneToolbarSection>
             <PaneToolbarSection>
+              <PaneToolbarItem>
+                <Checkbox
+                  id="log"
+                  label="Preserve log"
+                  checked
+                  onChange={console.log}
+                />
+              </PaneToolbarItem>
+            </PaneToolbarSection>
+            <PaneToolbarItem>
               <Checkbox
-                id="log"
-                label="Preserve log"
-                checked
+                id="caching"
+                label="Disable caching"
                 onChange={console.log}
               />
-            </PaneToolbarSection>
-            <Checkbox
-              id="caching"
-              label="Disable caching"
-              onChange={console.log}
-            />
+            </PaneToolbarItem>
           </Flex>
           <PaneToolbarSection separatorBefore>
             <Button
@@ -86,8 +97,8 @@ const Children = () => {
       </PaneToolbar>
       {showFilter && (
         <PaneToolbar>
-          <Flex alignItems="center" gap="4px">
-            <View padding="3px 4px">
+          <Flex alignItems="center" gap="4px" wrap>
+            <View padding="3px 4px" width={163}>
               <TextField
                 value={filter}
                 onChange={setFilter}
@@ -144,6 +155,9 @@ const Children = () => {
           </Flex>
         </PaneToolbar>
       )}
+      <PaneContent>
+        <Default {...Default.args} />
+      </PaneContent>
     </>
   );
 };
