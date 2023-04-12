@@ -14,7 +14,7 @@ export function Checkbox({label, checked, onChange, id}: Props) {
         id={id}
         className="accent-checkbox-accent bg-transparent m-[3px] ml-1"
         type="checkbox"
-        onChange={onChange}
+        onChange={() => onChange()}
         checked={checked}
       />
       <label className="ml-[3px] text-gray-300" htmlFor={id}>

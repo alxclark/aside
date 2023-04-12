@@ -20,6 +20,7 @@ import {
 import {Tabs, Tab} from '../components/Tabs/Tabs.remote';
 import {Checkbox} from '../components/Checkbox/Checkbox.remote';
 import {Divider} from '../components/Divider/Divider.remote';
+import {TextField} from '../components/TextField/TextField.remote';
 
 export {
   Button,
@@ -42,6 +43,7 @@ export {
   Tab,
   Checkbox,
   Divider,
+  TextField,
 };
 
 export const AllComponents = [
@@ -65,4 +67,5 @@ export const AllComponents = [
   Tab,
   Checkbox,
   Divider,
+  TextField,
 ];

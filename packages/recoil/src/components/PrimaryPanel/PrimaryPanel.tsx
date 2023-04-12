@@ -38,14 +38,13 @@ export function PrimaryPanel({api}: {api: DevToolsApi}) {
           </Flex>
         </Flex>
       </PaneToolbar>
-      <PaneContent>
-        {primaryNavigation.tab === PrimaryNavigationTab.StateTree && (
-          <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
-        )}
-        {primaryNavigation.tab === PrimaryNavigationTab.StateDiffs && (
-          <StateDiffs diffs={api.diffs} initial={api.snapshots[0]} />
-        )}
-      </PaneContent>
+
+      {primaryNavigation.tab === PrimaryNavigationTab.StateTree && (
+        <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
+      )}
+      {primaryNavigation.tab === PrimaryNavigationTab.StateDiffs && (
+        <StateDiffs diffs={api.diffs} initial={api.snapshots[0]} />
+      )}
     </Pane>
   );
 }

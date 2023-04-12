@@ -33,6 +33,10 @@ import {Icon} from './Icon';
 export {Icon} from './Icon';
 export type {IconProps} from './Icon';
 
+import {TextField} from './TextField';
+export {TextField} from './TextField';
+export type {Props as TextFieldProps} from './TextField';
+
 import {
   Pane,
   PaneContent,
@@ -87,4 +91,5 @@ export const AllComponents = {
   Tab,
   Checkbox,
   Divider,
+  TextField,
 };

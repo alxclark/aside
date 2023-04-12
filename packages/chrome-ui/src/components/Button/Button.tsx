@@ -30,7 +30,7 @@ export function Button({
           'w-[28px] h-[26px] flex items-center justify-center text-gray-300 hover:text-white cursor-default',
           pressed && 'text-lightblue',
         )}
-        onClick={onPress}
+        onClick={() => onPress?.()}
       >
         <Icon source={icon} height={iconHeight} color={color} />
       </button>
