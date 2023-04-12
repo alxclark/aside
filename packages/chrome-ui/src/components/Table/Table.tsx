@@ -15,7 +15,6 @@ export type Props = PropsWithChildren<{
   selected?: string;
   border?: boolean;
   scrollable?: boolean;
-  maxHeight?: string;
   rowHeight?: string;
 }>;
 
@@ -36,7 +35,6 @@ export function Table({
   onSelect,
   border = true,
   scrollable,
-  maxHeight,
   selected,
   rowHeight,
 }: Props) {
@@ -90,13 +88,13 @@ export function Table({
         </thead>
         <tbody
           ref={tablebodyRef}
-          style={{maxHeight}}
           className={classNames(scrollable && 'overflow-scroll')}
         >
           {children}
           <tr>
-            {headings.map(() => (
+            {columns.map(({title}) => (
               <td
+                key={title}
                 className={classNames('border-gray-400', border && 'border-x')}
               />
             ))}

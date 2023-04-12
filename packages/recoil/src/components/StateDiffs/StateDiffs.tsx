@@ -29,7 +29,6 @@ export function StateDiffs({
           columns={[{title: 'Name', width: 30}]}
           border={false}
           scrollable
-          maxHeight="calc(100vh - 55px)"
         >
           {diffs.map((diff, index) => (
             <TableRow key={diff.createdAt.toISOString()} id={index.toString()}>

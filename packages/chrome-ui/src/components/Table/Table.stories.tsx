@@ -15,7 +15,7 @@ export default {
 
 const Template = (args: any) => <Table {...args} />;
 
-const data = Array.from(Array(50)).map(() => ({
+const data = Array.from(Array(5)).map(() => ({
   name: 'progress',
   status: 200,
   type: 'eventsource',
