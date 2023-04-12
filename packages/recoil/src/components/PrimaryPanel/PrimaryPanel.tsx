@@ -1,5 +1,12 @@
 import React from 'react';
-import {Flex, Navigation, NavigationTab, View} from '@aside/chrome-ui';
+import {
+  Flex,
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  Tab,
+  Tabs,
+} from '@aside/chrome-ui';
 import {useRecoilState} from 'recoil';
 
 import {DevToolsApi} from '../../types';
@@ -15,27 +22,30 @@ export function PrimaryPanel({api}: {api: DevToolsApi}) {
   );
 
   return (
-    <Flex direction="column" fullHeight>
-      <Navigation
-        selected={primaryNavigation.tab}
-        navigate={(value) => {
-          setPrimaryNavigation({tab: value as PrimaryNavigationTab});
-        }}
-      >
-        <NavigationTab value={PrimaryNavigationTab.StateTree} label="State" />
-        <NavigationTab
-          value={PrimaryNavigationTab.StateDiffs}
-          label="Timeline"
-        />
-      </Navigation>
-      <View flexGrow>
+    <Pane>
+      <PaneToolbar>
+        <Flex justifyContent="space-between">
+          <Flex alignItems="center">
+            <Tabs
+              selected={primaryNavigation.tab}
+              setSelected={(value) => {
+                setPrimaryNavigation({tab: value as PrimaryNavigationTab});
+              }}
+            >
+              <Tab id={PrimaryNavigationTab.StateTree} label="State" />
+              <Tab id={PrimaryNavigationTab.StateDiffs} label="Timeline" />
+            </Tabs>
+          </Flex>
+        </Flex>
+      </PaneToolbar>
+      <PaneContent>
         {primaryNavigation.tab === PrimaryNavigationTab.StateTree && (
           <StateTree currentState={api.snapshots[api.snapshots.length - 1]} />
         )}
         {primaryNavigation.tab === PrimaryNavigationTab.StateDiffs && (
           <StateDiffs diffs={api.diffs} initial={api.snapshots[0]} />
         )}
-      </View>
-    </Flex>
+      </PaneContent>
+    </Pane>
   );
 }

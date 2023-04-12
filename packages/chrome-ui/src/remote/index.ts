@@ -10,6 +10,16 @@ import {
 } from '../components/Navigation/Navigation.remote';
 import {Table, TableRow, TableCell} from '../components/Table/Table.remote';
 import {View} from '../components/View/View.remote';
+import {
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+} from '../components/Pane/Pane.remote';
+import {Tabs, Tab} from '../components/Tabs/Tabs.remote';
+import {Checkbox} from '../components/Checkbox/Checkbox.remote';
+import {Divider} from '../components/Divider/Divider.remote';
 
 export {
   Button,
@@ -23,6 +33,15 @@ export {
   TableRow,
   TableCell,
   View,
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+  Tabs,
+  Tab,
+  Checkbox,
+  Divider,
 };
 
 export const AllComponents = [
@@ -37,4 +56,13 @@ export const AllComponents = [
   TableRow,
   TableCell,
   View,
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+  Tabs,
+  Tab,
+  Checkbox,
+  Divider,
 ];

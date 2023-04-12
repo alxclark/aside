@@ -45,7 +45,7 @@ export const Default = Template.bind({}) as any;
 Default.args = {
   columns: [
     {title: 'Name', width: 150},
-    {title: 'Status', width: 30},
+    {title: 'Status', width: 50},
     {title: 'Type', width: 75},
     {title: 'Initiator', width: 100},
     {title: 'Time', width: 50},

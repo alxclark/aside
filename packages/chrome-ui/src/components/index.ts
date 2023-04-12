@@ -33,6 +33,40 @@ import {Icon} from './Icon';
 export {Icon} from './Icon';
 export type {IconProps} from './Icon';
 
+import {
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+} from './Pane';
+export {
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+} from './Pane';
+export type {
+  Props as PaneProps,
+  PaneContentProps,
+  PaneToolbarItemProps,
+  PaneToolbarProps,
+  PaneToolbarSectionProps,
+} from './Pane';
+
+import {Tabs, Tab} from './Tabs';
+export {Tabs, Tab} from './Tabs';
+export type {Props as TabsProps, TabProps} from './Tabs';
+
+import {Checkbox} from './Checkbox';
+export {Checkbox} from './Checkbox';
+export type {CheckboxProps} from './Checkbox';
+
+import {Divider} from './Divider';
+export {Divider} from './Divider';
+export type {DividerProps} from './Divider';
+
 export const AllComponents = {
   Button,
   Navigation,
@@ -44,4 +78,13 @@ export const AllComponents = {
   Flex,
   View,
   Icon,
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+  Tabs,
+  Tab,
+  Checkbox,
+  Divider,
 };
