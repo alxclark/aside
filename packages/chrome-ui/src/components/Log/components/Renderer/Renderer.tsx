@@ -31,6 +31,6 @@ export function Renderer({
         />
       );
     default:
-      return <>?</>;
+      return <></>;
   }
 }

@@ -1,9 +1,7 @@
+import {SnapshotID} from 'recoil';
+
 export interface Snapshot {
+  id: SnapshotID;
   createdAt: Date;
   nodes: {[key: string]: any};
-}
-
-export interface DevToolsApi {
-  snapshots: Snapshot[];
-  diffs: Snapshot[];
 }

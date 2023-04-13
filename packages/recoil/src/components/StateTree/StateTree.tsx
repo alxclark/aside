@@ -1,9 +1,12 @@
 import React, {useMemo} from 'react';
 import {Log} from '@aside/chrome-ui';
+import {useRecoilValue} from 'recoil';
 
-import {Snapshot} from '../../types';
+import {currentStateAtom} from '../../foundation/Snapshots';
 
-export function StateTree({currentState}: {currentState?: Snapshot}) {
+export function StateTree() {
+  const currentState = useRecoilValue(currentStateAtom);
+
   const items = useMemo(() => {
     return [
       {

@@ -15,22 +15,21 @@ import {
   PaneContent,
 } from '@aside/chrome-ui';
 import React, {useState} from 'react';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 
 import {
+  diffsAtom,
   filterAtom,
+  initialStateAtom,
   preserveLogAtom,
   showFilterAtom,
-} from '../../foundation/Timeline';
-import {Snapshot} from '../../types';
+  Snapshot,
+} from '../../foundation/Snapshots';
 
-export function StateDiffs({
-  diffs,
-  initial,
-}: {
-  diffs: Snapshot[];
-  initial: Snapshot;
-}) {
+export function StateDiffs() {
+  const [diffs, setDiffs] = useRecoilState(diffsAtom);
+  const initial = useRecoilValue(initialStateAtom);
+
   const [selectedDiff, setSelectedDiff] = useState<number>(diffs.length - 1);
   const [showFilter, setShowFilter] = useRecoilState(showFilterAtom);
   const [preserveLog, setPreserveLog] = useRecoilState(preserveLogAtom);
@@ -51,7 +50,7 @@ export function StateDiffs({
               <Button
                 icon="cancel"
                 title="Clear"
-                onPress={() => console.log('yo')}
+                onPress={() => setDiffs([])}
               />
             </PaneToolbarSection>
             <PaneToolbarSection>
@@ -108,7 +107,7 @@ export function StateDiffs({
                 >
                   <TableCell>
                     <Flex gap="5px" alignItems="center">
-                      {index === 0 ? (
+                      {diff.id === initial?.id ? (
                         <View margin="0 0 0 2px">
                           <Icon
                             source="start"
@@ -125,7 +124,9 @@ export function StateDiffs({
                           />
                         </View>
                       )}
-                      {getDiffName(diffs[index])}
+                      {diff.id === initial?.id
+                        ? 'initial'
+                        : getDiffName(diffs[index])}
                     </Flex>
                   </TableCell>
                 </TableRow>
@@ -137,10 +138,7 @@ export function StateDiffs({
               items={[
                 {
                   id: 'state',
-                  value:
-                    selectedDiff === 0
-                      ? initial.nodes
-                      : diffs[selectedDiff].nodes,
+                  value: diffs[selectedDiff]?.nodes,
                 },
               ]}
             />
@@ -152,7 +150,5 @@ export function StateDiffs({
 }
 
 function getDiffName(snapshot: Snapshot): string {
-  if (Object.keys(snapshot.nodes).length === 0) return 'initial';
-
   return Object.keys(snapshot.nodes).join(', ');
 }
