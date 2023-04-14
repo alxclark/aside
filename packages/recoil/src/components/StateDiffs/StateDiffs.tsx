@@ -30,7 +30,9 @@ export function StateDiffs() {
   const [diffs, setDiffs] = useRecoilState(diffsAtom);
   const initial = useRecoilValue(initialStateAtom);
 
-  const [selectedDiff, setSelectedDiff] = useState<number>(diffs.length - 1);
+  const [selectedDiff, setSelectedDiff] = useState<string>(
+    String(diffs[diffs.length - 1]?.id),
+  );
   const [showFilter, setShowFilter] = useRecoilState(showFilterAtom);
   const [preserveLog, setPreserveLog] = useRecoilState(preserveLogAtom);
   const [filter, setFilter] = useRecoilState(filterAtom);
@@ -93,7 +95,7 @@ export function StateDiffs() {
         <Flex fullHeight>
           <View maxHeight="100%" overflow="scroll" width={150}>
             <Table
-              onSelect={(index) => setSelectedDiff(parseInt(index, 10))}
+              onSelect={(index) => setSelectedDiff(index)}
               selected={selectedDiff.toString()}
               columns={[{title: 'Name', width: 30}]}
               border={false}
@@ -103,7 +105,7 @@ export function StateDiffs() {
               {diffs.map((diff, index) => (
                 <TableRow
                   key={diff.createdAt.toISOString()}
-                  id={index.toString()}
+                  id={String(diff.id)}
                 >
                   <TableCell>
                     <Flex gap="5px" alignItems="center">
@@ -111,7 +113,11 @@ export function StateDiffs() {
                         <View margin="0 0 0 2px">
                           <Icon
                             source="start"
-                            color={index === selectedDiff ? 'white' : '#2883ff'}
+                            color={
+                              String(diff.id) === selectedDiff
+                                ? 'white'
+                                : '#2883ff'
+                            }
                             height={13}
                           />
                         </View>
@@ -119,7 +125,11 @@ export function StateDiffs() {
                         <View margin="0 0 0 1px">
                           <Icon
                             source="curly"
-                            color={index === selectedDiff ? 'white' : '#e5ab04'}
+                            color={
+                              String(diff.id) === selectedDiff
+                                ? 'white'
+                                : '#e5ab04'
+                            }
                             height={15}
                           />
                         </View>
@@ -138,7 +148,8 @@ export function StateDiffs() {
               items={[
                 {
                   id: 'state',
-                  value: diffs[selectedDiff]?.nodes,
+                  value: diffs.find((diff) => String(diff.id) === selectedDiff)
+                    ?.nodes,
                 },
               ]}
             />
