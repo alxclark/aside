@@ -49,9 +49,11 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   }, [setDiffs, snapshot, diff, shouldRecordSnapshots]);
 
   const handleMount = useCallback(() => {
-    setShouldRecordSnapshots(false);
+    // setShouldRecordSnapshots(false);
   }, []);
 
+  // TODO: This is not getting called when the devtools panel is closed.
+  // Because of this, we need to always record snapshots on the client.
   const handleUnMount = useCallback(() => {
     setShouldRecordSnapshots(true);
   }, []);
@@ -62,6 +64,7 @@ export function DevTools({children}: PropsWithChildren<{}>) {
         <RecoilRoot
           key="@aside/recoil"
           initializeState={(snapshot) => {
+            console.log({snapshots});
             snapshot.set(snapshotsAtom, snapshots);
             snapshot.set(initialStateAtom, snapshots[0]);
             snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
