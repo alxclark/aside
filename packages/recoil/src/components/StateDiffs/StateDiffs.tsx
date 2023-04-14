@@ -175,7 +175,7 @@ function EmptyView() {
       gap="10px"
     >
       <Text>Recording activity...</Text>
-      <Text>Perform a request or hit ⌘ R to record the reload.</Text>
+      <Text>Perform an action or hit ⌘ R to record the reload.</Text>
     </Flex>
   );
 }
