@@ -38,7 +38,6 @@ export function Table({
   selected,
   rowHeight,
 }: Props) {
-  const [selectedId, setSelectedId] = useState<string | undefined>(selected);
   const tablebodyRef = useRef<HTMLTableSectionElement | null>(null);
 
   useEffect(() => {
@@ -62,15 +61,14 @@ export function Table({
 
   const tableContext: TableContext = useMemo(
     () => ({
-      selectedId,
+      selectedId: selected,
       setSelectedId: (id: string) => {
-        setSelectedId(id);
         onSelect?.(id);
       },
       border,
       rowHeight,
     }),
-    [selectedId, border, onSelect, rowHeight],
+    [selected, border, rowHeight, onSelect],
   );
 
   return (

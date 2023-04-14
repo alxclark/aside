@@ -1,7 +1,5 @@
-import {SnapshotID} from 'recoil';
-
 export interface Snapshot {
-  id: SnapshotID;
+  id: string;
   createdAt: Date;
   nodes: {[key: string]: any};
 }

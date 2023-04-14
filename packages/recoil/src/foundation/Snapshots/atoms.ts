@@ -57,3 +57,23 @@ export const diffsAtom = atom<Snapshot[]>({
   key: createKey('diffs'),
   default: [],
 });
+
+export const selectedDiffBaseAtom = atom<string | undefined>({
+  key: createKey('selected-diff-base'),
+  default: undefined,
+});
+
+export const selectedDiffAtom = selector<string | undefined>({
+  key: createKey('selected-diff'),
+  get: ({get}) => {
+    const diffs = get(diffsAtom);
+    const explicitlySelectedDiff = get(selectedDiffBaseAtom);
+
+    if (explicitlySelectedDiff) return explicitlySelectedDiff;
+
+    return diffs[diffs.length - 1]?.id;
+  },
+  set: ({set}, value) => {
+    set(selectedDiffBaseAtom, value);
+  },
+});

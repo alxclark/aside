@@ -13,6 +13,7 @@ import {
   Checkbox,
   TextField,
   PaneContent,
+  Text,
 } from '@aside/chrome-ui';
 import React, {useState} from 'react';
 import {useRecoilState, useRecoilValue} from 'recoil';
@@ -22,6 +23,7 @@ import {
   filterAtom,
   initialStateAtom,
   preserveLogAtom,
+  selectedDiffAtom,
   showFilterAtom,
   Snapshot,
 } from '../../foundation/Snapshots';
@@ -30,9 +32,7 @@ export function StateDiffs() {
   const [diffs, setDiffs] = useRecoilState(diffsAtom);
   const initial = useRecoilValue(initialStateAtom);
 
-  const [selectedDiff, setSelectedDiff] = useState<string>(
-    String(diffs[diffs.length - 1]?.id),
-  );
+  const [selectedDiff, setSelectedDiff] = useRecoilState(selectedDiffAtom);
   const [showFilter, setShowFilter] = useRecoilState(showFilterAtom);
   const [preserveLog, setPreserveLog] = useRecoilState(preserveLogAtom);
   const [filter, setFilter] = useRecoilState(filterAtom);
@@ -52,7 +52,10 @@ export function StateDiffs() {
               <Button
                 icon="cancel"
                 title="Clear"
-                onPress={() => setDiffs([])}
+                onPress={() => {
+                  setSelectedDiff(undefined);
+                  setDiffs([]);
+                }}
               />
             </PaneToolbarSection>
             <PaneToolbarSection>
@@ -92,71 +95,83 @@ export function StateDiffs() {
         </PaneToolbar>
       )}
       <PaneContent>
-        <Flex fullHeight>
-          <View maxHeight="100%" overflow="scroll" width={150}>
-            <Table
-              onSelect={(index) => setSelectedDiff(index)}
-              selected={selectedDiff.toString()}
-              columns={[{title: 'Name', width: 30}]}
-              border={false}
-              scrollable
-              rowHeight="21px"
-            >
-              {diffs.map((diff, index) => (
-                <TableRow
-                  key={diff.createdAt.toISOString()}
-                  id={String(diff.id)}
-                >
-                  <TableCell>
-                    <Flex gap="5px" alignItems="center">
-                      {diff.id === initial?.id ? (
-                        <View margin="0 0 0 2px">
-                          <Icon
-                            source="start"
-                            color={
-                              String(diff.id) === selectedDiff
-                                ? 'white'
-                                : '#2883ff'
-                            }
-                            height={13}
-                          />
-                        </View>
-                      ) : (
-                        <View margin="0 0 0 1px">
-                          <Icon
-                            source="curly"
-                            color={
-                              String(diff.id) === selectedDiff
-                                ? 'white'
-                                : '#e5ab04'
-                            }
-                            height={15}
-                          />
-                        </View>
-                      )}
-                      {diff.id === initial?.id
-                        ? 'initial'
-                        : getDiffName(diffs[index])}
-                    </Flex>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </Table>
-          </View>
-          <View flexGrow border="left">
-            <Log
-              items={[
-                {
-                  id: 'state',
-                  value: diffs.find((diff) => String(diff.id) === selectedDiff)
-                    ?.nodes,
-                },
-              ]}
-            />
-          </View>
-        </Flex>
+        {diffs.length > 0 ? (
+          <Flex fullHeight direction="row">
+            <View maxHeight="100%" overflow="scroll" width={150}>
+              <Table
+                onSelect={(index) => setSelectedDiff(index)}
+                selected={selectedDiff}
+                columns={[{title: 'Name', width: 30}]}
+                border={false}
+                scrollable
+                rowHeight="21px"
+              >
+                {diffs.map((diff, index) => (
+                  <TableRow key={diff.id} id={diff.id}>
+                    <TableCell>
+                      <Flex gap="5px" alignItems="center">
+                        {diff.id === initial?.id ? (
+                          <View margin="0 0 0 2px">
+                            <Icon
+                              source="start"
+                              color={
+                                diff.id === selectedDiff ? 'white' : '#2883ff'
+                              }
+                              height={13}
+                            />
+                          </View>
+                        ) : (
+                          <View margin="0 0 0 1px">
+                            <Icon
+                              source="curly"
+                              color={
+                                diff.id === selectedDiff ? 'white' : '#e5ab04'
+                              }
+                              height={15}
+                            />
+                          </View>
+                        )}
+                        {diff.id === initial?.id
+                          ? 'initial'
+                          : getDiffName(diffs[index])}
+                      </Flex>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </Table>
+            </View>
+            <View flexGrow border="left">
+              <Log
+                items={[
+                  {
+                    id: 'state',
+                    value: diffs.find((diff) => diff.id === selectedDiff)
+                      ?.nodes,
+                  },
+                ]}
+              />
+            </View>
+          </Flex>
+        ) : (
+          <EmptyView />
+        )}
       </PaneContent>
     </>
+  );
+}
+
+function EmptyView() {
+  return (
+    <Flex
+      fullHeight
+      justifyContent="center"
+      alignItems="center"
+      direction="column"
+      gap="10px"
+    >
+      <Text>Recording activity...</Text>
+      <Text>Perform a request or hit ⌘ R to record the reload.</Text>
+    </Flex>
   );
 }
 

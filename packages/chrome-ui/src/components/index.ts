@@ -37,6 +37,10 @@ import {TextField} from './TextField';
 export {TextField} from './TextField';
 export type {Props as TextFieldProps} from './TextField';
 
+import {Text} from './Text';
+export {Text} from './Text';
+export type {TextProps} from './Text';
+
 import {
   Pane,
   PaneContent,
@@ -92,4 +96,5 @@ export const AllComponents = {
   Checkbox,
   Divider,
   TextField,
+  Text,
 };

@@ -69,7 +69,7 @@ function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
   const createdAt = new Date();
 
   const snapshot: Snapshot = {
-    id: recoilSnapshot.getID(),
+    id: String(recoilSnapshot.getID()),
     createdAt,
     nodes: {},
   };
@@ -93,7 +93,7 @@ function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
   }
 
   const diff: Snapshot = {
-    id: recoilSnapshot.getID(),
+    id: String(recoilSnapshot.getID()),
     createdAt,
     nodes: {},
   };

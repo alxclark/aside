@@ -7,7 +7,7 @@ export interface Props {
   fullHeight?: boolean;
   gap?: string;
   alignItems?: 'center' | 'start';
-  justifyContent?: 'space-between';
+  justifyContent?: 'space-between' | 'center';
   wrap?: boolean;
 }
 
@@ -31,6 +31,7 @@ export function Flex({
         alignItems === 'center' && 'items-center',
         alignItems === 'start' && 'items-start',
         justifyContent === 'space-between' && 'justify-between',
+        justifyContent === 'center' && 'justify-center',
         wrap && 'flex-wrap',
       )}
     >

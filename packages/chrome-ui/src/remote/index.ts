@@ -21,6 +21,7 @@ import {Tabs, Tab} from '../components/Tabs/Tabs.remote';
 import {Checkbox} from '../components/Checkbox/Checkbox.remote';
 import {Divider} from '../components/Divider/Divider.remote';
 import {TextField} from '../components/TextField/TextField.remote';
+import {Text} from '../components/Text/Text.remote';
 
 export {
   Button,
@@ -44,6 +45,7 @@ export {
   Checkbox,
   Divider,
   TextField,
+  Text,
 };
 
 export const AllComponents = [
@@ -68,4 +70,5 @@ export const AllComponents = [
   Checkbox,
   Divider,
   TextField,
+  Text,
 ];
