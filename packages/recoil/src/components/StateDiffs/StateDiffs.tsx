@@ -15,12 +15,13 @@ import {
   PaneContent,
   Text,
 } from '@aside/chrome-ui';
-import React, {useState} from 'react';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import React from 'react';
+import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
 
 import {
   diffsAtom,
   filterAtom,
+  filteredDiffsAtom,
   initialStateAtom,
   preserveLogAtom,
   selectedDiffAtom,
@@ -29,7 +30,9 @@ import {
 } from '../../foundation/Snapshots';
 
 export function StateDiffs() {
-  const [diffs, setDiffs] = useRecoilState(diffsAtom);
+  const unfilteredDiffs = useRecoilValue(diffsAtom);
+  const diffs = useRecoilValue(filteredDiffsAtom);
+  const setDiffs = useSetRecoilState(diffsAtom);
   const initial = useRecoilValue(initialStateAtom);
 
   const [selectedDiff, setSelectedDiff] = useRecoilState(selectedDiffAtom);
@@ -95,7 +98,7 @@ export function StateDiffs() {
         </PaneToolbar>
       )}
       <PaneContent>
-        {diffs.length > 0 ? (
+        {unfilteredDiffs.length > 0 ? (
           <Flex fullHeight direction="row">
             <View maxHeight="100%" overflow="scroll" width={150}>
               <Table
@@ -141,15 +144,17 @@ export function StateDiffs() {
               </Table>
             </View>
             <View flexGrow border="left">
-              <Log
-                items={[
-                  {
-                    id: 'state',
-                    value: diffs.find((diff) => diff.id === selectedDiff)
-                      ?.nodes,
-                  },
-                ]}
-              />
+              {diffs.length > 0 && (
+                <Log
+                  items={[
+                    {
+                      id: 'state',
+                      value: diffs.find((diff) => diff.id === selectedDiff)
+                        ?.nodes,
+                    },
+                  ]}
+                />
+              )}
             </View>
           </Flex>
         ) : (

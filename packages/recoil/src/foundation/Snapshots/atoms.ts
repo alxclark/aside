@@ -1,4 +1,4 @@
-import {atom, selector} from 'recoil';
+import {atom, selector, selectorFamily} from 'recoil';
 
 import {createKey} from '../../utilities/recoil';
 
@@ -58,6 +58,50 @@ export const diffsAtom = atom<Snapshot[]>({
   default: [],
 });
 
+export const getDiffQueryAtom = selectorFamily<string, string>({
+  key: createKey('diff-query'),
+  get:
+    (id) =>
+    ({get}) => {
+      const diff = get(diffsAtom).find((diff) => diff.id === id);
+
+      if (!diff) return '';
+
+      return traverseObject(diff.nodes);
+    },
+});
+
+function traverseObject(obj: any) {
+  let result = '';
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      result += `${key}:${
+        typeof value === 'object' ? traverseObject(value) : value
+      },`;
+    }
+  }
+
+  result = result.slice(0, -1);
+
+  return result;
+}
+
+export const filteredDiffsAtom = selector<Snapshot[]>({
+  key: createKey('filtered-diffs'),
+  get: ({get}) => {
+    const diffs = get(diffsAtom);
+    const filter = get(filterAtom);
+
+    return diffs.filter((diff) => {
+      const query = get(getDiffQueryAtom(diff.id));
+
+      return query.includes(filter);
+    });
+  },
+});
+
 export const selectedDiffBaseAtom = atom<string | undefined>({
   key: createKey('selected-diff-base'),
   default: undefined,
@@ -66,10 +110,11 @@ export const selectedDiffBaseAtom = atom<string | undefined>({
 export const selectedDiffAtom = selector<string | undefined>({
   key: createKey('selected-diff'),
   get: ({get}) => {
-    const diffs = get(diffsAtom);
+    const diffs = get(filteredDiffsAtom);
     const explicitlySelectedDiff = get(selectedDiffBaseAtom);
 
-    if (explicitlySelectedDiff) return explicitlySelectedDiff;
+    if (diffs.find((diff) => diff.id === explicitlySelectedDiff))
+      return explicitlySelectedDiff;
 
     return diffs[diffs.length - 1]?.id;
   },
