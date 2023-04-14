@@ -29,7 +29,6 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     [recoilSnapshot],
   );
 
-  const [shouldRecordSnapshots, setShouldRecordSnapshots] = useState(true);
   const [diffs, setDiffs] = useState<Snapshot[]>([]);
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
 
@@ -37,26 +36,9 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   // This is needed since we want access to the previous states
   // even if the devtools panel was not opened.
   useEffect(() => {
-    // Once the devtools is opened and the remote is mounted,
-    // we do not need to record snapshots on the client and on the remote.
-    // Only communicating a single snapshot at a time over the bridge
-    // is less expensive then passing a complete array of all snapshots everytime
-    // there is a change.
-    if (shouldRecordSnapshots) {
-      setSnapshots((prev) => [...prev, snapshot]);
-      setDiffs((prev) => [...prev, diff]);
-    }
-  }, [setDiffs, snapshot, diff, shouldRecordSnapshots]);
-
-  const handleMount = useCallback(() => {
-    // setShouldRecordSnapshots(false);
-  }, []);
-
-  // TODO: This is not getting called when the devtools panel is closed.
-  // Because of this, we need to always record snapshots on the client.
-  const handleUnMount = useCallback(() => {
-    setShouldRecordSnapshots(true);
-  }, []);
+    setSnapshots((prev) => [...prev, snapshot]);
+    setDiffs((prev) => [...prev, diff]);
+  }, [setDiffs, snapshot, diff]);
 
   return (
     <Aside>
@@ -64,7 +46,6 @@ export function DevTools({children}: PropsWithChildren<{}>) {
         <RecoilRoot
           key="@aside/recoil"
           initializeState={(snapshot) => {
-            console.log({snapshots});
             snapshot.set(snapshotsAtom, snapshots);
             snapshot.set(initialStateAtom, snapshots[0]);
             snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
@@ -73,12 +54,7 @@ export function DevTools({children}: PropsWithChildren<{}>) {
             snapshot.set(diffsAtom, [snapshots[0], ...rest]);
           }}
         >
-          <RemoteDevTools
-            snapshot={snapshot}
-            diff={diff}
-            onMount={handleMount}
-            onUnmount={handleUnMount}
-          />
+          <RemoteDevTools snapshot={snapshot} diff={diff} />
         </RecoilRoot>
         {children}
       </AsideDevTools>

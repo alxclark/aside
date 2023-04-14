@@ -11,13 +11,9 @@ import {
 } from './foundation/Snapshots';
 
 export function RemoteDevTools({
-  onMount,
-  onUnmount,
   snapshot,
   diff,
 }: {
-  onMount(): void;
-  onUnmount(): void;
   snapshot: Snapshot;
   diff: Snapshot;
 }) {
@@ -25,14 +21,6 @@ export function RemoteDevTools({
   const setSnapshots = useSetRecoilState(snapshotsAtom);
   const setDiffs = useSetRecoilState(diffsAtom);
   const setCurrentState = useSetRecoilState(currentStateAtom);
-
-  useEffect(() => {
-    onMount();
-
-    return () => {
-      onUnmount();
-    };
-  }, [onMount, onUnmount]);
 
   useEffect(() => {
     setCurrentState(snapshot);
