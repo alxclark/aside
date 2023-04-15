@@ -29,9 +29,9 @@ export function Button({
         title={title}
         aria-label={title}
         className={classNames(
-          'w-[28px] h-[26px] flex items-center justify-center text-gray-300 hover:text-white cursor-default',
+          'w-[28px] h-[26px] flex items-center justify-center text-gray-300 cursor-default',
           pressed && 'text-lightblue',
-          alert && 'text-lightred',
+          alert ? 'text-lightred' : 'hover:text-white',
         )}
         onClick={() => onPress?.()}
       >

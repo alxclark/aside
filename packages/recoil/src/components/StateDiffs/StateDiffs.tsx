@@ -24,6 +24,7 @@ import {
   filteredDiffsAtom,
   initialStateAtom,
   preserveLogAtom,
+  recordSnapshotAtom,
   selectedDiffAtom,
   showFilterAtom,
   Snapshot,
@@ -38,6 +39,8 @@ export function StateDiffs() {
   const [selectedDiff, setSelectedDiff] = useRecoilState(selectedDiffAtom);
   const [showFilter, setShowFilter] = useRecoilState(showFilterAtom);
   const [preserveLog, setPreserveLog] = useRecoilState(preserveLogAtom);
+  const [recordSnapshot, setRecordSnapshot] =
+    useRecoilState(recordSnapshotAtom);
   const [filter, setFilter] = useRecoilState(filterAtom);
 
   return (
@@ -47,10 +50,13 @@ export function StateDiffs() {
           <Flex alignItems="center" wrap>
             <PaneToolbarSection>
               <Button
-                icon="record-on"
-                alert
+                icon={recordSnapshot ? 'record-on' : 'record-off'}
+                alert={recordSnapshot}
                 title="Stop recording"
-                iconHeight={19}
+                iconHeight={recordSnapshot ? 19 : 13}
+                onPress={() => {
+                  setRecordSnapshot((prev) => !prev);
+                }}
               />
               <Button
                 icon="cancel"
