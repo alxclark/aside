@@ -1,6 +1,7 @@
-import {atom} from 'recoil';
+import {atom, AtomEffect} from 'recoil';
 
 import {createKey} from '../../utilities/recoil';
+import {extensionApiAtom, syncStorageEffect} from '../Extension';
 
 import {PrimaryNavigation, PrimaryNavigationTab} from './types';
 
@@ -9,4 +10,5 @@ export const primaryNavigationAtom = atom<PrimaryNavigation>({
   default: {
     tab: PrimaryNavigationTab.StateTree,
   },
+  effects: [syncStorageEffect],
 });

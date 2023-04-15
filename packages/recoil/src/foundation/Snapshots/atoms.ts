@@ -1,27 +1,32 @@
 import {atom, selector, selectorFamily} from 'recoil';
 
 import {createKey} from '../../utilities/recoil';
+import {syncStorageEffect} from '../Extension';
 
 import {Snapshot} from './types';
 
 export const filterAtom = atom<string>({
   key: createKey('filter'),
   default: '',
+  effects: [syncStorageEffect],
 });
 
 export const showFilterAtom = atom<boolean>({
   key: createKey('show-filter'),
   default: false,
+  effects: [syncStorageEffect],
 });
 
 export const preserveLogAtom = atom<boolean>({
   key: createKey('preserve-log'),
   default: false,
+  effects: [syncStorageEffect],
 });
 
 export const recordSnapshotAtom = atom<boolean>({
   key: createKey('record-snapshot'),
   default: true,
+  effects: [syncStorageEffect],
 });
 
 export const snapshotsAtom = atom<Snapshot[]>({

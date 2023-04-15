@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {Aside, DevTools as AsideDevTools} from '@aside/react';
+import {Aside, DevTools as AsideDevTools, useExtensionApi} from '@aside/react';
 import {
   RecoilRoot,
   useRecoilSnapshot,
@@ -21,6 +21,7 @@ import {
   snapshotsAtom,
 } from './foundation/Snapshots';
 import {isInternalAtom} from './utilities/recoil';
+import {extensionApiAtom} from './foundation/Extension';
 
 export function DevTools({children}: PropsWithChildren<{}>) {
   const recoilSnapshot = useRecoilSnapshot();
@@ -43,22 +44,40 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   return (
     <Aside>
       <AsideDevTools>
-        <RecoilRoot
-          key="@aside/recoil"
-          initializeState={(snapshot) => {
-            snapshot.set(snapshotsAtom, snapshots);
-            snapshot.set(initialStateAtom, snapshots[0]);
-            snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
-
-            const [_emptyDiff, ...rest] = diffs;
-            snapshot.set(diffsAtom, [snapshots[0], ...rest]);
-          }}
+        <RecoilDevTools
+          snapshots={snapshots}
+          snapshot={snapshot}
+          diff={diff}
+          diffs={diffs}
         >
-          <RemoteDevTools snapshot={snapshot} diff={diff} />
-        </RecoilRoot>
-        {children}
+          {children}
+        </RecoilDevTools>
       </AsideDevTools>
     </Aside>
+  );
+}
+
+function RecoilDevTools({children, snapshots, diffs, snapshot, diff}: any) {
+  const api = useExtensionApi();
+
+  return (
+    <>
+      <RecoilRoot
+        key="@aside/recoil"
+        initializeState={(snapshot) => {
+          snapshot.set(snapshotsAtom, snapshots);
+          snapshot.set(initialStateAtom, snapshots[0]);
+          snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
+          snapshot.set(extensionApiAtom, api);
+
+          const [_emptyDiff, ...rest] = diffs;
+          snapshot.set(diffsAtom, [snapshots[0], ...rest]);
+        }}
+      >
+        <RemoteDevTools snapshot={snapshot} diff={diff} />
+      </RecoilRoot>
+      {children}
+    </>
   );
 }
 
