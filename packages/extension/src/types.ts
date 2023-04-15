@@ -9,6 +9,10 @@ interface RemoteApi {
 
 export interface ContentScriptApiForWebpage extends RemoteApi {
   getDevToolsChannel(): Promise<RemoteChannel>;
+  getLocalStorage(
+    keys?: string | {[key: string]: any} | string[] | null | undefined,
+  ): Promise<{[key: string]: any}>;
+  setLocalStorage(items: {[key: string]: any}): Promise<void>;
 }
 
 export interface ContentScriptApiForDevTools extends RemoteApi {

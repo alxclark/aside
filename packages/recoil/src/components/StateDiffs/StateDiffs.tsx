@@ -15,7 +15,8 @@ import {
   PaneContent,
   Text,
 } from '@aside/chrome-ui';
-import React from 'react';
+import {useExtensionApi} from '@aside/react';
+import React, {useEffect} from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
 
 import {

@@ -12,5 +12,6 @@
   "references": [
     { "path": "../extension" },
     { "path": "../chrome-ui" },
+    { "path": "../react" },
   ]
 }

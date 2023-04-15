@@ -101,6 +101,12 @@ function exposeWebpage(
     getDevToolsChannel() {
       return devtools.call.getDevToolsChannel();
     },
+    getLocalStorage(keys) {
+      return browser.storage.local.get(keys);
+    },
+    setLocalStorage(items) {
+      return browser.storage.local.set(items);
+    },
   };
 
   webpage.expose(contentScriptApiForWebpage);
