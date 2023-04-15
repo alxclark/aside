@@ -10,6 +10,7 @@ export type Props = PropsWithChildren<{
   title?: string;
   iconHeight?: number;
   color?: string;
+  alert?: boolean;
 }>;
 
 export function Button({
@@ -20,6 +21,7 @@ export function Button({
   title,
   iconHeight = 13,
   color,
+  alert,
 }: Props) {
   if (icon) {
     return (
@@ -29,6 +31,7 @@ export function Button({
         className={classNames(
           'w-[28px] h-[26px] flex items-center justify-center text-gray-300 hover:text-white cursor-default',
           pressed && 'text-lightblue',
+          alert && 'text-lightred',
         )}
         onClick={() => onPress?.()}
       >

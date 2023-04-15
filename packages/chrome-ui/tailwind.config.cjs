@@ -37,6 +37,7 @@ module.exports = {
         accent: 'rgb(255, 165, 0)',
       },
       lightblue: 'rgb(138, 180, 248)',
+      lightred: 'rgb(242, 139, 130)',
       background: 'rgb(32, 33, 36)',
       text: {
         secondary: 'rgb(154, 160, 166)',

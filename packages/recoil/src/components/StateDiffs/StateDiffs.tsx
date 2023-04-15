@@ -48,7 +48,7 @@ export function StateDiffs() {
             <PaneToolbarSection>
               <Button
                 icon="record-on"
-                color="rgb(242, 139, 130)"
+                alert
                 title="Stop recording"
                 iconHeight={19}
               />
@@ -65,6 +65,7 @@ export function StateDiffs() {
               <Button
                 icon="filter"
                 iconHeight={12}
+                alert={filter.length > 0}
                 pressed={showFilter}
                 title="Filter"
                 onPress={() => setShowFilter((prev) => !prev)}
@@ -100,7 +101,7 @@ export function StateDiffs() {
       <PaneContent>
         {unfilteredDiffs.length > 0 ? (
           <Flex fullHeight direction="row">
-            <View maxHeight="100%" overflow="scroll" width={150}>
+            <View maxHeight="100%" overflow="scroll" minWidth={150}>
               <Table
                 onSelect={(index) => setSelectedDiff(index)}
                 selected={selectedDiff}
