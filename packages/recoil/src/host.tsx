@@ -3,6 +3,7 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import {Aside, DevTools as AsideDevTools, useExtensionApi} from '@aside/react';
@@ -32,13 +33,19 @@ export function DevTools({children}: PropsWithChildren<{}>) {
 
   const [diffs, setDiffs] = useState<Snapshot[]>([]);
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
+  const snapshotCount = useRef(0);
 
   // Persist the state snapshots client side.
   // This is needed since we want access to the previous states
   // even if the devtools panel was not opened.
   useEffect(() => {
-    setSnapshots((prev) => [...prev, snapshot]);
+    if (snapshotCount.current === 0) {
+      setSnapshots((prev) => [...prev, {...snapshot, initial: true}]);
+    } else {
+      setSnapshots((prev) => [...prev, snapshot]);
+    }
     setDiffs((prev) => [...prev, diff]);
+    snapshotCount.current += 1;
   }, [setDiffs, snapshot, diff]);
 
   return (
@@ -85,10 +92,11 @@ function RecoilDevTools({children, snapshots, diffs, snapshot, diff}: any) {
 // In order to make it simpler to pass it to the remote, we pre-process
 // each snapshot and generate an object containing all values and a diff of the state.
 function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
-  const createdAt = new Date();
+  const createdAt = new Date().getTime().toString();
+  const id = `${String(recoilSnapshot.getID())}-${createdAt}`;
 
   const snapshot: Snapshot = {
-    id: String(recoilSnapshot.getID()),
+    id,
     createdAt,
     nodes: {},
   };
@@ -112,7 +120,7 @@ function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
   }
 
   const diff: Snapshot = {
-    id: String(recoilSnapshot.getID()),
+    id,
     createdAt,
     nodes: {},
   };

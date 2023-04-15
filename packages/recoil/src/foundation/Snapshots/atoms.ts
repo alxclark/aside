@@ -8,25 +8,25 @@ import {Snapshot} from './types';
 export const filterAtom = atom<string>({
   key: createKey('filter'),
   default: '',
-  effects: [syncStorageEffect],
+  effects: [syncStorageEffect()],
 });
 
 export const showFilterAtom = atom<boolean>({
   key: createKey('show-filter'),
   default: false,
-  effects: [syncStorageEffect],
+  effects: [syncStorageEffect()],
 });
 
 export const preserveLogAtom = atom<boolean>({
   key: createKey('preserve-log'),
   default: false,
-  effects: [syncStorageEffect],
+  effects: [syncStorageEffect()],
 });
 
 export const recordSnapshotAtom = atom<boolean>({
   key: createKey('record-snapshot'),
   default: true,
-  effects: [syncStorageEffect],
+  effects: [syncStorageEffect()],
 });
 
 export const snapshotsAtom = atom<Snapshot[]>({
@@ -61,7 +61,7 @@ export const initialStateAtom = atom<Snapshot | undefined>({
 export const diffsAtom = atom<Snapshot[]>({
   key: createKey('diffs'),
   default: [],
-  effects: [syncStorageEffect],
+  effects: [syncStorageEffect({reconciliation: 'mergeBefore'})],
 });
 
 export const getDiffQueryAtom = selectorFamily<string, string>({
@@ -111,6 +111,7 @@ export const filteredDiffsAtom = selector<Snapshot[]>({
 export const selectedDiffBaseAtom = atom<string | undefined>({
   key: createKey('selected-diff-base'),
   default: undefined,
+  effects: [syncStorageEffect()],
 });
 
 export const selectedDiffAtom = selector<string | undefined>({

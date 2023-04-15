@@ -8,34 +8,86 @@ export const extensionApiAtom = atom<ExtensionApi | undefined>({
   default: undefined,
 });
 
-export const syncStorageEffect: AtomEffect<any> = ({
-  getLoadable,
-  setSelf,
-  node,
-  trigger,
-  onSet,
-}) => {
-  async function persistToExtensionStorage() {
-    if (trigger === 'get') {
-      const api = getLoadable(extensionApiAtom).getValue();
+interface SyncStorageEffectOptions {
+  /**
+   * Specifies how to reconcile the state being retrieved from storage.
+   *
+   * `overwrite` (Default): Completely replaces the initial state of the atom.
+   *
+   * `mergeBefore`: The initial atom state will be merged into the persisted state.
+   *
+   * *example*: [...persisted, ...initial]
+   *
+   * `mergeAfter`: The persisted atom state will be merged into the initial state.
+   *
+   * *example*: [...initial, ...persisted]
+   */
+  reconciliation?: 'overwrite' | 'mergeBefore' | 'mergeAfter';
+}
 
-      if (!api) return;
+export const syncStorageEffect: (
+  options?: SyncStorageEffectOptions,
+) => AtomEffect<any> =
+  (options) =>
+  ({getLoadable, setSelf, node, trigger, onSet}) => {
+    async function persistToExtensionStorage() {
+      if (trigger === 'get') {
+        const reconciliation = options?.reconciliation ?? 'overwrite';
 
-      const result = await api.storage.local.get(node.key);
+        const api = getLoadable(extensionApiAtom).getValue();
 
-      const isEmptyObject =
-        result &&
-        Object.keys(result).length === 0 &&
-        Object.getPrototypeOf(result) === Object.prototype;
+        if (!api) return;
 
-      if (!isEmptyObject) {
-        setSelf((result as any)[node.key]);
+        const persistedValue = await api.storage.local.get(node.key);
+
+        const isEmptyObject =
+          persistedValue &&
+          Object.keys(persistedValue).length === 0 &&
+          Object.getPrototypeOf(persistedValue) === Object.prototype;
+
+        const initialValue = getLoadable(node).getValue();
+
+        if (!isEmptyObject) {
+          switch (reconciliation) {
+            case 'overwrite': {
+              setSelf(persistedValue[node.key]);
+              break;
+            }
+            case 'mergeBefore': {
+              const reconciliatedValue = getReconciliatedValue(
+                persistedValue[node.key],
+                initialValue,
+              );
+              setSelf(reconciliatedValue);
+              break;
+            }
+            case 'mergeAfter': {
+              const reconciliatedValue = getReconciliatedValue(
+                initialValue,
+                persistedValue[node.key],
+              );
+              setSelf(reconciliatedValue);
+              break;
+            }
+          }
+        }
+
+        onSet((value) => {
+          api.storage.local.set({[node.key]: value});
+        });
       }
-
-      onSet((value) => {
-        api.storage.local.set({[node.key]: value});
-      });
     }
+    persistToExtensionStorage();
+  };
+
+function getReconciliatedValue<T>(previous: T, newValue: T) {
+  if (Array.isArray(previous) && Array.isArray(newValue)) {
+    return [...previous, ...newValue];
   }
-  persistToExtensionStorage();
-};
+
+  if (typeof previous === 'object' && typeof newValue === 'object') {
+    return {...previous, ...newValue};
+  }
+
+  return newValue;
+}

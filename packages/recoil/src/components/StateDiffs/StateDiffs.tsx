@@ -121,7 +121,7 @@ export function StateDiffs() {
                   <TableRow key={diff.id} id={diff.id}>
                     <TableCell>
                       <Flex gap="5px" alignItems="center">
-                        {diff.id === initial?.id ? (
+                        {diff.initial ? (
                           <View margin="0 0 0 2px">
                             <Icon
                               source="start"
@@ -142,9 +142,7 @@ export function StateDiffs() {
                             />
                           </View>
                         )}
-                        {diff.id === initial?.id
-                          ? 'initial'
-                          : getDiffName(diffs[index])}
+                        {diff.initial ? 'initial' : getDiffName(diffs[index])}
                       </Flex>
                     </TableCell>
                   </TableRow>

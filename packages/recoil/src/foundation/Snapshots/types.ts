@@ -1,5 +1,6 @@
 export interface Snapshot {
   id: string;
-  createdAt: Date;
+  createdAt: string;
   nodes: {[key: string]: any};
+  initial?: boolean;
 }
