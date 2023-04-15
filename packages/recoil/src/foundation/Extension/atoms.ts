@@ -51,6 +51,7 @@ export const syncStorageEffect: (
           switch (reconciliation) {
             case 'overwrite': {
               setSelf(persistedValue[node.key]);
+              api.storage.local.set({[node.key]: persistedValue[node.key]});
               break;
             }
             case 'mergeBefore': {
@@ -58,7 +59,9 @@ export const syncStorageEffect: (
                 persistedValue[node.key],
                 initialValue,
               );
+
               setSelf(reconciliatedValue);
+              api.storage.local.set({[node.key]: reconciliatedValue});
               break;
             }
             case 'mergeAfter': {
@@ -66,7 +69,9 @@ export const syncStorageEffect: (
                 initialValue,
                 persistedValue[node.key],
               );
+
               setSelf(reconciliatedValue);
+              api.storage.local.set({[node.key]: reconciliatedValue});
               break;
             }
           }
