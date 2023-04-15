@@ -61,6 +61,7 @@ export const initialStateAtom = atom<Snapshot | undefined>({
 export const diffsAtom = atom<Snapshot[]>({
   key: createKey('diffs'),
   default: [],
+  effects: [syncStorageEffect],
 });
 
 export const getDiffQueryAtom = selectorFamily<string, string>({
