@@ -134,7 +134,7 @@ function RecoilDevTools({children, snapshots, diffs, snapshot, diff}: any) {
 
           if (persistedState.recordSnapshot !== false) {
             const reconciledDiffs = [
-              ...(persistedState.diffs ?? []),
+              ...(persistedState.preserveLog ? persistedState.diffs ?? [] : []),
               snapshots[0],
               ...rest,
             ];
@@ -159,7 +159,7 @@ function RecoilDevTools({children, snapshots, diffs, snapshot, diff}: any) {
             snapshot.set(filterAtom, persistedState.filter);
           }
 
-          if (persistedState.preserveLog) {
+          if (persistedState.preserveLog !== undefined) {
             snapshot.set(preserveLogAtom, persistedState.preserveLog);
           }
 
