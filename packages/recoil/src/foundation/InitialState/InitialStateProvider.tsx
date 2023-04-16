@@ -10,7 +10,6 @@ import {
   invertFilterAtom,
   preserveLogAtom,
   recordSnapshotAtom,
-  diffsAtom,
   selectedDiffBaseAtom,
   snapshotsAtom,
   currentStateAtom,
@@ -22,10 +21,9 @@ import {PersistedState} from './types';
 export interface Props {
   children: React.ReactNode;
   snapshots: Snapshot[];
-  diffs: Snapshot[];
 }
 
-export function InitialStateProvider({children, snapshots, diffs}: Props) {
+export function InitialStateProvider({children, snapshots}: Props) {
   const api = useExtensionApi();
   const [persistedState, setPersistedState] = useState<
     PersistedState | undefined
@@ -40,7 +38,7 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
           invertFilterAtom.key,
           preserveLogAtom.key,
           recordSnapshotAtom.key,
-          diffsAtom.key,
+          snapshotsAtom.key,
           selectedDiffBaseAtom.key,
           primaryNavigationAtom.key,
         ]);
@@ -51,7 +49,7 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
           invertFilter: result[invertFilterAtom.key],
           preserveLog: result[preserveLogAtom.key],
           recordSnapshot: result[recordSnapshotAtom.key],
-          diffs: result[diffsAtom.key],
+          snapshots: result[snapshotsAtom.key],
           selectedDiff: result[selectedDiffBaseAtom.key],
           primaryNavigation: result[primaryNavigationAtom.key],
         });
@@ -63,7 +61,7 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
           [invertFilterAtom.key]: undefined,
           [preserveLogAtom.key]: undefined,
           [recordSnapshotAtom.key]: undefined,
-          [diffsAtom.key]: undefined,
+          [snapshotsAtom.key]: undefined,
           [selectedDiffBaseAtom.key]: undefined,
           [primaryNavigationAtom.key]: undefined,
         });
@@ -84,17 +82,19 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
           snapshot.set(snapshotsAtom, snapshots);
           snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
 
-          const [, ...rest] = diffs;
+          const [, ...rest] = snapshots;
 
-          const reconciledDiffs = [
-            ...(persistedState.preserveLog ? persistedState.diffs ?? [] : []),
+          const reconciledSnapshots = [
+            ...(persistedState.preserveLog
+              ? persistedState.snapshots ?? []
+              : []),
             ...(persistedState.recordSnapshot ? [snapshots[0]] : []),
             ...(persistedState.recordSnapshot ? rest : []),
           ];
 
-          api.storage.local.set({[diffsAtom.key]: reconciledDiffs});
+          api.storage.local.set({[snapshotsAtom.key]: reconciledSnapshots});
 
-          snapshot.set(diffsAtom, reconciledDiffs);
+          snapshot.set(snapshotsAtom, reconciledSnapshots);
 
           if (persistedState.primaryNavigation) {
             snapshot.set(

@@ -4,7 +4,6 @@ import {useRecoilValue, useSetRecoilState} from 'recoil';
 import {PrimaryPanel} from './components';
 import {
   currentStateAtom,
-  diffsAtom,
   recordSnapshotAtom,
   Snapshot,
   snapshotsAtom,
@@ -19,7 +18,6 @@ export function RemoteDevTools({
 }) {
   const shouldRecordSnapshot = useRecoilValue(recordSnapshotAtom);
   const setSnapshots = useSetRecoilState(snapshotsAtom);
-  const setDiffs = useSetRecoilState(diffsAtom);
   const setCurrentState = useSetRecoilState(currentStateAtom);
   const lastSnapshotRef = useRef<string | null>(null);
 
@@ -37,21 +35,7 @@ export function RemoteDevTools({
       }
       return [...prev, snapshot];
     });
-
-    setDiffs((prev) => {
-      if (prev[prev.length - 1]?.id === diff.id) {
-        return prev;
-      }
-      return [...prev, diff];
-    });
-  }, [
-    diff,
-    setCurrentState,
-    setDiffs,
-    setSnapshots,
-    shouldRecordSnapshot,
-    snapshot,
-  ]);
+  }, [diff, setCurrentState, setSnapshots, shouldRecordSnapshot, snapshot]);
 
   return <PrimaryPanel />;
 }

@@ -28,12 +28,14 @@ import {
   selectedDiffAtom,
   showFilterAtom,
   Snapshot,
+  snapshotsAtom,
 } from '../../foundation/Snapshots';
 
 export function StateDiffs() {
   const unfilteredDiffs = useRecoilValue(diffsAtom);
   const diffs = useRecoilValue(filteredDiffsAtom);
-  const setDiffs = useSetRecoilState(diffsAtom);
+
+  const setSnapshots = useSetRecoilState(snapshotsAtom);
 
   const [selectedDiff, setSelectedDiff] = useRecoilState(selectedDiffAtom);
   const [showFilter, setShowFilter] = useRecoilState(showFilterAtom);
@@ -63,7 +65,8 @@ export function StateDiffs() {
                 title="Clear"
                 onPress={() => {
                   setSelectedDiff(undefined);
-                  setDiffs([]);
+                  // TODO
+                  setSnapshots([]);
                 }}
               />
             </PaneToolbarSection>

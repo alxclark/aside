@@ -1,9 +1,11 @@
+/* eslint-disable line-comment-position */
 import {atom, selector, selectorFamily} from 'recoil';
 
 import {createKey} from '../../utilities/recoil';
 import {syncStorageEffect} from '../Extension';
 
-import {Snapshot} from './types';
+import {Diff, DiffNode, Snapshot} from './types';
+import {createDiffFromSnapshots} from './utilities';
 
 export const filterAtom = atom<string>({
   key: createKey('filter'),
@@ -38,6 +40,7 @@ export const recordSnapshotAtom = atom<boolean>({
 export const snapshotsAtom = atom<Snapshot[]>({
   key: createKey('snapshots'),
   default: [],
+  effects: [syncStorageEffect()],
 });
 
 /**
@@ -52,10 +55,48 @@ export const currentStateAtom = atom<Snapshot | undefined>({
   default: undefined,
 });
 
-export const diffsAtom = atom<Snapshot[]>({
-  key: createKey('diffs'),
-  default: [],
-  effects: [syncStorageEffect()],
+export const diffsAtom = selector<Diff[]>({
+  key: createKey('diffs-2'),
+  get: ({get}) => {
+    const snapshots = get(snapshotsAtom);
+    return snapshots.reduce<Diff[]>((prev, {id}) => {
+      const diff = get(getDiffAtom(id));
+
+      if (diff) {
+        prev.push(diff);
+      }
+
+      return prev;
+    }, []);
+  },
+});
+
+export const getDiffAtom = selectorFamily<Diff | undefined, string>({
+  key: createKey('get-diff'),
+  get:
+    (id) =>
+    ({get}) => {
+      const snapshots = get(snapshotsAtom);
+      const snapshotIndex = get(snapshotsAtom).findIndex(
+        (snapshot) => snapshot.id === id,
+      );
+
+      if (snapshotIndex === -1) {
+        return;
+      }
+
+      if (snapshotIndex === 0 || snapshots[snapshotIndex].initial) {
+        return createDiffFromSnapshots(
+          {id: '-1', createdAt: '', nodes: {}},
+          snapshots[snapshotIndex],
+        );
+      }
+
+      return createDiffFromSnapshots(
+        snapshots[snapshotIndex - 1],
+        snapshots[snapshotIndex],
+      );
+    },
 });
 
 export const getDiffQueryAtom = selectorFamily<string, string>({
@@ -63,11 +104,24 @@ export const getDiffQueryAtom = selectorFamily<string, string>({
   get:
     (id) =>
     ({get}) => {
-      const diff = get(diffsAtom).find((diff) => diff.id === id);
+      const diff = get(getDiffAtom(id));
 
       if (!diff) return '';
 
       return traverseObject(diff.nodes) + (diff.initial ? 'initial' : '');
+    },
+});
+
+export const getDiff2QueryAtom = selectorFamily<string, string>({
+  key: createKey('diff-2-query'),
+  get:
+    (id) =>
+    ({get}) => {
+      const diff = get(diffsAtom).find((diff) => diff.id === id);
+
+      if (!diff) return '';
+
+      return traverseDiff(diff.nodes) + (diff.initial ? 'initial' : '');
     },
 });
 
@@ -88,15 +142,35 @@ function traverseObject(obj: any) {
   return result;
 }
 
+function traverseDiff(obj: DiffNode) {
+  let result = '';
+
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key]?.next;
+      result += `${key}:${
+        typeof value === 'object' && value !== null
+          ? // TODO: Support arrays
+            traverseDiff(value as any)
+          : value
+      },`;
+    }
+  }
+
+  result = result.slice(0, -1);
+
+  return result;
+}
+
 export const filteredDiffsAtom = selector<Snapshot[]>({
-  key: createKey('filtered-diffs'),
+  key: createKey('filtered-diffs-2'),
   get: ({get}) => {
     const diffs = get(diffsAtom);
     const filter = get(filterAtom);
     const invert = get(invertFilterAtom);
 
     return diffs.filter((diff) => {
-      const query = get(getDiffQueryAtom(diff.id));
+      const query = get(getDiff2QueryAtom(diff.id));
 
       const included = query.includes(filter);
 

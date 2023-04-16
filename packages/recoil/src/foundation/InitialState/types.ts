@@ -7,7 +7,7 @@ export interface PersistedState {
   invertFilter?: boolean;
   preserveLog?: boolean;
   recordSnapshot?: boolean;
-  diffs?: Snapshot[];
+  snapshots?: Snapshot[];
   selectedDiff?: string;
   primaryNavigation?: PrimaryNavigation;
 }
