@@ -15,15 +15,13 @@ import {
   PaneContent,
   Text,
 } from '@aside/chrome-ui';
-import {useExtensionApi} from '@aside/react';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
 
 import {
   diffsAtom,
   filterAtom,
   filteredDiffsAtom,
-  initialStateAtom,
   preserveLogAtom,
   recordSnapshotAtom,
   selectedDiffAtom,
@@ -35,7 +33,6 @@ export function StateDiffs() {
   const unfilteredDiffs = useRecoilValue(diffsAtom);
   const diffs = useRecoilValue(filteredDiffsAtom);
   const setDiffs = useSetRecoilState(diffsAtom);
-  const initial = useRecoilValue(initialStateAtom);
 
   const [selectedDiff, setSelectedDiff] = useRecoilState(selectedDiffAtom);
   const [showFilter, setShowFilter] = useRecoilState(showFilterAtom);

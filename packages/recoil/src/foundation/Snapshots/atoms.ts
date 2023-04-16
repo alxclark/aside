@@ -46,22 +46,10 @@ export const currentStateAtom = atom<Snapshot | undefined>({
   default: undefined,
 });
 
-/**
- * The initial Recoil state.
- *
- * Although we store a separate list of all snapshots,
- * this is not a selector since users can wipe the snapshot history
- * and we don't want to just select the first snapshot in the history.
- */
-export const initialStateAtom = atom<Snapshot | undefined>({
-  key: createKey('initial-state'),
-  default: undefined,
-});
-
 export const diffsAtom = atom<Snapshot[]>({
   key: createKey('diffs'),
   default: [],
-  effects: [syncStorageEffect({reconciliation: 'mergeBefore'})],
+  effects: [syncStorageEffect()],
 });
 
 export const getDiffQueryAtom = selectorFamily<string, string>({
