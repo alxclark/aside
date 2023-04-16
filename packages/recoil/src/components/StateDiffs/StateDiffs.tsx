@@ -22,6 +22,7 @@ import {
   diffsAtom,
   filterAtom,
   filteredDiffsAtom,
+  invertFilterAtom,
   preserveLogAtom,
   recordSnapshotAtom,
   selectedDiffAtom,
@@ -36,6 +37,7 @@ export function StateDiffs() {
 
   const [selectedDiff, setSelectedDiff] = useRecoilState(selectedDiffAtom);
   const [showFilter, setShowFilter] = useRecoilState(showFilterAtom);
+  const [invertFilter, setinvertFilter] = useRecoilState(invertFilterAtom);
   const [preserveLog, setPreserveLog] = useRecoilState(preserveLogAtom);
   const [recordSnapshot, setRecordSnapshot] =
     useRecoilState(recordSnapshotAtom);
@@ -99,6 +101,14 @@ export function StateDiffs() {
                 id="filter"
               />
             </View>
+            <Flex wrap gap="7px">
+              <Checkbox
+                id="invert"
+                label="Invert"
+                checked={invertFilter}
+                onChange={() => setinvertFilter((prev) => !prev)}
+              />
+            </Flex>
           </Flex>
         </PaneToolbar>
       )}

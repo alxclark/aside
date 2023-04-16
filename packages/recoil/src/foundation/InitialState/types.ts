@@ -4,6 +4,7 @@ import {Snapshot} from '../Snapshots';
 export interface PersistedState {
   filter?: string;
   showFilter?: boolean;
+  invertFilter?: boolean;
   preserveLog?: boolean;
   recordSnapshot?: boolean;
   diffs?: Snapshot[];

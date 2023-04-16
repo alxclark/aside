@@ -17,6 +17,12 @@ export const showFilterAtom = atom<boolean>({
   effects: [syncStorageEffect()],
 });
 
+export const invertFilterAtom = atom<boolean>({
+  key: createKey('invert-filter'),
+  default: false,
+  effects: [syncStorageEffect()],
+});
+
 export const preserveLogAtom = atom<boolean>({
   key: createKey('preserve-log'),
   default: false,
@@ -61,7 +67,7 @@ export const getDiffQueryAtom = selectorFamily<string, string>({
 
       if (!diff) return '';
 
-      return traverseObject(diff.nodes);
+      return traverseObject(diff.nodes) + (diff.initial ? 'initial' : '');
     },
 });
 
@@ -87,11 +93,14 @@ export const filteredDiffsAtom = selector<Snapshot[]>({
   get: ({get}) => {
     const diffs = get(diffsAtom);
     const filter = get(filterAtom);
+    const invert = get(invertFilterAtom);
 
     return diffs.filter((diff) => {
       const query = get(getDiffQueryAtom(diff.id));
 
-      return query.includes(filter);
+      const included = query.includes(filter);
+
+      return invert ? !included : included;
     });
   },
 });

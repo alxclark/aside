@@ -7,6 +7,7 @@ import {primaryNavigationAtom} from '../Navigation';
 import {
   filterAtom,
   showFilterAtom,
+  invertFilterAtom,
   preserveLogAtom,
   recordSnapshotAtom,
   diffsAtom,
@@ -36,6 +37,7 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
         const result = await api.storage.local.get([
           filterAtom.key,
           showFilterAtom.key,
+          invertFilterAtom.key,
           preserveLogAtom.key,
           recordSnapshotAtom.key,
           diffsAtom.key,
@@ -46,6 +48,7 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
         setPersistedState({
           filter: result[filterAtom.key],
           showFilter: result[showFilterAtom.key],
+          invertFilter: result[invertFilterAtom.key],
           preserveLog: result[preserveLogAtom.key],
           recordSnapshot: result[recordSnapshotAtom.key],
           diffs: result[diffsAtom.key],
@@ -57,6 +60,7 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
         api.storage.local.set({
           [filterAtom.key]: undefined,
           [showFilterAtom.key]: undefined,
+          [invertFilterAtom.key]: undefined,
           [preserveLogAtom.key]: undefined,
           [recordSnapshotAtom.key]: undefined,
           [diffsAtom.key]: undefined,
@@ -117,6 +121,10 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
 
           if (persistedState.showFilter) {
             snapshot.set(showFilterAtom, persistedState.showFilter);
+          }
+
+          if (persistedState.invertFilter) {
+            snapshot.set(invertFilterAtom, persistedState.invertFilter);
           }
         }}
       >
