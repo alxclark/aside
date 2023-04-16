@@ -1,36 +1,17 @@
 import React, {
   PropsWithChildren,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
-import {Aside, DevTools as AsideDevTools, useExtensionApi} from '@aside/react';
-import {
-  RecoilRoot,
-  useRecoilSnapshot,
-  Snapshot as RecoilSnapshot,
-} from 'recoil';
+import {Aside, DevTools as AsideDevTools} from '@aside/react';
+import {useRecoilSnapshot, Snapshot as RecoilSnapshot} from 'recoil';
 
 import {RemoteDevTools} from './remote';
-import {
-  currentStateAtom,
-  diffsAtom,
-  filterAtom,
-  preserveLogAtom,
-  recordSnapshotAtom,
-  selectedDiffBaseAtom,
-  showFilterAtom,
-  Snapshot,
-  snapshotsAtom,
-} from './foundation/Snapshots';
+import {Snapshot} from './foundation/Snapshots';
 import {isInternalAtom} from './utilities/recoil';
-import {extensionApiAtom} from './foundation/Extension';
-import {
-  primaryNavigationAtom,
-  PrimaryNavigation,
-} from './foundation/Navigation';
+import {InitialStateProvider} from './foundation/InitialState';
 
 export function DevTools({children}: PropsWithChildren<{}>) {
   const recoilSnapshot = useRecoilSnapshot();
@@ -72,110 +53,12 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   );
 }
 
-interface PersistedState {
-  filter?: string;
-  showFilter?: boolean;
-  preserveLog?: boolean;
-  recordSnapshot?: boolean;
-  diffs?: Snapshot[];
-  selectedDiff?: string;
-  primaryNavigation?: PrimaryNavigation;
-}
-
 function RecoilDevTools({children, snapshots, diffs, snapshot, diff}: any) {
-  const api = useExtensionApi();
-  const [persistedState, setPersistedState] = useState<
-    PersistedState | undefined
-  >();
-
-  useEffect(() => {
-    async function queryExtensionStorage() {
-      try {
-        const result = await api.storage.local.get([
-          filterAtom.key,
-          showFilterAtom.key,
-          preserveLogAtom.key,
-          recordSnapshotAtom.key,
-          diffsAtom.key,
-          selectedDiffBaseAtom.key,
-          primaryNavigationAtom.key,
-        ]);
-
-        setPersistedState({
-          filter: result[filterAtom.key],
-          showFilter: result[showFilterAtom.key],
-          preserveLog: result[preserveLogAtom.key],
-          recordSnapshot: result[recordSnapshotAtom.key],
-          diffs: result[diffsAtom.key],
-          selectedDiff: result[selectedDiffBaseAtom.key],
-          primaryNavigation: result[primaryNavigationAtom.key],
-        });
-      } catch (error) {
-        // TODO: Wipe all of local storage
-        setPersistedState({});
-      }
-    }
-
-    queryExtensionStorage();
-  }, [api.storage.local]);
-
-  if (!persistedState) return null;
-
   return (
-    <>
-      <RecoilRoot
-        key="@aside/recoil"
-        initializeState={(snapshot) => {
-          snapshot.set(extensionApiAtom, api);
-          snapshot.set(snapshotsAtom, snapshots);
-          snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
-
-          const [, ...rest] = diffs;
-
-          if (persistedState.recordSnapshot !== false) {
-            const reconciledDiffs = [
-              ...(persistedState.preserveLog ? persistedState.diffs ?? [] : []),
-              snapshots[0],
-              ...rest,
-            ];
-
-            api.storage.local.set({[diffsAtom.key]: reconciledDiffs});
-
-            snapshot.set(diffsAtom, reconciledDiffs);
-          }
-
-          if (persistedState.primaryNavigation) {
-            snapshot.set(
-              primaryNavigationAtom,
-              persistedState.primaryNavigation,
-            );
-          }
-
-          if (persistedState.selectedDiff) {
-            snapshot.set(selectedDiffBaseAtom, persistedState.selectedDiff);
-          }
-
-          if (persistedState.filter) {
-            snapshot.set(filterAtom, persistedState.filter);
-          }
-
-          if (persistedState.preserveLog !== undefined) {
-            snapshot.set(preserveLogAtom, persistedState.preserveLog);
-          }
-
-          if (persistedState.recordSnapshot !== undefined) {
-            snapshot.set(recordSnapshotAtom, persistedState.recordSnapshot);
-          }
-
-          if (persistedState.showFilter) {
-            snapshot.set(showFilterAtom, persistedState.showFilter);
-          }
-        }}
-      >
-        <RemoteDevTools snapshot={snapshot} diff={diff} />
-      </RecoilRoot>
+    <InitialStateProvider snapshots={snapshots} diffs={diffs}>
+      <RemoteDevTools snapshot={snapshot} diff={diff} />
       {children}
-    </>
+    </InitialStateProvider>
   );
 }
 
