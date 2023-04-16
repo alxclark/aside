@@ -80,8 +80,6 @@ export function InitialStateProvider({children, snapshots, diffs}: Props) {
           snapshot.set(snapshotsAtom, snapshots);
           snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
 
-          console.log(persistedState.recordSnapshot);
-
           const [, ...rest] = diffs;
 
           const reconciledDiffs = [
