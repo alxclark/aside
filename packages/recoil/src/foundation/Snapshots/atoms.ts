@@ -4,7 +4,7 @@ import {atom, selector, selectorFamily} from 'recoil';
 import {createKey} from '../../utilities/recoil';
 import {syncStorageEffect} from '../Extension';
 
-import {Diff, DiffNode, Snapshot} from './types';
+import {Diff, DiffNodes, Snapshot} from './types';
 import {createDiffFromSnapshots} from './utilities';
 
 export const filterAtom = atom<string>({
@@ -142,7 +142,7 @@ function traverseObject(obj: any) {
   return result;
 }
 
-function traverseDiff(obj: DiffNode) {
+function traverseDiff(obj: DiffNodes) {
   let result = '';
 
   for (const key in obj) {

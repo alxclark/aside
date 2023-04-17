@@ -11,11 +11,15 @@ export function ObjectRenderer({
   collapsed: collapsedParent,
   nested,
   path,
+  previousValue,
+  showDiffs,
 }: {
   value: {[key: string]: any} | null;
   collapsed?: boolean;
   nested?: boolean;
   path: string[];
+  previousValue?: {[key: string]: any} | null;
+  showDiffs?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(nested);
   const lastKey = path[path.length - 1];
@@ -74,7 +78,12 @@ export function ObjectRenderer({
             <span className="text-white">{'{'}</span>
             {keys.map((key, index) => (
               <React.Fragment key={key}>
-                <Renderer value={value[key]} collapsed path={[...path, key]} />
+                <Renderer
+                  value={value[key]}
+                  collapsed
+                  path={[...path, key]}
+                  showDiffs={showDiffs}
+                />
                 {index !== keys.length - 1 && <>, </>}
               </React.Fragment>
             ))}
@@ -92,7 +101,13 @@ export function ObjectRenderer({
         >
           {keys.map((key) => (
             <div key={key}>
-              <Renderer value={value[key]} nested path={[...path, key]} />
+              <Renderer
+                value={value[key]}
+                nested
+                path={[...path, key]}
+                showDiffs={showDiffs}
+                previousValue={previousValue}
+              />
             </div>
           ))}
         </div>

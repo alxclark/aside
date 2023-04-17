@@ -9,13 +9,7 @@ import {
   snapshotsAtom,
 } from './foundation/Snapshots';
 
-export function RemoteDevTools({
-  snapshot,
-  diff,
-}: {
-  snapshot: Snapshot;
-  diff: Snapshot;
-}) {
+export function RemoteDevTools({snapshot}: {snapshot: Snapshot}) {
   const shouldRecordSnapshot = useRecoilValue(recordSnapshotAtom);
   const setSnapshots = useSetRecoilState(snapshotsAtom);
   const setCurrentState = useSetRecoilState(currentStateAtom);
@@ -35,7 +29,7 @@ export function RemoteDevTools({
       }
       return [...prev, snapshot];
     });
-  }, [diff, setCurrentState, setSnapshots, shouldRecordSnapshot, snapshot]);
+  }, [setCurrentState, setSnapshots, shouldRecordSnapshot, snapshot]);
 
   return <PrimaryPanel />;
 }

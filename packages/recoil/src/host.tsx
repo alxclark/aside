@@ -15,12 +15,11 @@ import {InitialStateProvider} from './foundation/InitialState';
 
 export function DevTools({children}: PropsWithChildren<{}>) {
   const recoilSnapshot = useRecoilSnapshot();
-  const {snapshot, diff} = useMemo(
+  const {snapshot} = useMemo(
     () => transformSnapshot(recoilSnapshot),
     [recoilSnapshot],
   );
 
-  const [diffs, setDiffs] = useState<Snapshot[]>([]);
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
   const snapshotCount = useRef(0);
 
@@ -33,19 +32,14 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     } else {
       setSnapshots((prev) => [...prev, snapshot]);
     }
-    setDiffs((prev) => [...prev, diff]);
+
     snapshotCount.current += 1;
-  }, [setDiffs, snapshot, diff]);
+  }, [snapshot]);
 
   return (
     <Aside>
       <AsideDevTools>
-        <RecoilDevTools
-          snapshots={snapshots}
-          snapshot={snapshot}
-          diff={diff}
-          diffs={diffs}
-        >
+        <RecoilDevTools snapshots={snapshots} snapshot={snapshot}>
           {children}
         </RecoilDevTools>
       </AsideDevTools>
@@ -53,10 +47,10 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   );
 }
 
-function RecoilDevTools({children, snapshots, diffs, snapshot, diff}: any) {
+function RecoilDevTools({children, snapshots, snapshot}: any) {
   return (
-    <InitialStateProvider snapshots={snapshots} diffs={diffs}>
-      <RemoteDevTools snapshot={snapshot} diff={diff} />
+    <InitialStateProvider snapshots={snapshots}>
+      <RemoteDevTools snapshot={snapshot} />
       {children}
     </InitialStateProvider>
   );
@@ -93,16 +87,5 @@ function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
     }
   }
 
-  const diff: Snapshot = {
-    id,
-    createdAt,
-    nodes: {},
-  };
-
-  for (const node of recoilSnapshot.getNodes_UNSTABLE({isModified: true})) {
-    if (isInternalAtom(node.key)) continue;
-    diff.nodes[node.key] = recoilSnapshot.getLoadable(node).getValue();
-  }
-
-  return {diff, snapshot};
+  return {snapshot};
 }

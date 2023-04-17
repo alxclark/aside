@@ -5,10 +5,14 @@ export function StringRenderer({
   value,
   path,
   collapsed,
+  previousValue,
+  showDiffs,
 }: {
   value: string;
   path: string[];
   collapsed?: boolean;
+  previousValue?: string;
+  showDiffs?: boolean;
 }) {
   return (
     <>
@@ -20,7 +24,10 @@ export function StringRenderer({
       >
         {path[path.length - 1]}
       </span>
-      : <span className="text-console-object-cyan">&apos;{value}&apos;</span>
+      :{' '}
+      <span className="text-console-object-cyan">
+        {showDiffs && `${previousValue} →`} &apos;{value}&apos;
+      </span>
     </>
   );
 }

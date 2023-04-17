@@ -9,7 +9,7 @@ export type {NavigationProps, NavigationTabProps} from './Navigation';
 
 import {Log} from './Log';
 export {Log} from './Log';
-export type {Props as LogProps} from './Log';
+export type {Props as LogProps, Diff, DiffNode, DiffValue} from './Log';
 
 import {Table, TableRow, TableCell} from './Table';
 export {Table} from './Table';

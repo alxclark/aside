@@ -11,8 +11,6 @@ export function createDiffFromSnapshots(
     initial: currentSnapshot.initial,
   };
 
-  console.log({previousSnapshot, currentSnapshot, diff});
-
   function compareObjects(firstObject: any, secondObject: any, path = '') {
     for (const key in firstObject) {
       if (firstObject.hasOwnProperty(key)) {
@@ -26,12 +24,14 @@ export function createDiffFromSnapshots(
             compareObjects(firstObject[key], secondObject[key], newPath);
           } else if (firstObject[key] !== secondObject[key]) {
             diff.nodes[newPath] = {
+              __tag: 'diff',
               previous: firstObject[key],
               next: secondObject[key],
             };
           }
         } else {
           diff.nodes[newPath] = {
+            __tag: 'diff',
             previous: firstObject[key],
             next: undefined,
           };
@@ -51,6 +51,7 @@ export function createDiffFromSnapshots(
       ) {
         const newPath = (path ? `${path}.` : '') + key;
         diff.nodes[newPath] = {
+          __tag: 'diff',
           previous: undefined,
           next: secondObject[key],
         };

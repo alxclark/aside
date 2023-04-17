@@ -45,6 +45,8 @@ export function StateDiffs() {
     useRecoilState(recordSnapshotAtom);
   const [filter, setFilter] = useRecoilState(filterAtom);
 
+  const currentDiff = diffs.find((diff) => diff.id === selectedDiff);
+
   return (
     <>
       <PaneToolbar>
@@ -165,10 +167,10 @@ export function StateDiffs() {
                   items={[
                     {
                       id: 'state',
-                      value: diffs.find((diff) => diff.id === selectedDiff)
-                        ?.nodes,
+                      value: currentDiff?.nodes,
                     },
                   ]}
+                  showDiffs={!currentDiff?.initial}
                 />
               )}
             </View>

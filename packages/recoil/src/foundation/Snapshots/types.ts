@@ -1,3 +1,7 @@
+import type {Diff as DiffNodes} from '@aside/chrome-ui/react';
+
+export {DiffNodes};
+
 export interface Snapshot {
   id: string;
   createdAt: string;
@@ -5,16 +9,9 @@ export interface Snapshot {
   initial?: boolean;
 }
 
-export interface DiffNode {
-  [key: string]: {
-    previous?: DiffNode | string | boolean | any[] | null | undefined;
-    next: DiffNode | string | boolean | any[] | null | undefined;
-  };
-}
-
 export interface Diff {
   id: string;
   createdAt: string;
-  nodes: DiffNode;
+  nodes: DiffNodes;
   initial?: boolean;
 }
