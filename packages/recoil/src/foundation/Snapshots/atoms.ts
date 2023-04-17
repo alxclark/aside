@@ -55,8 +55,14 @@ export const currentStateAtom = atom<Snapshot | undefined>({
   default: undefined,
 });
 
+export const previousSnapshotAtom = atom<Snapshot | undefined>({
+  key: createKey('previous-state'),
+  default: undefined,
+  effects: [syncStorageEffect()],
+});
+
 export const diffsAtom = selector<Diff[]>({
-  key: createKey('diffs-2'),
+  key: createKey('diffs'),
   get: ({get}) => {
     const snapshots = get(snapshotsAtom);
     return snapshots.reduce<Diff[]>((prev, {id}) => {
@@ -77,7 +83,7 @@ export const getDiffAtom = selectorFamily<Diff | undefined, string>({
     (id) =>
     ({get}) => {
       const snapshots = get(snapshotsAtom);
-      const snapshotIndex = get(snapshotsAtom).findIndex(
+      const snapshotIndex = snapshots.findIndex(
         (snapshot) => snapshot.id === id,
       );
 
@@ -85,7 +91,22 @@ export const getDiffAtom = selectorFamily<Diff | undefined, string>({
         return;
       }
 
-      if (snapshotIndex === 0 || snapshots[snapshotIndex].initial) {
+      if (snapshotIndex === 0) {
+        const previousSnapshot = get(previousSnapshotAtom);
+        if (!snapshots[snapshotIndex].initial && previousSnapshot) {
+          return createDiffFromSnapshots(
+            previousSnapshot,
+            snapshots[snapshotIndex],
+          );
+        }
+
+        return createDiffFromSnapshots(
+          {id: '-1', createdAt: '', nodes: {}},
+          snapshots[snapshotIndex],
+        );
+      }
+
+      if (snapshots[snapshotIndex].initial) {
         return createDiffFromSnapshots(
           {id: '-1', createdAt: '', nodes: {}},
           snapshots[snapshotIndex],

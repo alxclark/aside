@@ -10,4 +10,5 @@ export interface PersistedState {
   snapshots?: Snapshot[];
   selectedDiff?: string;
   primaryNavigation?: PrimaryNavigation;
+  previousSnapshot?: Snapshot;
 }

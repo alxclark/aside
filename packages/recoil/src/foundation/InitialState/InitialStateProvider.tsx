@@ -14,6 +14,7 @@ import {
   snapshotsAtom,
   currentStateAtom,
   Snapshot,
+  previousSnapshotAtom,
 } from '../Snapshots';
 
 import {PersistedState} from './types';
@@ -41,6 +42,7 @@ export function InitialStateProvider({children, snapshots}: Props) {
           snapshotsAtom.key,
           selectedDiffBaseAtom.key,
           primaryNavigationAtom.key,
+          previousSnapshotAtom.key,
         ]);
 
         setPersistedState({
@@ -52,6 +54,7 @@ export function InitialStateProvider({children, snapshots}: Props) {
           snapshots: result[snapshotsAtom.key],
           selectedDiff: result[selectedDiffBaseAtom.key],
           primaryNavigation: result[primaryNavigationAtom.key],
+          previousSnapshot: result[previousSnapshotAtom.key],
         });
       } catch (error) {
         setPersistedState({});
@@ -64,6 +67,7 @@ export function InitialStateProvider({children, snapshots}: Props) {
           [snapshotsAtom.key]: undefined,
           [selectedDiffBaseAtom.key]: undefined,
           [primaryNavigationAtom.key]: undefined,
+          [previousSnapshotAtom.key]: undefined,
         });
       }
     }
@@ -79,16 +83,15 @@ export function InitialStateProvider({children, snapshots}: Props) {
         key="@aside/recoil"
         initializeState={(snapshot) => {
           snapshot.set(extensionApiAtom, api);
-          snapshot.set(snapshotsAtom, snapshots);
           snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
 
           const [, ...rest] = snapshots;
 
           const reconciledSnapshots = [
-            ...(persistedState.preserveLog
+            ...(persistedState.preserveLog === true
               ? persistedState.snapshots ?? []
               : []),
-            ...(persistedState.recordSnapshot ? [snapshots[0]] : []),
+            ...(persistedState.recordSnapshot === false ? [] : [snapshots[0]]),
             ...(persistedState.recordSnapshot ? rest : []),
           ];
 
@@ -125,6 +128,10 @@ export function InitialStateProvider({children, snapshots}: Props) {
 
           if (persistedState.invertFilter) {
             snapshot.set(invertFilterAtom, persistedState.invertFilter);
+          }
+
+          if (persistedState.previousSnapshot) {
+            snapshot.set(previousSnapshotAtom, persistedState.previousSnapshot);
           }
         }}
       >

@@ -24,6 +24,7 @@ import {
   filteredDiffsAtom,
   invertFilterAtom,
   preserveLogAtom,
+  previousSnapshotAtom,
   recordSnapshotAtom,
   selectedDiffAtom,
   showFilterAtom,
@@ -44,6 +45,8 @@ export function StateDiffs() {
   const [recordSnapshot, setRecordSnapshot] =
     useRecoilState(recordSnapshotAtom);
   const [filter, setFilter] = useRecoilState(filterAtom);
+  const setPreviousSnapshot = useSetRecoilState(previousSnapshotAtom);
+  const snapshots = useRecoilValue(snapshotsAtom);
 
   const currentDiff = diffs.find((diff) => diff.id === selectedDiff);
 
@@ -67,7 +70,7 @@ export function StateDiffs() {
                 title="Clear"
                 onPress={() => {
                   setSelectedDiff(undefined);
-                  // TODO
+                  setPreviousSnapshot(snapshots[snapshots.length - 1]);
                   setSnapshots([]);
                 }}
               />
