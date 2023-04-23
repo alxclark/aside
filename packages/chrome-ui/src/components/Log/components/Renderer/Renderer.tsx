@@ -1,69 +1,43 @@
 import React from 'react';
 
-import {isDiff} from '../../utilities';
-
-import {NumberRenderer} from './NumberRenderer';
 // eslint-disable-next-line import/no-cycle
-import {ObjectRenderer} from './ObjectRenderer';
-import {StringRenderer} from './StringRenderer';
+import {
+  BooleanRenderer,
+  DefaultRenderer,
+  NumberRenderer,
+  ObjectRenderer,
+  StringRenderer,
+} from './components';
 
 export function Renderer({
   value,
-  collapsed,
+  preview,
   nested,
   path = [],
-  previousValue,
   showDiffs = false,
 }: {
   value: any;
-  collapsed?: boolean;
+  preview?: boolean;
   nested?: boolean;
   path?: string[];
-  previousValue?: any;
   showDiffs?: boolean;
 }) {
   switch (typeof value) {
     case 'string':
-      return (
-        <StringRenderer
-          value={value}
-          path={path}
-          collapsed={collapsed}
-          previousValue={previousValue}
-          showDiffs={showDiffs}
-        />
-      );
+      return <StringRenderer value={value} />;
     case 'number':
-      return (
-        <NumberRenderer
-          value={value}
-          path={path}
-          collapsed={collapsed}
-          previousValue={previousValue}
-          showDiffs={showDiffs}
-        />
-      );
+      return <NumberRenderer value={value} />;
+    case 'boolean':
+      return <BooleanRenderer value={value} />;
+    case 'undefined':
+      return <DefaultRenderer value="undefined" />;
     case 'object':
-      if (isDiff(value)) {
-        return (
-          <Renderer
-            value={value.next}
-            path={path}
-            collapsed={collapsed}
-            nested={nested}
-            previousValue={value.previous}
-            showDiffs={showDiffs}
-          />
-        );
-      }
-
       return (
         <ObjectRenderer
           value={value}
-          collapsed={collapsed}
+          preview={preview}
           nested={nested}
           path={path}
-          previousValue={previousValue}
           showDiffs={showDiffs}
         />
       );

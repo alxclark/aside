@@ -1,62 +1,63 @@
 import React, {useState} from 'react';
 import classNames from 'classnames';
 
-import {Carret} from '../../../Carret';
+import {Carret} from '../../../../../Carret';
+// eslint-disable-next-line import/no-cycle
+import {Renderer} from '../../Renderer';
+import {isDiff} from '../../../../utilities';
+import {DefaultRenderer} from '../DefaultRenderer';
 
 // eslint-disable-next-line import/no-cycle
-import {Renderer} from './Renderer';
+import {DiffRenderer, ArrayRenderer} from './components';
 
 export function ObjectRenderer({
   value,
-  collapsed: collapsedParent,
-  nested,
+  preview,
+  nested = false,
   path,
-  previousValue,
   showDiffs,
 }: {
   value: {[key: string]: any} | null;
-  collapsed?: boolean;
+  preview?: boolean;
   nested?: boolean;
   path: string[];
-  previousValue?: {[key: string]: any} | null;
   showDiffs?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(nested);
   const lastKey = path[path.length - 1];
 
-  if (value === null || value === undefined) {
+  if (isDiff(value)) {
     return (
-      <>
-        <span
-          className={classNames(
-            collapsedParent
-              ? 'text-console-object-gray'
-              : 'text-console-object-blue font-bold',
-          )}
-        >
-          {lastKey}
-        </span>
-        {': '}
-        <span className="text-console-object-gray">
-          {value === null ? 'null' : 'undefined'}
-        </span>
-      </>
+      <DiffRenderer value={value} preview={preview} showDiffs={showDiffs} />
     );
+  }
+
+  if (Array.isArray(value)) {
+    return (
+      <ArrayRenderer
+        value={value}
+        preview={preview}
+        showDiffs={showDiffs}
+        path={path}
+      />
+    );
+  }
+
+  if (value === null) {
+    return <DefaultRenderer value="null" />;
   }
 
   const keys = Object.keys(value).sort();
 
-  if (collapsedParent) {
+  if (preview) {
     return (
       <>
-        <span className="text-console-object-gray">{lastKey}</span>
-        {': '}
         <span className="text-white">{'{…}'}</span>
       </>
     );
   }
 
-  const showCollapsed = !nested || collapsed;
+  const showChildPreview = !nested || collapsed;
 
   return (
     <>
@@ -73,16 +74,20 @@ export function ObjectRenderer({
             {': '}
           </>
         )}
-        {showCollapsed && (
+        {showChildPreview && (
           <span className={classNames(!nested && 'italic')}>
             <span className="text-white">{'{'}</span>
             {keys.map((key, index) => (
               <React.Fragment key={key}>
+                <span className={classNames('text-console-object-gray')}>
+                  {key}
+                </span>
+                {': '}
                 <Renderer
                   value={value[key]}
-                  collapsed
+                  preview
                   path={[...path, key]}
-                  showDiffs={showDiffs}
+                  showDiffs={false}
                 />
                 {index !== keys.length - 1 && <>, </>}
               </React.Fragment>
@@ -101,12 +106,24 @@ export function ObjectRenderer({
         >
           {keys.map((key) => (
             <div key={key}>
+              {(typeof value[key] !== 'object' || isDiff(value[key])) && (
+                <>
+                  <span
+                    className={classNames(
+                      'text-console-object-gray',
+                      !collapsed && 'text-console-object-blue font-bold',
+                    )}
+                  >
+                    {key}
+                  </span>
+                  :{' '}
+                </>
+              )}
               <Renderer
                 value={value[key]}
                 nested
                 path={[...path, key]}
                 showDiffs={showDiffs}
-                previousValue={previousValue}
               />
             </div>
           ))}
