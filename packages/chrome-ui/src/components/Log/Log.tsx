@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {Renderer} from './components';
+import {RendererContext} from './context';
+import {RendererContextType} from './types';
 
 export interface LogItem {
   id: string;
@@ -13,12 +15,19 @@ export interface Props {
   showDiffs?: boolean;
 }
 
-export function Log({items, showDiffs}: Props) {
+export function Log({items, showDiffs = false}: Props) {
+  const context = useMemo<RendererContextType>(
+    () => ({showDiffs}),
+    [showDiffs],
+  );
+
   return (
-    <div className="px-6 py-[2px] font-menlo text-code-gray text-[11px] border-b border-gray-400">
-      {items.map((item) => (
-        <Renderer key={item.id} value={item.value} showDiffs={showDiffs} />
-      ))}
-    </div>
+    <RendererContext.Provider value={context}>
+      <div className="px-6 py-[2px] font-menlo text-code-gray text-[11px] border-b border-gray-400">
+        {items.map((item) => (
+          <Renderer key={item.id} value={item.value} />
+        ))}
+      </div>
+    </RendererContext.Provider>
   );
 }

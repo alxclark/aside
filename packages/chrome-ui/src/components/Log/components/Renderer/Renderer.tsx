@@ -14,14 +14,12 @@ export function Renderer({
   preview,
   nested,
   path = [],
-  showDiffs = false,
   collapsible = true,
 }: {
   value: any;
   preview?: boolean;
   nested?: boolean;
   path?: string[];
-  showDiffs?: boolean;
   collapsible?: boolean;
 }) {
   switch (typeof value) {
@@ -40,7 +38,6 @@ export function Renderer({
           preview={preview}
           nested={nested}
           path={path}
-          showDiffs={showDiffs}
           collapsible={collapsible}
         />
       );

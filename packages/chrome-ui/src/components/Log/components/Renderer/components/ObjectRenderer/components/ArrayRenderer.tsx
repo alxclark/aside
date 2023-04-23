@@ -7,13 +7,11 @@ import {Carret} from '../../../../../../Carret';
 
 export function ArrayRenderer({
   value,
-  showDiffs,
   preview,
   path,
   collapsible = true,
 }: {
   value: any[];
-  showDiffs?: boolean;
   preview?: boolean;
   path: string[];
   collapsible?: boolean;
@@ -43,7 +41,7 @@ export function ArrayRenderer({
             <span className="text-console-object-blue font-bold">{key}</span>
             {': '}
             {collapsed ? (
-              <DescriptivePreview value={value} showDiffs={showDiffs} />
+              <DescriptivePreview value={value} />
             ) : (
               <SimplePreview length={value.length} />
             )}
@@ -65,12 +63,7 @@ export function ArrayRenderer({
                   :{' '}
                 </>
               )}
-              <Renderer
-                value={child}
-                nested
-                path={[...path, key]}
-                showDiffs={showDiffs}
-              />
+              <Renderer value={child} nested path={[...path, key]} />
             </div>
           ))}
         </div>
@@ -83,13 +76,7 @@ function SimplePreview({length}: {length: number}) {
   return <span className="text-white">Array({length})</span>;
 }
 
-function DescriptivePreview({
-  value,
-  showDiffs,
-}: {
-  value: any[];
-  showDiffs?: boolean;
-}) {
+function DescriptivePreview({value}: {value: any[]}) {
   return (
     <>
       <span className="text-console-object-gray">({value.length})</span>
@@ -99,7 +86,7 @@ function DescriptivePreview({
         {value.map((child, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={index}>
-            <Renderer value={child} preview showDiffs={showDiffs} />
+            <Renderer value={child} preview />
             {index !== value.length - 1 && <>{', '}</>}
           </React.Fragment>
         ))}

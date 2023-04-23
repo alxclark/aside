@@ -16,3 +16,7 @@ export interface DiffNode {
 export interface Diff {
   [key: string]: DiffNode;
 }
+
+export interface RendererContextType {
+  showDiffs: boolean;
+}

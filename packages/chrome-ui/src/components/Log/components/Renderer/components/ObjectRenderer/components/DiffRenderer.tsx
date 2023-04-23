@@ -3,21 +3,21 @@ import React from 'react';
 // eslint-disable-next-line import/no-cycle
 import {Renderer} from '../../../Renderer';
 import {DiffNode} from '../../../../../types';
+import {useRenderer} from '../../../../../hooks';
 
 // eslint-disable-next-line import/no-cycle
 import {ArrayRenderer} from './ArrayRenderer';
 
 export function DiffRenderer({
   value,
-  showDiffs,
   preview,
   path,
 }: {
   value: DiffNode;
-  showDiffs?: boolean;
   preview?: boolean;
   path: string[];
 }) {
+  const {showDiffs} = useRenderer();
   const collapsible = Array.isArray(value.next);
 
   if (Array.isArray(value.next)) {

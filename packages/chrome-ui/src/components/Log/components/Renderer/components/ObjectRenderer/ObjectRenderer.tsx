@@ -15,28 +15,19 @@ export function ObjectRenderer({
   preview,
   nested = false,
   path,
-  showDiffs,
   collapsible,
 }: {
   value: {[key: string]: any} | null;
   preview?: boolean;
   nested?: boolean;
   path: string[];
-  showDiffs?: boolean;
   collapsible: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(nested);
   const lastKey = path[path.length - 1];
 
   if (isDiff(value)) {
-    return (
-      <DiffRenderer
-        path={path}
-        value={value}
-        preview={preview}
-        showDiffs={showDiffs}
-      />
-    );
+    return <DiffRenderer path={path} value={value} preview={preview} />;
   }
 
   if (Array.isArray(value)) {
@@ -45,7 +36,6 @@ export function ObjectRenderer({
         value={value}
         preview={preview}
         collapsible={collapsible}
-        showDiffs={showDiffs}
         path={path}
       />
     );
@@ -91,12 +81,7 @@ export function ObjectRenderer({
                   {key}
                 </span>
                 {': '}
-                <Renderer
-                  value={value[key]}
-                  preview
-                  path={[...path, key]}
-                  showDiffs={false}
-                />
+                <Renderer value={value[key]} preview path={[...path, key]} />
                 {index !== keys.length - 1 && <>, </>}
               </React.Fragment>
             ))}
@@ -127,12 +112,7 @@ export function ObjectRenderer({
                   :{' '}
                 </>
               )}
-              <Renderer
-                value={value[key]}
-                nested
-                path={[...path, key]}
-                showDiffs={showDiffs}
-              />
+              <Renderer value={value[key]} nested path={[...path, key]} />
             </div>
           ))}
         </div>
