@@ -16,19 +16,26 @@ export function ObjectRenderer({
   nested = false,
   path,
   showDiffs,
+  collapsible,
 }: {
   value: {[key: string]: any} | null;
   preview?: boolean;
   nested?: boolean;
   path: string[];
   showDiffs?: boolean;
+  collapsible: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(nested);
   const lastKey = path[path.length - 1];
 
   if (isDiff(value)) {
     return (
-      <DiffRenderer value={value} preview={preview} showDiffs={showDiffs} />
+      <DiffRenderer
+        path={path}
+        value={value}
+        preview={preview}
+        showDiffs={showDiffs}
+      />
     );
   }
 
@@ -37,6 +44,7 @@ export function ObjectRenderer({
       <ArrayRenderer
         value={value}
         preview={preview}
+        collapsible={collapsible}
         showDiffs={showDiffs}
         path={path}
       />
@@ -65,7 +73,7 @@ export function ObjectRenderer({
         className="ml-[-10px] text-left"
         onClick={() => setCollapsed((prev) => !prev)}
       >
-        <Carret direction={collapsed ? 'right' : 'down'} />
+        {collapsible && <Carret direction={collapsed ? 'right' : 'down'} />}
         {path.length > 0 && (
           <>
             <span className="text-console-object-blue font-bold">
@@ -106,7 +114,7 @@ export function ObjectRenderer({
         >
           {keys.map((key) => (
             <div key={key}>
-              {(typeof value[key] !== 'object' || isDiff(value[key])) && (
+              {typeof value[key] !== 'object' && (
                 <>
                   <span
                     className={classNames(

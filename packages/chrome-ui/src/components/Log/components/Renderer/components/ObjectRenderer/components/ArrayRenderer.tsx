@@ -10,11 +10,13 @@ export function ArrayRenderer({
   showDiffs,
   preview,
   path,
+  collapsible = true,
 }: {
   value: any[];
   showDiffs?: boolean;
   preview?: boolean;
   path: string[];
+  collapsible?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(true);
 
@@ -28,9 +30,14 @@ export function ArrayRenderer({
     <>
       <button
         className="ml-[-10px] text-left"
-        onClick={() => setCollapsed((prev) => !prev)}
+        disabled={!collapsible}
+        onClick={() => {
+          if (collapsible) {
+            setCollapsed((prev) => !prev);
+          }
+        }}
       >
-        <Carret direction={collapsed ? 'right' : 'down'} />
+        {collapsible && <Carret direction={collapsed ? 'right' : 'down'} />}
         {path.length > 0 && (
           <>
             <span className="text-console-object-blue font-bold">{key}</span>

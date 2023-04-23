@@ -44,11 +44,21 @@ Diff.args = {
         //   previous: null,
         // },
         array: [1, 2, 3, 4],
-        // arrayChange: {
-        //   __tag: 'diff',
-        //   next: [1, 2, 3, 4],
-        //   previous: [1, 2, 3],
-        // },
+        arrayChange: {
+          __tag: 'diff',
+          next: [1, 2, 3, 4],
+          previous: [1, 2, 3],
+        },
+        arrayChange2: {
+          __tag: 'diff',
+          next: [1, 2, 3, 4],
+          previous: undefined,
+        },
+        arrayChange3: {
+          __tag: 'diff',
+          next: null,
+          previous: [1, 2, 3, 4],
+        },
         // object: {
         //   __tag: 'diff',
         //   next: {hey: 3},
