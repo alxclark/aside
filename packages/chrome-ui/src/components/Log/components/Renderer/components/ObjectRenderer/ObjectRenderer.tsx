@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
-import {Carret} from '../../../../../Carret';
-// eslint-disable-next-line import/no-cycle
-import {Renderer} from '../../Renderer';
 import {isDiff} from '../../../../utilities';
 import {DefaultRenderer} from '../DefaultRenderer';
+// eslint-disable-next-line import/no-cycle
+import {KeyValueRenderer} from '../KeyValueRenderer';
 
 // eslint-disable-next-line import/no-cycle
 import {DiffRenderer, ArrayRenderer} from './components';
@@ -13,110 +12,50 @@ import {DiffRenderer, ArrayRenderer} from './components';
 export function ObjectRenderer({
   value,
   preview,
-  nested = false,
   path,
-  collapsible,
+  collapsed: collapsedParent,
 }: {
   value: {[key: string]: any} | null;
   preview?: boolean;
-  nested?: boolean;
   path: string[];
-  collapsible: boolean;
+  collapsed?: boolean;
 }) {
-  const [collapsed, setCollapsed] = useState(nested);
-  const lastKey = path[path.length - 1];
-
-  if (isDiff(value)) {
-    return <DiffRenderer path={path} value={value} preview={preview} />;
+  if (value === null) {
+    return <DefaultRenderer value="null" />;
   }
 
   if (Array.isArray(value)) {
     return (
       <ArrayRenderer
+        collapsed={collapsedParent}
         value={value}
         preview={preview}
-        collapsible={collapsible}
         path={path}
       />
     );
   }
 
-  if (value === null) {
-    return <DefaultRenderer value="null" />;
+  if (isDiff(value)) {
+    return <DiffRenderer path={path} value={value} preview={preview} />;
+  }
+
+  if (preview) {
+    return <span className="text-white">{'{…}'}</span>;
   }
 
   const keys = Object.keys(value).sort();
-
-  if (preview) {
-    return (
-      <>
-        <span className="text-white">{'{…}'}</span>
-      </>
-    );
-  }
-
-  const showChildPreview = !nested || collapsed;
+  const nested = path.length > 0;
 
   return (
-    <>
-      <button
-        className="ml-[-10px] text-left"
-        onClick={() => setCollapsed((prev) => !prev)}
-      >
-        {collapsible && <Carret direction={collapsed ? 'right' : 'down'} />}
-        {path.length > 0 && (
-          <>
-            <span className="text-console-object-blue font-bold">
-              {lastKey}
-            </span>
-            {': '}
-          </>
-        )}
-        {showChildPreview && (
-          <span className={classNames(!nested && 'italic')}>
-            <span className="text-white">{'{'}</span>
-            {keys.map((key, index) => (
-              <React.Fragment key={key}>
-                <span className={classNames('text-console-object-gray')}>
-                  {key}
-                </span>
-                {': '}
-                <Renderer value={value[key]} preview path={[...path, key]} />
-                {index !== keys.length - 1 && <>, </>}
-              </React.Fragment>
-            ))}
-            <span className="text-white">{'}'}</span>
-          </span>
-        )}
-      </button>
-
-      {!collapsed && (
-        <div
-          className={classNames(
-            'flex flex-col items-start pl-[12px]',
-            nested && 'pl-[10px]',
-          )}
-        >
-          {keys.map((key) => (
-            <div key={key}>
-              {typeof value[key] !== 'object' && (
-                <>
-                  <span
-                    className={classNames(
-                      'text-console-object-gray',
-                      !collapsed && 'text-console-object-blue font-bold',
-                    )}
-                  >
-                    {key}
-                  </span>
-                  :{' '}
-                </>
-              )}
-              <Renderer value={value[key]} nested path={[...path, key]} />
-            </div>
-          ))}
-        </div>
+    <div
+      className={classNames(
+        'flex flex-col items-start pl-[12px]',
+        nested && 'pl-[10px]',
       )}
-    </>
+    >
+      {keys.map((key) => (
+        <KeyValueRenderer key={key} value={value[key]} path={[...path, key]} />
+      ))}
+    </div>
   );
 }

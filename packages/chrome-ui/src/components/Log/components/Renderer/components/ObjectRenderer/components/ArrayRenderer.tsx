@@ -3,72 +3,42 @@ import classNames from 'classnames';
 
 // eslint-disable-next-line import/no-cycle
 import {Renderer} from '../../../Renderer';
-import {Carret} from '../../../../../../Carret';
+// eslint-disable-next-line import/no-cycle
+import {KeyValueRenderer} from '../../KeyValueRenderer';
 
 export function ArrayRenderer({
   value,
   preview,
   path,
-  collapsible = true,
+  collapsed = true,
 }: {
   value: any[];
   preview?: boolean;
   path: string[];
-  collapsible?: boolean;
+  collapsed?: boolean;
 }) {
-  const [collapsed, setCollapsed] = useState(true);
-
   if (preview) {
-    return <SimplePreview length={value.length} />;
+    return collapsed ? (
+      <DescriptivePreview value={value} />
+    ) : (
+      <SimplePreview length={value.length} />
+    );
   }
 
-  const key = path[path.length - 1];
+  if (collapsed) {
+    return null;
+  }
 
   return (
-    <>
-      <button
-        className="ml-[-10px] text-left"
-        disabled={!collapsible}
-        onClick={() => {
-          if (collapsible) {
-            setCollapsed((prev) => !prev);
-          }
-        }}
-      >
-        {collapsible && <Carret direction={collapsed ? 'right' : 'down'} />}
-        {path.length > 0 && (
-          <>
-            <span className="text-console-object-blue font-bold">{key}</span>
-            {': '}
-            {collapsed ? (
-              <DescriptivePreview value={value} />
-            ) : (
-              <SimplePreview length={value.length} />
-            )}
-          </>
-        )}
-      </button>
-      {!collapsed && (
-        <div className="pl-[10px]">
-          {value.map((child, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index}>
-              {child && (
-                <>
-                  <span
-                    className={classNames('text-console-object-blue font-bold')}
-                  >
-                    {index}
-                  </span>
-                  :{' '}
-                </>
-              )}
-              <Renderer value={child} nested path={[...path, key]} />
-            </div>
-          ))}
-        </div>
-      )}
-    </>
+    <div className="pl-[10px]">
+      {value.map((child, index) => (
+        <KeyValueRenderer
+          value={child}
+          path={[...path, index.toString()]}
+          key={[...path, index.toString()].join()}
+        />
+      ))}
+    </div>
   );
 }
 

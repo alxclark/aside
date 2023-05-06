@@ -43,29 +43,56 @@ Diff.args = {
         //   next: undefined,
         //   previous: null,
         // },
-        array: [1, 2, 3, 4],
-        arrayChange: {
-          __tag: 'diff',
-          next: [1, 2, 3, 4],
-          previous: [1, 2, 3],
-        },
-        arrayChange2: {
-          __tag: 'diff',
-          next: [1, 2, 3, 4],
-          previous: undefined,
-        },
-        arrayChange3: {
-          __tag: 'diff',
-          next: null,
-          previous: [1, 2, 3, 4],
-        },
+        // array: [1, 2, 3, 4],
+        // arrayChange: {
+        //   __tag: 'diff',
+        //   next: [1, 2, 3, 4],
+        //   previous: [1, 2, 3],
+        // },
+        // arrayChange2: {
+        //   __tag: 'diff',
+        //   next: [1, 2, 3, 4],
+        //   previous: undefined,
+        // },
+        // arrayChange3: {
+        //   __tag: 'diff',
+        //   next: null,
+        //   previous: [1, 2, 3, 4],
+        // },
         // object: {
         //   __tag: 'diff',
         //   next: {hey: 3},
         //   previous: {yo: 5},
         // },
+        something: [1, 2, 3, 4],
       },
     },
   ],
   showDiffs: true,
+} as Props;
+
+export const ArrayOfNumbers = Template.bind({}) as any;
+
+ArrayOfNumbers.args = {
+  items: [
+    {
+      id: 'numbers',
+      value: {
+        numbers: [1, 2, 3, 4],
+      },
+    },
+  ],
+} as Props;
+
+export const ArrayOfObjects = Template.bind({}) as any;
+
+ArrayOfObjects.args = {
+  items: [
+    {
+      id: 'objects',
+      value: {
+        objects: [{apple: true}, {banana: true}, {pear: true}, {kiwi: true}],
+      },
+    },
+  ],
 } as Props;
