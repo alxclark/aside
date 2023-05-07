@@ -30,10 +30,10 @@ export function KeyValueRenderer({
 
   return (
     <>
-      <button onClick={handleClick}>
+      <span onClick={handleClick} onKeyDown={handleClick}>
         <KeyRenderer collapsible={collapsible} path={path} preview={preview} />
         <Renderer depth={depth} value={value} path={path} preview />
-      </button>
+      </span>
       {collapsible && open && !preview && (
         <Renderer value={value} path={path} />
       )}
