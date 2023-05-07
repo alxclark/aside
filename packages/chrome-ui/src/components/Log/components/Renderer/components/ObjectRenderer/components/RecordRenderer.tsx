@@ -30,6 +30,7 @@ export function RecordRenderer({
   );
 
   if (preview) {
+    if (opened && depth === 0) return null;
     if (parentOpened && depth === 0) {
       return <DescriptivePreview depth={depth} value={value} path={path} />;
     }

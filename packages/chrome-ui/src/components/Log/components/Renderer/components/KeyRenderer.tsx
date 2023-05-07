@@ -15,9 +15,10 @@ export function KeyRenderer({
   onPress?: () => void;
   preview?: boolean;
 }) {
-  const key = path[path.length - 1];
+  const key = path.join('.');
   const renderer = useRenderer();
   const opened = renderer.opened[key];
+  const label = path[path.length - 1];
 
   return (
     <span
@@ -37,7 +38,7 @@ export function KeyRenderer({
             : 'text-console-object-blue font-bold',
         )}
       >
-        {key}
+        {label}
       </span>
       <span className={classNames(preview && 'text-white')}>:</span>
     </span>
