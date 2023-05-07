@@ -13,10 +13,12 @@ export function Renderer({
   value,
   preview,
   path = [],
+  depth = 0,
 }: {
   value: any;
   preview?: boolean;
   path?: string[];
+  depth?: number;
 }) {
   switch (typeof value) {
     case 'string':
@@ -28,7 +30,14 @@ export function Renderer({
     case 'undefined':
       return <DefaultRenderer value="undefined" />;
     case 'object':
-      return <ObjectRenderer value={value} preview={preview} path={path} />;
+      return (
+        <ObjectRenderer
+          depth={depth}
+          value={value}
+          preview={preview}
+          path={path}
+        />
+      );
     default:
       return <></>;
   }

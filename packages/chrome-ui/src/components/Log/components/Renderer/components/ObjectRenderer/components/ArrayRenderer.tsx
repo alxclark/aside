@@ -11,21 +11,24 @@ export function ArrayRenderer({
   value,
   preview,
   path,
+  depth = 0,
 }: {
   value: any[];
   preview?: boolean;
   path: string[];
+  depth?: number;
 }) {
   const renderer = useRenderer();
   const key = path.join('.');
   const open = renderer.opened[key];
 
   if (preview) {
-    return open ? (
-      <SimplePreview length={value.length} />
-    ) : (
-      <DescriptivePreview value={value} />
-    );
+    console.log({depth});
+    if (open || depth > 0) {
+      return <SimplePreview length={value.length} />;
+    }
+
+    return <DescriptivePreview value={value} />;
   }
 
   if (!open) {
@@ -57,7 +60,7 @@ function DescriptivePreview({value}: {value: any[]}) {
         {value.map((child, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={index}>
-            <Renderer value={child} preview />
+            <Renderer value={child} preview depth={1} />
             {index !== value.length - 1 && <>{', '}</>}
           </React.Fragment>
         ))}

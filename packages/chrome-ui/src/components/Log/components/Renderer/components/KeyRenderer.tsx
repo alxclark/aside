@@ -26,7 +26,7 @@ export function KeyRenderer({
       onClick={onPress}
     >
       {collapsible && !preview && (
-        <div className="absolute left-[-10px] top-[-2px]">
+        <div className="absolute left-[-10px] top-[-1px]">
           <Carret direction={opened ? 'down' : 'right'} />
         </div>
       )}

@@ -11,10 +11,12 @@ export function KeyValueRenderer({
   value,
   path,
   preview,
+  depth,
 }: {
   value: any;
   path: string[];
   preview?: boolean;
+  depth?: number;
 }) {
   const renderer = useRenderer();
   const key = path.join('.');
@@ -30,7 +32,7 @@ export function KeyValueRenderer({
     <>
       <button onClick={handleClick}>
         <KeyRenderer collapsible={collapsible} path={path} preview={preview} />
-        <Renderer value={value} path={path} preview />
+        <Renderer depth={depth} value={value} path={path} preview />
       </button>
       {collapsible && open && !preview && (
         <Renderer value={value} path={path} />
