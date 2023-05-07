@@ -1,27 +1,39 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 // eslint-disable-next-line import/no-cycle
 import {Renderer} from '../Renderer';
 import {isCollapsible} from '../utilities';
+import {useRenderer} from '../../../hooks';
 
 import {KeyRenderer} from './KeyRenderer';
 
-export function KeyValueRenderer({value, path}: {value: any; path: string[]}) {
-  const [collapsed, setCollapsed] = useState(true);
+export function KeyValueRenderer({
+  value,
+  path,
+  preview,
+}: {
+  value: any;
+  path: string[];
+  preview?: boolean;
+}) {
+  const renderer = useRenderer();
+  const key = path.join('.');
+  const open = renderer.opened[key];
+
   const collapsible = isCollapsible(value);
+  const handleClick = () => {
+    if (preview) return;
+    renderer.setOpened(key, !open);
+  };
 
   return (
     <>
-      <button onClick={() => setCollapsed((prev) => !prev)}>
-        <KeyRenderer
-          collapsed={collapsed}
-          collapsible={collapsible}
-          path={path}
-        />
-        <Renderer collapsed={collapsed} value={value} path={path} preview />
+      <button onClick={handleClick}>
+        <KeyRenderer collapsible={collapsible} path={path} preview={preview} />
+        <Renderer value={value} path={path} preview />
       </button>
-      {collapsible && !collapsed && (
-        <Renderer collapsed={false} value={value} path={path} />
+      {collapsible && open && !preview && (
+        <Renderer value={value} path={path} />
       )}
     </>
   );

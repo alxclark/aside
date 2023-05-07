@@ -13,12 +13,10 @@ export function Renderer({
   value,
   preview,
   path = [],
-  collapsed,
 }: {
   value: any;
   preview?: boolean;
   path?: string[];
-  collapsed?: boolean;
 }) {
   switch (typeof value) {
     case 'string':
@@ -30,14 +28,7 @@ export function Renderer({
     case 'undefined':
       return <DefaultRenderer value="undefined" />;
     case 'object':
-      return (
-        <ObjectRenderer
-          value={value}
-          preview={preview}
-          path={path}
-          collapsed={collapsed}
-        />
-      );
+      return <ObjectRenderer value={value} preview={preview} path={path} />;
     default:
       return <></>;
   }

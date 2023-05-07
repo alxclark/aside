@@ -5,38 +5,39 @@ import classNames from 'classnames';
 import {Renderer} from '../../../Renderer';
 // eslint-disable-next-line import/no-cycle
 import {KeyValueRenderer} from '../../KeyValueRenderer';
+import {useRenderer} from '../../../../../hooks';
 
 export function ArrayRenderer({
   value,
   preview,
   path,
-  collapsed = true,
 }: {
   value: any[];
   preview?: boolean;
   path: string[];
-  collapsed?: boolean;
 }) {
+  const renderer = useRenderer();
+  const key = path.join('.');
+  const open = renderer.opened[key];
+
   if (preview) {
-    return collapsed ? (
-      <DescriptivePreview value={value} />
-    ) : (
+    return open ? (
       <SimplePreview length={value.length} />
+    ) : (
+      <DescriptivePreview value={value} />
     );
   }
 
-  if (collapsed) {
+  if (!open) {
     return null;
   }
 
   return (
     <div className="pl-[10px]">
       {value.map((child, index) => (
-        <KeyValueRenderer
-          value={child}
-          path={[...path, index.toString()]}
-          key={[...path, index.toString()].join()}
-        />
+        <div key={[...path, index.toString()].join()}>
+          <KeyValueRenderer value={child} path={[...path, index.toString()]} />
+        </div>
       ))}
     </div>
   );
