@@ -86,7 +86,7 @@ function DescriptivePreview({
   const keys = Object.keys(value).sort();
 
   return (
-    <span className="italic">
+    <span className={classNames(path.length === 0 && 'italic')}>
       <span className="text-white">{'{'}</span>
       {keys.map((key, index) => (
         <React.Fragment key={key}>

@@ -34,8 +34,9 @@ export function KeyRenderer({
       <span
         className={classNames(
           preview
-            ? 'text-console-object-gray italic'
+            ? 'text-console-object-gray'
             : 'text-console-object-blue font-bold',
+          path.length === 0 && preview && 'italic',
         )}
       >
         {label}
