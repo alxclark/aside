@@ -2,7 +2,6 @@
 import React from 'react';
 
 import {Log, Props} from './Log';
-import {DiffNode} from './types';
 
 import '../../../build/css/styles.css';
 
@@ -20,51 +19,56 @@ Default.args = {
   items: [{id: 'first', value: {something: {1: 'hey'}, else: 5}}],
 } as Props;
 
-export const Diff = Template.bind({}) as any;
+export const ArrayDiff = Template.bind({}) as any;
 
-Diff.args = {
+ArrayDiff.args = {
   items: [
     {
       id: 'diff',
       value: {
-        // number: 5,
-        // numberToString: {
-        //   __tag: 'diff',
-        //   next: '5',
-        //   previous: 5,
-        // },
-        // boolean: {
-        //   __tag: 'diff',
-        //   next: true,
-        //   previous: false,
-        // },
-        // undefined: {
-        //   __tag: 'diff',
-        //   next: undefined,
-        //   previous: null,
-        // },
-        // array: [1, 2, 3, 4],
-        // arrayChange: {
-        //   __tag: 'diff',
-        //   next: [1, 2, 3, 4],
-        //   previous: [1, 2, 3],
-        // },
-        // arrayChange2: {
-        //   __tag: 'diff',
-        //   next: [1, 2, 3, 4],
-        //   previous: undefined,
-        // },
-        // arrayChange3: {
-        //   __tag: 'diff',
-        //   next: null,
-        //   previous: [1, 2, 3, 4],
-        // },
-        // object: {
-        //   __tag: 'diff',
-        //   next: {hey: 3},
-        //   previous: {yo: 5},
-        // },
-        something: [1, 2, 3, 4],
+        arrayChange: {
+          __tag: 'diff',
+          next: [1, 2, 3, 4],
+          previous: [1, 2, 3],
+        },
+        arrayChange2: {
+          __tag: 'diff',
+          next: [1, 2, 3, 4],
+          previous: undefined,
+        },
+        arrayChange3: {
+          __tag: 'diff',
+          next: null,
+          previous: [1, 2, 3, 4],
+        },
+      },
+    },
+  ],
+  showDiffs: true,
+} as Props;
+
+export const ObjectDiff = Template.bind({}) as any;
+
+ObjectDiff.args = {
+  items: [
+    {
+      id: 'diff',
+      value: {
+        sameKeysAndValues: {
+          __tag: 'diff',
+          next: {count: 1},
+          previous: {count: 1},
+        },
+        sameKeys: {
+          __tag: 'diff',
+          next: {count: 1},
+          previous: {count: 0},
+        },
+        differentKeys: {
+          __tag: 'diff',
+          next: {count: 0},
+          previous: {sum: 100},
+        },
       },
     },
   ],

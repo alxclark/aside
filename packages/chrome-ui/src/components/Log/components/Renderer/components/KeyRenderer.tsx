@@ -7,12 +7,10 @@ import {useRenderer} from '../../../hooks';
 export function KeyRenderer({
   path,
   collapsible = true,
-  onPress,
   preview,
 }: {
   path: string[];
   collapsible?: boolean;
-  onPress?: () => void;
   preview?: boolean;
 }) {
   const key = path.join('.');
@@ -21,11 +19,7 @@ export function KeyRenderer({
   const label = path[path.length - 1];
 
   return (
-    <span
-      className="text-left mr-[7px] relative"
-      onKeyDown={onPress}
-      onClick={onPress}
-    >
+    <span className="text-left mr-[7px] relative">
       {collapsible && !preview && (
         <div className="absolute left-[-10px] top-[-1px]">
           <Carret direction={opened ? 'down' : 'right'} />

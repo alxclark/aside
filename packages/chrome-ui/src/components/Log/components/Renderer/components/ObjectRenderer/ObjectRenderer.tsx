@@ -30,7 +30,9 @@ export function ObjectRenderer(props: {
   }
 
   if (isDiff(value)) {
-    return <DiffRenderer value={value} preview={preview} path={path} />;
+    return (
+      <DiffRenderer value={value} preview={preview} path={path} depth={depth} />
+    );
   }
 
   return (

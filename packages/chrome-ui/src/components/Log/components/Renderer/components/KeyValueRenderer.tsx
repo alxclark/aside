@@ -24,7 +24,7 @@ export function KeyValueRenderer({
 
   const collapsible = isCollapsible(value);
   const handleClick = () => {
-    if (preview) return;
+    if (preview || !collapsible) return;
     renderer.setOpened(key, !open);
   };
 

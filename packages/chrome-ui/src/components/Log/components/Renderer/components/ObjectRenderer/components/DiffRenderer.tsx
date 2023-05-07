@@ -12,32 +12,43 @@ export function DiffRenderer({
   value,
   preview,
   path,
+  depth = 0,
 }: {
   value: DiffNode;
   preview?: boolean;
   path: string[];
+  depth?: number;
 }) {
   const {showDiffs} = useRenderer();
-  const collapsible = Array.isArray(value.next);
 
   if (Array.isArray(value.next)) {
-    return <ArrayRenderer path={path} value={value.next} preview={preview} />;
+    return (
+      <ArrayRenderer
+        path={path}
+        value={value.next}
+        preview={preview}
+        depth={depth}
+      />
+    );
   }
+
+  console.log({value});
 
   return (
     <>
-      {showDiffs && !preview && (
+      {showDiffs && depth === 0 && (
         <>
-          <Renderer
-            value={value.previous}
-            path={path}
-            collapsible={collapsible}
-          />
+          <Renderer value={value.previous} path={path} preview />
           <span className="text-white">{' → '}</span>
         </>
       )}
 
-      <Renderer value={value.next} preview={preview} path={path} />
+      <Renderer
+        value={value.next}
+        preview={preview}
+        path={path}
+        depth={depth}
+      />
     </>
   );
 }
