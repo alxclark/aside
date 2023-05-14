@@ -8,11 +8,13 @@ import {KeyValueRenderer} from '../../KeyValueRenderer';
 
 export function RecordRenderer({
   value,
+  previous,
   preview,
   path,
   depth = 0,
 }: {
   value: {[key: string]: any};
+  previous?: {[key: string]: any};
   preview?: boolean;
   path: string[];
   depth?: number;
@@ -40,6 +42,10 @@ export function RecordRenderer({
   const keys = Object.keys(value).sort();
   const nested = path.length > 0;
 
+  const removedKeys = Object.keys(previous ?? {}).filter(
+    (key) => !keys.includes(key),
+  );
+
   return (
     <>
       {!nested && (
@@ -61,9 +67,20 @@ export function RecordRenderer({
             <KeyValueRenderer
               key={key}
               value={value[key]}
+              previous={previous?.[key]}
               path={[...path, key]}
             />
           ))}
+          {renderer.showDiffs &&
+            removedKeys.map((key) => (
+              <KeyValueRenderer
+                key={key}
+                value={previous?.[key]}
+                path={[...path, key]}
+                linethrough
+                muted
+              />
+            ))}
         </div>
       )}
     </>

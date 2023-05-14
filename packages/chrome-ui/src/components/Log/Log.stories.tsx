@@ -19,6 +19,39 @@ Default.args = {
   items: [{id: 'first', value: {something: {1: 'hey'}, else: 5}}],
 } as Props;
 
+export const PrimitiveDiff = Template.bind({}) as any;
+
+PrimitiveDiff.args = {
+  items: [
+    {
+      id: 'diff',
+      value: {
+        numberChange: {
+          __tag: 'diff',
+          next: 10,
+          previous: 0,
+        },
+        booleanChange: {
+          __tag: 'diff',
+          next: false,
+          previous: true,
+        },
+        booleanChange2: {
+          __tag: 'diff',
+          next: true,
+          previous: false,
+        },
+        stringChange: {
+          __tag: 'diff',
+          next: 'test@email.com',
+          previous: '',
+        },
+      },
+    },
+  ],
+  showDiffs: true,
+} as Props;
+
 export const ArrayDiff = Template.bind({}) as any;
 
 ArrayDiff.args = {
@@ -26,20 +59,30 @@ ArrayDiff.args = {
     {
       id: 'diff',
       value: {
-        arrayChange: {
+        oneMore: {
           __tag: 'diff',
           next: [1, 2, 3, 4],
           previous: [1, 2, 3],
         },
-        arrayChange2: {
+        oneLess: {
+          __tag: 'diff',
+          previous: [1, 2, 3, 4],
+          next: [1, 2, 3],
+        },
+        undefinedToArray: {
           __tag: 'diff',
           next: [1, 2, 3, 4],
           previous: undefined,
         },
-        arrayChange3: {
+        arrayToNull: {
           __tag: 'diff',
           next: null,
           previous: [1, 2, 3, 4],
+        },
+        arrayObject: {
+          __tag: 'diff',
+          next: [{apple: true}, {banana: true}],
+          previous: [{apple: true}],
         },
       },
     },
@@ -69,6 +112,47 @@ ObjectDiff.args = {
           next: {count: 0},
           previous: {sum: 100},
         },
+        nested: {
+          __tag: 'diff',
+          next: {car: {brand: 'VW', cost: 10000}},
+          previous: {wallet: {amount: 10000}},
+        },
+      },
+    },
+  ],
+  showDiffs: true,
+} as Props;
+
+export const NestedDiff = Template.bind({}) as any;
+
+NestedDiff.args = {
+  items: [
+    {
+      id: 'diff',
+      value: {
+        newTodo: [
+          {
+            id: 1,
+            description: 'Clean the dishes.',
+          },
+          {
+            __tag: 'diff',
+            next: {id: 2, description: 'Feed the cats'},
+            previous: undefined,
+          },
+        ],
+        removedTodo: [
+          {
+            __tag: 'diff',
+            next: {id: 2, description: 'Feed the cats'},
+            previous: {id: 1, description: 'Clean the dishes'},
+          },
+          {
+            __tag: 'diff',
+            next: {id: 3, description: 'Vaccum the apartment'},
+            previous: {id: 2, description: 'Feed the cats'},
+          },
+        ],
       },
     },
   ],

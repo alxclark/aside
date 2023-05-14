@@ -14,11 +14,13 @@ export function Renderer({
   preview,
   path = [],
   depth = 0,
+  previous,
 }: {
   value: any;
   preview?: boolean;
   path?: string[];
   depth?: number;
+  previous?: any;
 }) {
   switch (typeof value) {
     case 'string':
@@ -36,6 +38,7 @@ export function Renderer({
           value={value}
           preview={preview}
           path={path}
+          previous={previous}
         />
       );
     default:

@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 // eslint-disable-next-line import/no-cycle
 import {Renderer} from '../Renderer';
@@ -9,14 +10,20 @@ import {KeyRenderer} from './KeyRenderer';
 
 export function KeyValueRenderer({
   value,
+  previous,
   path,
   preview,
   depth,
+  linethrough,
+  muted,
 }: {
   value: any;
+  previous?: any;
   path: string[];
   preview?: boolean;
   depth?: number;
+  linethrough?: boolean;
+  muted?: boolean;
 }) {
   const renderer = useRenderer();
   const key = path.join('.');
@@ -30,12 +37,27 @@ export function KeyValueRenderer({
 
   return (
     <>
-      <span onClick={handleClick} onKeyDown={handleClick}>
+      <span
+        onClick={handleClick}
+        onKeyDown={handleClick}
+        className={classNames(
+          linethrough && 'line-through',
+          muted && 'opacity-60',
+        )}
+      >
         <KeyRenderer collapsible={collapsible} path={path} preview={preview} />
+        {previous !== undefined && value !== previous && (
+          <>
+            <Renderer depth={depth} value={previous} path={path} preview />
+            <span className="text-white">{' → '}</span>
+          </>
+        )}
         <Renderer depth={depth} value={value} path={path} preview />
       </span>
       {collapsible && open && !preview && (
-        <Renderer value={value} path={path} />
+        <>
+          <Renderer value={value} path={path} />
+        </>
       )}
     </>
   );

@@ -7,12 +7,13 @@ import {DefaultRenderer} from '../DefaultRenderer';
 import {DiffRenderer, ArrayRenderer, RecordRenderer} from './components';
 
 export function ObjectRenderer(props: {
-  value: {[key: string]: any} | null;
+  value: object;
+  previous?: object;
   preview?: boolean;
   path: string[];
   depth?: number;
 }) {
-  const {value, preview, path, depth} = props;
+  const {value, preview, path, depth, previous} = props;
 
   if (value === null) {
     return <DefaultRenderer value="null" />;
@@ -25,6 +26,7 @@ export function ObjectRenderer(props: {
         preview={preview}
         path={path}
         depth={depth}
+        previous={Array.isArray(previous) ? previous : undefined}
       />
     );
   }
@@ -36,6 +38,12 @@ export function ObjectRenderer(props: {
   }
 
   return (
-    <RecordRenderer value={value} preview={preview} path={path} depth={depth} />
+    <RecordRenderer
+      value={value}
+      preview={preview}
+      path={path}
+      depth={depth}
+      previous={previous}
+    />
   );
 }

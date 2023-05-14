@@ -8,11 +8,13 @@ import {useRenderer} from '../../../../../hooks';
 
 export function ArrayRenderer({
   value,
+  previous,
   preview,
   path,
   depth = 0,
 }: {
   value: any[];
+  previous?: any[];
   preview?: boolean;
   path: string[];
   depth?: number;
@@ -37,9 +39,26 @@ export function ArrayRenderer({
     <div className="pl-[10px]">
       {value.map((child, index) => (
         <div key={[...path, index.toString()].join()}>
-          <KeyValueRenderer value={child} path={[...path, index.toString()]} />
+          <KeyValueRenderer
+            value={child}
+            previous={previous?.[index]}
+            path={[...path, index.toString()]}
+          />
         </div>
       ))}
+      {renderer.showDiffs &&
+        previous &&
+        previous.length > value.length &&
+        previous.slice(value.length).map((child, index) => (
+          <div key={[...path, index.toString()].join()}>
+            <KeyValueRenderer
+              value={child}
+              path={[...path, (index + value.length).toString()]}
+              linethrough
+              muted
+            />
+          </div>
+        ))}
     </div>
   );
 }

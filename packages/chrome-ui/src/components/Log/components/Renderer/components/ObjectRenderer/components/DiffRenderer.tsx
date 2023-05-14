@@ -6,6 +6,9 @@ import {DiffNode} from '../../../../../types';
 import {useRenderer} from '../../../../../hooks';
 
 // eslint-disable-next-line import/no-cycle
+import {ObjectRenderer} from '../ObjectRenderer';
+import {isCollapsible} from '../../../utilities';
+
 import {ArrayRenderer} from './ArrayRenderer';
 
 export function DiffRenderer({
@@ -21,33 +24,20 @@ export function DiffRenderer({
 }) {
   const {showDiffs} = useRenderer();
 
-  if (Array.isArray(value.next)) {
-    return (
-      <ArrayRenderer
-        path={path}
-        value={value.next}
-        preview={preview}
-        depth={depth}
-      />
-    );
-  }
-
-  console.log({value});
-
   return (
     <>
-      {showDiffs && depth === 0 && (
+      {showDiffs && depth === 0 && !isCollapsible(value.next) && (
         <>
           <Renderer value={value.previous} path={path} preview />
           <span className="text-white">{' → '}</span>
         </>
       )}
-
       <Renderer
         value={value.next}
         preview={preview}
         path={path}
         depth={depth}
+        previous={value.previous}
       />
     </>
   );
