@@ -53,7 +53,7 @@ PrimitiveDiff.args = {
 } as Props;
 
 export const ArrayDiff = Template.bind({}) as any;
-
+const object = {apple: true};
 ArrayDiff.args = {
   items: [
     {
@@ -81,8 +81,8 @@ ArrayDiff.args = {
         },
         arrayObject: {
           __tag: 'diff',
-          next: [{apple: true}, {banana: true}],
-          previous: [{apple: true}],
+          next: [object, {banana: true}],
+          previous: [object],
         },
       },
     },
