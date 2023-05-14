@@ -2,7 +2,6 @@
 import React from 'react';
 
 import {Log, Props} from './Log';
-import {DiffNode} from './types';
 
 import '../../../build/css/styles.css';
 
@@ -20,52 +19,168 @@ Default.args = {
   items: [{id: 'first', value: {something: {1: 'hey'}, else: 5}}],
 } as Props;
 
-export const Diff = Template.bind({}) as any;
+export const PrimitiveDiff = Template.bind({}) as any;
 
-Diff.args = {
+PrimitiveDiff.args = {
   items: [
     {
       id: 'diff',
       value: {
-        // number: 5,
-        // numberToString: {
-        //   __tag: 'diff',
-        //   next: '5',
-        //   previous: 5,
-        // },
-        // boolean: {
-        //   __tag: 'diff',
-        //   next: true,
-        //   previous: false,
-        // },
-        // undefined: {
-        //   __tag: 'diff',
-        //   next: undefined,
-        //   previous: null,
-        // },
-        array: [1, 2, 3, 4],
-        arrayChange: {
+        numberChange: {
           __tag: 'diff',
-          next: [1, 2, 3, 4],
-          previous: [1, 2, 3],
+          next: 10,
+          previous: 0,
         },
-        arrayChange2: {
+        booleanChange: {
           __tag: 'diff',
-          next: [1, 2, 3, 4],
-          previous: undefined,
+          next: false,
+          previous: true,
         },
-        arrayChange3: {
+        booleanChange2: {
           __tag: 'diff',
-          next: null,
-          previous: [1, 2, 3, 4],
+          next: true,
+          previous: false,
         },
-        // object: {
-        //   __tag: 'diff',
-        //   next: {hey: 3},
-        //   previous: {yo: 5},
-        // },
+        stringChange: {
+          __tag: 'diff',
+          next: 'test@email.com',
+          previous: '',
+        },
       },
     },
   ],
   showDiffs: true,
+} as Props;
+
+export const ArrayDiff = Template.bind({}) as any;
+const object = {apple: true};
+ArrayDiff.args = {
+  items: [
+    {
+      id: 'diff',
+      value: {
+        oneMore: {
+          __tag: 'diff',
+          next: [1, 2, 3, 4],
+          previous: [1, 2, 3],
+        },
+        oneLess: {
+          __tag: 'diff',
+          previous: [1, 2, 3, 4],
+          next: [1, 2, 3],
+        },
+        undefinedToArray: {
+          __tag: 'diff',
+          next: [1, 2, 3, 4],
+          previous: undefined,
+        },
+        arrayToNull: {
+          __tag: 'diff',
+          next: null,
+          previous: [1, 2, 3, 4],
+        },
+        arrayObject: {
+          __tag: 'diff',
+          next: [object, {banana: true}],
+          previous: [object],
+        },
+      },
+    },
+  ],
+  showDiffs: true,
+} as Props;
+
+export const ObjectDiff = Template.bind({}) as any;
+
+ObjectDiff.args = {
+  items: [
+    {
+      id: 'diff',
+      value: {
+        sameKeysAndValues: {
+          __tag: 'diff',
+          next: {count: 1},
+          previous: {count: 1},
+        },
+        sameKeys: {
+          __tag: 'diff',
+          next: {count: 1},
+          previous: {count: 0},
+        },
+        differentKeys: {
+          __tag: 'diff',
+          next: {count: 0},
+          previous: {sum: 100},
+        },
+        nested: {
+          __tag: 'diff',
+          next: {car: {brand: 'VW', cost: 10000}},
+          previous: {wallet: {amount: 10000}},
+        },
+      },
+    },
+  ],
+  showDiffs: true,
+} as Props;
+
+export const NestedDiff = Template.bind({}) as any;
+
+NestedDiff.args = {
+  items: [
+    {
+      id: 'diff',
+      value: {
+        newTodo: [
+          {
+            id: 1,
+            description: 'Clean the dishes.',
+          },
+          {
+            __tag: 'diff',
+            next: {id: 2, description: 'Feed the cats'},
+            previous: undefined,
+          },
+        ],
+        removedTodo: [
+          {
+            __tag: 'diff',
+            next: {id: 2, description: 'Feed the cats'},
+            previous: {id: 1, description: 'Clean the dishes'},
+          },
+          {
+            __tag: 'diff',
+            next: {id: 3, description: 'Vaccum the apartment'},
+            previous: {id: 2, description: 'Feed the cats'},
+          },
+        ],
+      },
+    },
+  ],
+  showDiffs: true,
+} as Props;
+
+export const ArrayOfNumbers = Template.bind({}) as any;
+
+ArrayOfNumbers.args = {
+  items: [
+    {
+      id: 'numbers',
+      value: {
+        numbers: [1, 2, 3, 4],
+      },
+    },
+  ],
+} as Props;
+
+export const ArrayOfObjects = Template.bind({}) as any;
+
+ArrayOfObjects.args = {
+  items: [
+    {
+      id: 'objects',
+      value: {
+        objects: [{apple: true}, {banana: true}, {pear: true}, {kiwi: true}],
+      },
+    },
+  ],
 } as Props;

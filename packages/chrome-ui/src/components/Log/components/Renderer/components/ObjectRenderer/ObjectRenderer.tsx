@@ -1,33 +1,22 @@
-import React, {useState} from 'react';
-import classNames from 'classnames';
+import React from 'react';
 
-import {Carret} from '../../../../../Carret';
-// eslint-disable-next-line import/no-cycle
-import {Renderer} from '../../Renderer';
 import {isDiff} from '../../../../utilities';
 import {DefaultRenderer} from '../DefaultRenderer';
 
 // eslint-disable-next-line import/no-cycle
-import {DiffRenderer, ArrayRenderer} from './components';
+import {DiffRenderer, ArrayRenderer, RecordRenderer} from './components';
 
-export function ObjectRenderer({
-  value,
-  preview,
-  nested = false,
-  path,
-  collapsible,
-}: {
-  value: {[key: string]: any} | null;
+export function ObjectRenderer(props: {
+  value: object;
+  previous?: object;
   preview?: boolean;
-  nested?: boolean;
   path: string[];
-  collapsible: boolean;
+  depth?: number;
 }) {
-  const [collapsed, setCollapsed] = useState(nested);
-  const lastKey = path[path.length - 1];
+  const {value, preview, path, depth, previous} = props;
 
-  if (isDiff(value)) {
-    return <DiffRenderer path={path} value={value} preview={preview} />;
+  if (value === null) {
+    return <DefaultRenderer value="null" />;
   }
 
   if (Array.isArray(value)) {
@@ -35,88 +24,26 @@ export function ObjectRenderer({
       <ArrayRenderer
         value={value}
         preview={preview}
-        collapsible={collapsible}
         path={path}
+        depth={depth}
+        previous={Array.isArray(previous) ? previous : undefined}
       />
     );
   }
 
-  if (value === null) {
-    return <DefaultRenderer value="null" />;
-  }
-
-  const keys = Object.keys(value).sort();
-
-  if (preview) {
+  if (isDiff(value)) {
     return (
-      <>
-        <span className="text-white">{'{…}'}</span>
-      </>
+      <DiffRenderer value={value} preview={preview} path={path} depth={depth} />
     );
   }
 
-  const showChildPreview = !nested || collapsed;
-
   return (
-    <>
-      <button
-        className="ml-[-10px] text-left"
-        onClick={() => setCollapsed((prev) => !prev)}
-      >
-        {collapsible && <Carret direction={collapsed ? 'right' : 'down'} />}
-        {path.length > 0 && (
-          <>
-            <span className="text-console-object-blue font-bold">
-              {lastKey}
-            </span>
-            {': '}
-          </>
-        )}
-        {showChildPreview && (
-          <span className={classNames(!nested && 'italic')}>
-            <span className="text-white">{'{'}</span>
-            {keys.map((key, index) => (
-              <React.Fragment key={key}>
-                <span className={classNames('text-console-object-gray')}>
-                  {key}
-                </span>
-                {': '}
-                <Renderer value={value[key]} preview path={[...path, key]} />
-                {index !== keys.length - 1 && <>, </>}
-              </React.Fragment>
-            ))}
-            <span className="text-white">{'}'}</span>
-          </span>
-        )}
-      </button>
-
-      {!collapsed && (
-        <div
-          className={classNames(
-            'flex flex-col items-start pl-[12px]',
-            nested && 'pl-[10px]',
-          )}
-        >
-          {keys.map((key) => (
-            <div key={key}>
-              {typeof value[key] !== 'object' && (
-                <>
-                  <span
-                    className={classNames(
-                      'text-console-object-gray',
-                      !collapsed && 'text-console-object-blue font-bold',
-                    )}
-                  >
-                    {key}
-                  </span>
-                  :{' '}
-                </>
-              )}
-              <Renderer value={value[key]} nested path={[...path, key]} />
-            </div>
-          ))}
-        </div>
-      )}
-    </>
+    <RecordRenderer
+      value={value}
+      preview={preview}
+      path={path}
+      depth={depth}
+      previous={previous}
+    />
   );
 }

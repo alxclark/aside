@@ -1,74 +1,65 @@
-import React, {useState} from 'react';
-import classNames from 'classnames';
+import React from 'react';
 
 // eslint-disable-next-line import/no-cycle
 import {Renderer} from '../../../Renderer';
-import {Carret} from '../../../../../../Carret';
+// eslint-disable-next-line import/no-cycle
+import {KeyValueRenderer} from '../../KeyValueRenderer';
+import {useRenderer} from '../../../../../hooks';
 
 export function ArrayRenderer({
   value,
+  previous,
   preview,
   path,
-  collapsible = true,
+  depth = 0,
 }: {
   value: any[];
+  previous?: any[];
   preview?: boolean;
   path: string[];
-  collapsible?: boolean;
+  depth?: number;
 }) {
-  const [collapsed, setCollapsed] = useState(true);
+  const renderer = useRenderer();
+  const key = path.join('.');
+  const open = renderer.opened[key];
 
   if (preview) {
-    return <SimplePreview length={value.length} />;
+    if (open || depth > 0) {
+      return <SimplePreview length={value.length} />;
+    }
+
+    return <DescriptivePreview value={value} path={path} />;
   }
 
-  const key = path[path.length - 1];
+  if (!open) {
+    return null;
+  }
 
   return (
-    <>
-      <button
-        className="ml-[-10px] text-left"
-        disabled={!collapsible}
-        onClick={() => {
-          if (collapsible) {
-            setCollapsed((prev) => !prev);
-          }
-        }}
-      >
-        {collapsible && <Carret direction={collapsed ? 'right' : 'down'} />}
-        {path.length > 0 && (
-          <>
-            <span className="text-console-object-blue font-bold">{key}</span>
-            {': '}
-            {collapsed ? (
-              <DescriptivePreview value={value} />
-            ) : (
-              <SimplePreview length={value.length} />
-            )}
-          </>
-        )}
-      </button>
-      {!collapsed && (
-        <div className="pl-[10px]">
-          {value.map((child, index) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <div key={index}>
-              {child && (
-                <>
-                  <span
-                    className={classNames('text-console-object-blue font-bold')}
-                  >
-                    {index}
-                  </span>
-                  :{' '}
-                </>
-              )}
-              <Renderer value={child} nested path={[...path, key]} />
-            </div>
-          ))}
+    <div className="pl-[10px]">
+      {value.map((child, index) => (
+        <div key={[...path, index.toString()].join()}>
+          <KeyValueRenderer
+            value={child}
+            previous={previous?.[index]}
+            path={[...path, index.toString()]}
+          />
         </div>
-      )}
-    </>
+      ))}
+      {renderer.showDiffs &&
+        previous &&
+        previous.length > value.length &&
+        previous.slice(value.length).map((child, index) => (
+          <div key={[...path, index.toString()].join()}>
+            <KeyValueRenderer
+              value={child}
+              path={[...path, (index + value.length).toString()]}
+              linethrough
+              muted
+            />
+          </div>
+        ))}
+    </div>
   );
 }
 
@@ -76,7 +67,7 @@ function SimplePreview({length}: {length: number}) {
   return <span className="text-white">Array({length})</span>;
 }
 
-function DescriptivePreview({value}: {value: any[]}) {
+function DescriptivePreview({value, path}: {value: any[]; path: string[]}) {
   return (
     <>
       <span className="text-console-object-gray">({value.length})</span>
@@ -86,7 +77,12 @@ function DescriptivePreview({value}: {value: any[]}) {
         {value.map((child, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <React.Fragment key={index}>
-            <Renderer value={child} preview />
+            <Renderer
+              value={child}
+              preview
+              depth={1}
+              path={[...path, index.toString()]}
+            />
             {index !== value.length - 1 && <>{', '}</>}
           </React.Fragment>
         ))}

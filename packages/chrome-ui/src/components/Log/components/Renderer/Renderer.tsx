@@ -12,15 +12,15 @@ import {
 export function Renderer({
   value,
   preview,
-  nested,
   path = [],
-  collapsible = true,
+  depth = 0,
+  previous,
 }: {
   value: any;
   preview?: boolean;
-  nested?: boolean;
   path?: string[];
-  collapsible?: boolean;
+  depth?: number;
+  previous?: any;
 }) {
   switch (typeof value) {
     case 'string':
@@ -34,11 +34,11 @@ export function Renderer({
     case 'object':
       return (
         <ObjectRenderer
+          depth={depth}
           value={value}
           preview={preview}
-          nested={nested}
           path={path}
-          collapsible={collapsible}
+          previous={previous}
         />
       );
     default:

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 
 import {Renderer} from './components';
 import {RendererContext} from './context';
@@ -13,12 +13,25 @@ export interface LogItem {
 export interface Props {
   items: LogItem[];
   showDiffs?: boolean;
+  opened?: {[key: string]: boolean};
 }
 
-export function Log({items, showDiffs = false}: Props) {
+export function Log({
+  items,
+  showDiffs = false,
+  opened: explicitOpened = {},
+}: Props) {
+  const [opened, setOpenedState] = useState(explicitOpened);
+  const setOpened: RendererContextType['setOpened'] = useCallback(
+    (key, open) => {
+      setOpenedState((prev) => ({...prev, [key]: open}));
+    },
+    [],
+  );
+
   const context = useMemo<RendererContextType>(
-    () => ({showDiffs}),
-    [showDiffs],
+    () => ({showDiffs, opened, setOpened}),
+    [opened, setOpened, showDiffs],
   );
 
   return (
