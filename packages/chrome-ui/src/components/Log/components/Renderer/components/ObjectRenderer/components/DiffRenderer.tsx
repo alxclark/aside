@@ -4,12 +4,7 @@ import React from 'react';
 import {Renderer} from '../../../Renderer';
 import {DiffNode} from '../../../../../types';
 import {useRenderer} from '../../../../../hooks';
-
-// eslint-disable-next-line import/no-cycle
-import {ObjectRenderer} from '../ObjectRenderer';
 import {isCollapsible} from '../../../utilities';
-
-import {ArrayRenderer} from './ArrayRenderer';
 
 export function DiffRenderer({
   value,
