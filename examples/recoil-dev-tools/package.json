@@ -11,7 +11,8 @@
   "dependencies": {
     "@aside/react": "0.0.0",
     "@aside/recoil": "0.0.0",
-    "recoil": "latest"
+    "recoil": "latest",
+    "todomvc-app-css": "latest"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^2.0.1",

@@ -76,7 +76,11 @@ function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
     const hasAtomFamilyPrefix = parts.length > 1;
     if (hasAtomFamilyPrefix) {
       const [prefix, ...rest] = parts;
-      const itemKey = rest.join('').replaceAll('"', '');
+      const itemKey = rest
+        .join('')
+        .replaceAll('"', '')
+        .replace('selectorFamily/', '')
+        .split('/')[0];
 
       snapshot.nodes[prefix] ||= {};
       snapshot.nodes[prefix][itemKey] = recoilSnapshot
