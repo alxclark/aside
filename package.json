@@ -31,11 +31,11 @@
   },
   "homepage": "https://github.com/alxclark/aside#readme",
   "dependencies": {
-    "@remote-ui/react": "^5.0.0",
-    "@remote-ui/rpc": "^1.4.1",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "react-reconciler": "0.26.2"
+    "@remote-ui/react": "latest",
+    "@remote-ui/rpc": "latest",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-reconciler": "0.29.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

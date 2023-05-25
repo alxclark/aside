@@ -15,7 +15,7 @@ export function NewTodo() {
         if (event.key === 'Enter') {
           const text = event.currentTarget.value.trim();
           const id = snapshot.getLoadable(todosCreatedAtom).getValue() + 1;
-          set(getTodoAtom(id), {id, description: text});
+          set(getTodoAtom(id), {id, description: text, completed: false});
           setText('');
         }
       },

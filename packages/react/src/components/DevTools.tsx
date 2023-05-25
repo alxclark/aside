@@ -63,6 +63,14 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     contentScript.expose(webpageApi);
   }, [setDevToolsRoot, mountDevTools]);
 
+  // Attempt to mount the dev tools.
+  // If the other side of the endpoint is not ready yet,
+  // `mountDevTools` will be called on the webpage api,
+  // correctly setting up the remote endpoint.
+  useEffect(() => {
+    mountDevTools(contentScript);
+  }, [mountDevTools]);
+
   const handleUnmount = useCallback(() => {
     release(channelRef.current);
     channelRef.current = null;

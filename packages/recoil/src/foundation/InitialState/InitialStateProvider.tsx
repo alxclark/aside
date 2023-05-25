@@ -73,70 +73,65 @@ export function InitialStateProvider({children, snapshots}: Props) {
     }
 
     queryExtensionStorage();
-  }, [api.storage.local]);
+  }, [api.storage.local, setPersistedState]);
 
   if (!persistedState) return null;
 
   return (
-    <>
-      <RecoilRoot
-        key="@aside/recoil"
-        initializeState={(snapshot) => {
-          snapshot.set(extensionApiAtom, api);
-          snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
+    <RecoilRoot
+      key="@aside/recoil"
+      initializeState={(snapshot) => {
+        snapshot.set(extensionApiAtom, api);
+        snapshot.set(currentStateAtom, snapshots[snapshots.length - 1]);
 
-          const [, ...rest] = snapshots;
+        const [, ...rest] = snapshots;
 
-          const reconciledSnapshots = [
-            ...(persistedState.preserveLog === true
-              ? persistedState.snapshots ?? []
-              : []),
-            ...(persistedState.recordSnapshot === false ? [] : [snapshots[0]]),
-            ...(persistedState.recordSnapshot ? rest : []),
-          ];
+        const reconciledSnapshots = [
+          ...(persistedState.preserveLog === true
+            ? persistedState.snapshots ?? []
+            : []),
+          ...(persistedState.recordSnapshot === false ? [] : [snapshots[0]]),
+          ...(persistedState.recordSnapshot ? rest : []),
+        ];
 
-          api.storage.local.set({[snapshotsAtom.key]: reconciledSnapshots});
+        api.storage.local.set({[snapshotsAtom.key]: reconciledSnapshots});
 
-          snapshot.set(snapshotsAtom, reconciledSnapshots);
+        snapshot.set(snapshotsAtom, reconciledSnapshots);
 
-          if (persistedState.primaryNavigation) {
-            snapshot.set(
-              primaryNavigationAtom,
-              persistedState.primaryNavigation,
-            );
-          }
+        if (persistedState.primaryNavigation) {
+          snapshot.set(primaryNavigationAtom, persistedState.primaryNavigation);
+        }
 
-          if (persistedState.selectedDiff) {
-            snapshot.set(selectedDiffBaseAtom, persistedState.selectedDiff);
-          }
+        if (persistedState.selectedDiff) {
+          snapshot.set(selectedDiffBaseAtom, persistedState.selectedDiff);
+        }
 
-          if (persistedState.filter) {
-            snapshot.set(filterAtom, persistedState.filter);
-          }
+        if (persistedState.filter) {
+          snapshot.set(filterAtom, persistedState.filter);
+        }
 
-          if (persistedState.preserveLog !== undefined) {
-            snapshot.set(preserveLogAtom, persistedState.preserveLog);
-          }
+        if (persistedState.preserveLog !== undefined) {
+          snapshot.set(preserveLogAtom, persistedState.preserveLog);
+        }
 
-          if (persistedState.recordSnapshot !== undefined) {
-            snapshot.set(recordSnapshotAtom, persistedState.recordSnapshot);
-          }
+        if (persistedState.recordSnapshot !== undefined) {
+          snapshot.set(recordSnapshotAtom, persistedState.recordSnapshot);
+        }
 
-          if (persistedState.showFilter) {
-            snapshot.set(showFilterAtom, persistedState.showFilter);
-          }
+        if (persistedState.showFilter) {
+          snapshot.set(showFilterAtom, persistedState.showFilter);
+        }
 
-          if (persistedState.invertFilter) {
-            snapshot.set(invertFilterAtom, persistedState.invertFilter);
-          }
+        if (persistedState.invertFilter) {
+          snapshot.set(invertFilterAtom, persistedState.invertFilter);
+        }
 
-          if (persistedState.previousSnapshot) {
-            snapshot.set(previousSnapshotAtom, persistedState.previousSnapshot);
-          }
-        }}
-      >
-        {children}
-      </RecoilRoot>
-    </>
+        if (persistedState.previousSnapshot) {
+          snapshot.set(previousSnapshotAtom, persistedState.previousSnapshot);
+        }
+      }}
+    >
+      {children}
+    </RecoilRoot>
   );
 }

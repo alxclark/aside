@@ -19,7 +19,8 @@ export interface Props {
 export function Log({
   items,
   showDiffs = false,
-  opened: explicitOpened = {},
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  opened: explicitOpened = {'': true},
 }: Props) {
   const [opened, setOpenedState] = useState(explicitOpened);
   const setOpened: RendererContextType['setOpened'] = useCallback(

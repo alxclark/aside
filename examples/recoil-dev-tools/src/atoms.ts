@@ -40,12 +40,12 @@ export const todoIdsAtom = atom<number[]>({
 });
 
 export const todosCreatedAtom = atom<number>({
-  key: 'todosCreated',
+  key: 'numberOfTodos',
   default: 0,
 });
 
 export const activeTodosIdsAtom = selector({
-  key: 'activeTodoIds',
+  key: 'active',
   get: ({get}) => {
     const activeTodoIds = get(todoIdsAtom)
       .map((id) => get(getTodoAtom(id)))
@@ -57,7 +57,7 @@ export const activeTodosIdsAtom = selector({
 });
 
 export const completedTodosIdsAtom = selector({
-  key: 'completedTodoIds',
+  key: 'completed',
   get: ({get}) => {
     const allTodoIds = get(todoIdsAtom);
     const activeTodoIds = get(activeTodosIdsAtom);
@@ -71,12 +71,12 @@ export const completedTodosIdsAtom = selector({
 });
 
 export const todoFilterAtom = atom<TodoFilter>({
-  key: 'todoFilter',
+  key: 'filter',
   default: 'all',
 });
 
 export const filteredTodoIdsAtom = selector<number[]>({
-  key: 'filteredTodoIds',
+  key: 'filtered',
   get: ({get}) => {
     const filter = get(todoFilterAtom);
     const todoIds = get(todoIdsAtom);
@@ -96,6 +96,6 @@ export const filteredTodoIdsAtom = selector<number[]>({
 });
 
 export const selectedTodoIdAtom = atom<number>({
-  key: 'selectedTodoId',
+  key: 'selected',
   default: 0,
 });

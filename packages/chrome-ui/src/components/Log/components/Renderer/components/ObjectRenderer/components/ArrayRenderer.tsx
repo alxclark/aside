@@ -50,7 +50,7 @@ export function ArrayRenderer({
         previous &&
         previous.length > value.length &&
         previous.slice(value.length).map((child, index) => (
-          <div key={[...path, index.toString()].join()}>
+          <div key={`${child}`}>
             <KeyValueRenderer
               value={child}
               path={[...path, (index + value.length).toString()]}
@@ -70,13 +70,13 @@ function SimplePreview({length}: {length: number}) {
 function DescriptivePreview({value, path}: {value: any[]; path: string[]}) {
   return (
     <>
-      <span className="text-console-object-gray">({value.length})</span>
+      {value.length > 0 && (
+        <span className="text-console-object-gray">({value.length})</span>
+      )}
       <span className="text-white">
-        {' '}
-        [
+        {value.length > 0 && ' '}[
         {value.map((child, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <React.Fragment key={index}>
+          <React.Fragment key={`${child}`}>
             <Renderer
               value={child}
               preview

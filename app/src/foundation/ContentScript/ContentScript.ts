@@ -1,4 +1,4 @@
-import {createEndpoint} from '@remote-ui/rpc';
+import {createEndpoint, retain} from '@remote-ui/rpc';
 import type {Endpoint} from '@remote-ui/rpc';
 import {
   ContentScriptApiForWebpage,
@@ -98,7 +98,7 @@ function exposeWebpage(
   devtools: Endpoint<DevToolsApiForContentScript>,
 ) {
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
-    getDevToolsChannel() {
+    async getDevToolsChannel() {
       return devtools.call.getDevToolsChannel();
     },
     getLocalStorage(keys) {

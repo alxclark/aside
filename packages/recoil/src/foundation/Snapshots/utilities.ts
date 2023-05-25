@@ -12,10 +12,9 @@ export function createDiffFromSnapshots(
   };
 
   function compareObjects(firstObject: any, secondObject: any, path = '') {
-    for (const key in firstObject) {
-      if (firstObject.hasOwnProperty(key)) {
+    for (const key in secondObject) {
+      if (secondObject.hasOwnProperty(key)) {
         const newPath = (path ? `${path}.` : '') + key;
-
         if (secondObject.hasOwnProperty(key)) {
           if (
             typeof firstObject[key] === 'object' &&
@@ -42,18 +41,19 @@ export function createDiffFromSnapshots(
 
   compareObjects(previousSnapshot.nodes, currentSnapshot.nodes);
 
-  // Check for keys in currentSnapshot.nodes that are not in previousSnapshot.nodes
+  // Check for keys in previousSnapshot.nodes that are not in currentSnapshot.nodes
+  // TODO: This needs to check recursively
   function checkMissingKeys(firstObject: any, secondObject: any, path = '') {
     for (const key in secondObject) {
       if (
-        secondObject.hasOwnProperty(key) &&
-        !firstObject.hasOwnProperty(key)
+        !secondObject.hasOwnProperty(key) &&
+        firstObject.hasOwnProperty(key)
       ) {
         const newPath = (path ? `${path}.` : '') + key;
         diff.nodes[newPath] = {
           __tag: 'diff',
-          previous: undefined,
-          next: secondObject[key],
+          previous: firstObject[key],
+          next: undefined,
         };
       }
     }

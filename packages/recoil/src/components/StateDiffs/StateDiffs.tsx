@@ -123,7 +123,12 @@ export function StateDiffs() {
       <PaneContent>
         {unfilteredDiffs.length > 0 ? (
           <Flex fullHeight direction="row">
-            <View maxHeight="100%" overflow="scroll" minWidth={150}>
+            <View
+              maxHeight="100%"
+              overflow="scroll"
+              minWidth={150}
+              maxWidth={150}
+            >
               <Table
                 onSelect={(index) => setSelectedDiff(index)}
                 selected={selectedDiff}
