@@ -13,11 +13,15 @@ import {Snapshot} from './foundation/Snapshots';
 import {isInternalAtom} from './utilities/recoil';
 import {InitialStateProvider} from './foundation/InitialState';
 
-export function DevTools({children}: PropsWithChildren<{}>) {
+export type Props = PropsWithChildren<{
+  ignoredRecoilKeys?: string[];
+}>;
+
+export function DevTools({children, ignoredRecoilKeys}: Props) {
   const recoilSnapshot = useRecoilSnapshot();
   const {snapshot} = useMemo(
-    () => transformSnapshot(recoilSnapshot),
-    [recoilSnapshot],
+    () => transformSnapshot(recoilSnapshot, {ignoredRecoilKeys}),
+    [ignoredRecoilKeys, recoilSnapshot],
   );
 
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
@@ -59,7 +63,10 @@ function RecoilDevTools({children, snapshots, snapshot}: any) {
 // Recoil snapshots need to be manually retained in order to extract the data from it.
 // In order to make it simpler to pass it to the remote, we pre-process
 // each snapshot and generate an object containing all values and a diff of the state.
-function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
+function transformSnapshot(
+  recoilSnapshot: RecoilSnapshot,
+  options: {ignoredRecoilKeys?: string[]},
+) {
   const createdAt = new Date().getTime().toString();
   const id = `${String(recoilSnapshot.getID())}-${createdAt}`;
 
@@ -74,8 +81,12 @@ function transformSnapshot(recoilSnapshot: RecoilSnapshot) {
 
     const parts = node.key.split('__');
     const hasAtomFamilyPrefix = parts.length > 1;
+
     if (hasAtomFamilyPrefix) {
       const [prefix, ...rest] = parts;
+
+      if (options.ignoredRecoilKeys?.includes(prefix)) continue;
+
       const itemKey = rest
         .join('')
         .replaceAll('"', '')

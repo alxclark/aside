@@ -9,7 +9,7 @@ export function App() {
   return (
     <RecoilRoot key="recoil-example">
       <RecoilTodoMVC />
-      <DevTools />
+      <DevTools ignoredRecoilKeys={['todosBase']} />
     </RecoilRoot>
   );
 }
