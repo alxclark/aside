@@ -8,6 +8,9 @@
     "emitDeclarationOnly": true,
     "outDir": "./build/ts",
     "jsx": "preserve",
+    "types": [
+      "vitest/globals"
+    ]
   },
   "references": [
     { "path": "../extension" },
