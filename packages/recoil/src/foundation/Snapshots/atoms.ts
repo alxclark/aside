@@ -5,7 +5,7 @@ import {createKey} from '../../utilities/recoil';
 import {syncStorageEffect} from '../Extension';
 
 import {Diff, DiffNodes, Snapshot} from './types';
-import {createDiffFromSnapshots} from './utilities';
+import {createDiff} from './utilities';
 
 export const filterAtom = atom<string>({
   key: createKey('filter'),
@@ -91,32 +91,53 @@ export const getDiffAtom = selectorFamily<Diff | undefined, string>({
         return;
       }
 
+      const nextSnapshot = snapshots[snapshotIndex];
       if (snapshotIndex === 0) {
         const previousSnapshot = get(previousSnapshotAtom);
         if (!snapshots[snapshotIndex].initial && previousSnapshot) {
-          return createDiffFromSnapshots(
-            previousSnapshot,
-            snapshots[snapshotIndex],
-          );
+          return {
+            id: nextSnapshot.id,
+            createdAt: nextSnapshot.createdAt,
+            initial: nextSnapshot.initial,
+            nodes: createDiff({
+              previous: previousSnapshot.nodes,
+              next: nextSnapshot.nodes,
+            }),
+          };
         }
 
-        return createDiffFromSnapshots(
-          {id: '-1', createdAt: '', nodes: {}},
-          snapshots[snapshotIndex],
-        );
+        return {
+          id: nextSnapshot.id,
+          createdAt: nextSnapshot.createdAt,
+          initial: nextSnapshot.initial,
+          nodes: createDiff({
+            previous: {},
+            next: nextSnapshot.nodes,
+          }),
+        };
       }
 
-      if (snapshots[snapshotIndex].initial) {
-        return createDiffFromSnapshots(
-          {id: '-1', createdAt: '', nodes: {}},
-          snapshots[snapshotIndex],
-        );
+      if (nextSnapshot.initial) {
+        return {
+          id: nextSnapshot.id,
+          createdAt: nextSnapshot.createdAt,
+          initial: nextSnapshot.initial,
+          nodes: createDiff({
+            previous: {},
+            next: nextSnapshot.nodes,
+          }),
+        };
       }
 
-      return createDiffFromSnapshots(
-        snapshots[snapshotIndex - 1],
-        snapshots[snapshotIndex],
-      );
+      return {
+        id: nextSnapshot.id,
+        createdAt: nextSnapshot.createdAt,
+        initial: nextSnapshot.initial,
+        nodes: createDiff({
+          previous: snapshots[snapshotIndex - 1].nodes,
+          next: nextSnapshot.nodes,
+        }),
+      };
     },
 });
 

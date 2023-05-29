@@ -1,131 +1,3 @@
-import {Diff, DiffNodes, Snapshot} from './types';
-
-export function createDiffFromSnapshots(
-  previousSnapshot: Snapshot,
-  currentSnapshot: Snapshot,
-): Diff {
-  const diff: Diff = {
-    id: currentSnapshot.id,
-    createdAt: currentSnapshot.createdAt,
-    nodes: {},
-    initial: currentSnapshot.initial,
-  };
-
-  function compareObjects(firstObject: any, secondObject: any, path = '') {
-    for (const key in secondObject) {
-      if (secondObject.hasOwnProperty(key)) {
-        const newPath = (path ? `${path}.` : '') + key;
-        if (secondObject.hasOwnProperty(key)) {
-          if (
-            typeof firstObject[key] === 'object' &&
-            typeof secondObject[key] === 'object'
-          ) {
-            compareObjects(firstObject[key], secondObject[key], newPath);
-          } else if (firstObject[key] !== secondObject[key]) {
-            diff.nodes[newPath] = {
-              __tag: 'diff',
-              previous: firstObject[key],
-              next: secondObject[key],
-            };
-          }
-        } else {
-          diff.nodes[newPath] = {
-            __tag: 'diff',
-            previous: firstObject[key],
-            next: undefined,
-          };
-        }
-      }
-    }
-  }
-
-  compareObjects(previousSnapshot.nodes, currentSnapshot.nodes);
-
-  // Check for keys in previousSnapshot.nodes that are not in currentSnapshot.nodes
-  // TODO: This needs to check recursively
-  function checkMissingKeys(firstObject: any, secondObject: any, path = '') {
-    for (const key in secondObject) {
-      if (
-        !secondObject.hasOwnProperty(key) &&
-        firstObject.hasOwnProperty(key)
-      ) {
-        const newPath = (path ? `${path}.` : '') + key;
-        diff.nodes[newPath] = {
-          __tag: 'diff',
-          previous: firstObject[key],
-          next: undefined,
-        };
-      }
-    }
-  }
-
-  checkMissingKeys(previousSnapshot.nodes, currentSnapshot.nodes);
-
-  return diff;
-}
-
-export function createDiff0({
-  next,
-  previous,
-}: {
-  next: object;
-  previous: object;
-}): DiffNodes {
-  const nodes: DiffNodes = {};
-
-  function compareObjects(firstObject: any, secondObject: any, path = '') {
-    for (const key in secondObject) {
-      if (secondObject.hasOwnProperty(key)) {
-        const newPath = (path ? `${path}.` : '') + key;
-        if (secondObject.hasOwnProperty(key)) {
-          if (
-            typeof firstObject[key] === 'object' &&
-            typeof secondObject[key] === 'object'
-          ) {
-            compareObjects(firstObject[key], secondObject[key], newPath);
-          } else if (firstObject[key] !== secondObject[key]) {
-            nodes[newPath] = {
-              __tag: 'diff',
-              previous: firstObject[key],
-              next: secondObject[key],
-            };
-          }
-        } else {
-          nodes[newPath] = {
-            __tag: 'diff',
-            previous: firstObject[key],
-            next: undefined,
-          };
-        }
-      }
-    }
-  }
-
-  compareObjects(previous, next);
-
-  // Check for keys in previousSnapshot.nodes that are not in currentSnapshot.nodes
-  // TODO: This needs to check recursively
-  function checkMissingKeys(firstObject: any, secondObject: any, path = '') {
-    for (const key in secondObject) {
-      if (
-        !secondObject.hasOwnProperty(key) &&
-        firstObject.hasOwnProperty(key)
-      ) {
-        const newPath = (path ? `${path}.` : '') + key;
-        nodes[newPath] = {
-          __tag: 'diff',
-          previous: firstObject[key],
-          next: undefined,
-        };
-      }
-    }
-  }
-
-  checkMissingKeys(previous, next);
-
-  return nodes;
-}
-
 interface DiffNode {
   __tag: 'diff';
   next: any;
@@ -137,7 +9,7 @@ interface DiffInput {
   next: any;
 }
 
-function createDiff(input: DiffInput): {[key: string]: any} {
+export function createDiff(input: DiffInput): {[key: string]: any} {
   const {previous, next} = input;
   const diff: {[key: string]: any} = {};
 
@@ -221,5 +93,3 @@ function createArrayDiff(input: DiffInput): {[key: string]: any} {
 
   return diff;
 }
-
-export {createDiff};
