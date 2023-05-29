@@ -23,6 +23,8 @@ import {Divider} from '../components/Divider/Divider.remote';
 import {TextField} from '../components/TextField/TextField.remote';
 import {Text} from '../components/Text/Text.remote';
 
+export {UNSET} from '../components/Log/constants';
+
 export {
   Button,
   Carret,

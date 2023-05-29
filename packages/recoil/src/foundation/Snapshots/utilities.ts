@@ -1,3 +1,5 @@
+import {UNSET} from '@aside/chrome-ui';
+
 interface DiffNode {
   __tag: 'diff';
   next: any;
@@ -23,7 +25,7 @@ export function createDiff(input: DiffInput): {[key: string]: any} {
 
   for (const key in next) {
     if (!(key in previous)) {
-      diff[key] = createDiffNode(next[key], undefined);
+      diff[key] = createDiffNode(next[key], UNSET);
     } else if (isObject(next[key]) && isObject(previous[key])) {
       const nestedDiff = createDiff({previous: previous[key], next: next[key]});
       if (Object.keys(nestedDiff).length > 0) {
@@ -44,7 +46,7 @@ export function createDiff(input: DiffInput): {[key: string]: any} {
 
   for (const key in previous) {
     if (!(key in next)) {
-      diff[key] = createDiffNode(undefined, previous[key]);
+      diff[key] = createDiffNode(UNSET, previous[key]);
     }
   }
 
@@ -70,9 +72,9 @@ function createArrayDiff(input: DiffInput): {[key: string]: any} {
   const maxLength = Math.max(next.length, previous.length);
   for (let i = 0; i < maxLength; i++) {
     if (i >= next.length) {
-      diff[i] = createDiffNode(undefined, previous[i]);
+      diff[i] = createDiffNode(UNSET, previous[i]);
     } else if (i >= previous.length) {
-      diff[i] = createDiffNode(next[i], undefined);
+      diff[i] = createDiffNode(next[i], UNSET);
     } else if (Array.isArray(next[i]) && Array.isArray(previous[i])) {
       const nestedArrayDiff = createArrayDiff({
         previous: previous[i],

@@ -1,17 +1,19 @@
 /* eslint-disable @typescript-eslint/naming-convention */
+import {UNSET} from '@aside/chrome-ui';
+
 import {createDiff} from '../utilities';
 
 describe('Snapshots utilities', () => {
   describe('createDiff', () => {
     describe('when the previous object is empty', () => {
-      it('returns a diff node for all field of the next object', () => {
+      it('returns a diff node for all field of the next object with UNSET as the previous value', () => {
         const diff = createDiff({previous: {}, next: {count: 0}});
 
         expect(diff).toStrictEqual({
           count: {
             __tag: 'diff',
             next: 0,
-            previous: undefined,
+            previous: UNSET,
           },
         });
       });
@@ -30,7 +32,7 @@ describe('Snapshots utilities', () => {
         expect(diff).toStrictEqual({
           sum: {
             __tag: 'diff',
-            next: undefined,
+            next: UNSET,
             previous: 10,
           },
         });
@@ -50,7 +52,7 @@ describe('Snapshots utilities', () => {
           sum: {
             __tag: 'diff',
             next: 10,
-            previous: undefined,
+            previous: UNSET,
           },
         });
       });
@@ -199,7 +201,7 @@ describe('Snapshots utilities', () => {
               array: {
                 3: {
                   __tag: 'diff',
-                  previous: undefined,
+                  previous: UNSET,
                   next: 4,
                 },
               },
@@ -237,7 +239,7 @@ describe('Snapshots utilities', () => {
                 },
                 3: {
                   __tag: 'diff',
-                  previous: undefined,
+                  previous: UNSET,
                   next: 3,
                 },
               },
