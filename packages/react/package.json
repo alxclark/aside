@@ -1,7 +1,7 @@
 {
   "name": "@aside/react",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "files": [
     "build"
@@ -21,10 +21,10 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
-    "@aside/web": "0.0.0",
-    "@aside/chrome-ui": "0.0.0"
+    "@aside/web": "0.1.0",
+    "@aside/chrome-ui": "0.1.0"
   },
   "devDependencies": {
-    "@aside/extension": "0.0.0"
+    "@aside/extension": "0.1.0"
   }
 }
