@@ -1,5 +1,17 @@
 # @aside/recoil
 
+## 0.3.0
+
+### Minor Changes
+
+- 23a9c26: Updated package.json
+
+### Patch Changes
+
+- Updated dependencies [23a9c26]
+  - @aside/react@0.3.0
+  - @aside/web@0.3.0
+
 ## 0.2.0
 
 ### Minor Changes

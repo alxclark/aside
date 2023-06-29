@@ -1,5 +1,11 @@
 # @aside/core
 
+## 0.3.0
+
+### Minor Changes
+
+- 23a9c26: Updated package.json
+
 ## 0.2.0
 
 ### Minor Changes

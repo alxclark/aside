@@ -1,6 +1,6 @@
 {
   "name": "@aside/extension",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "files": [
     "build"
@@ -20,7 +20,7 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
-    "@aside/web": "0.2.0"
+    "@aside/web": "0.3.0"
   },
   "devDependencies": {},
   "publishConfig": {

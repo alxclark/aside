@@ -1,6 +1,6 @@
 {
   "name": "@aside/recoil",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "source": "src/index.tsx",
   "main": "src/index.tsx",
@@ -10,13 +10,13 @@
     "test": "vitest test"
   },
   "dependencies": {
-    "@aside/web": "0.2.0",
-    "@aside/react": "0.2.0",
+    "@aside/web": "0.3.0",
+    "@aside/react": "0.3.0",
     "recoil": "latest"
   },
   "devDependencies": {
-    "@aside/extension": "0.2.0",
-    "@aside/chrome-ui": "0.2.0"
+    "@aside/extension": "0.3.0",
+    "@aside/chrome-ui": "0.3.0"
   },
   "publishConfig": {
     "access": "public"
