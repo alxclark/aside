@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/alxclark/aside#readme",
   "dependencies": {
+    "@changesets/cli": "^2.26.2",
     "@remote-ui/react": "latest",
     "@remote-ui/rpc": "latest",
     "react": "^18.0.0",
