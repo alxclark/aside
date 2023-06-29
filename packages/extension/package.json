@@ -1,6 +1,5 @@
 {
   "name": "@aside/extension",
-  "private": true,
   "version": "0.2.0",
   "type": "module",
   "files": [
@@ -23,5 +22,8 @@
   "dependencies": {
     "@aside/web": "0.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
 }

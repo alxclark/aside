@@ -1,6 +1,5 @@
 {
   "name": "@aside/recoil",
-  "private": true,
   "version": "0.2.0",
   "type": "module",
   "source": "src/index.tsx",
@@ -18,5 +17,8 @@
   "devDependencies": {
     "@aside/extension": "0.2.0",
     "@aside/chrome-ui": "0.2.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

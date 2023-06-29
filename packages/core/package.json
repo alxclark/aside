@@ -1,6 +1,5 @@
 {
   "name": "@aside/core",
-  "private": true,
   "version": "0.2.0",
   "type": "module",
   "source": "src/index.ts",
@@ -11,5 +10,8 @@
   },
   "dependencies": {
     "webextension-polyfill": "^0.10.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
