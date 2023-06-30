@@ -10,7 +10,7 @@
     "jsx": "preserve",
     "types": [
       "vitest/globals"
-    ]
+    ],
   },
   "references": [
     { "path": "../extension" },

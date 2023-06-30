@@ -12,7 +12,7 @@
   "dependencies": {
     "@aside/web": "0.3.0",
     "@aside/react": "0.3.0",
-    "recoil": "latest"
+    "recoil": "^0.7.5"
   },
   "devDependencies": {
     "@aside/extension": "0.3.0",
