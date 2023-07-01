@@ -9,6 +9,7 @@
     "dev:app": "yarn workspace app dev",
     "dev:recoil": "yarn workspace recoil-example dev",
     "dev:chrome-ui": "yarn workspace @aside/chrome-ui dev",
+    "dev:website": "yarn workspace website dev",
     "open-chrome": "yarn workspace app start:chromium",
     "clean-vite": "yarn workspace recoil-example clean-vite && yarn workspace app clean-vite",
     "storybook": "NODE_OPTIONS='--openssl-legacy-provider' start-storybook -p 6006",
@@ -59,6 +60,7 @@
   },
   "workspaces": [
     "app",
+    "website",
     "packages/*",
     "examples/*"
   ]
