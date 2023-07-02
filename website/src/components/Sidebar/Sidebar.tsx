@@ -22,22 +22,18 @@ export function Sidebar() {
             url="guides/getting-started"
           />
           <SidebarItem icon="features" label="Features" url="features" />
-          <SidebarItem
-            icon="stack"
-            label="Architecture"
-            url="guides/getting-started"
-          />
+          <SidebarItem icon="stack" label="Architecture" url="architecture" />
         </SidebarSection>
         <SidebarSection title="GUIDES">
-          <SidebarItem icon="house" label="State management" url="/" />
+          <SidebarItem
+            icon="house"
+            label="State management"
+            url="guides/state-management"
+          />
         </SidebarSection>
         <SidebarSection title="APIs">
           <SidebarItem icon="react" label="React" url="apis/react" />
-          <SidebarItem
-            icon="storage"
-            label="Storage"
-            url="guides/getting-started"
-          />
+          <SidebarItem icon="storage" label="Storage" url="apis/storage" />
         </SidebarSection>
         <SidebarSection title="UI">
           <SidebarCollapsibleItem label="Chrome" icon="chrome">
