@@ -10,6 +10,7 @@ module.exports = {
       dark: {
         surface: '#1c1c1c',
         border: '#2c2c2c',
+        accentBorder: '#504323',
         text: '#bbbbbb',
         mono: '#707070',
         separator: '#ffffff09',

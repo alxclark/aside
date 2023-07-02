@@ -15,8 +15,9 @@ export function Topbar() {
       </a>
       <a
         href="https://chrome.google.com/webstore/detail/aside/pecefkiefodjfkgfihkhkcbhlbgahoge"
-        className="font-medium text-sm bg-accent text-dark-surface px-3 py-1.5 rounded-md"
+        className="flex items-center gap-2 font-medium text-sm bg-accent text-dark-surface px-5 py-2 rounded-md border-4 dark:border-dark-accentBorder rounded-full"
       >
+        <Image alt="" src="/magic.svg" height={20} width={20} />
         Download
       </a>
     </header>
