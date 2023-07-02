@@ -9,5 +9,6 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'no-warning-comments': 'off',
     '@shopify/jsx-no-hardcoded-content': 'off',
+    'react/react-in-jsx-scope': 'off',
   },
 };
