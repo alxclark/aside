@@ -1,10 +1,13 @@
-import {Inter} from 'next/font/google';
+import {Inter, Albert_Sans} from 'next/font/google';
 
 import {Sidebar, Topbar} from '@/components';
 
 import './globals.css';
 
-const inter = Inter({subsets: ['latin']});
+const font = Albert_Sans({
+  display: 'fallback',
+  subsets: ['latin'],
+});
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,15 +18,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-surface dark:bg-dark-surface dark:text-dark-text`}
+        className={`${font.className} bg-surface dark:bg-dark-surface dark:text-dark-text`}
       >
-        <div className="flex flex-row h-screen">
-          <Sidebar />
-          <div className="w-full">
-            <Topbar />
-            <main>{children}</main>
-          </div>
-        </div>
+        {children}
       </body>
     </html>
   );

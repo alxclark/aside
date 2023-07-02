@@ -11,7 +11,7 @@ export function SidebarItem({
   url: string;
 }) {
   return (
-    <Link href={url}>
+    <Link href={`/${url}`}>
       <li className="text-sm flex gap-3 grayscale">
         {icon && (
           <Image alt={icon} height={16} width={16} src={`/${icon}.svg`} />
