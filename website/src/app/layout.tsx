@@ -1,6 +1,6 @@
 import {Inter} from 'next/font/google';
 
-import {Sidebar} from '@/components/Sidebar';
+import {Sidebar, Topbar} from '@/components';
 
 import './globals.css';
 
@@ -19,7 +19,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       >
         <div className="flex flex-row h-screen">
           <Sidebar />
-          <main>{children}</main>
+          <div className="w-full">
+            <Topbar />
+            <main>{children}</main>
+          </div>
         </div>
       </body>
     </html>

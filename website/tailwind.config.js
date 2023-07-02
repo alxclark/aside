@@ -15,6 +15,7 @@ module.exports = {
         separator: '#ffffff09',
       },
       surface: '#f8f9fa',
+      accent: '#E9B42D',
     },
     extend: {
       backgroundImage: {

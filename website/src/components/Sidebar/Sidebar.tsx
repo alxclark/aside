@@ -11,7 +11,7 @@ export interface Props {}
 
 export function Sidebar() {
   return (
-    <div className="w-[300px] border-r dark:border-dark-border px-10 overflow-auto">
+    <div className="min-w-[300px] border-r dark:border-dark-border px-10 overflow-auto">
       <Logo />
       <ul className="max-w-[170px]">
         <SidebarSection>
