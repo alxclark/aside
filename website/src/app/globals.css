@@ -13,4 +13,8 @@ h2 {
   font-size: 1.5rem;
 }
 
+header {
+  backdrop-filter: brightness(0.9) blur(3px);
+}
+
 

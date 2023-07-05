@@ -5,7 +5,7 @@ export function SidebarSection({
   title,
 }: PropsWithChildren<{title?: string}>) {
   return (
-    <div className="flex flex-col gap-4 pb-5">
+    <div className="flex flex-col gap-2 pb-5">
       {title && (
         <div className="font-mono text-xs dark:text-dark-mono">{title}</div>
       )}

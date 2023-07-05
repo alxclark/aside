@@ -10,13 +10,16 @@ module.exports = {
       dark: {
         surface: '#1c1c1c',
         border: '#2c2c2c',
-        accentBorder: '#504323',
+        accentBorder: '#ab4f41',
         text: '#bbbbbb',
         mono: '#707070',
         separator: '#ffffff09',
+        surface2: '#171717',
+        foreground: '#fff',
       },
       surface: '#f8f9fa',
-      accent: '#E9B42D',
+      // accent: '#E9B42D',
+      accent: '#fe5c43',
     },
     extend: {
       backgroundImage: {
