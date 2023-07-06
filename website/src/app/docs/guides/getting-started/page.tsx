@@ -42,27 +42,59 @@ export default function GettingStarted() {
         </ListItem>
         <ListItem index={3}>
           <h4 className="font-medium dark:text-dark-foreground mb-3">
-            Import {'<Aside />'} and {'<DevTools />'}
+            Import Aside, DevTools and UI components
           </h4>
           <p className="mb-5">
             Render both components into your application and you now have a
             portal to render directly into the Chrome developer tool panel!
           </p>
-          <Codeblock codeBlock={buttonExample} language="tsx" />
+          <Codeblock codeBlock={imports} language="tsx" />
 
           <p className="my-5">
-            In the example above, we are using Button from @aside/chrome-ui.
+            In the example below, we are using Button from @aside/chrome-ui.
             Chrome UI is one of the UI packages that Aside offers. It mirrors
             the native Chrome look and feel and is our recommendation for new
             users.
           </p>
+          <Codeblock codeBlock={buttonRender} language="tsx" />
+        </ListItem>
+        <ListItem index={4}>
+          <h4 className="font-medium dark:text-dark-foreground mb-3">
+            Open Aside in the Chrome developer tools
+          </h4>
+          <p>
+            A new tab called Aside will now show up in your browser developer
+            tools, and you should now see the button you have rendered 🎉.
+          </p>
         </ListItem>
       </ol>
+
+      <h2 className="mt-8 mb-5">Example</h2>
+
+      <p className="mb-5">
+        The power of Aside is that you can mix your own app code, state and
+        logic and have it power what will render in the browser developer tool.
+        You can even provide Aside's components callbacks to update your own app
+        state and it will work as expected.
+      </p>
+
+      <Codeblock language="tsx" codeBlock={buttonExample} />
     </>
   );
 }
 
 const yarnInstall = `yarn install @aside/react @aside/chrome-ui`;
+const imports = `import {Aside, DevTools} from '@aside/react';
+import {Button} from '@aside/chrome-ui';`;
+const buttonRender = `<Aside>
+  <DevTools>
+    <Button
+      onPress={() => console.log('Pressed !')}
+    >
+      Press me!
+    </Button>
+  </DevTools>
+</Aside>`;
 const buttonExample = `import React, {useState} from 'react';
 import {Aside, DevTools} from '@aside/react';
 import {Button} from '@aside/chrome-ui';
