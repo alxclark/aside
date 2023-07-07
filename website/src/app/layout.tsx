@@ -1,7 +1,6 @@
-import {Inter, Albert_Sans} from 'next/font/google';
+import {Albert_Sans} from 'next/font/google';
 
-import {Sidebar, Topbar} from '@/components';
-
+import '@aside/chrome-ui/css';
 import './globals.css';
 
 const font = Albert_Sans({

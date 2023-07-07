@@ -1,12 +1,10 @@
-import {Highlight, themes} from 'prism-react-renderer';
-
+import {AsideSandbox, Codeblock, Heading, Link, ListItem} from '@/components';
 import {webstoreUrl} from '@/constants';
-import {Codeblock, Link, ListItem} from '@/components';
 
 export default function GettingStarted() {
   return (
     <>
-      <h1>Getting started</h1>
+      <Heading level={1}>Getting started</Heading>
       <p className="mt-3 text-lg">
         Aside is a modular browser extension built to be a companion to any web
         application. <br />
@@ -16,13 +14,15 @@ export default function GettingStarted() {
         from the comfort of your own web application.
       </p>
 
-      <h2 className="mt-8">Installation</h2>
+      <Heading level={2} className="mt-8">
+        Installation
+      </Heading>
 
       <ol className="mt-7 flex flex-col gap-10">
         <ListItem index={1}>
-          <h4 className="font-medium dark:text-dark-foreground mb-3">
+          <Heading level={4} className="mb-3">
             Download the browser extension
-          </h4>
+          </Heading>
           <p>
             Dowload the extension on the{' '}
             <Link external to={webstoreUrl}>
@@ -32,18 +32,18 @@ export default function GettingStarted() {
           </p>
         </ListItem>
         <ListItem index={2}>
-          <h4 className="font-medium dark:text-dark-foreground mb-3">
+          <Heading level={4} className="mb-3">
             Install the npm packages
-          </h4>
+          </Heading>
           <p className="mb-5">
-            Install @aside/react as one of your project's dependencies.
+            Install @aside/react as one of your project&apos;s dependencies.
           </p>
           <Codeblock codeBlock={yarnInstall} language="" />
         </ListItem>
         <ListItem index={3}>
-          <h4 className="font-medium dark:text-dark-foreground mb-3">
+          <Heading level={4} className="mb-3">
             Import Aside, DevTools and UI components
-          </h4>
+          </Heading>
           <p className="mb-5">
             Render both components into your application and you now have a
             portal to render directly into the Chrome developer tool panel!
@@ -59,26 +59,34 @@ export default function GettingStarted() {
           <Codeblock codeBlock={buttonRender} language="tsx" />
         </ListItem>
         <ListItem index={4}>
-          <h4 className="font-medium dark:text-dark-foreground mb-3">
+          <Heading level={4} className="mb-3">
             Open Aside in the Chrome developer tools
-          </h4>
+          </Heading>
           <p>
             A new tab called Aside will now show up in your browser developer
-            tools, and you should now see the button you have rendered 🎉.
+            tools, and you should now see the button you have rendered{' '}
+            <span role="img" aria-label="Tada">
+              🎉
+            </span>
+            .
           </p>
         </ListItem>
       </ol>
 
-      <h2 className="mt-8 mb-5">Example</h2>
+      <Heading level={2} className="mt-8 mb-5">
+        Example
+      </Heading>
 
       <p className="mb-5">
         The power of Aside is that you can mix your own app code, state and
         logic and have it power what will render in the browser developer tool.
-        You can even provide Aside's components callbacks to update your own app
-        state and it will work as expected.
+        You can even provide Aside&apos;s components callbacks to update your
+        own app state and it will work as expected.
       </p>
 
-      <Codeblock language="tsx" codeBlock={buttonExample} />
+      <AsideSandbox code={buttonExample} />
+
+      <div className="mb-10" />
     </>
   );
 }
@@ -95,25 +103,29 @@ const buttonRender = `<Aside>
     </Button>
   </DevTools>
 </Aside>`;
-const buttonExample = `import React, {useState} from 'react';
-import {Aside, DevTools} from '@aside/react';
-import {Button} from '@aside/chrome-ui';
-
-export function App({children}) {
-  const [count, setCount] = useState(0)
+const buttonExample = `function App() {
+  const [count, setCount] = useState(0);
 
   return (
     <div>
-      {count}
+      <button onClick={() => setCount(count + 1)}>Increment</button>
       <Aside>
         <DevTools>
-          <Button
-            onPress={(prev) => setCount(prev + 1)}
-          >
-            Increment
-          </Button>
+          <PaneToolbar>
+            <Flex justifyContent="space-between">
+              <Flex alignItems="center">
+                <Tabs
+                  selected={'state'}
+                >
+                  <Tab id='state' label="State" />
+                  <Tab id='settings' label="Settings" />
+                </Tabs>
+              </Flex>
+            </Flex>
+          </PaneToolbar>
+          <Log items={[{id: 'my app state', value: {count}}]} />
         </DevTools>
       </Aside>
     </div>
   );
-}`;
+};`;

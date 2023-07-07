@@ -27,5 +27,6 @@
     { "path": "../packages/extension" },
     { "path": "../packages/web" },
     { "path": "../packages/react" },
+    { "path": "../packages/chrome-ui" },
   ]
 }
