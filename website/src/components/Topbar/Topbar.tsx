@@ -17,7 +17,7 @@ export function Topbar() {
       </a>
       <a
         href={webstoreUrl}
-        className="flex font-semibold items-center gap-2 font-medium text-sm bg-accent text-dark-surface px-5 py-2 border-4 dark:border-dark-accentBorder rounded-full"
+        className="flex font-semibold items-center gap-2 font-medium text-sm bg-accent text-dark-surface px-5 py-2 rounded-full"
       >
         <Image alt="" src="/magic.svg" height={20} width={20} />
         Download

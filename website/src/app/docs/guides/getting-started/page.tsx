@@ -1,4 +1,13 @@
-import {AsideSandbox, Codeblock, Heading, Link, ListItem} from '@/components';
+import {
+  AsideSandbox,
+  Button,
+  Codeblock,
+  Heading,
+  Link,
+  ListItem,
+} from '@/components';
+import {Wrapper} from '@/components/AsideSandbox';
+import {withWrapper} from '@/components/AsideSandbox/components/Wrapper';
 import {webstoreUrl} from '@/constants';
 
 export default function GettingStarted() {
@@ -84,7 +93,13 @@ export default function GettingStarted() {
         own app state and it will work as expected.
       </p>
 
-      <AsideSandbox code={buttonExample} />
+      <AsideSandbox
+        height={200}
+        code={buttonExample}
+        scope={{
+          MyButton: Button,
+        }}
+      />
 
       <div className="mb-10" />
     </>
@@ -108,21 +123,9 @@ const buttonExample = `function App() {
 
   return (
     <div>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <MyButton onPress={() => setCount(count + 1)}>Increment</ MyButton>
       <Aside>
         <DevTools>
-          <PaneToolbar>
-            <Flex justifyContent="space-between">
-              <Flex alignItems="center">
-                <Tabs
-                  selected={'state'}
-                >
-                  <Tab id='state' label="State" />
-                  <Tab id='settings' label="Settings" />
-                </Tabs>
-              </Flex>
-            </Flex>
-          </PaneToolbar>
           <Log items={[{id: 'my app state', value: {count}}]} />
         </DevTools>
       </Aside>

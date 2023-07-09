@@ -40,7 +40,3 @@ export function SidebarItem({
     </Link>
   );
 }
-// background: hsl(0 0% 9% / 1);
-// padding: 6px 4px;
-// border-radius: 8px;
-// margin: -6px;

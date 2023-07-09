@@ -15,11 +15,14 @@ module.exports = {
         mono: '#707070',
         separator: '#ffffff09',
         surface2: '#171717',
+        surface3: '#000',
         foreground: '#fff',
       },
       surface: '#f8f9fa',
       // accent: '#E9B42D',
-      accent: '#fe5c43',
+      // accent: '#fe5c43',
+      accent: "#14d6b5",
+      transparent: 'transparent'
     },
     extend: {
       backgroundImage: {

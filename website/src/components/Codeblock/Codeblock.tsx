@@ -11,7 +11,7 @@ export function Codeblock({
   language: string;
 }) {
   return (
-    <Highlight theme={themes.oceanicNext} code={codeBlock} language={language}>
+    <Highlight theme={themes.vsDark} code={codeBlock} language={language}>
       {({tokens, getLineProps, getTokenProps}) => (
         <pre className="text-sm p-3 dark:bg-dark-surface2 rounded-md">
           {tokens.map((line, i) => (
