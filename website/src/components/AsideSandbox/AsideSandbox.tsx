@@ -27,7 +27,7 @@ export function AsideSandbox({code, scope, height}: Props) {
         useState,
         Aside: ({children}: PropsWithChildren) => (
           <>
-            <div className="absolute left-[calc(100%+1px)] box-content top-[-1px] w-full h-full border border-[#484c50]">
+            <div className="absolute md:left-[calc(100%+1px)] box-content top-full md:top-[-1px] w-full h-full border border-[#484c50]">
               {children}
             </div>
             <div className="text-xs rounded-full bg-dark-surface3 absolute left-[50%] top-0 translate-x-[-50%] translate-y-[-50%] px-2 py-0.5 text-accent font-semibold">
@@ -61,7 +61,7 @@ export function AsideSandbox({code, scope, height}: Props) {
       <LiveEditor className="child:text-sm child:p-3 child:dark:!bg-dark-surface2 child:rounded-t-lg !font-mono child:border-2 child:border-transparent child:hover:border-accent" />
       <LiveError />
       <LivePreview
-        className="flex child:w-6/12 child:flex child:items-center child:justify-center child:relative child:dark:border-dark-border child:border"
+        className="flex child:w-full md:child:w-6/12 child:flex child:items-center child:justify-center child:relative child:dark:border-dark-border child:border"
         style={{height}}
       />
     </LiveProvider>
