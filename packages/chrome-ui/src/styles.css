@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+.aside {
   font-size: 12px;
   background: #202124;
   padding: 0 !important;
@@ -11,7 +11,6 @@ body {
 
 ::-webkit-scrollbar {
   width: 0;
-  background: red;
   padding: 0;
   height: 0;
 }

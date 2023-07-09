@@ -40,7 +40,6 @@
     "lint": "tsc",
     "clean": "rm -rf build"
   },
-  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "classnames": "latest",

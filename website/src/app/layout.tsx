@@ -1,10 +1,9 @@
-import {Inter, Albert_Sans} from 'next/font/google';
+import {Source_Sans_3} from 'next/font/google';
 
-import {Sidebar, Topbar} from '@/components';
-
+import '@aside/chrome-ui/css';
 import './globals.css';
 
-const font = Albert_Sans({
+const font = Source_Sans_3({
   display: 'fallback',
   subsets: ['latin'],
 });

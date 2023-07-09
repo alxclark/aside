@@ -1,5 +1,27 @@
 /* eslint-disable import/first, import/order, import/newline-after-import */
 
+import {
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+} from './Pane';
+export {
+  Pane,
+  PaneContent,
+  PaneToolbar,
+  PaneToolbarItem,
+  PaneToolbarSection,
+} from './Pane';
+export type {
+  Props as PaneProps,
+  PaneContentProps,
+  PaneToolbarItemProps,
+  PaneToolbarProps,
+  PaneToolbarSectionProps,
+} from './Pane';
+
 import {Button} from './Button';
 export {Button} from './Button';
 
@@ -41,28 +63,6 @@ import {Text} from './Text';
 export {Text} from './Text';
 export type {TextProps} from './Text';
 
-import {
-  Pane,
-  PaneContent,
-  PaneToolbar,
-  PaneToolbarItem,
-  PaneToolbarSection,
-} from './Pane';
-export {
-  Pane,
-  PaneContent,
-  PaneToolbar,
-  PaneToolbarItem,
-  PaneToolbarSection,
-} from './Pane';
-export type {
-  Props as PaneProps,
-  PaneContentProps,
-  PaneToolbarItemProps,
-  PaneToolbarProps,
-  PaneToolbarSectionProps,
-} from './Pane';
-
 import {Tabs, Tab} from './Tabs';
 export {Tabs, Tab} from './Tabs';
 export type {Props as TabsProps, TabProps} from './Tabs';
@@ -76,6 +76,7 @@ export {Divider} from './Divider';
 export type {DividerProps} from './Divider';
 
 export const AllComponents = {
+  Pane,
   Button,
   Navigation,
   NavigationTab,
@@ -86,7 +87,6 @@ export const AllComponents = {
   Flex,
   View,
   Icon,
-  Pane,
   PaneContent,
   PaneToolbar,
   PaneToolbarItem,

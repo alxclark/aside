@@ -5,9 +5,12 @@ import {useTabs} from './hooks';
 import {TabsContext} from './context';
 import {TabsContextType} from './types';
 
-export type Props = PropsWithChildren<TabsContextType>;
+export type Props = PropsWithChildren<{
+  selected: string;
+  setSelected?(id: string): void;
+}>;
 
-export function Tabs({selected, setSelected, children}: Props) {
+export function Tabs({selected, setSelected = () => {}, children}: Props) {
   const context: TabsContextType = useMemo(
     () => ({selected, setSelected}),
     [selected, setSelected],

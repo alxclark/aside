@@ -129,7 +129,11 @@ export function BrowserExtensionRenderer() {
 }
 
 export function DevTools() {
-  return <BrowserExtensionRenderer />;
+  return (
+    <div className="aside h-full">
+      <BrowserExtensionRenderer />
+    </div>
+  );
 }
 
 function prefixComponents(components: {[key: string]: any}, prefix: string) {
