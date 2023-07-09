@@ -4,7 +4,7 @@ export function Logo() {
       <div className="text-accent font-black text-3xl leading-4 relative">
         aside
       </div>
-      <div className="text-3xl dark:text-dark-surface2 font-black dark:text-dark-surface leading-4">
+      <div className="text-3xl font-black dark:text-dark-foreground leading-4">
         aside
       </div>
     </div>
