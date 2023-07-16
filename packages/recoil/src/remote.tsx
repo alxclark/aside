@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {useRecoilCallback, useRecoilValue, useSetRecoilState} from 'recoil';
 
-import {PrimaryPanel} from './components';
 import {
   currentStateAtom,
   recordSnapshotAtom,
@@ -34,5 +33,5 @@ export function RemoteDevTools({snapshot}: {snapshot: Snapshot}) {
     updateSnapshots();
   }, [updateSnapshots]);
 
-  return <PrimaryPanel />;
+  return null;
 }

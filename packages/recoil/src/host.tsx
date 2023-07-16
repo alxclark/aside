@@ -5,7 +5,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {Aside, DevTools as AsideDevTools} from '@aside/react';
 import {useRecoilSnapshot, Snapshot as RecoilSnapshot} from 'recoil';
 
 import {RemoteDevTools} from './remote';
@@ -17,7 +16,7 @@ export type Props = PropsWithChildren<{
   ignoredRecoilKeys?: string[];
 }>;
 
-export function DevTools({children, ignoredRecoilKeys}: Props) {
+export function DevTools0({children, ignoredRecoilKeys}: Props) {
   const recoilSnapshot = useRecoilSnapshot();
   const {snapshot} = useMemo(
     () => transformSnapshot(recoilSnapshot, {ignoredRecoilKeys}),
@@ -41,17 +40,46 @@ export function DevTools({children, ignoredRecoilKeys}: Props) {
   }, [snapshot]);
 
   return (
-    <Aside>
-      <AsideDevTools>
-        <RecoilDevTools snapshots={snapshots} snapshot={snapshot}>
-          {children}
-        </RecoilDevTools>
-      </AsideDevTools>
-    </Aside>
+    <DevTools snapshots={snapshots} snapshot={snapshot}>
+      {children}
+    </DevTools>
   );
 }
 
-function RecoilDevTools({children, snapshots, snapshot}: any) {
+export function useRecoilObserver({
+  ignoredRecoilKeys,
+}: {
+  ignoredRecoilKeys?: string[];
+} = {}) {
+  const recoilSnapshot = useRecoilSnapshot();
+  const ignoredRecoilKeysDependency = ignoredRecoilKeys?.sort().join();
+
+  const {snapshot} = useMemo(
+    () => transformSnapshot(recoilSnapshot, {ignoredRecoilKeys}),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [ignoredRecoilKeysDependency, recoilSnapshot.getID()],
+  );
+
+  const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
+  const snapshotCount = useRef(0);
+
+  // Persist the state snapshots client side.
+  // This is needed since we want access to the previous states
+  // even if the devtools panel was not opened.
+  useEffect(() => {
+    if (snapshotCount.current === 0) {
+      setSnapshots((prev) => [...prev, {...snapshot, initial: true}]);
+    } else {
+      setSnapshots((prev) => [...prev, snapshot]);
+    }
+
+    snapshotCount.current += 1;
+  }, [snapshot]);
+
+  return useMemo(() => ({snapshots, snapshot}), [snapshot, snapshots]);
+}
+
+export function DevTools({children, snapshots, snapshot}: any) {
   return (
     <InitialStateProvider snapshots={snapshots}>
       <RemoteDevTools snapshot={snapshot} />

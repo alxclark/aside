@@ -12,8 +12,8 @@ import {
 } from '@aside/extension';
 import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui/react';
 import {Runtime} from 'webextension-polyfill';
-
 import '@aside/chrome-ui/css';
+import {DevtoolsNetwork} from 'webextension-polyfill/namespaces/devtools_network';
 
 export function BrowserExtensionRenderer() {
   const controller = useMemo(
@@ -25,6 +25,9 @@ export function BrowserExtensionRenderer() {
   );
   const [receiver, setReceiver] = useState(createRemoteReceiver());
   const [port, setPort] = useState<Runtime.Port | undefined>();
+  const [networkRequests, setNetworkRequests] = useState<
+    (Request | DevtoolsNetwork.Request)[]
+  >([]);
 
   useEffect(() => {
     const listener = () => {
@@ -52,6 +55,10 @@ export function BrowserExtensionRenderer() {
     // In case devtools loads first, we listen for content-script connection.
     // Once content-script connect, we will accept the port sent.
     browser.runtime.onConnect.addListener(onConnectListener);
+
+    browser.devtools.network.onRequestFinished.addListener(async (request) => {
+      setNetworkRequests((prev) => [...prev, request]);
+    });
 
     function onAcceptedPortListener(message: any, port: Runtime.Port) {
       console.log('Received message from CS', message);
