@@ -9,5 +9,8 @@
     "outDir": "./build/ts",
     "rootDir": "./src",
     "jsx": "preserve",
-  }
+  },
+  "references": [
+    { "path": "../react" },
+  ]
 }

@@ -1,5 +1,6 @@
 /* eslint-disable @shopify/strict-component-boundaries */
 import React, {createContext, useContext, useState} from 'react';
+import {usePersistedState} from '@aside/react';
 
 import {Button} from '../Button/Button.remote';
 import {Checkbox} from '../Checkbox/Checkbox.remote';
@@ -32,19 +33,38 @@ export interface TimelineData<T extends TimelineItemData = TimelineItemData> {
   rows: T[];
   name: (row: T) => string;
   query?: (row: T) => string;
+  onDelete?: () => void;
 }
 
 export function Timeline({children, data}: Props) {
-  const [recordSnapshot, setRecordSnapshot] = useState(false);
-  const [filter, setFilter] = useState('');
-  const [showFilter, setShowFilter] = useState(true);
-  const [preserveLog, setPreserveLog] = useState(false);
-  const [invertFilter, setinvertFilter] = useState(false);
+  const [
+    {data: recordSnapshot, loading: recordSnapshotLoading},
+    setRecordSnapshot,
+  ] = usePersistedState(true, {
+    key: 'record-snapshot',
+  });
 
-  function handleClear() {}
+  const [{data: filter, loading: filterLoading}, setFilter] = usePersistedState(
+    '',
+    {
+      key: 'filter',
+    },
+  );
+  const [{data: showFilter, loading: showFilterLoading}, setShowFilter] =
+    usePersistedState(true, {
+      key: 'show-filter',
+    });
+  const [{data: preserveLog, loading: preserveLogLoading}, setPreserveLog] =
+    usePersistedState(false, {
+      key: 'preserve-log',
+    });
+  const [{data: invertFilter, loading: invertFilterLoading}, setinvertFilter] =
+    usePersistedState(false, {
+      key: 'invert-filter',
+    });
 
   const rows = data.flatMap((column) =>
-    column.rows.map((row) => ({...row, type: column.type})),
+    column.rows.map((row, index) => ({...row, type: column.type, index})),
   );
 
   const getRow = (type: string) => data.find((group) => group.type === type);
@@ -52,14 +72,29 @@ export function Timeline({children, data}: Props) {
   const filteredRows = rows.filter((row) => {
     const rowDescriptor = getRow(row.type);
     const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
-    const included = query?.includes(filter);
+    const included = query?.includes(filter ?? '');
 
     return invertFilter ? !included : included;
   });
 
   const [selectedRow, setSelectedRow] = useState<string | undefined>(
-    rows[0].id,
+    rows[0]?.id,
   );
+
+  function handleClear() {
+    data.forEach(({onDelete}) => onDelete?.());
+    setSelectedRow(undefined);
+  }
+
+  if (
+    recordSnapshotLoading ||
+    filterLoading ||
+    showFilterLoading ||
+    preserveLogLoading ||
+    invertFilterLoading
+  ) {
+    return null;
+  }
 
   return (
     <>
@@ -82,7 +117,7 @@ export function Timeline({children, data}: Props) {
               <Button
                 icon="filter"
                 iconHeight={12}
-                alert={filter.length > 0}
+                alert={(filter ?? '').length > 0}
                 pressed={showFilter}
                 title="Filter"
                 onPress={() => setShowFilter((prev) => !prev)}

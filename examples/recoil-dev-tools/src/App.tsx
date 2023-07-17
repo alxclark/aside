@@ -8,7 +8,7 @@ import {
   useRecoilObserver,
 } from '@aside/recoil';
 import {Aside, DevTools} from '@aside/react';
-import {Button, Pane, PaneToolbar, Tab, Tabs, Timeline} from '@aside/chrome-ui';
+import {Pane, PaneToolbar, Tab, Tabs, Timeline} from '@aside/chrome-ui';
 
 import 'todomvc-app-css/index.css';
 

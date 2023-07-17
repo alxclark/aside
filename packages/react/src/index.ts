@@ -1,4 +1,4 @@
 export {Aside, DevTools, RemoteRenderer} from './components';
-export {useExtensionApi} from './hooks';
+export {useExtensionApi, usePersistedState} from './hooks';
 export type {ExtensionApi} from './types';
 export {ExtensionApiContext} from './context';
