@@ -22,6 +22,14 @@ import {Checkbox} from '../components/Checkbox/Checkbox.remote';
 import {Divider} from '../components/Divider/Divider.remote';
 import {TextField} from '../components/TextField/TextField.remote';
 import {Text} from '../components/Text/Text.remote';
+import {
+  Timeline,
+  useTimelineItem,
+  StorageKey as TimelineStorageKey,
+} from '../components/Timeline/Timeline';
+import {Image} from '../components/Image/Image.remote';
+
+export type {TimelineData} from '../components/Timeline/Timeline';
 
 export {
   Button,
@@ -46,6 +54,10 @@ export {
   Divider,
   TextField,
   Text,
+  Timeline,
+  useTimelineItem,
+  TimelineStorageKey,
+  Image,
 };
 
 export const AllComponents = [
@@ -71,4 +83,5 @@ export const AllComponents = [
   Divider,
   TextField,
   Text,
+  Image,
 ];
