@@ -22,7 +22,11 @@ import {Checkbox} from '../components/Checkbox/Checkbox.remote';
 import {Divider} from '../components/Divider/Divider.remote';
 import {TextField} from '../components/TextField/TextField.remote';
 import {Text} from '../components/Text/Text.remote';
-import {Timeline, useTimelineItem} from '../components/Timeline/Timeline';
+import {
+  Timeline,
+  useTimelineItem,
+  StorageKey as TimelineStorageKey,
+} from '../components/Timeline/Timeline';
 import {Image} from '../components/Image/Image.remote';
 
 export type {TimelineData} from '../components/Timeline/Timeline';
@@ -52,6 +56,7 @@ export {
   Text,
   Timeline,
   useTimelineItem,
+  TimelineStorageKey,
   Image,
 };
 

@@ -36,31 +36,39 @@ export interface TimelineData<T extends TimelineItemData = TimelineItemData> {
   onDelete?: () => void;
 }
 
+export enum StorageKey {
+  RecordSnapshot = 'record-snapshot',
+  Filter = 'filter',
+  ShowFilter = 'show-filter',
+  PreserveLog = 'preserve-log',
+  InvertFilter = 'invert-filter',
+}
+
 export function Timeline({children, data}: Props) {
   const [
     {data: recordSnapshot, loading: recordSnapshotLoading},
     setRecordSnapshot,
   ] = usePersistedState(true, {
-    key: 'record-snapshot',
+    key: StorageKey.RecordSnapshot,
   });
 
   const [{data: filter, loading: filterLoading}, setFilter] = usePersistedState(
     '',
     {
-      key: 'filter',
+      key: StorageKey.Filter,
     },
   );
   const [{data: showFilter, loading: showFilterLoading}, setShowFilter] =
     usePersistedState(true, {
-      key: 'show-filter',
+      key: StorageKey.ShowFilter,
     });
   const [{data: preserveLog, loading: preserveLogLoading}, setPreserveLog] =
     usePersistedState(false, {
-      key: 'preserve-log',
+      key: StorageKey.PreserveLog,
     });
   const [{data: invertFilter, loading: invertFilterLoading}, setinvertFilter] =
     usePersistedState(false, {
-      key: 'invert-filter',
+      key: StorageKey.InvertFilter,
     });
 
   const rows = data.flatMap((column) =>

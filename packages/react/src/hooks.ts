@@ -35,7 +35,7 @@ export function usePersistedState<T>(
       const result = await api.storage.local.get([options.key]);
       setLoading(false);
 
-      setData(result[options.key]);
+      setData(result[options.key] ?? defaultValue);
     }
     queryStorage();
   }, [api.storage.local, defaultValue, options.key]);

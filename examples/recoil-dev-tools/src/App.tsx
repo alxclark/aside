@@ -7,7 +7,7 @@ import {
   useRecoilData,
   useRecoilObserver,
 } from '@aside/recoil';
-import {Aside, DevTools} from '@aside/react';
+import {Aside, DevTools, usePersistedState} from '@aside/react';
 import {Pane, PaneToolbar, Tab, Tabs, Timeline} from '@aside/chrome-ui';
 
 import 'todomvc-app-css/index.css';
@@ -40,8 +40,12 @@ function AsideDevTools() {
 }
 
 function AsideApp() {
-  const [tab, setTab] = useState('timeline');
   const recoil = useRecoilData();
+  const [{data: tab, loading}, setTab] = usePersistedState('timeline', {
+    key: 'tab',
+  });
+
+  if (loading || !tab) return null;
 
   return (
     <Pane>

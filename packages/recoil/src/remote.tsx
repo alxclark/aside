@@ -1,19 +1,24 @@
-import React, {useEffect, useRef} from 'react';
-import {useRecoilCallback, useRecoilValue, useSetRecoilState} from 'recoil';
+import {useEffect} from 'react';
+import {useRecoilCallback} from 'recoil';
+import {usePersistedState} from '@aside/react';
+import {TimelineStorageKey} from '@aside/chrome-ui';
 
 import {
   currentStateAtom,
-  recordSnapshotAtom,
   Snapshot,
   snapshotsAtom,
 } from './foundation/Snapshots';
 
 export function RemoteDevTools({snapshot}: {snapshot: Snapshot}) {
-  const shouldRecordSnapshot = useRecoilValue(recordSnapshotAtom);
+  const [{data: recordSnapshot}] = usePersistedState(false, {
+    key: TimelineStorageKey.RecordSnapshot,
+  });
 
   const updateSnapshots = useRecoilCallback(
     ({snapshot: recoilSnapshot, set}) =>
       () => {
+        if (!recordSnapshot) return;
+
         const snapshots = recoilSnapshot.getLoadable(snapshotsAtom).getValue();
         const isSameSnapshot =
           snapshots[snapshots.length - 1]?.id === snapshot.id;
@@ -26,7 +31,7 @@ export function RemoteDevTools({snapshot}: {snapshot: Snapshot}) {
           return [...prev, snapshot];
         });
       },
-    [snapshot, shouldRecordSnapshot],
+    [snapshot, recordSnapshot],
   );
 
   useEffect(() => {

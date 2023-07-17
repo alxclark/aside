@@ -1,6 +1,7 @@
 import {useExtensionApi} from '@aside/react';
 import React, {useEffect, useState} from 'react';
 import {RecoilRoot} from 'recoil';
+import {TimelineStorageKey} from '@aside/chrome-ui';
 
 import {extensionApiAtom} from '../Extension';
 import {
@@ -29,11 +30,15 @@ export function InitialStateProvider({children, snapshots}: Props) {
         const result = await api.storage.local.get([
           snapshotsAtom.key,
           previousSnapshotAtom.key,
+          TimelineStorageKey.PreserveLog,
+          TimelineStorageKey.RecordSnapshot,
         ]);
 
         setPersistedState({
           snapshots: result[snapshotsAtom.key],
           previousSnapshot: result[previousSnapshotAtom.key],
+          preserveLog: result[TimelineStorageKey.PreserveLog],
+          recordSnapshot: result[TimelineStorageKey.RecordSnapshot],
         });
       } catch (error) {
         setPersistedState({});

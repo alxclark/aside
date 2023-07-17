@@ -5,4 +5,5 @@ export {
   type Props as TimelineProps,
   type TimelineData,
   type TimelineItemData,
+  StorageKey as TimelineStorageKey,
 } from './Timeline';
