@@ -1,7 +1,6 @@
-/* eslint-disable @shopify/strict-component-boundaries */
 import {PropsWithChildren} from 'react';
+import {Log} from '@aside/chrome-ui';
 
-import {Log} from '../../../Log/Log.remote';
 import {useTimelineItem} from '../../Timeline';
 
 import {useReactData} from './hooks';

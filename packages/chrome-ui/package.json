@@ -40,9 +40,7 @@
     "lint": "tsc",
     "clean": "rm -rf build"
   },
-  "dependencies": {
-    "@aside/react": "0.3.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "autoprefixer": "^10.4.13",
     "classnames": "latest",

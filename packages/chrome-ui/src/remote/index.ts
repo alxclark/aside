@@ -22,18 +22,7 @@ import {Checkbox} from '../components/Checkbox/Checkbox.remote';
 import {Divider} from '../components/Divider/Divider.remote';
 import {TextField} from '../components/TextField/TextField.remote';
 import {Text} from '../components/Text/Text.remote';
-import {
-  Timeline,
-  useTimelineItem,
-  TimelineStorageKey,
-  ReactTimeline,
-  useObserver,
-  useReactData,
-  ReactDevTools,
-} from '../components/Timeline';
 import {Image} from '../components/Image/Image.remote';
-
-export type {TimelineData} from '../components/Timeline/Timeline';
 
 export {
   Button,
@@ -58,14 +47,7 @@ export {
   Divider,
   TextField,
   Text,
-  Timeline,
-  useTimelineItem,
-  TimelineStorageKey,
   Image,
-  ReactTimeline,
-  useObserver,
-  useReactData,
-  ReactDevTools,
 };
 
 export const ChromeUIComponents = [

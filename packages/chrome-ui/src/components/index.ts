@@ -79,12 +79,6 @@ import {Image} from './Image';
 export {Image} from './Image';
 export type {ImageProps} from './Image';
 
-// Composite components that are built with primitive components.
-// Those components don't need to be exposed directly as a distinct component on the remote.
-
-export {Timeline, useTimelineItem, TimelineItemContext} from './Timeline';
-export type {TimelineData, TimelineProps, TimelineItemData} from './Timeline';
-
 export const AllComponents = {
   Pane,
   Button,

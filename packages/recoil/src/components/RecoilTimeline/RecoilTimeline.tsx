@@ -1,5 +1,6 @@
-import {Log, useTimelineItem} from '@aside/chrome-ui';
+import {Log} from '@aside/chrome-ui';
 import React from 'react';
+import {useTimelineItem} from '@aside/timeline';
 
 import {useRecoilData} from '../../hooks';
 

@@ -18,5 +18,5 @@
     "jsx": "react"
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }, {"path": "../../packages/react"}]
+  "references": [{ "path": "./tsconfig.node.json" }, {"path": "../../packages/react"}, {"path": "../../packages/timeline"}]
 }

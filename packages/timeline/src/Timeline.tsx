@@ -1,30 +1,31 @@
-/* eslint-disable @shopify/strict-component-boundaries */
 import React, {createContext, useContext, useState} from 'react';
 import {usePersistedState} from '@aside/react';
-
-import {Button} from '../Button/Button.remote';
-import {Checkbox} from '../Checkbox/Checkbox.remote';
-import {Flex} from '../Flex/Flex.remote';
-import {Image} from '../Image/Image.remote';
-import {Text} from '../Text/Text.remote';
 import {
   PaneToolbar,
+  Flex,
   PaneToolbarSection,
+  Button,
   PaneToolbarItem,
+  Checkbox,
+  View,
+  TextField,
   PaneContent,
-} from '../Pane/Pane.remote';
-import {Table, TableRow, TableCell} from '../Table/Table.remote';
-import {TextField} from '../TextField/TextField.remote';
-import {View} from '../View/View.remote';
+  Table,
+  TableRow,
+  TableCell,
+  Image,
+  Text,
+} from '@aside/chrome-ui';
 
 export interface Props {
   children: any;
-  data: TimelineData<any>[];
+  data: TimelineData[];
 }
 
 export interface TimelineItemData {
   id: string;
   createdAt: string;
+  nodes: any;
 }
 
 export interface TimelineData<T extends TimelineItemData = TimelineItemData> {
@@ -71,9 +72,14 @@ export function Timeline({children, data}: Props) {
       key: StorageKey.InvertFilter,
     });
 
-  const rows = data.flatMap((column) =>
-    column.rows.map((row, index) => ({...row, type: column.type, index})),
-  );
+  const rows = data
+    .flatMap((column) =>
+      column.rows.map((row, index) => ({...row, type: column.type, index})),
+    )
+    .sort((left, right) => {
+      if (left.createdAt === right.createdAt) return 0;
+      return left.createdAt < right.createdAt ? -1 : 1;
+    });
 
   const getRow = (type: string) => data.find((group) => group.type === type);
 

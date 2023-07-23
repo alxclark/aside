@@ -1,7 +1,7 @@
 import {useExtensionApi} from '@aside/react';
 import React, {useEffect, useState} from 'react';
 import {RecoilRoot} from 'recoil';
-import {TimelineStorageKey} from '@aside/chrome-ui';
+import {TimelineStorageKey} from '@aside/timeline';
 
 import {extensionApiAtom} from '../Extension';
 import {

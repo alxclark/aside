@@ -7,4 +7,5 @@ export interface Snapshot {
 export interface Observer {
   snapshots: Snapshot[];
   snapshot: Snapshot;
+  clearSnapshot?: () => void;
 }

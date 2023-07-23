@@ -1,5 +1,5 @@
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
-import {TimelineData} from '@aside/chrome-ui';
+import {TimelineData} from '@aside/timeline';
 import {useCallback, useMemo} from 'react';
 
 import {

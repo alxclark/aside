@@ -6,14 +6,13 @@ import {Observer} from '../../types';
 export function ReactDevTools({
   snapshot,
   snapshots,
+  clearSnapshot,
   children,
 }: PropsWithChildren<Observer>) {
   const observer = useMemo(
-    () => ({snapshots, snapshot}),
-    [snapshot, snapshots],
+    () => ({snapshots, snapshot, clearSnapshot}),
+    [clearSnapshot, snapshot, snapshots],
   );
-
-  console.log({observer});
 
   return (
     <ReactStateContext.Provider value={observer}>

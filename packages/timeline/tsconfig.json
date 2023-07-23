@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "./build/ts",
+    "jsx": "preserve",
+    "types": [
+      "vitest/globals"
+    ],
+  },
+  "references": [
+    { "path": "../extension" },
+    { "path": "../chrome-ui" },
+    { "path": "../react" },
+  ]
+}

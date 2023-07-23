@@ -1,0 +1,20 @@
+{
+  "name": "@aside/timeline",
+  "version": "0.0.1",
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "clean": "rm -rf build",
+    "test": "vitest test"
+  },
+  "dependencies": {
+    "@aside/react": "0.3.0",
+    "@aside/chrome-ui": "0.3.0"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

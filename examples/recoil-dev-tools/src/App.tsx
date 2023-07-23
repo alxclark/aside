@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import React, {createContext, useContext, useState} from 'react';
 import {RecoilRoot} from 'recoil';
 import {
@@ -7,21 +8,18 @@ import {
   useRecoilData,
   useRecoilObserver,
 } from '@aside/recoil';
+import {Pane, PaneToolbar, Tab, Tabs} from '@aside/chrome-ui';
 import {Aside, DevTools, usePersistedState} from '@aside/react';
+
+import 'todomvc-app-css/index.css';
+
 import {
-  ChromeUIComponents,
-  Pane,
-  PaneToolbar,
   ReactDevTools,
   ReactTimeline,
-  Tab,
-  Tabs,
   Timeline,
   useObserver,
   useReactData,
-} from '@aside/chrome-ui';
-
-import 'todomvc-app-css/index.css';
+} from '@aside/timeline';
 
 import {NewTodo, Todos} from './components';
 
@@ -55,15 +53,16 @@ function AsideDevTools() {
   });
 
   const count = useContext(CountContext);
-  const reactObserver = useObserver({
-    CountContext: count,
-  });
-
-  console.log({reactObserver});
+  const reactObserver = useObserver(
+    {
+      CountContext: count,
+    },
+    [count],
+  );
 
   return (
     <Aside>
-      <DevTools components={ChromeUIComponents}>
+      <DevTools>
         <RecoilDevTools {...recoilObserver}>
           <ReactDevTools {...reactObserver}>
             <AsideApp />
@@ -80,8 +79,6 @@ function AsideApp() {
   const [{data: tab, loading}, setTab] = usePersistedState('timeline', {
     key: 'tab',
   });
-
-  console.log({react});
 
   if (loading || !tab) return null;
 
