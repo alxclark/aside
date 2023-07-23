@@ -79,7 +79,11 @@ export function useRecoilObserver({
   return useMemo(() => ({snapshots, snapshot}), [snapshot, snapshots]);
 }
 
-export function DevTools({children, snapshots, snapshot}: any) {
+export function DevTools({
+  children,
+  snapshots,
+  snapshot,
+}: PropsWithChildren<{snapshot: Snapshot; snapshots: Snapshot[]}>) {
   return (
     <InitialStateProvider snapshots={snapshots}>
       <RemoteDevTools snapshot={snapshot} />

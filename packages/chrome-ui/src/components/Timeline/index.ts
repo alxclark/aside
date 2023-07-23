@@ -7,3 +7,6 @@ export {
   type TimelineItemData,
   StorageKey as TimelineStorageKey,
 } from './Timeline';
+
+export * from './hooks';
+export * from './components';

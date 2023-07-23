@@ -25,8 +25,12 @@ import {Text} from '../components/Text/Text.remote';
 import {
   Timeline,
   useTimelineItem,
-  StorageKey as TimelineStorageKey,
-} from '../components/Timeline/Timeline';
+  TimelineStorageKey,
+  ReactTimeline,
+  useObserver,
+  useReactData,
+  ReactDevTools,
+} from '../components/Timeline';
 import {Image} from '../components/Image/Image.remote';
 
 export type {TimelineData} from '../components/Timeline/Timeline';
@@ -58,9 +62,13 @@ export {
   useTimelineItem,
   TimelineStorageKey,
   Image,
+  ReactTimeline,
+  useObserver,
+  useReactData,
+  ReactDevTools,
 };
 
-export const AllComponents = [
+export const ChromeUIComponents = [
   Button,
   Carret,
   Flex,

@@ -12,7 +12,6 @@ import {createEndpoint, Endpoint, release, retain} from '@remote-ui/rpc';
 import {ContentScriptApiForWebpage} from '@aside/extension';
 import type {RemoteChannel} from '@remote-ui/core';
 
-import {AllComponents} from '../ui';
 import {ExtensionApiContext} from '../context';
 import {ExtensionApi} from '../types';
 
@@ -20,7 +19,12 @@ import {RemoteRenderer} from './RemoteRenderer';
 
 const contentScript = createContentScriptEndpoint();
 
-export function DevTools({children}: PropsWithChildren<{}>) {
+export function DevTools({
+  children,
+  components,
+}: PropsWithChildren<{
+  components: NonNullable<Parameters<typeof createRemoteRoot>[1]>['components'];
+}>) {
   const [devToolsRoot, setDevToolsRoot] = useState<RemoteRoot | undefined>();
   const channelRef = useRef<RemoteChannel | null>(null);
   const endpointRef = useRef<Endpoint<ContentScriptApiForWebpage> | null>(null);
@@ -34,12 +38,12 @@ export function DevTools({children}: PropsWithChildren<{}>) {
       endpointRef.current = endpoint;
 
       const root = createRemoteRoot(channel, {
-        components: AllComponents,
+        components,
       });
 
       setDevToolsRoot(root);
     },
-    [],
+    [components],
   );
 
   useEffect(() => {
