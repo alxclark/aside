@@ -7,7 +7,7 @@ import {
 } from '@remote-ui/rpc';
 
 import type {Retainer} from './memory';
-import {StackFrame, isMemoryManageable} from './memory';
+import {StackFrame, isBasicObject, isMemoryManageable} from './memory';
 
 type AnyFunction = (...args: any[]) => any;
 
@@ -35,16 +35,13 @@ export function createUnsafeEncoder(
 
       try {
         const retainedBy = isMemoryManageable(func)
-          ? [stackFrame, ...(func as any)[RETAINED_BY]]
+          ? [stackFrame, ...func[RETAINED_BY]]
           : [stackFrame];
 
-        const decodedArgs = decode(args, retainedBy) as any[];
-        const result = await func(...decodedArgs);
+        const result = await func(...(decode(args, retainedBy) as any[]));
 
         return result;
       } finally {
-        // TODO: Try to properly retain/release the React tree
-        // from contexts between the remote (react package) and host (dev tools page)
         // stackFrame.release();
       }
     },
@@ -63,41 +60,68 @@ export function createUnsafeEncoder(
     },
   };
 
-  function encode(value: unknown): [any, Transferable[]?] {
+  type EncodeResult = [any, Transferable[]?];
+
+  function encode(
+    value: unknown,
+    seen = new Map<any, EncodeResult>(),
+  ): EncodeResult {
+    if (value == null) {
+      return [value];
+    }
+
+    const seenValue = seen.get(value);
+
+    if (seenValue) {
+      return seenValue;
+    }
+
     if (typeof value === 'object') {
-      if (value == null) {
-        return [value];
-      }
-
-      if (value instanceof ArrayBuffer) {
-        return [value];
-      }
-
-      const transferables: Transferable[] = [];
-
       if (Array.isArray(value)) {
+        seen.set(value, [undefined]);
+
+        const transferables: Transferable[] = [];
         const result = value.map((item) => {
-          const [result, nestedTransferables = []] = encode(item);
+          const [result, nestedTransferables = []] = encode(item, seen);
           transferables.push(...nestedTransferables);
           return result;
         });
 
-        return [result, transferables];
+        const fullResult: EncodeResult = [result, transferables];
+
+        seen.set(value, fullResult);
+
+        return fullResult;
       }
 
-      const result = Object.keys(value).reduce((object, key) => {
-        const [result, nestedTransferables = []] = encode((value as any)[key]);
-        transferables.push(...nestedTransferables);
-        return {...object, [key]: result};
-      }, {});
+      if (isBasicObject(value)) {
+        seen.set(value, [undefined]);
 
-      return [result, transferables];
+        const transferables: Transferable[] = [];
+        const result = Object.keys(value).reduce((object, key) => {
+          const [result, nestedTransferables = []] = encode(
+            (value as any)[key],
+            seen,
+          );
+          transferables.push(...nestedTransferables);
+          return {...object, [key]: result};
+        }, {});
+
+        const fullResult: EncodeResult = [result, transferables];
+
+        seen.set(value, fullResult);
+
+        return fullResult;
+      }
     }
 
     if (typeof value === 'function') {
       if (functionsToId.has(value as AnyFunction)) {
         const id = functionsToId.get(value as AnyFunction)!;
-        return [{[FUNCTION]: id}];
+        const result: EncodeResult = [{[FUNCTION]: id}];
+        seen.set(value, result);
+
+        return result;
       }
 
       const id = api.uuid();
@@ -105,10 +129,16 @@ export function createUnsafeEncoder(
       functionsToId.set(value as AnyFunction, id);
       idsToFunction.set(id, value as AnyFunction);
 
-      return [{[FUNCTION]: id}];
+      const result: EncodeResult = [{[FUNCTION]: id}];
+      seen.set(value, result);
+
+      return result;
     }
 
-    return [value];
+    const result: EncodeResult = [value];
+    seen.set(value, result);
+
+    return result;
   }
 
   function decode(value: unknown, retainedBy?: Iterable<Retainer>): any {

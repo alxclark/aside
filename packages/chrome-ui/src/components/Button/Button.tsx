@@ -41,7 +41,7 @@ export function Button({
   }
 
   return (
-    <button className="" onClick={onPress}>
+    <button className="" onClick={() => onPress?.()}>
       {children}
     </button>
   );

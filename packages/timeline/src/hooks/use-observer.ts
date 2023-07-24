@@ -7,32 +7,37 @@ export function useObserver(
   deps: any[],
 ): Observer {
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
+  const [previous, setPrevious] = useState<Snapshot | undefined>();
+  const [current, setCurrent] = useState<Snapshot | undefined>();
 
   useEffect(() => {
     const createdAt = Date.now().toString();
 
-    setSnapshots((prev) => [
-      ...prev,
-      {
-        id: `object-${createdAt}`,
-        createdAt,
-        nodes: object,
-      },
-    ]);
+    const snapshot = {
+      id: `object-${createdAt}`,
+      createdAt,
+      nodes: object,
+    };
+
+    setPrevious(current);
+    setCurrent(snapshot);
+
+    setSnapshots((prev) => [...prev, snapshot]);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps]);
 
   const clearSnapshots = useCallback(() => {
-    console.log('whats up');
-    setSnapshots((prev) => [prev[prev.length - 1]]);
+    setSnapshots([]);
   }, []);
 
   return useMemo(
     () => ({
-      snapshot: snapshots[snapshots.length - 1],
+      previous,
+      snapshot: current ?? {id: '0', createdAt: '', nodes: {}},
       snapshots,
-      clearSnapshots: () => console.log('hello m8'),
+      clearSnapshots,
     }),
-    [snapshots],
+    [clearSnapshots, current, previous, snapshots],
   );
 }

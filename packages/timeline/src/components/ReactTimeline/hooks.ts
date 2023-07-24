@@ -17,17 +17,17 @@ export function useReactData(): TimelineData {
     name: (snapshot) => Object.keys(snapshot.nodes).join(', '),
     query: (snapshot) => Object.keys(snapshot.nodes).join(''),
     rows: state.snapshots.map((next, index) => {
-      const previous = state.snapshots[index - 1]?.nodes ?? {};
+      const previous = state.snapshots[index - 1]?.nodes;
 
       return {
         id: next.id,
         createdAt: next.createdAt,
         nodes: createDiff({
-          previous,
+          previous: previous ?? state.previous?.nodes ?? {},
           next: next.nodes ?? {},
         }),
       };
     }),
-    onDelete: () => state.clearSnapshot?.(),
+    onDelete: () => state.clearSnapshots?.(),
   };
 }
