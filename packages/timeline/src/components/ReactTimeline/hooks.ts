@@ -14,18 +14,21 @@ export function useReactData(): TimelineData {
   return {
     type: 'react',
     icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-    name: (snapshot) => Object.keys(snapshot.nodes).join(', '),
-    query: (snapshot) => Object.keys(snapshot.nodes).join(''),
+    name: (row) => Object.keys(row.nodes).join(', '),
+    query: (row) => Object.keys(row.nodes).join(''),
     rows: state.snapshots.map((next, index) => {
-      const previous = state.snapshots[index - 1]?.nodes;
+      const previous =
+        state.snapshots[index - 1]?.nodes ?? state.previous?.nodes ?? {};
+
+      const nodes = createDiff({
+        previous,
+        next: next.nodes,
+      });
 
       return {
         id: next.id,
         createdAt: next.createdAt,
-        nodes: createDiff({
-          previous: previous ?? state.previous?.nodes ?? {},
-          next: next.nodes ?? {},
-        }),
+        nodes,
       };
     }),
     onDelete: () => state.clearSnapshots?.(),

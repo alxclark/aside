@@ -7,8 +7,8 @@ export function useObserver(
   deps: any[],
 ): Observer {
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
-  const [previous, setPrevious] = useState<Snapshot | undefined>();
-  const [current, setCurrent] = useState<Snapshot | undefined>();
+  const [previous, setPrevious] = useState<Snapshot>(empty);
+  const [current, setCurrent] = useState<Snapshot>(empty);
 
   useEffect(() => {
     const createdAt = Date.now().toString();
@@ -19,7 +19,6 @@ export function useObserver(
       nodes: object,
     };
 
-    setPrevious(current);
     setCurrent(snapshot);
 
     setSnapshots((prev) => [...prev, snapshot]);
@@ -28,16 +27,19 @@ export function useObserver(
   }, [...deps]);
 
   const clearSnapshots = useCallback(() => {
+    setPrevious(current);
     setSnapshots([]);
-  }, []);
+  }, [current]);
 
   return useMemo(
     () => ({
       previous,
-      snapshot: current ?? {id: '0', createdAt: '', nodes: {}},
+      snapshot: current,
       snapshots,
       clearSnapshots,
     }),
     [clearSnapshots, current, previous, snapshots],
   );
 }
+
+const empty: Snapshot = {id: '0', createdAt: '', nodes: {}};
