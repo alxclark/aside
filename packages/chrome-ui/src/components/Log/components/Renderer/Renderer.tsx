@@ -31,6 +31,8 @@ export function Renderer({
       return <BooleanRenderer value={value} />;
     case 'undefined':
       return <DefaultRenderer value="undefined" />;
+    case 'function':
+      return <DefaultRenderer value="f" />;
     case 'object':
       return (
         <ObjectRenderer
