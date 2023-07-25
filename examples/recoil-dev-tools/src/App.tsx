@@ -15,6 +15,7 @@ import 'todomvc-app-css/index.css';
 
 import {
   ReactDevTools,
+  ReactState,
   ReactTimeline,
   Timeline,
   useObserver,
@@ -88,15 +89,18 @@ function AsideApp() {
         <Tabs selected={tab} setSelected={(selected) => setTab(selected)}>
           <Tab id="timeline" label="Timeline" />
           <Tab id="recoil" label="Recoil" />
+          <Tab id="react" label="React" />
         </Tabs>
       </PaneToolbar>
-      {tab === 'recoil' && <StateTree />}
+
       {tab === 'timeline' && (
         <Timeline data={[recoil, react]}>
           <RecoilTimeline />
           <ReactTimeline />
         </Timeline>
       )}
+      {tab === 'recoil' && <StateTree />}
+      {tab === 'react' && <ReactState />}
     </Pane>
   );
 }
