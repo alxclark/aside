@@ -1,7 +1,14 @@
-import {PropsWithChildren, useCallback, useMemo} from 'react';
+import {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {usePersistedState} from '@aside/react';
 
 import {ReactObserverContext, ReactTimelineContext} from '../../contexts';
-import {Observer} from '../../types';
+import {Observer, Snapshot} from '../../types';
 import {createDiff} from '../../diff';
 import {TimelineItemData} from '../../Timeline';
 
@@ -12,12 +19,44 @@ export function ReactDevTools({
   children,
   previous,
 }: PropsWithChildren<Observer>) {
+  const [initialSnapshots, setInitialSnapshots] = useState<
+    Snapshot[] | undefined
+  >(undefined);
+  const [{data: persistedSnapshots, loading}, setPersistedSnapshots] =
+    usePersistedState<Snapshot[] | undefined>(undefined, {
+      key: 'react-snapshots',
+    });
+
+  useEffect(() => {
+    if (!loading && persistedSnapshots && !initialSnapshots) {
+      setInitialSnapshots(persistedSnapshots);
+    }
+  }, [initialSnapshots, loading, persistedSnapshots]);
+
+  const observer: Observer = useMemo(
+    () => ({
+      snapshot,
+      snapshots: [...(initialSnapshots ?? []), ...snapshots],
+      clearSnapshots,
+      previous,
+    }),
+    [clearSnapshots, initialSnapshots, previous, snapshot, snapshots],
+  );
+
   const rows: TimelineItemData[] = useMemo(() => {
-    return snapshots.map((next, index) => {
-      const prev = snapshots[index - 1]?.nodes ?? previous?.nodes ?? {};
+    return observer.snapshots.map((next, index) => {
+      const prev = observer.snapshots[index - 1] ?? previous ?? {};
+
+      if (prev.initial || next.initial) {
+        return {
+          id: next.id,
+          createdAt: next.createdAt,
+          nodes: next.nodes,
+        };
+      }
 
       const nodes = createDiff({
-        previous: prev,
+        previous: prev.nodes,
         next: next.nodes,
       });
 
@@ -27,7 +66,7 @@ export function ReactDevTools({
         nodes,
       };
     });
-  }, [previous?.nodes, snapshots]);
+  }, [observer.snapshots, previous]);
 
   const name = useCallback(
     (row: TimelineItemData) => Object.keys(row.nodes).join(', '),
@@ -46,20 +85,20 @@ export function ReactDevTools({
       name,
       query,
       rows,
-      onDelete: () => clearSnapshots?.(),
+      onDelete: () => {
+        clearSnapshots?.();
+        setPersistedSnapshots([]);
+        setInitialSnapshots([]);
+      },
     }),
-    [clearSnapshots, name, query, rows],
+    [clearSnapshots, name, query, rows, setPersistedSnapshots],
   );
 
-  const observer: Observer = useMemo(
-    () => ({
-      snapshot,
-      snapshots,
-      clearSnapshots,
-      previous,
-    }),
-    [clearSnapshots, previous, snapshot, snapshots],
-  );
+  useEffect(() => {
+    if (!loading) {
+      setPersistedSnapshots(observer.snapshots);
+    }
+  }, [loading, observer.snapshots, setPersistedSnapshots]);
 
   return (
     <ReactObserverContext.Provider value={observer}>

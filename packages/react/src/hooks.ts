@@ -33,26 +33,30 @@ export function usePersistedState<T>(
   useEffect(() => {
     async function queryStorage() {
       const result = await api.storage.local.get([options.key]);
-      setLoading(false);
 
       setData(result[options.key] ?? defaultValue);
+      setLoading(false);
     }
     queryStorage();
   }, [api.storage.local, defaultValue, options.key]);
 
   const setState = useCallback(
     (value: SetStateAction<T | undefined>) => {
-      let derivedValue: T | undefined;
+      setData((prev) => {
+        let derivedValue: T | undefined;
 
-      if (typeof value === 'function') {
-        derivedValue = (value as Function)(data);
-      }
+        if (typeof value === 'function') {
+          derivedValue = (value as Function)(prev);
+          api.storage.local.set({[options.key]: derivedValue});
+          return derivedValue;
+        }
 
-      api.storage.local.set({[options.key]: derivedValue ?? value});
+        api.storage.local.set({[options.key]: value});
 
-      setData(value);
+        return value;
+      });
     },
-    [api.storage.local, data, options.key],
+    [api.storage.local, options.key],
   );
 
   return useMemo(

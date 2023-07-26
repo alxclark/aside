@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {Observer, Snapshot} from '../types';
 
@@ -9,19 +9,23 @@ export function useObserver(
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
   const [previous, setPrevious] = useState<Snapshot>(empty);
   const [current, setCurrent] = useState<Snapshot>(empty);
+  const count = useRef(0);
 
   useEffect(() => {
     const createdAt = Date.now().toString();
 
-    const snapshot = {
+    const snapshot: Snapshot = {
       id: `object-${createdAt}`,
       createdAt,
       nodes: object,
+      initial: count.current === 0,
     };
 
     setCurrent(snapshot);
 
     setSnapshots((prev) => [...prev, snapshot]);
+
+    count.current++;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps]);
