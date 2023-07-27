@@ -13,7 +13,7 @@ export default defineConfig({
       fileName: (format) => `recoil.${format}.js`,
     },
     rollupOptions: {
-      external: ['react'],
+      external: ['react', 'recoil'],
       output: {
         globals: {
           react: 'React',
