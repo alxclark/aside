@@ -32,6 +32,32 @@
   dependencies:
     tslib "~2.0.1"
 
+"@aside/chrome-ui@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@aside/chrome-ui/-/chrome-ui-0.3.0.tgz#540b17ec51e8af6d7f36dd1340d2afd374f96172"
+  integrity sha512-3JMg8uijOnkajucvV+p6qkqyjBfMzaW8ja/bFnhDW6GAadUiWPogn+HCLheEcgPE8BNJ8wgADIxHbGFUTxk0Jw==
+
+"@aside/react@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@aside/react/-/react-0.3.0.tgz#2486ec857adcba8cd9dd45fb0f1b79ab11434076"
+  integrity sha512-E5W0J8WcXb6uIoEj/8mUgCoBOsVkBnH6xRjd/+LIY5DKJa7sTXtRIW8pMF5FBOZxbu9SfhhbyHWt/kOzX4HXXw==
+  dependencies:
+    "@aside/chrome-ui" "0.3.0"
+    "@aside/web" "0.3.0"
+
+"@aside/timeline@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@aside/timeline/-/timeline-0.0.1.tgz#9f46a5e403bf7ea0264e9befc1d3cc79541cf05b"
+  integrity sha512-PHd0otLZz5X/31vwNJLU2zP+asl5n+lkYescg72JuRsA7d774Rj17RUdizSRE7jqVbS52ktCK/4VkL1Z18LW8A==
+  dependencies:
+    "@aside/chrome-ui" "0.3.0"
+    "@aside/react" "0.3.0"
+
+"@aside/web@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@aside/web/-/web-0.3.0.tgz#f5884b3e806a76751d0aff1c848153f23442e154"
+  integrity sha512-SGjJWpa8LInGly0brsjvOCTq/9Lz+jBJHth/3H66qmVLWvSUj4zEiz/RKh+HpyBhqmW9AC4eTy71cIVZJcZawQ==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.16.0", "@babel/code-frame@^7.18.6", "@babel/code-frame@^7.5.5", "@babel/code-frame@^7.8.3":
   version "7.18.6"
   resolved "https://registry.npmjs.org/@babel/code-frame/-/code-frame-7.18.6.tgz"

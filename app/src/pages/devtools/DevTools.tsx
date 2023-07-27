@@ -25,7 +25,7 @@ export function BrowserExtensionRenderer() {
   );
   const [receiver, setReceiver] = useState(createRemoteReceiver());
   const [port, setPort] = useState<Runtime.Port | undefined>();
-  const [networkRequests, setNetworkRequests] = useState<
+  const [_networkRequests, setNetworkRequests] = useState<
     (Request | DevtoolsNetwork.Request)[]
   >([]);
 

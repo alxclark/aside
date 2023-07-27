@@ -1,17 +1,28 @@
 {
   "name": "@aside/timeline",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
-  "source": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "files": [
+    "build"
+  ],
+  "main": "./build/js/timeline.umd.js",
+  "module": "./build/js/timeline.es.js",
+  "types": "./build/ts/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./build/js/timeline.es.js",
+      "require": "./build/js/timeline.umd.js"
+    }
+  },
   "scripts": {
     "clean": "rm -rf build",
-    "test": "vitest test"
+    "test": "vitest test",
+    "build": "vite build",
+    "lint": "tsc"
   },
   "dependencies": {
-    "@aside/react": "0.3.0",
-    "@aside/chrome-ui": "0.3.0"
+    "@aside/react": "0.4.1",
+    "@aside/chrome-ui": "0.4.1"
   },
   "devDependencies": {},
   "publishConfig": {

@@ -1,11 +1,5 @@
 import classNames from 'classnames';
-import React, {
-  PropsWithChildren,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {PropsWithChildren, useEffect, useMemo, useRef} from 'react';
 
 import {TableContext} from './context';
 

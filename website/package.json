@@ -5,11 +5,10 @@
   "scripts": {
     "dev": "next dev -p 4000",
     "build": "",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
-    "@aside/chrome-ui": "0.3.0",
+    "@aside/chrome-ui": "0.4.1",
     "@types/node": "20.3.3",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",

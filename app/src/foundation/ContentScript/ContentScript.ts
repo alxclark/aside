@@ -1,4 +1,4 @@
-import {createEndpoint, retain} from '@remote-ui/rpc';
+import {createEndpoint} from '@remote-ui/rpc';
 import type {Endpoint} from '@remote-ui/rpc';
 import {
   ContentScriptApiForWebpage,
