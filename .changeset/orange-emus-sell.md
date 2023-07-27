@@ -1,0 +1,11 @@
+---
+'@aside/chrome-ui': minor
+'@aside/core': minor
+'@aside/extension': minor
+'@aside/react': minor
+'@aside/recoil': minor
+'@aside/timeline': minor
+'@aside/web': minor
+---
+
+Simplers apis for clients and support for a timeline feature
