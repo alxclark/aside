@@ -1,5 +1,11 @@
 # @aside/recoil
 
+## 0.5.1
+
+### Patch Changes
+
+- 30bc962: Set recoil as external dep from @aside/recoil
+
 ## 0.5.0
 
 ### Minor Changes

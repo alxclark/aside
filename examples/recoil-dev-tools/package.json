@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@aside/react": "0.5.0",
-    "@aside/recoil": "0.5.0",
+    "@aside/recoil": "0.5.1",
     "@aside/timeline": "0.2.0",
     "recoil": "latest",
     "todomvc-app-css": "latest"
