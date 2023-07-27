@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Table,
   TableRow,
@@ -15,7 +16,6 @@ import {
   PaneContent,
   Text,
 } from '@aside/chrome-ui';
-import React from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
 
 import {

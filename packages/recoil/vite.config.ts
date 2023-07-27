@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {resolve} from 'path';
 
 import {defineConfig} from 'vite';
@@ -13,10 +14,12 @@ export default defineConfig({
       fileName: (format) => `recoil.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'recoil'],
+      external: ['react', 'recoil', '@aside/react', '@aside/timeline'],
       output: {
         globals: {
           react: 'React',
+          '@aside/react': 'AsideReact',
+          '@aside/timeline': 'AsideTimeline',
         },
       },
     },

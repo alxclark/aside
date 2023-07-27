@@ -1,4 +1,4 @@
-import {PropsWithChildren} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {Log} from '@aside/chrome-ui';
 
 import {useTimelineItem} from '../../Timeline';

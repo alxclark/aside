@@ -13,10 +13,14 @@ export default defineConfig({
       fileName: (format) => `timeline.${format}.js`,
     },
     rollupOptions: {
-      external: ['react'],
+      external: ['react', '@aside/react', '@aside/chrome-ui'],
       output: {
         globals: {
           react: 'React',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          '@aside/react': 'AsideReact',
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          '@aside/chrome-ui': 'AsideChromeUi',
         },
       },
     },

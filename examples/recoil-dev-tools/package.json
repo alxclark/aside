@@ -13,7 +13,8 @@
     "@aside/recoil": "0.5.1",
     "@aside/timeline": "0.2.0",
     "recoil": "latest",
-    "todomvc-app-css": "latest"
+    "todomvc-app-css": "latest",
+    "react": "18.2.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^2.0.1",

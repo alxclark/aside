@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {resolve} from 'path';
 
 import {defineConfig} from 'vite';
@@ -13,10 +14,13 @@ export default defineConfig({
       fileName: (format) => `aside-react.${format}.js`,
     },
     rollupOptions: {
-      external: ['react'],
+      external: ['react', '@aside-web', '@aside/chrome-ui', '@aside/timeline'],
       output: {
         globals: {
           react: 'React',
+          '@aside/react': 'AsideReact',
+          '@aside/chrome-ui': 'AsideChromeUi',
+          '@aside/timeline': 'AsideTimeline',
         },
       },
     },
