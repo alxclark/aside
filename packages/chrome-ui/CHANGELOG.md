@@ -1,5 +1,12 @@
 # @aside/chrome-ui
 
+## 0.5.0
+
+### Minor Changes
+
+- a35806e: Fix broken exports
+- cc66ec0: Simplers apis for clients and support for a timeline feature
+
 ## 0.3.0
 
 ### Minor Changes

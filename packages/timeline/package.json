@@ -1,6 +1,6 @@
 {
   "name": "@aside/timeline",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "files": [
     "build"
@@ -21,8 +21,8 @@
     "lint": "tsc"
   },
   "dependencies": {
-    "@aside/react": "0.4.1",
-    "@aside/chrome-ui": "0.4.1"
+    "@aside/react": "0.5.0",
+    "@aside/chrome-ui": "0.5.0"
   },
   "devDependencies": {},
   "publishConfig": {

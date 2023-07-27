@@ -1,5 +1,18 @@
 # @aside/extension
 
+## 0.5.0
+
+### Minor Changes
+
+- a35806e: Fix broken exports
+- cc66ec0: Simplers apis for clients and support for a timeline feature
+
+### Patch Changes
+
+- Updated dependencies [a35806e]
+- Updated dependencies [cc66ec0]
+  - @aside/web@0.5.0
+
 ## 0.3.0
 
 ### Minor Changes
