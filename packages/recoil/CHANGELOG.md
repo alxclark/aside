@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.5.2
+
+### Patch Changes
+
+- 9040da6: Fix peer deps
+- Updated dependencies [9040da6]
+  - @aside/react@0.5.1
+
 ## 0.5.1
 
 ### Patch Changes

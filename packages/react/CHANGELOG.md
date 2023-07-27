@@ -1,5 +1,14 @@
 # @aside/react
 
+## 0.5.1
+
+### Patch Changes
+
+- 9040da6: Fix peer deps
+- Updated dependencies [9040da6]
+  - @aside/chrome-ui@0.5.1
+  - @aside/web@0.5.1
+
 ## 0.5.0
 
 ### Minor Changes

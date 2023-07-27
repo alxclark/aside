@@ -1,5 +1,11 @@
 # @aside/chrome-ui
 
+## 0.5.1
+
+### Patch Changes
+
+- 9040da6: Fix peer deps
+
 ## 0.5.0
 
 ### Minor Changes
