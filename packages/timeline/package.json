@@ -1,6 +1,6 @@
 {
   "name": "@aside/timeline",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "source": "src/index.ts",
   "main": "src/index.ts",
