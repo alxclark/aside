@@ -9,9 +9,9 @@
     "clean-vite": "rm -rf ./node_modules/.vite"
   },
   "dependencies": {
-    "@aside/react": "0.5.1",
-    "@aside/recoil": "0.5.2",
-    "@aside/timeline": "0.2.1",
+    "@aside/react": "0.5.2",
+    "@aside/recoil": "0.5.3",
+    "@aside/timeline": "0.2.2",
     "recoil": "latest",
     "todomvc-app-css": "latest",
     "react": "18.2.0"

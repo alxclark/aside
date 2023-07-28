@@ -55,7 +55,7 @@
   "dependencies": {
     "@aside/extension": "0.5.1",
     "@aside/web": "0.5.1",
-    "@aside/react": "0.5.1",
+    "@aside/react": "0.5.2",
     "@aside/core": "0.5.1",
     "@aside/chrome-ui": "0.5.1",
     "react": "18.2.0"

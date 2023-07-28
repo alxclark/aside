@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.5.3
+
+### Patch Changes
+
+- 2e9c1dd: Fix diffing for strings and empty diffs handling
+- Updated dependencies [2e9c1dd]
+  - @aside/react@0.5.2
+
 ## 0.5.2
 
 ### Patch Changes

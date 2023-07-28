@@ -1,5 +1,11 @@
 # @aside/react
 
+## 0.5.2
+
+### Patch Changes
+
+- 2e9c1dd: Fix diffing for strings and empty diffs handling
+
 ## 0.5.1
 
 ### Patch Changes
