@@ -3,6 +3,8 @@ import {resolve} from 'path';
 
 import {defineConfig} from 'vite';
 
+import {r} from '../../app/scripts/utils';
+
 export default defineConfig({
   build: {
     emptyOutDir: false,
@@ -24,4 +26,9 @@ export default defineConfig({
       },
     },
   },
-});
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: [`${r('./src/tests/setup.ts')}`],
+  },
+} as any);

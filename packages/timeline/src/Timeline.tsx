@@ -86,9 +86,10 @@ export function Timeline({children, data}: Props) {
   const filteredRows = rows.filter((row) => {
     const rowDescriptor = getRow(row.type);
     const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
+    const isEmpty = Object.keys(row.nodes).length === 0;
     const included = query?.includes(filter ?? '');
 
-    return invertFilter ? !included : included;
+    return (invertFilter ? !included : included) && !isEmpty;
   });
 
   const [selectedRow, setSelectedRow] = useState<string | undefined>(

@@ -56,6 +56,87 @@ describe('Snapshots utilities', () => {
       });
     });
 
+    describe('string', () => {
+      describe('when a value changed', () => {
+        it('returns a diff node with the previous and next values', () => {
+          const diff = createDiff({
+            previous: {
+              string: 'hello',
+            },
+            next: {string: 'byebye'},
+          });
+
+          expect(diff).toStrictEqual({
+            string: {
+              __tag: 'diff',
+              next: 'byebye',
+              previous: 'hello',
+            },
+          });
+        });
+      });
+
+      describe('when a value stayed the same', () => {
+        it('does not return a diff node', () => {
+          const diff = createDiff({
+            previous: {
+              string: 'hello',
+            },
+            next: {string: 'hello'},
+          });
+
+          expect(diff).toStrictEqual({});
+        });
+      });
+
+      describe('nested object', () => {
+        it('does not return a diff node', () => {
+          const diff = createDiff({
+            previous: {
+              nested: {
+                string: 'hello',
+              },
+            },
+            next: {nested: {string: 'hello'}},
+          });
+
+          expect(diff).toStrictEqual({});
+        });
+      });
+
+      describe('nested array', () => {
+        it('does not return a diff node when value is the same', () => {
+          const diff = createDiff({
+            previous: {
+              nested: ['hello'],
+            },
+            next: {nested: ['hello']},
+          });
+
+          expect(diff).toStrictEqual({});
+        });
+
+        it('returns a diff node when value changed', () => {
+          const diff = createDiff({
+            previous: {
+              nested: ['hello'],
+            },
+            next: {nested: ['byebye']},
+          });
+
+          expect(diff).toStrictEqual({
+            nested: {
+              0: {
+                __tag: 'diff',
+                previous: 'hello',
+                next: 'byebye',
+              },
+            },
+          });
+        });
+      });
+    });
+
     describe('number', () => {
       describe('when a value changed', () => {
         it('returns a diff node with the previous and next values', () => {

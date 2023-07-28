@@ -13,15 +13,18 @@ export function createDiff(input: DiffInput): {[key: string]: any} {
   const {previous, next} = input;
   const diff: {[key: string]: any} = {};
 
-  if (
-    typeof next !== 'object' &&
-    typeof previous !== 'object' &&
-    next !== previous
-  ) {
+  if (typeof next !== 'object' && typeof previous !== 'object') {
+    if (next === previous) return {};
+
     return createDiffNode(next, previous);
   }
 
-  for (const key in next) {
+  // eslint-disable-next-line guard-for-in
+  for (const _key in next) {
+    // This causes a ReferenceError where key can not exist.
+    // This will fix temporarily
+    const key = _key ?? undefined;
+
     if (!(key in previous)) {
       diff[key] = createDiffNode(next[key], undefined);
     } else if (isObject(next[key]) && isObject(previous[key])) {

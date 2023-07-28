@@ -130,6 +130,7 @@ function transformSnapshot(
         .getLoadable(node)
         .getValue();
     } else {
+      if (options.ignoredRecoilKeys?.includes(parts[0])) continue;
       snapshot.nodes[node.key] = recoilSnapshot.getLoadable(node).getValue();
     }
   }
