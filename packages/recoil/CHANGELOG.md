@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.5.4
+
+### Patch Changes
+
+- 1614eab: Fix broken build
+- Updated dependencies [1614eab]
+  - @aside/react@0.5.3
+
 ## 0.5.3
 
 ### Patch Changes

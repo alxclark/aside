@@ -1,5 +1,11 @@
 # @aside/react
 
+## 0.5.3
+
+### Patch Changes
+
+- 1614eab: Fix broken build
+
 ## 0.5.2
 
 ### Patch Changes
