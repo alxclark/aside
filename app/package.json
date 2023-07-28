@@ -4,6 +4,7 @@
   "version": "0.0.2",
   "private": true,
   "packageManager": "pnpm@7.8.0",
+  "license": "BSD-3-Clause",
   "description": "A modular browser extension for developers",
   "scripts": {
     "dev": "npm run clear && cross-env NODE_ENV=development run-p dev:*",

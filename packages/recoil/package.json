@@ -5,6 +5,7 @@
   "files": [
     "build"
   ],
+  "license": "BSD-3-Clause",
   "main": "./build/js/recoil.umd.js",
   "module": "./build/js/recoil.es.js",
   "types": "./build/ts/index.d.ts",

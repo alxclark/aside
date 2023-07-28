@@ -1,6 +1,7 @@
 {
   "name": "@aside/chrome-ui",
   "version": "0.5.1",
+  "license": "BSD-3-Clause",
   "files": [
     "build"
   ],

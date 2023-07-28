@@ -4,6 +4,7 @@
   "type": "module",
   "source": "src/index.ts",
   "main": "src/index.ts",
+  "license": "BSD-3-Clause",
   "scripts": {
     "lint": "tsc",
     "clean": "rm -rf build"
