@@ -38,7 +38,7 @@ export function Table({
     if (scrollable && tablebodyRef.current) {
       tablebodyRef.current.scrollTo({top: tablebodyRef.current.scrollHeight});
     }
-  }, [scrollable]);
+  }, [scrollable, selected]);
 
   const headings = columns.map(({title, width}) => (
     <th
@@ -72,7 +72,7 @@ export function Table({
       >
         <thead
           className={classNames(
-            'bg-gray-500 w-full sticky top-0',
+            'bg-gray-500 w-full sticky top-0 z-10',
             'shadow-table',
           )}
         >

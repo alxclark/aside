@@ -17,5 +17,6 @@
     { "path": "../extension" },
     { "path": "../chrome-ui" },
     { "path": "../react" },
+    { "path": "../timeline" },
   ]
 }

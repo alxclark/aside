@@ -1,11 +1,13 @@
 import React, {PropsWithChildren} from 'react';
 import {Log} from '@aside/chrome-ui';
+import {useExtensionApi} from '@aside/react';
 
 import {useTimelineItem} from '../../Timeline';
 
 import {useReactData} from './hooks';
 
 export function ReactTimeline({children}: PropsWithChildren) {
+  const api = useExtensionApi();
   const selected = useTimelineItem();
   const {rows} = useReactData();
 
@@ -24,7 +26,7 @@ export function ReactTimeline({children}: PropsWithChildren) {
             value: matchingRow.nodes,
           },
         ]}
-        showDiffs
+        showDiffs={api.timeline.showPreviousValues[0].data}
       />
       {children}
     </>

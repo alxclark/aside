@@ -15,6 +15,7 @@ import type {RemoteChannel} from '@remote-ui/core';
 import {AllComponents} from '../ui';
 import {ExtensionApiContext} from '../context';
 import {ExtensionApi} from '../types';
+import {useLocalStorageStateInternal} from '../hooks';
 
 import {RemoteRenderer} from './RemoteRenderer';
 
@@ -76,33 +77,111 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     channelRef.current = null;
   }, []);
 
-  const api: ExtensionApi | undefined = useMemo(() => {
-    if (!endpointRef.current) {
-      return;
-    }
-
-    return {
-      storage: {
-        local: {
-          get: endpointRef.current.call.getLocalStorage,
-          set: endpointRef.current.call.setLocalStorage,
-        },
-      },
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [devToolsRoot]);
-
-  if (devToolsRoot) {
+  if (devToolsRoot && endpointRef.current) {
     return (
       <RemoteRenderer root={devToolsRoot} onUnmount={handleUnmount}>
-        <ExtensionApiContext.Provider value={api}>
+        <ExtensionApiProvider endpoint={endpointRef.current}>
           {children}
-        </ExtensionApiContext.Provider>
+        </ExtensionApiProvider>
       </RemoteRenderer>
     );
   }
 
   return null;
+}
+
+function ExtensionApiProvider({
+  endpoint,
+  children,
+}: PropsWithChildren<{
+  endpoint: Endpoint<ContentScriptApiForWebpage>;
+}>) {
+  const get: ExtensionApi['storage']['local']['get'] = useCallback(
+    (keys) => endpoint.call.getLocalStorage(keys),
+    [endpoint],
+  );
+  const set: ExtensionApi['storage']['local']['set'] = useCallback(
+    (items) => endpoint.call.setLocalStorage(items),
+    [endpoint],
+  );
+
+  const recordSnapshot = useLocalStorageStateInternal(true, {
+    key: 'record-snapshot',
+    get,
+    set,
+  });
+
+  const filter = useLocalStorageStateInternal('', {
+    key: 'filter',
+    get,
+    set,
+  });
+
+  const showFilter = useLocalStorageStateInternal(true, {
+    key: 'show-filter',
+    get,
+    set,
+  });
+
+  const preserveLog = useLocalStorageStateInternal(false, {
+    key: 'preserve-log',
+    get,
+    set,
+  });
+
+  const invertFilter = useLocalStorageStateInternal(false, {
+    key: 'invert-filter',
+    get,
+    set,
+  });
+
+  const showPreviousValues = useLocalStorageStateInternal(false, {
+    key: 'show-previous-values',
+    get,
+    set,
+  });
+
+  const showTimelineOptions = useLocalStorageStateInternal(false, {
+    key: 'show-timeline-options',
+    get,
+    set,
+  });
+
+  const api: ExtensionApi | undefined = useMemo(() => {
+    return {
+      storage: {
+        local: {
+          get,
+          set,
+        },
+      },
+      timeline: {
+        recordSnapshot,
+        filter,
+        showFilter,
+        preserveLog,
+        invertFilter,
+        showPreviousValues,
+        showTimelineOptions,
+      },
+    };
+  }, [
+    filter,
+    get,
+    invertFilter,
+    preserveLog,
+    recordSnapshot,
+    set,
+    showFilter,
+    showPreviousValues,
+    showTimelineOptions,
+  ]);
+
+  return (
+    <ExtensionApiContext.Provider value={api}>
+      {children}
+    </ExtensionApiContext.Provider>
+  );
 }
 
 function createContentScriptEndpoint() {

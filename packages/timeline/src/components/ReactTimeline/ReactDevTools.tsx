@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import {usePersistedState} from '@aside/react';
+import {useExtensionApi, useLocalStorageState} from '@aside/react';
 
 import {ReactObserverContext, ReactTimelineContext} from '../../contexts';
 import {Observer, Snapshot} from '../../types';
@@ -22,8 +22,11 @@ export function ReactDevTools({
   const [initialSnapshots, setInitialSnapshots] = useState<
     Snapshot[] | undefined
   >(undefined);
+
+  const [preserveLog] = useExtensionApi().timeline.preserveLog;
+
   const [{data: persistedSnapshots, loading}, setPersistedSnapshots] =
-    usePersistedState<Snapshot[] | undefined>(undefined, {
+    useLocalStorageState<Snapshot[] | undefined>(undefined, {
       key: 'react-snapshots',
     });
 
@@ -52,6 +55,7 @@ export function ReactDevTools({
           id: next.id,
           createdAt: next.createdAt,
           nodes: next.nodes,
+          initial: next.initial,
         };
       }
 
@@ -68,15 +72,21 @@ export function ReactDevTools({
     });
   }, [observer.snapshots, previous]);
 
-  const name = useCallback(
-    (row: TimelineItemData) => Object.keys(row.nodes).join(', '),
-    [],
-  );
+  const name = useCallback((row: TimelineItemData) => {
+    if (row.initial) return 'Initial';
 
-  const query = useCallback(
-    (row: TimelineItemData) => Object.keys(row.nodes).join(', '),
-    [],
-  );
+    return Object.keys(row.nodes).sort().join(', ');
+  }, []);
+
+  const query = useCallback((row: TimelineItemData) => {
+    let baseQuery = JSON.stringify(row.nodes);
+
+    if (row.initial) {
+      baseQuery += 'initial';
+    }
+
+    return baseQuery;
+  }, []);
 
   const timeline = useMemo(
     () => ({
@@ -96,9 +106,11 @@ export function ReactDevTools({
 
   useEffect(() => {
     if (!loading) {
-      setPersistedSnapshots(observer.snapshots);
+      setPersistedSnapshots(observer.snapshots, {
+        persist: preserveLog.data,
+      });
     }
-  }, [loading, observer.snapshots, setPersistedSnapshots]);
+  }, [loading, observer.snapshots, preserveLog.data, setPersistedSnapshots]);
 
   return (
     <ReactObserverContext.Provider value={observer}>

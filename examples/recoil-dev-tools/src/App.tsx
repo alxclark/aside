@@ -9,7 +9,7 @@ import {
   useRecoilObserver,
 } from '@aside/recoil';
 import {Pane, PaneToolbar, Tab, Tabs} from '@aside/chrome-ui';
-import {Aside, DevTools, usePersistedState} from '@aside/react';
+import {Aside, DevTools, useLocalStorageState} from '@aside/react';
 
 import 'todomvc-app-css/index.css';
 
@@ -77,30 +77,30 @@ function AsideDevTools() {
 function AsideApp() {
   const recoil = useRecoilData();
   const react = useReactData();
-  const [{data: tab, loading}, setTab] = usePersistedState('timeline', {
+  const [tab, setTab] = useLocalStorageState('timeline', {
     key: 'tab',
   });
 
-  if (loading || !tab) return null;
+  if (tab.loading) return null;
 
   return (
     <Pane>
       <PaneToolbar>
-        <Tabs selected={tab} setSelected={(selected) => setTab(selected)}>
+        <Tabs selected={tab.data} setSelected={(selected) => setTab(selected)}>
           <Tab id="timeline" label="Timeline" />
           <Tab id="recoil" label="Recoil" />
           <Tab id="react" label="React" />
         </Tabs>
       </PaneToolbar>
 
-      {tab === 'timeline' && (
+      {tab.data === 'timeline' && (
         <Timeline data={[recoil, react]}>
           <RecoilTimeline />
           <ReactTimeline />
         </Timeline>
       )}
-      {tab === 'recoil' && <StateTree />}
-      {tab === 'react' && <ReactState />}
+      {tab.data === 'recoil' && <StateTree />}
+      {tab.data === 'react' && <ReactState />}
     </Pane>
   );
 }

@@ -27,6 +27,7 @@ export const sharedConfig: UserConfig = {
       '@aside/react': `${r('../packages/react/src')}`,
       '@aside/core': `${r('../packages/core/src')}`,
       '@aside/chrome-ui/react': `${r('../packages/chrome-ui/src')}`,
+      '@aside/timeline': `${r('../packages/timeline/src')}`,
     },
   },
   define: {

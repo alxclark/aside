@@ -1,6 +1,7 @@
 import React from 'react';
 import {Log} from '@aside/chrome-ui';
 import {useTimelineItem} from '@aside/timeline';
+import {useExtensionApi} from '@aside/react';
 
 import {useRecoilData} from '../../hooks';
 
@@ -9,6 +10,7 @@ export interface Props {
 }
 
 export function RecoilTimeline({children}: Props) {
+  const api = useExtensionApi();
   const selected = useTimelineItem();
   const {rows} = useRecoilData();
 
@@ -27,7 +29,7 @@ export function RecoilTimeline({children}: Props) {
             value: matchingRow.nodes,
           },
         ]}
-        showDiffs
+        showDiffs={api.timeline.showPreviousValues[0].data}
       />
       {children}
     </>

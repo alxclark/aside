@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {useRecoilCallback} from 'recoil';
-import {usePersistedState} from '@aside/react';
-import {TimelineStorageKey} from '@aside/timeline';
+import {useExtensionApi, useLocalStorageState} from '@aside/react';
 
 import {
   currentStateAtom,
@@ -10,14 +9,14 @@ import {
 } from './foundation/Snapshots';
 
 export function RemoteDevTools({snapshot}: {snapshot: Snapshot}) {
-  const [{data: recordSnapshot}] = usePersistedState(true, {
-    key: TimelineStorageKey.RecordSnapshot,
-  });
+  const {
+    timeline: {recordSnapshot},
+  } = useExtensionApi();
 
   const updateSnapshots = useRecoilCallback(
     ({snapshot: recoilSnapshot, set}) =>
       () => {
-        if (!recordSnapshot) return;
+        if (!recordSnapshot[0].data) return;
 
         const snapshots = recoilSnapshot.getLoadable(snapshotsAtom).getValue();
         const isSameSnapshot =
@@ -31,7 +30,7 @@ export function RemoteDevTools({snapshot}: {snapshot: Snapshot}) {
           return [...prev, snapshot];
         });
       },
-    [snapshot, recordSnapshot],
+    [snapshot, !recordSnapshot[0].data],
   );
 
   useEffect(() => {

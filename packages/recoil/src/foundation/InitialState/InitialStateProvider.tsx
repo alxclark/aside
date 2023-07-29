@@ -1,7 +1,6 @@
-import {useExtensionApi} from '@aside/react';
-import React, {useEffect, useState} from 'react';
+import {useExtensionApi, useLocalStorageState} from '@aside/react';
+import React from 'react';
 import {RecoilRoot} from 'recoil';
-import {TimelineStorageKey} from '@aside/timeline';
 
 import {extensionApiAtom} from '../Extension';
 import {
@@ -11,8 +10,6 @@ import {
   previousSnapshotAtom,
 } from '../Snapshots';
 
-import {PersistedState} from './types';
-
 export interface Props {
   children: React.ReactNode;
   snapshots: Snapshot[];
@@ -20,39 +17,35 @@ export interface Props {
 
 export function InitialStateProvider({children, snapshots}: Props) {
   const api = useExtensionApi();
-  const [persistedState, setPersistedState] = useState<
-    PersistedState | undefined
-  >();
+  const {timeline} = api;
 
-  useEffect(() => {
-    async function queryExtensionStorage() {
-      try {
-        const result = await api.storage.local.get([
-          snapshotsAtom.key,
-          previousSnapshotAtom.key,
-          TimelineStorageKey.PreserveLog,
-          TimelineStorageKey.RecordSnapshot,
-        ]);
+  const filter = timeline.filter[0];
+  const invertFilter = timeline.invertFilter[0];
+  const showFilter = timeline.showFilter[0];
+  const preserveLog = timeline.preserveLog[0];
+  const recordSnapshot = timeline.recordSnapshot[0];
 
-        setPersistedState({
-          snapshots: result[snapshotsAtom.key],
-          previousSnapshot: result[previousSnapshotAtom.key],
-          preserveLog: result[TimelineStorageKey.PreserveLog],
-          recordSnapshot: result[TimelineStorageKey.RecordSnapshot],
-        });
-      } catch (error) {
-        setPersistedState({});
-        api.storage.local.set({
-          [snapshotsAtom.key]: undefined,
-          [previousSnapshotAtom.key]: undefined,
-        });
-      }
-    }
+  const [persistedSnapshots] = useLocalStorageState<Snapshot[]>([], {
+    key: snapshotsAtom.key,
+  });
 
-    queryExtensionStorage();
-  }, [api.storage.local, setPersistedState]);
+  const [previousSnapshot] = useLocalStorageState<Snapshot | undefined>(
+    undefined,
+    {
+      key: previousSnapshotAtom.key,
+    },
+  );
 
-  if (!persistedState) return null;
+  const extensionStorageLoading =
+    filter.loading ||
+    invertFilter.loading ||
+    showFilter.loading ||
+    preserveLog.loading ||
+    recordSnapshot.loading ||
+    previousSnapshot.loading ||
+    persistedSnapshots.loading;
+
+  if (extensionStorageLoading) return null;
 
   return (
     <RecoilRoot
@@ -64,19 +57,17 @@ export function InitialStateProvider({children, snapshots}: Props) {
         const [, ...rest] = snapshots;
 
         const reconciledSnapshots = [
-          ...(persistedState.preserveLog === true
-            ? persistedState.snapshots ?? []
-            : []),
-          ...(persistedState.recordSnapshot === false ? [] : [snapshots[0]]),
-          ...(persistedState.recordSnapshot ? rest : []),
+          ...(preserveLog.data === true ? persistedSnapshots.data ?? [] : []),
+          ...(recordSnapshot.data === false ? [] : [snapshots[0]]),
+          ...(recordSnapshot.data ? rest : []),
         ];
 
         api.storage.local.set({[snapshotsAtom.key]: reconciledSnapshots});
 
         snapshot.set(snapshotsAtom, reconciledSnapshots);
 
-        if (persistedState.previousSnapshot) {
-          snapshot.set(previousSnapshotAtom, persistedState.previousSnapshot);
+        if (previousSnapshot.data) {
+          snapshot.set(previousSnapshotAtom, previousSnapshot.data);
         }
       }}
     >

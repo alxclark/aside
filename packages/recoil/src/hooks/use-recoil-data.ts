@@ -29,8 +29,19 @@ export function useRecoilData(): RecoilData {
       type: 'recoil',
       icon: 'https://recoiljs.org/img/favicon.png',
       rows: diffs,
-      name: (diff) => Object.keys(diff.nodes).join(', '),
-      query: (diff) => Object.keys(diff.nodes).join(', '),
+      name: (diff) => {
+        if (diff.initial) return 'Initial';
+        return Object.keys(diff.nodes).sort().join(', ');
+      },
+      query: (diff) => {
+        let baseQuery = JSON.stringify(diff.nodes);
+
+        if (diff.initial) {
+          baseQuery += 'initial';
+        }
+
+        return baseQuery;
+      },
       onDelete: handleDelete,
     }),
     [diffs, handleDelete],

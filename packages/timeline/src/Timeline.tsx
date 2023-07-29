@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react';
-import {usePersistedState} from '@aside/react';
+import {useExtensionApi} from '@aside/react';
 import {
   PaneToolbar,
   Flex,
@@ -26,6 +26,7 @@ export interface TimelineItemData {
   id: string;
   createdAt: string;
   nodes: any;
+  initial?: boolean;
 }
 
 export interface TimelineData<T extends TimelineItemData = TimelineItemData> {
@@ -37,40 +38,17 @@ export interface TimelineData<T extends TimelineItemData = TimelineItemData> {
   onDelete?: () => void;
 }
 
-export enum StorageKey {
-  RecordSnapshot = 'record-snapshot',
-  Filter = 'filter',
-  ShowFilter = 'show-filter',
-  PreserveLog = 'preserve-log',
-  InvertFilter = 'invert-filter',
-}
-
 export function Timeline({children, data}: Props) {
-  const [
-    {data: recordSnapshot, loading: recordSnapshotLoading},
-    setRecordSnapshot,
-  ] = usePersistedState(true, {
-    key: StorageKey.RecordSnapshot,
-  });
-
-  const [{data: filter, loading: filterLoading}, setFilter] = usePersistedState(
-    '',
-    {
-      key: StorageKey.Filter,
-    },
-  );
-  const [{data: showFilter, loading: showFilterLoading}, setShowFilter] =
-    usePersistedState(true, {
-      key: StorageKey.ShowFilter,
-    });
-  const [{data: preserveLog, loading: preserveLogLoading}, setPreserveLog] =
-    usePersistedState(false, {
-      key: StorageKey.PreserveLog,
-    });
-  const [{data: invertFilter, loading: invertFilterLoading}, setinvertFilter] =
-    usePersistedState(false, {
-      key: StorageKey.InvertFilter,
-    });
+  const {timeline} = useExtensionApi();
+  const [filter, setFilter] = timeline.filter;
+  const [invertFilter, setInvertFilter] = timeline.invertFilter;
+  const [showFilter, setShowFilter] = timeline.showFilter;
+  const [preserveLog, setPreserveLog] = timeline.preserveLog;
+  const [recordSnapshot, setRecordSnapshot] = timeline.recordSnapshot;
+  const [showTimelineOptions, setShowTimelineOptions] =
+    timeline.showTimelineOptions;
+  const [showPreviousValues, setShowPreviousValues] =
+    timeline.showPreviousValues;
 
   const rows = data
     .flatMap((column) =>
@@ -87,14 +65,16 @@ export function Timeline({children, data}: Props) {
     const rowDescriptor = getRow(row.type);
     const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
     const isEmpty = Object.keys(row.nodes).length === 0;
-    const included = query?.includes(filter ?? '');
+    const included = query?.includes(filter.data ?? '');
 
-    return (invertFilter ? !included : included) && !isEmpty;
+    return (invertFilter.data ? !included : included) && !isEmpty;
   });
 
-  const [selectedRow, setSelectedRow] = useState<string | undefined>(
-    rows[0]?.id,
-  );
+  const [explicitlySelectedRow, setSelectedRow] = useState<
+    string | undefined
+  >();
+
+  const selectedRow = explicitlySelectedRow ?? rows[rows.length - 1]?.id;
 
   function handleClear() {
     data.forEach(({onDelete}) => onDelete?.());
@@ -102,11 +82,11 @@ export function Timeline({children, data}: Props) {
   }
 
   if (
-    recordSnapshotLoading ||
-    filterLoading ||
-    showFilterLoading ||
-    preserveLogLoading ||
-    invertFilterLoading
+    recordSnapshot.loading ||
+    filter.loading ||
+    showFilter.loading ||
+    preserveLog.loading ||
+    invertFilter.loading
   ) {
     return null;
   }
@@ -119,7 +99,7 @@ export function Timeline({children, data}: Props) {
             <PaneToolbarSection>
               <Button
                 icon={recordSnapshot ? 'record-on' : 'record-off'}
-                alert={recordSnapshot}
+                alert={recordSnapshot.data}
                 title="Stop recording"
                 iconHeight={recordSnapshot ? 19 : 13}
                 onPress={() => {
@@ -132,8 +112,8 @@ export function Timeline({children, data}: Props) {
               <Button
                 icon="filter"
                 iconHeight={12}
-                alert={(filter ?? '').length > 0}
-                pressed={showFilter}
+                alert={filter.data.length > 0}
+                pressed={showFilter.data}
                 title="Filter"
                 onPress={() => setShowFilter((prev) => !prev)}
               />
@@ -143,7 +123,7 @@ export function Timeline({children, data}: Props) {
                 <Checkbox
                   id="log"
                   label="Preserve log"
-                  checked={preserveLog}
+                  checked={preserveLog.data}
                   onChange={() => setPreserveLog((prev) => !prev)}
                 />
               </PaneToolbarItem>
@@ -152,26 +132,54 @@ export function Timeline({children, data}: Props) {
         </Flex>
       </PaneToolbar>
       {showFilter && (
-        <PaneToolbar>
-          <Flex alignItems="center" gap="4px" wrap>
-            <View padding="3px 4px" width={163}>
-              <TextField
-                value={filter}
-                onChange={setFilter}
-                placeholder="Filter"
-                id="filter"
-              />
-            </View>
-            <Flex wrap gap="7px">
-              <Checkbox
-                id="invert"
-                label="Invert"
-                checked={invertFilter}
-                onChange={() => setinvertFilter((prev) => !prev)}
-              />
+        <>
+          <PaneToolbar>
+            <Flex alignItems="center" wrap justifyContent="space-between">
+              <Flex alignItems="center" gap="4px" wrap>
+                <View padding="3px 4px" width={163}>
+                  <TextField
+                    value={filter.data}
+                    onChange={setFilter}
+                    placeholder="Filter"
+                    id="filter"
+                  />
+                </View>
+                <Flex wrap gap="7px">
+                  <Checkbox
+                    id="invert"
+                    label="Invert"
+                    checked={invertFilter.data}
+                    onChange={() => setInvertFilter((prev) => !prev)}
+                  />
+                </Flex>
+              </Flex>
+              <PaneToolbarSection separatorBefore>
+                <Button
+                  icon="cog"
+                  iconHeight={14}
+                  pressed={showTimelineOptions.data}
+                  onPress={() => setShowTimelineOptions((prev) => !prev)}
+                />
+              </PaneToolbarSection>
             </Flex>
-          </Flex>
-        </PaneToolbar>
+          </PaneToolbar>
+          {showTimelineOptions.data && (
+            <PaneToolbar>
+              <Flex>
+                <View flexGrow>
+                  <PaneToolbarItem>
+                    <Checkbox
+                      id="large-rows"
+                      label="Show previous values"
+                      onChange={() => setShowPreviousValues((prev) => !prev)}
+                      checked={showPreviousValues.data}
+                    />
+                  </PaneToolbarItem>
+                </View>
+              </Flex>
+            </PaneToolbar>
+          )}
+        </>
       )}
       <PaneContent>
         {rows.length > 0 ? (
@@ -197,6 +205,7 @@ export function Timeline({children, data}: Props) {
                         <Image
                           source={getRow(row.type)?.icon ?? ''}
                           height={11}
+                          width={11}
                           filter={row.id === selectedRow ? 'grayscale' : 'none'}
                         />
                         {getRow(row.type)?.name(row)}
