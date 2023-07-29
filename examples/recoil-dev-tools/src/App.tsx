@@ -14,12 +14,12 @@ import {Aside, DevTools, useLocalStorageState} from '@aside/react';
 import 'todomvc-app-css/index.css';
 
 import {
-  ReactDevTools,
-  ReactState,
-  ReactTimeline,
+  DataProvider,
   Timeline,
+  useDataSource,
   useObserver,
-  useReactData,
+  TimelineDetails,
+  DataView,
 } from '@aside/timeline';
 
 import {NewTodo, Todos} from './components';
@@ -65,9 +65,13 @@ function AsideDevTools() {
     <Aside>
       <DevTools>
         <RecoilDevTools {...recoilObserver}>
-          <ReactDevTools {...reactObserver}>
+          <DataProvider
+            type="react"
+            observer={reactObserver}
+            icon="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+          >
             <AsideApp />
-          </ReactDevTools>
+          </DataProvider>
         </RecoilDevTools>
       </DevTools>
     </Aside>
@@ -76,7 +80,7 @@ function AsideDevTools() {
 
 function AsideApp() {
   const recoil = useRecoilData();
-  const react = useReactData();
+  const react = useDataSource('react');
   const [tab, setTab] = useLocalStorageState('timeline', {
     key: 'tab',
   });
@@ -94,13 +98,13 @@ function AsideApp() {
       </PaneToolbar>
 
       {tab.data === 'timeline' && (
-        <Timeline data={[recoil, react]}>
+        <Timeline data={[recoil, react.data]}>
           <RecoilTimeline />
-          <ReactTimeline />
+          <TimelineDetails type="react" />
         </Timeline>
       )}
       {tab.data === 'recoil' && <StateTree />}
-      {tab.data === 'react' && <ReactState />}
+      {tab.data === 'react' && <DataView type="react" />}
     </Pane>
   );
 }

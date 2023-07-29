@@ -14,8 +14,8 @@
     ],
   },
   "references": [
-    { "path": "../extension" },
-    { "path": "../chrome-ui" },
-    { "path": "../react" },
+    { "path": "../extension/tsconfig.json" },
+    { "path": "../chrome-ui/tsconfig.json" },
+    { "path": "../react/tsconfig.json" },
   ]
 }
