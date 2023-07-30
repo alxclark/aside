@@ -13,6 +13,7 @@ export interface Props {
   maxWidth?: CSSProperties['maxWidth'];
   minWidth?: CSSProperties['minWidth'];
   overflow?: CSSProperties['overflow'];
+  overflowWrap?: CSSProperties['overflowWrap'];
 }
 
 export function View({
@@ -27,10 +28,20 @@ export function View({
   overflow,
   maxWidth,
   minWidth,
+  overflowWrap,
 }: Props) {
   return (
     <div
-      style={{width, margin, padding, maxHeight, overflow, maxWidth, minWidth}}
+      style={{
+        width,
+        margin,
+        padding,
+        maxHeight,
+        overflow,
+        maxWidth,
+        minWidth,
+        overflowWrap,
+      }}
       className={classNames(
         flexGrow && 'grow',
         border && 'border-gray-400',

@@ -41,6 +41,7 @@ export function KeyValueRenderer({
         onClick={handleClick}
         onKeyDown={handleClick}
         className={classNames(
+          'whitespace-nowrap',
           linethrough && 'line-through',
           muted && 'opacity-60',
         )}

@@ -2,7 +2,6 @@ import React from 'react';
 
 // eslint-disable-next-line import/no-cycle
 import {Renderer} from '../../../Renderer';
-// eslint-disable-next-line import/no-cycle
 import {KeyValueRenderer} from '../../KeyValueRenderer';
 import {useRenderer} from '../../../../../hooks';
 

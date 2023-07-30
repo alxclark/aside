@@ -59,7 +59,7 @@ export function RecordRenderer({
       {opened && (
         <div
           className={classNames(
-            'flex flex-col items-start pl-[12px]',
+            'flex flex-col items-start pl-[12px] overflow-hidden',
             nested && 'pl-[10px]',
           )}
         >
