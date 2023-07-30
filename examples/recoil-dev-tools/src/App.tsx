@@ -61,6 +61,13 @@ function AsideDevTools() {
     [count],
   );
 
+  const countObserver = useObserver(
+    {
+      count: count![0],
+    },
+    [count],
+  );
+
   return (
     <Aside>
       <DevTools>
@@ -70,7 +77,13 @@ function AsideDevTools() {
             observer={reactObserver}
             icon="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
           >
-            <AsideApp />
+            <DataProvider
+              type="count"
+              observer={countObserver}
+              icon="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+            >
+              <AsideApp />
+            </DataProvider>
           </DataProvider>
         </RecoilDevTools>
       </DevTools>
@@ -81,6 +94,7 @@ function AsideDevTools() {
 function AsideApp() {
   const recoil = useRecoilData();
   const react = useDataSource('react');
+  const count = useDataSource('count');
   const [tab, setTab] = useLocalStorageState('timeline', {
     key: 'tab',
   });
@@ -94,17 +108,20 @@ function AsideApp() {
           <Tab id="timeline" label="Timeline" />
           <Tab id="recoil" label="Recoil" />
           <Tab id="react" label="React" />
+          <Tab id="count" label="Count" />
         </Tabs>
       </PaneToolbar>
 
       {tab.data === 'timeline' && (
-        <Timeline data={[recoil, react.data]}>
+        <Timeline data={[recoil, react.data, count.data]}>
           <RecoilTimeline />
           <TimelineDetails type="react" />
+          <TimelineDetails type="count" />
         </Timeline>
       )}
       {tab.data === 'recoil' && <StateTree />}
       {tab.data === 'react' && <DataView type="react" />}
+      {tab.data === 'count' && <DataView type="count" />}
     </Pane>
   );
 }

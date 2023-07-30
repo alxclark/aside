@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useEffect, useId, useMemo, useRef, useState} from 'react';
 
 import {Observer, Snapshot} from '../types';
 
@@ -6,6 +6,8 @@ export function useObserver(
   object: {[key: string]: any},
   deps: any[],
 ): Observer {
+  const id = useId();
+
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
   const [previous, setPrevious] = useState<Snapshot>(empty);
   const [current, setCurrent] = useState<Snapshot>(empty);
@@ -15,7 +17,7 @@ export function useObserver(
     const createdAt = Date.now().toString();
 
     const snapshot: Snapshot = {
-      id: `object-${createdAt}`,
+      id: `object-${id}-${createdAt}`,
       createdAt,
       nodes: object,
       initial: count.current === 0,
