@@ -2,14 +2,15 @@ import React, {PropsWithChildren} from 'react';
 import {Log} from '@aside/chrome-ui';
 import {useExtensionApi} from '@aside/react';
 
-import {useTimelineItem} from '../../Timeline';
+import {useTimelineItem, useDataStore} from '../hooks';
 
-import {useReactData} from './hooks';
-
-export function ReactTimeline({children}: PropsWithChildren) {
+export function TimelineDetails({
+  children,
+  type,
+}: PropsWithChildren<{type: string}>) {
   const api = useExtensionApi();
   const selected = useTimelineItem();
-  const {rows} = useReactData();
+  const {rows} = useDataStore(type).data;
 
   if (!selected) return null;
 
@@ -22,7 +23,7 @@ export function ReactTimeline({children}: PropsWithChildren) {
       <Log
         items={[
           {
-            id: 'state',
+            id: type,
             value: matchingRow.nodes,
           },
         ]}

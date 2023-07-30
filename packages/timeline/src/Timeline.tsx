@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {PropsWithChildren, useState} from 'react';
 import {useExtensionApi} from '@aside/react';
 import {
   PaneToolbar,
@@ -14,31 +14,17 @@ import {
   TableRow,
   TableCell,
   Image,
-  Text,
 } from '@aside/chrome-ui';
 
-export interface Props {
-  children: any;
+import {TimelineData} from './types';
+import {TimelineItemContext} from './contexts';
+import {EmptyView} from './components';
+
+export interface TimelineProps extends PropsWithChildren {
   data: TimelineData[];
 }
 
-export interface TimelineItemData {
-  id: string;
-  createdAt: string;
-  nodes: any;
-  initial?: boolean;
-}
-
-export interface TimelineData<T extends TimelineItemData = TimelineItemData> {
-  type: string;
-  icon: string;
-  rows: T[];
-  name: (row: T) => string;
-  query?: (row: T) => string;
-  onDelete?: () => void;
-}
-
-export function Timeline({children, data}: Props) {
+export function Timeline({children, data}: TimelineProps) {
   const {timeline} = useExtensionApi();
   const [filter, setFilter] = timeline.filter;
   const [invertFilter, setInvertFilter] = timeline.invertFilter;
@@ -227,27 +213,4 @@ export function Timeline({children, data}: Props) {
       </PaneContent>
     </>
   );
-}
-
-function EmptyView() {
-  return (
-    <Flex
-      fullHeight
-      justifyContent="center"
-      alignItems="center"
-      direction="column"
-      gap="10px"
-    >
-      <Text>Recording activity...</Text>
-      <Text>Perform an action or hit ⌘ R to record the reload.</Text>
-    </Flex>
-  );
-}
-
-export const TimelineItemContext = createContext<string | undefined>(undefined);
-
-export function useTimelineItem(): string | undefined {
-  const item = useContext(TimelineItemContext);
-
-  return item;
 }

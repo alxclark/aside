@@ -8,15 +8,17 @@ import React, {
 } from 'react';
 import {useExtensionApi, useLocalStorageState} from '@aside/react';
 
-import {TimelineData, TimelineItemData} from '../../Timeline';
-import {Observer, Snapshot} from '../../types';
-import {createDiff} from '../../diff';
+import {
+  TimelineData,
+  Snapshot,
+  Observer,
+  DataStore,
+  DataStoreDescriptor,
+} from '../types';
+import {createDiff} from '../diff';
+import {DataStoresContextMap} from '../contexts';
 
-export interface Props extends PropsWithChildren {
-  type: string;
-  icon?: string;
-  observer: Observer;
-}
+export type Props = PropsWithChildren<DataStoreDescriptor>;
 
 export function DataProvider({
   type,
@@ -51,7 +53,7 @@ export function DataProvider({
     [clearSnapshots, initialSnapshots, previous, snapshot, snapshots],
   );
 
-  const rows: TimelineItemData[] = useMemo(() => {
+  const rows: Snapshot[] = useMemo(() => {
     return observer.snapshots.map((next, index) => {
       const prev = observer.snapshots[index - 1] ?? previous ?? {};
 
@@ -77,13 +79,13 @@ export function DataProvider({
     });
   }, [observer.snapshots, previous]);
 
-  const name = useCallback((row: TimelineItemData) => {
+  const name = useCallback((row: Snapshot) => {
     if (row.initial) return 'Initial';
 
     return Object.keys(row.nodes).sort().join(', ');
   }, []);
 
-  const query = useCallback((row: TimelineItemData) => {
+  const query = useCallback((row: Snapshot) => {
     let baseQuery = JSON.stringify(row.nodes);
 
     if (row.initial) {
@@ -118,7 +120,7 @@ export function DataProvider({
   );
 
   const Context = useMemo(() => {
-    const existingContext = DataProviderContextMap.get(type);
+    const existingContext = DataStoresContextMap.get(type);
 
     if (existingContext) return existingContext;
 
@@ -127,7 +129,7 @@ export function DataProvider({
       observer,
     });
 
-    DataProviderContextMap.set(type, newContext);
+    DataStoresContextMap.set(type, newContext);
 
     return newContext;
   }, [observer, type, timeline]);
@@ -142,13 +144,3 @@ export function DataProvider({
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
-
-export interface DataStore {
-  data: TimelineData;
-  observer: Observer;
-}
-
-export const DataProviderContextMap = new Map<
-  string,
-  React.Context<DataStore>
->();

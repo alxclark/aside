@@ -1,12 +1,10 @@
 import {createContext} from 'react';
 
-import {TimelineData} from './Timeline';
-import {Observer} from './types';
+import {DataStore} from './types';
 
-export const ReactTimelineContext = createContext<TimelineData | undefined>(
-  undefined,
-);
+export const TimelineItemContext = createContext<string | undefined>(undefined);
 
-export const ReactObserverContext = createContext<Observer | undefined>(
-  undefined,
-);
+/**
+ * Map containing one React context per data store type.
+ */
+export const DataStoresContextMap = new Map<string, React.Context<DataStore>>();

@@ -1,25 +1,19 @@
 /* eslint-disable import/order */
 import React, {createContext, useContext, useState} from 'react';
 import {RecoilRoot} from 'recoil';
-import {
-  DevTools as RecoilDevTools,
-  RecoilTimeline,
-  StateTree,
-  useRecoilData,
-  useRecoilObserver,
-} from '@aside/recoil';
+import {useRecoilObserver} from '@aside/recoil';
 import {Pane, PaneToolbar, Tab, Tabs} from '@aside/chrome-ui';
 import {Aside, DevTools, useLocalStorageState} from '@aside/react';
 
 import 'todomvc-app-css/index.css';
 
 import {
-  DataProvider,
   Timeline,
-  useDataSource,
+  useDataStore,
   useObserver,
   TimelineDetails,
   DataView,
+  Provider as DataStoreProvider,
 } from '@aside/timeline';
 
 import {NewTodo, Todos} from './components';
@@ -71,30 +65,36 @@ function AsideDevTools() {
   return (
     <Aside>
       <DevTools>
-        <RecoilDevTools {...recoilObserver}>
-          <DataProvider
-            type="react"
-            observer={reactObserver}
-            icon="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
-          >
-            <DataProvider
-              type="count"
-              observer={countObserver}
-              icon="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
-            >
-              <AsideApp />
-            </DataProvider>
-          </DataProvider>
-        </RecoilDevTools>
+        <DataStoreProvider
+          stores={[
+            {
+              type: 'react',
+              observer: reactObserver,
+              icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+            },
+            {
+              type: 'count',
+              observer: countObserver,
+              icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+            },
+            {
+              type: 'recoil',
+              observer: recoilObserver,
+              icon: 'https://recoiljs.org/img/favicon.png',
+            },
+          ]}
+        >
+          <AsideApp />
+        </DataStoreProvider>
       </DevTools>
     </Aside>
   );
 }
 
 function AsideApp() {
-  const recoil = useRecoilData();
-  const react = useDataSource('react');
-  const count = useDataSource('count');
+  const recoil = useDataStore('recoil');
+  const react = useDataStore('react');
+  const count = useDataStore('count');
   const [tab, setTab] = useLocalStorageState('timeline', {
     key: 'tab',
   });
@@ -113,13 +113,13 @@ function AsideApp() {
       </PaneToolbar>
 
       {tab.data === 'timeline' && (
-        <Timeline data={[recoil, react.data, count.data]}>
-          <RecoilTimeline />
+        <Timeline data={[recoil.data, react.data, count.data]}>
+          <TimelineDetails type="recoil" />
           <TimelineDetails type="react" />
           <TimelineDetails type="count" />
         </Timeline>
       )}
-      {tab.data === 'recoil' && <StateTree />}
+      {tab.data === 'recoil' && <DataView type="recoil" />}
       {tab.data === 'react' && <DataView type="react" />}
       {tab.data === 'count' && <DataView type="count" />}
     </Pane>

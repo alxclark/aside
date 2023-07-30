@@ -11,3 +11,23 @@ export interface Observer {
   snapshot: Snapshot;
   clearSnapshots?: () => void;
 }
+
+export interface DataStore {
+  data: TimelineData;
+  observer: Observer;
+}
+
+export interface DataStoreDescriptor {
+  type: string;
+  icon?: string;
+  observer: Observer;
+}
+
+export interface TimelineData<T extends Snapshot = Snapshot> {
+  type: string;
+  icon: string;
+  rows: T[];
+  name: (row: T) => string;
+  query?: (row: T) => string;
+  onDelete?: () => void;
+}

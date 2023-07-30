@@ -1,15 +1,15 @@
 import React from 'react';
 import {Log} from '@aside/chrome-ui';
 
-import {useDataSource} from './hooks';
+import {useDataStore} from '../hooks';
 
-export interface Props {
+export interface DataViewProps {
   children?: React.ReactNode;
   type: string;
 }
 
-export function DataView({children, type}: Props) {
-  const observer = useDataSource(type).observer;
+export function DataView({children, type}: DataViewProps) {
+  const observer = useDataStore(type).observer;
 
   return (
     <>
