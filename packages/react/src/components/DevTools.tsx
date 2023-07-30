@@ -18,6 +18,7 @@ import {ExtensionApi} from '../types';
 import {useLocalStorageStateInternal} from '../hooks';
 
 import {RemoteRenderer} from './RemoteRenderer';
+import {ErrorBoundary} from './ErrorBoundary';
 
 const contentScript = createContentScriptEndpoint();
 
@@ -80,9 +81,11 @@ export function DevTools({children}: PropsWithChildren<{}>) {
   if (devToolsRoot && endpointRef.current) {
     return (
       <RemoteRenderer root={devToolsRoot} onUnmount={handleUnmount}>
-        <ExtensionApiProvider endpoint={endpointRef.current}>
-          {children}
-        </ExtensionApiProvider>
+        <ErrorBoundary>
+          <ExtensionApiProvider endpoint={endpointRef.current}>
+            {children}
+          </ExtensionApiProvider>
+        </ErrorBoundary>
       </RemoteRenderer>
     );
   }
