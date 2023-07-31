@@ -79,6 +79,9 @@ import {Image} from './Image';
 export {Image} from './Image';
 export type {ImageProps} from './Image';
 
+import {Link} from './Link';
+export {Link} from './Link';
+
 export const AllComponents = {
   Pane,
   Button,
@@ -102,4 +105,5 @@ export const AllComponents = {
   TextField,
   Text,
   Image,
+  Link,
 };

@@ -10,7 +10,14 @@ import {
   DevToolsApiForContentScript,
   fromPort,
 } from '@aside/extension';
-import {AllComponents as ChromeUIComponents} from '@aside/chrome-ui/react';
+import {
+  AllComponents as ChromeUIComponents,
+  Flex,
+  Text,
+  View,
+  Link,
+  Icon,
+} from '@aside/chrome-ui/react';
 import {Runtime} from 'webextension-polyfill';
 import '@aside/chrome-ui/css';
 import {DevtoolsNetwork} from 'webextension-polyfill/namespaces/devtools_network';
@@ -28,6 +35,7 @@ export function BrowserExtensionRenderer() {
   const [_networkRequests, setNetworkRequests] = useState<
     (Request | DevtoolsNetwork.Request)[]
   >([]);
+  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
     const listener = () => {
@@ -131,6 +139,36 @@ export function BrowserExtensionRenderer() {
       port.onDisconnect.removeListener(listener);
     };
   }, [port]);
+
+  useEffect(() => {
+    if (receiver.attached.root.children.length > 0) {
+      setConnected(true);
+    }
+  }, [receiver.attached.root.children.length]);
+
+  if (!connected) {
+    return (
+      <View padding={10} fullHeight>
+        <Flex
+          fullHeight
+          justifyContent="center"
+          alignItems="center"
+          direction="column"
+          gap="10px"
+        >
+          <Icon source="power-off" height={80} color="#45484b" />
+          <Text align="center">This website is not connected to Aside.</Text>
+          <Text align="center">
+            Learn how to integrate your application at{' '}
+            <Link to="https://github.com/alxclark/aside">
+              https://github.com/alxclark/aside
+            </Link>
+            .
+          </Text>
+        </Flex>
+      </View>
+    );
+  }
 
   return <RemoteRenderer receiver={receiver} controller={controller} />;
 }

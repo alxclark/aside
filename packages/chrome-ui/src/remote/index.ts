@@ -23,6 +23,7 @@ import {Divider} from '../components/Divider/Divider.remote';
 import {TextField} from '../components/TextField/TextField.remote';
 import {Text} from '../components/Text/Text.remote';
 import {Image} from '../components/Image/Image.remote';
+import {Link} from '../components/Link/Link.remote';
 
 export {
   Button,
@@ -48,6 +49,7 @@ export {
   TextField,
   Text,
   Image,
+  Link,
 };
 
 export const ChromeUIComponents = [
@@ -74,4 +76,5 @@ export const ChromeUIComponents = [
   TextField,
   Text,
   Image,
+  Link,
 ];
