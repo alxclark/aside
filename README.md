@@ -1,6 +1,7 @@
-# aside <img src="./app/extension/assets/logo-16.png">
+# <img src="./app/extension/assets/logo-16.png"> aside · ![License](https://img.shields.io/npm/l/%40aside%2Freact?style=social)
 
-![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pecefkiefodjfkgfihkhkcbhlbgahoge)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pecefkiefodjfkgfihkhkcbhlbgahoge?style=social&logo=google-chrome)
+![npm](https://img.shields.io/npm/v/%40aside%2Freact?style=social&logo=npm)
 
 
 Aside is a modular browser extension built to be a companion to any web application. The libraries provided by Aside allows users to render React components in their own application and uses a custom remote and reconciler to render those components into the Chrome developer tools.
