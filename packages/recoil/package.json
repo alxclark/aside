@@ -1,6 +1,6 @@
 {
   "name": "@aside/recoil",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "type": "module",
   "files": [
     "build"
@@ -22,13 +22,13 @@
     "lint": "tsc"
   },
   "dependencies": {
-    "@aside/react": "0.5.3",
+    "@aside/react": "0.6.0",
     "recoil": "^0.7.5"
   },
   "devDependencies": {
-    "@aside/extension": "0.5.1",
-    "@aside/chrome-ui": "0.5.1",
-    "@aside/timeline": "0.2.3"
+    "@aside/extension": "0.6.0",
+    "@aside/chrome-ui": "0.6.0",
+    "@aside/timeline": "0.3.0"
   },
   "publishConfig": {
     "access": "public"

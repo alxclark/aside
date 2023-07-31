@@ -1,6 +1,6 @@
 {
   "name": "@aside/timeline",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "type": "module",
   "license": "BSD-3-Clause",
   "files": [
@@ -22,8 +22,8 @@
     "lint": "tsc"
   },
   "dependencies": {
-    "@aside/react": "0.5.3",
-    "@aside/chrome-ui": "0.5.1"
+    "@aside/react": "0.6.0",
+    "@aside/chrome-ui": "0.6.0"
   },
   "devDependencies": {},
   "publishConfig": {

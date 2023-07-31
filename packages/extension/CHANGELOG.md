@@ -1,5 +1,16 @@
 # @aside/extension
 
+## 0.6.0
+
+### Minor Changes
+
+- 5997807: Simpler, leaner api for timeline integrations and QoL improvements
+
+### Patch Changes
+
+- Updated dependencies [5997807]
+  - @aside/web@0.6.0
+
 ## 0.5.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@aside/extension",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "license": "BSD-3-Clause",
   "type": "module",
   "files": [
@@ -21,7 +21,7 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
-    "@aside/web": "0.5.1"
+    "@aside/web": "0.6.0"
   },
   "devDependencies": {},
   "publishConfig": {

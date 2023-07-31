@@ -1,5 +1,17 @@
 # @aside/react
 
+## 0.6.0
+
+### Minor Changes
+
+- 5997807: Simpler, leaner api for timeline integrations and QoL improvements
+
+### Patch Changes
+
+- Updated dependencies [5997807]
+  - @aside/chrome-ui@0.6.0
+  - @aside/web@0.6.0
+
 ## 0.5.3
 
 ### Patch Changes

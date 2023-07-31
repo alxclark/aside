@@ -1,5 +1,11 @@
 # @aside/core
 
+## 0.6.0
+
+### Minor Changes
+
+- 5997807: Simpler, leaner api for timeline integrations and QoL improvements
+
 ## 0.5.1
 
 ### Patch Changes
