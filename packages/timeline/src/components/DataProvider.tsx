@@ -23,7 +23,7 @@ export type Props = PropsWithChildren<DataStoreDescriptor>;
 export function DataProvider({
   type,
   icon,
-  observer: {snapshot, snapshots, clearSnapshots, previous},
+  observer: {snapshot, snapshots, clearSnapshots, previous, setRecordSnapshot},
   children,
 }: Props) {
   const [initialSnapshots, setInitialSnapshots] = useState<
@@ -31,6 +31,7 @@ export function DataProvider({
   >(undefined);
 
   const [preserveLog] = useExtensionApi().timeline.preserveLog;
+  const recordSnapshot = useExtensionApi().timeline.recordSnapshot[0];
 
   const [{data: persistedSnapshots, loading}, setPersistedSnapshots] =
     useLocalStorageState<Snapshot[] | undefined>(undefined, {
@@ -38,10 +39,26 @@ export function DataProvider({
     });
 
   useEffect(() => {
-    if (!loading && persistedSnapshots && !initialSnapshots) {
-      setInitialSnapshots(persistedSnapshots);
+    if (recordSnapshot.loading) return;
+    setRecordSnapshot?.(recordSnapshot.data);
+  }, [recordSnapshot.data, recordSnapshot.loading, setRecordSnapshot]);
+
+  useEffect(() => {
+    if (
+      !loading &&
+      persistedSnapshots &&
+      !initialSnapshots &&
+      !preserveLog.loading
+    ) {
+      setInitialSnapshots(preserveLog.data ? persistedSnapshots : []);
     }
-  }, [initialSnapshots, loading, persistedSnapshots]);
+  }, [
+    initialSnapshots,
+    loading,
+    persistedSnapshots,
+    preserveLog.data,
+    preserveLog.loading,
+  ]);
 
   const observer: Observer = useMemo(
     () => ({
@@ -52,6 +69,8 @@ export function DataProvider({
     }),
     [clearSnapshots, initialSnapshots, previous, snapshot, snapshots],
   );
+
+  // console.log({observer});
 
   const rows: Snapshot[] = useMemo(() => {
     return observer.snapshots.map((next, index) => {
@@ -96,12 +115,18 @@ export function DataProvider({
   }, []);
 
   useEffect(() => {
-    if (!loading) {
-      setPersistedSnapshots(observer.snapshots, {
-        persist: preserveLog.data,
-      });
-    }
-  }, [loading, observer.snapshots, preserveLog.data, setPersistedSnapshots]);
+    if (loading || preserveLog.loading) return;
+
+    setPersistedSnapshots(observer.snapshots, {
+      persist: preserveLog.data,
+    });
+  }, [
+    loading,
+    observer.snapshots,
+    preserveLog.data,
+    preserveLog.loading,
+    setPersistedSnapshots,
+  ]);
 
   const timeline: TimelineData = useMemo(
     () => ({

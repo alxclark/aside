@@ -10,6 +10,7 @@ export interface Observer {
   snapshots: Snapshot[];
   snapshot: Snapshot;
   clearSnapshots?: () => void;
+  setRecordSnapshot?: (value: boolean) => void;
 }
 
 export interface DataStore {

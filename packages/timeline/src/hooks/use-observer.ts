@@ -11,9 +11,24 @@ export function useObserver(
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
   const [previous, setPrevious] = useState<Snapshot>(empty);
   const [current, setCurrent] = useState<Snapshot>(empty);
+  const [recordSnapshot, setRecordSnapshotInternal] = useState(true);
   const count = useRef(0);
 
+  const [isReady, setIsReady] = useState(false);
+
+  const setRecordSnapshot = useCallback(
+    (value: boolean) => {
+      if (!isReady) {
+        setIsReady(true);
+      }
+      setRecordSnapshotInternal(value);
+    },
+    [isReady],
+  );
+
   useEffect(() => {
+    if (!recordSnapshot || !isReady) return;
+
     const createdAt = Date.now().toString();
 
     const snapshot: Snapshot = {
@@ -30,7 +45,7 @@ export function useObserver(
     count.current++;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...deps]);
+  }, [...deps, isReady]);
 
   const clearSnapshots = useCallback(() => {
     setPrevious(current);
@@ -43,8 +58,9 @@ export function useObserver(
       snapshot: current,
       snapshots,
       clearSnapshots,
+      setRecordSnapshot,
     }),
-    [clearSnapshots, current, previous, snapshots],
+    [clearSnapshots, current, previous, setRecordSnapshot, snapshots],
   );
 }
 
