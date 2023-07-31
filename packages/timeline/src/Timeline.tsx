@@ -117,7 +117,7 @@ export function Timeline({children, data}: TimelineProps) {
           </Flex>
         </Flex>
       </PaneToolbar>
-      {showFilter && (
+      {showFilter.data && (
         <>
           <PaneToolbar>
             <Flex alignItems="center" wrap justifyContent="space-between">
