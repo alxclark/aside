@@ -1,6 +1,6 @@
 import {PropsWithChildren, useMemo} from 'react';
 import {useRecoilSnapshot, Snapshot as RecoilSnapshot} from 'recoil';
-import {useObserver, Observer, TimelineItemData} from '@aside/timeline';
+import {useObserver, Observer, Snapshot} from '@aside/timeline';
 
 export type Props = PropsWithChildren<{
   ignoredRecoilKeys?: string[];
@@ -33,7 +33,7 @@ function transformSnapshot(
   const createdAt = new Date().getTime().toString();
   const id = `${String(recoilSnapshot.getID())}-${createdAt}`;
 
-  const snapshot: TimelineItemData = {
+  const snapshot: Snapshot = {
     id,
     createdAt,
     nodes: {},
