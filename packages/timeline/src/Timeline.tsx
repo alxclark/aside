@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useState} from 'react';
+import React, {PropsWithChildren, useMemo, useState} from 'react';
 import {useExtensionApi} from '@aside/react';
 import {
   PaneToolbar,
@@ -60,7 +60,15 @@ export function Timeline({children, data}: TimelineProps) {
     string | undefined
   >();
 
-  const selectedRow = explicitlySelectedRow ?? rows[rows.length - 1]?.id;
+  const selectedRow = useMemo(() => {
+    if (
+      explicitlySelectedRow &&
+      filteredRows.some((row) => row.id === explicitlySelectedRow)
+    ) {
+      return explicitlySelectedRow;
+    }
+    return filteredRows[filteredRows.length - 1]?.id;
+  }, [explicitlySelectedRow, filteredRows]);
 
   function handleClear() {
     data.forEach(({onDelete}) => onDelete?.());
@@ -168,7 +176,7 @@ export function Timeline({children, data}: TimelineProps) {
         </>
       )}
       <PaneContent>
-        {rows.length > 0 ? (
+        {filteredRows.length > 0 ? (
           <Flex fullHeight direction="row">
             <View
               maxHeight="100%"
