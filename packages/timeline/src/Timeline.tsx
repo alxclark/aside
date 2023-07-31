@@ -123,6 +123,14 @@ export function Timeline({children, data}: TimelineProps) {
               </PaneToolbarItem>
             </PaneToolbarSection>
           </Flex>
+          <PaneToolbarSection separatorBefore>
+            <Button
+              icon="cog"
+              iconHeight={14}
+              pressed={showTimelineOptions.data}
+              onPress={() => setShowTimelineOptions((prev) => !prev)}
+            />
+          </PaneToolbarSection>
         </Flex>
       </PaneToolbar>
       {showFilter.data && (
@@ -147,33 +155,25 @@ export function Timeline({children, data}: TimelineProps) {
                   />
                 </Flex>
               </Flex>
-              <PaneToolbarSection separatorBefore>
-                <Button
-                  icon="cog"
-                  iconHeight={14}
-                  pressed={showTimelineOptions.data}
-                  onPress={() => setShowTimelineOptions((prev) => !prev)}
-                />
-              </PaneToolbarSection>
             </Flex>
           </PaneToolbar>
-          {showTimelineOptions.data && (
-            <PaneToolbar>
-              <Flex>
-                <View flexGrow>
-                  <PaneToolbarItem>
-                    <Checkbox
-                      id="large-rows"
-                      label="Show previous values"
-                      onChange={() => setShowPreviousValues((prev) => !prev)}
-                      checked={showPreviousValues.data}
-                    />
-                  </PaneToolbarItem>
-                </View>
-              </Flex>
-            </PaneToolbar>
-          )}
         </>
+      )}
+      {showTimelineOptions.data && (
+        <PaneToolbar>
+          <Flex>
+            <View flexGrow>
+              <PaneToolbarItem>
+                <Checkbox
+                  id="large-rows"
+                  label="Show previous values"
+                  onChange={() => setShowPreviousValues((prev) => !prev)}
+                  checked={showPreviousValues.data}
+                />
+              </PaneToolbarItem>
+            </View>
+          </Flex>
+        </PaneToolbar>
       )}
       <PaneContent>
         {filteredRows.length > 0 ? (
