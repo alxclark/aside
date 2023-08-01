@@ -29,9 +29,14 @@ import {Navigation, NavigationTab} from './Navigation';
 export {Navigation, NavigationTab} from './Navigation';
 export type {NavigationProps, NavigationTabProps} from './Navigation';
 
-import {Log} from './Log';
-export {Log} from './Log';
-export type {Props as LogProps, Diff, DiffNode, DiffValue} from './Log';
+import {ConsoleMessage} from './ConsoleMessage';
+export {ConsoleMessage} from './ConsoleMessage';
+export type {
+  Props as ConsoleMessageProps,
+  Diff,
+  DiffNode,
+  DiffValue,
+} from './ConsoleMessage';
 
 import {Table, TableRow, TableCell} from './Table';
 export {Table} from './Table';
@@ -87,7 +92,7 @@ export const AllComponents = {
   Button,
   Navigation,
   NavigationTab,
-  Log,
+  ConsoleMessage,
   Table,
   TableRow,
   TableCell,

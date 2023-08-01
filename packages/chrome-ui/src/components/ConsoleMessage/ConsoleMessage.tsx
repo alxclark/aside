@@ -4,20 +4,14 @@ import {Renderer} from './components';
 import {RendererContext} from './context';
 import {RendererContextType} from './types';
 
-export interface LogItem {
-  id: string;
-  value: any;
-  onPress?: () => void;
-}
-
 export interface Props {
-  items: LogItem[];
+  value: any;
   showDiffs?: boolean;
   opened?: {[key: string]: boolean};
 }
 
-export function Log({
-  items,
+export function ConsoleMessage({
+  value,
   showDiffs = false,
   // eslint-disable-next-line @typescript-eslint/naming-convention
   opened: explicitOpened = {'': true},
@@ -38,9 +32,7 @@ export function Log({
   return (
     <RendererContext.Provider value={context}>
       <div className="px-6 py-[2px] font-menlo text-code-gray text-[11px] border-b border-gray-400">
-        {items.map((item) => (
-          <Renderer key={item.id} value={item.value} />
-        ))}
+        <Renderer value={value} />
       </div>
     </RendererContext.Provider>
   );

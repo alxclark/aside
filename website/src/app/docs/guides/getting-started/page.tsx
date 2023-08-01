@@ -126,7 +126,7 @@ const buttonExample = `function App() {
       <MyButton onPress={() => setCount(count + 1)}>Increment</ MyButton>
       <Aside>
         <DevTools>
-          <Log items={[{id: 'my app state', value: {count}}]} />
+          <ConsoleMessage value={{count}} />
         </DevTools>
       </Aside>
     </div>

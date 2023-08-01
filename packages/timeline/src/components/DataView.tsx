@@ -1,5 +1,5 @@
 import React from 'react';
-import {Log} from '@aside/chrome-ui';
+import {ConsoleMessage} from '@aside/chrome-ui';
 
 import {useDataStore} from '../hooks';
 
@@ -13,14 +13,7 @@ export function DataView({children, type}: DataViewProps) {
 
   return (
     <>
-      <Log
-        items={[
-          {
-            id: type,
-            value: observer.snapshot.nodes,
-          },
-        ]}
-      />
+      <ConsoleMessage value={observer.snapshot.nodes} />
       {children}
     </>
   );

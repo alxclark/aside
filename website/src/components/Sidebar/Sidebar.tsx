@@ -46,7 +46,10 @@ export function Sidebar() {
             <SidebarItem label="Carret" url="docs/ui/chrome/carret" />
             <SidebarItem label="Flex" url="docs/ui/chrome/flex" />
             <SidebarItem label="Icon" url="docs/ui/chrome/icon" />
-            <SidebarItem label="Log" url="docs/ui/chrome/log" />
+            <SidebarItem
+              label="ConsoleMessage"
+              url="docs/ui/chrome/console-message"
+            />
             <SidebarItem label="Navigation" url="docs/ui/chrome/navigation" />
             <SidebarItem
               label="NavigationTab"

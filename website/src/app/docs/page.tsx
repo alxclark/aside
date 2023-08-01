@@ -45,7 +45,7 @@ const buttonExample = `function App() {
     <div>
       <Aside>
         <DevTools>
-          <Log items={[{id: 'my app state', value: {count}}]} />
+          <ConsoleMessage value={{count}} />
         </DevTools>
       </Aside>
     </div>

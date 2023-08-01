@@ -2,7 +2,7 @@
 import React from 'react';
 
 import '../../../../../.storybook/styles.css';
-import {Flex, Log, View} from '..';
+import {Flex, ConsoleMessage, View} from '..';
 import {Icon} from '../Icon';
 
 import {Table, Props} from './Table';
@@ -101,9 +101,7 @@ function TimelineExample() {
         </Table>
       </View>
       <View flexGrow border="left">
-        <Log
-          items={[{id: 'first', value: {something: {else: 'hey'}, else: 5}}]}
-        />
+        <ConsoleMessage value={{something: {else: 'hey'}, else: 5}} />
       </View>
     </Flex>
   );

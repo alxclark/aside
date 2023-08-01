@@ -3,7 +3,7 @@ import {Button} from '../components/Button/Button.remote';
 import {Carret} from '../components/Carret/Carret.remote';
 import {Flex} from '../components/Flex/Flex.remote';
 import {Icon} from '../components/Icon/Icon.remote';
-import {Log} from '../components/Log/Log.remote';
+import {ConsoleMessage} from '../components/ConsoleMessage/ConsoleMessage.remote';
 import {
   Navigation,
   NavigationTab,
@@ -30,7 +30,7 @@ export {
   Carret,
   Flex,
   Icon,
-  Log,
+  ConsoleMessage,
   Navigation,
   NavigationTab,
   Table,
@@ -57,7 +57,7 @@ export const ChromeUIComponents = [
   Carret,
   Flex,
   Icon,
-  Log,
+  ConsoleMessage,
   Navigation,
   NavigationTab,
   Table,

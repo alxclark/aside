@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {Log} from '@aside/chrome-ui';
+import {ConsoleMessage} from '@aside/chrome-ui';
 import {useExtensionApi} from '@aside/react';
 
 import {useTimelineItem, useDataStore} from '../hooks';
@@ -20,13 +20,8 @@ export function TimelineDetails({
 
   return (
     <>
-      <Log
-        items={[
-          {
-            id: type,
-            value: matchingRow.nodes,
-          },
-        ]}
+      <ConsoleMessage
+        value={matchingRow.nodes}
         showDiffs={api.timeline.showPreviousValues[0].data}
       />
       {children}
