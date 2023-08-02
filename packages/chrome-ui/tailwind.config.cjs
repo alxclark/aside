@@ -49,6 +49,7 @@ module.exports = {
     fontFamily: {
       sans: ['sans-serif'],
       menlo: ['Menlo'],
+      helvetica: ['Helvetica Neue'],
     },
   },
   plugins: [],

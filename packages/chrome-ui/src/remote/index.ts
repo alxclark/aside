@@ -24,6 +24,10 @@ import {TextField} from '../components/TextField/TextField.remote';
 import {Text} from '../components/Text/Text.remote';
 import {Image} from '../components/Image/Image.remote';
 import {Link} from '../components/Link/Link.remote';
+import {
+  SoftContextMenu,
+  SoftContextMenuItem,
+} from '../components/SoftContextMenu/SoftContextMenu.remote';
 
 export {
   Button,
@@ -50,6 +54,8 @@ export {
   Text,
   Image,
   Link,
+  SoftContextMenu,
+  SoftContextMenuItem,
 };
 
 export const ChromeUIComponents = [
@@ -77,4 +83,6 @@ export const ChromeUIComponents = [
   Text,
   Image,
   Link,
+  SoftContextMenu,
+  SoftContextMenuItem,
 ];

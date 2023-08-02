@@ -14,6 +14,7 @@ export interface Props {
   minWidth?: CSSProperties['minWidth'];
   overflow?: CSSProperties['overflow'];
   overflowWrap?: CSSProperties['overflowWrap'];
+  position?: CSSProperties['position'];
 }
 
 export function View({
@@ -29,6 +30,7 @@ export function View({
   maxWidth,
   minWidth,
   overflowWrap,
+  position,
 }: Props) {
   return (
     <div
@@ -41,6 +43,7 @@ export function View({
         maxWidth,
         minWidth,
         overflowWrap,
+        position,
       }}
       className={classNames(
         flexGrow && 'grow',

@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, {PropsWithChildren} from 'react';
 
 import {Icon, IconSource} from '../Icon';
+import {Carret} from '../Carret';
 
 export type Props = PropsWithChildren<{
   onPress?: () => void;
@@ -11,6 +12,7 @@ export type Props = PropsWithChildren<{
   iconHeight?: number;
   color?: string;
   alert?: boolean;
+  disclosure?: boolean;
 }>;
 
 export function Button({
@@ -22,6 +24,7 @@ export function Button({
   iconHeight = 13,
   color,
   alert,
+  disclosure,
 }: Props) {
   if (icon) {
     return (
@@ -41,8 +44,12 @@ export function Button({
   }
 
   return (
-    <button className="" onClick={() => onPress?.()}>
+    <button
+      className="px-1 flex gap-1 align-center items-center hover:text-white text-gray-300 relative"
+      onClick={() => onPress?.()}
+    >
       {children}
+      {disclosure && <Carret direction="down" />}
     </button>
   );
 }

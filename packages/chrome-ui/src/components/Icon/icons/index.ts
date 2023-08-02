@@ -8,3 +8,4 @@ export {Close} from './Close';
 export {RecordOn} from './RecordOn';
 export {RecordOff} from './RecordOff';
 export {Search} from './Search';
+export {Checkmark} from './Checkmark';

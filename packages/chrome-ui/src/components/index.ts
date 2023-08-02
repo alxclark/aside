@@ -87,6 +87,9 @@ export type {ImageProps} from './Image';
 import {Link} from './Link';
 export {Link} from './Link';
 
+import {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
+export {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
+
 export const AllComponents = {
   Pane,
   Button,
@@ -111,4 +114,6 @@ export const AllComponents = {
   Text,
   Image,
   Link,
+  SoftContextMenu,
+  SoftContextMenuItem,
 };

@@ -11,6 +11,7 @@ import {
   RecordOn,
   RecordOff,
   Search,
+  Checkmark,
 } from './icons';
 import {PowerOff} from './icons/PowerOff';
 
@@ -32,7 +33,8 @@ export type IconSource =
   | 'record-on'
   | 'record-off'
   | 'search'
-  | 'power-off';
+  | 'power-off'
+  | 'checkmark';
 
 export function Icon({source, ...props}: Props) {
   switch (source) {
@@ -58,6 +60,8 @@ export function Icon({source, ...props}: Props) {
       return <Search {...props} />;
     case 'power-off':
       return <PowerOff {...props} />;
+    case 'checkmark':
+      return <Checkmark {...props} />;
     default:
       return null;
   }

@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, useMemo, useState} from 'react';
+import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
 import {useExtensionApi} from '@aside/react';
 import {
   PaneToolbar,
@@ -14,6 +14,9 @@ import {
   TableRow,
   TableCell,
   Image,
+  SoftContextMenu,
+  SoftContextMenuItem,
+  Divider,
 } from '@aside/chrome-ui';
 
 import {TimelineData} from './types';
@@ -36,6 +39,10 @@ export function Timeline({children, data}: TimelineProps) {
   const [showPreviousValues, setShowPreviousValues] =
     timeline.showPreviousValues;
 
+  const [selectedDataTypes, setSelectedDataTypes] = useState<string[]>(
+    data.map((row) => row.type),
+  );
+
   const rows = data
     .flatMap((column) =>
       column.rows.map((row, index) => ({...row, type: column.type, index})),
@@ -52,13 +59,36 @@ export function Timeline({children, data}: TimelineProps) {
     const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
     const isEmpty = Object.keys(row.nodes).length === 0;
     const included = query?.includes(filter.data ?? '');
+    const isAcceptedType = selectedDataTypes.includes(row.type);
 
-    return (invertFilter.data ? !included : included) && !isEmpty;
+    return (
+      (invertFilter.data ? !included : included) && !isEmpty && isAcceptedType
+    );
   });
 
   const [explicitlySelectedRow, setSelectedRow] = useState<
     string | undefined
   >();
+
+  const [showDataTypeMenu, setShowDataTypeMenu] = useState(false);
+
+  const handleSelectedDataType = useCallback(
+    (id: string) => {
+      if (id === 'all') {
+        console.log(rows.map((row) => row.type));
+        setSelectedDataTypes(rows.map((row) => row.type));
+      } else {
+        setSelectedDataTypes((prev) => {
+          if (prev.includes(id)) {
+            return prev.filter((values) => values !== id);
+          }
+
+          return [...prev, id];
+        });
+      }
+    },
+    [rows],
+  );
 
   const selectedRow = useMemo(() => {
     if (
@@ -73,6 +103,22 @@ export function Timeline({children, data}: TimelineProps) {
   function handleClear() {
     data.forEach(({onDelete}) => onDelete?.());
     setSelectedRow(undefined);
+  }
+
+  function getDataTypesText() {
+    if (selectedDataTypes.length === rows.length) {
+      return 'All types';
+    }
+
+    if (selectedDataTypes.length === 1) {
+      return `${selectedDataTypes[0]} only`;
+    }
+
+    if (selectedDataTypes.length > 1) {
+      return 'Custom types';
+    }
+
+    return 'Hide all';
   }
 
   if (
@@ -122,6 +168,28 @@ export function Timeline({children, data}: TimelineProps) {
                 />
               </PaneToolbarItem>
             </PaneToolbarSection>
+            <View position="relative">
+              <Button
+                disclosure
+                onPress={() => setShowDataTypeMenu((prev) => !prev)}
+              >
+                {getDataTypesText()}
+              </Button>
+              {showDataTypeMenu && (
+                <SoftContextMenu
+                  selected={selectedDataTypes}
+                  onPress={handleSelectedDataType}
+                >
+                  <SoftContextMenuItem id="all">All</SoftContextMenuItem>
+                  <Divider horizontal />
+                  {data.map(({type}) => (
+                    <SoftContextMenuItem id={type} key={type}>
+                      {type}
+                    </SoftContextMenuItem>
+                  ))}
+                </SoftContextMenu>
+              )}
+            </View>
           </Flex>
           <PaneToolbarSection separatorBefore>
             <Button
