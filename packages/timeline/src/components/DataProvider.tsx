@@ -23,6 +23,7 @@ export type Props = PropsWithChildren<DataStoreDescriptor>;
 export function DataProvider({
   type,
   icon,
+  displayName,
   observer: {snapshot, snapshots, clearSnapshots, previous, setRecordSnapshot},
   children,
 }: Props) {
@@ -135,13 +136,23 @@ export function DataProvider({
       name,
       query,
       rows,
+      displayName,
       onDelete: () => {
         clearSnapshots?.();
         setPersistedSnapshots([]);
         setInitialSnapshots([]);
       },
     }),
-    [clearSnapshots, icon, name, query, rows, setPersistedSnapshots, type],
+    [
+      clearSnapshots,
+      displayName,
+      icon,
+      name,
+      query,
+      rows,
+      setPersistedSnapshots,
+      type,
+    ],
   );
 
   const Context = useMemo(() => {

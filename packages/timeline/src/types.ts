@@ -20,12 +20,14 @@ export interface DataStore {
 
 export interface DataStoreDescriptor {
   type: string;
+  displayName: string;
   icon?: string;
   observer: Observer;
 }
 
 export interface TimelineData<T extends Snapshot = Snapshot> {
   type: string;
+  displayName: string;
   icon: string;
   rows: T[];
   name: (row: T) => string;

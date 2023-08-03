@@ -1,5 +1,5 @@
 import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
-import {useExtensionApi} from '@aside/react';
+import {useExtensionApi, useLocalStorageState} from '@aside/react';
 import {
   PaneToolbar,
   Flex,
@@ -39,9 +39,13 @@ export function Timeline({children, data}: TimelineProps) {
   const [showPreviousValues, setShowPreviousValues] =
     timeline.showPreviousValues;
 
-  const [selectedDataTypes, setSelectedDataTypes] = useState<string[]>(
-    data.map((row) => row.type),
-  );
+  const [{data: selectedDataTypes}, setSelectedDataTypes] =
+    useLocalStorageState(
+      data.map((row) => row.type),
+      {
+        key: 'selected-data-types',
+      },
+    );
 
   const rows = data
     .flatMap((column) =>
@@ -87,7 +91,7 @@ export function Timeline({children, data}: TimelineProps) {
         });
       }
     },
-    [rows],
+    [rows, setSelectedDataTypes],
   );
 
   const selectedRow = useMemo(() => {
@@ -110,8 +114,9 @@ export function Timeline({children, data}: TimelineProps) {
       return 'All types';
     }
 
-    if (selectedDataTypes.length === 1) {
-      return `${selectedDataTypes[0]} only`;
+    const row = getRow(selectedDataTypes[0]);
+    if (selectedDataTypes.length === 1 && row) {
+      return `${row.displayName} only`;
     }
 
     if (selectedDataTypes.length > 1) {
@@ -182,9 +187,9 @@ export function Timeline({children, data}: TimelineProps) {
                 >
                   <SoftContextMenuItem id="all">All</SoftContextMenuItem>
                   <Divider horizontal />
-                  {data.map(({type}) => (
+                  {data.map(({type, displayName}) => (
                     <SoftContextMenuItem id={type} key={type}>
-                      {type}
+                      {displayName}
                     </SoftContextMenuItem>
                   ))}
                 </SoftContextMenu>

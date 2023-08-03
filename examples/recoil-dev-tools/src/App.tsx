@@ -69,16 +69,19 @@ function AsideDevTools() {
           stores={[
             {
               type: 'react',
+              displayName: 'React',
               observer: reactObserver,
               icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
             },
             {
               type: 'count',
+              displayName: 'Count',
               observer: countObserver,
               icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
             },
             {
               type: 'recoil',
+              displayName: 'Recoil',
               observer: recoilObserver,
               icon: 'https://recoiljs.org/img/favicon.png',
             },
