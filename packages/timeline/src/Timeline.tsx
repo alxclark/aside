@@ -39,13 +39,13 @@ export function Timeline({children, data}: TimelineProps) {
   const [showPreviousValues, setShowPreviousValues] =
     timeline.showPreviousValues;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const initialDataTypes = useMemo(() => data.map((row) => row.type), []);
+
   const [{data: selectedDataTypes}, setSelectedDataTypes] =
-    useLocalStorageState(
-      data.map((row) => row.type),
-      {
-        key: 'selected-data-types',
-      },
-    );
+    useLocalStorageState(initialDataTypes, {
+      key: 'selected-data-types',
+    });
 
   const rows = data
     .flatMap((column) =>

@@ -112,42 +112,49 @@ function ExtensionApiProvider({
     key: 'record-snapshot',
     get,
     set,
+    scope: 'global',
   });
 
   const filter = useLocalStorageStateInternal('', {
     key: 'filter',
     get,
     set,
+    scope: 'global',
   });
 
   const showFilter = useLocalStorageStateInternal(true, {
     key: 'show-filter',
     get,
     set,
+    scope: 'global',
   });
 
   const preserveLog = useLocalStorageStateInternal(false, {
     key: 'preserve-log',
     get,
     set,
+    scope: 'global',
   });
 
   const invertFilter = useLocalStorageStateInternal(false, {
     key: 'invert-filter',
     get,
     set,
+    scope: 'global',
   });
 
   const showPreviousValues = useLocalStorageStateInternal(false, {
     key: 'show-previous-values',
     get,
     set,
+    scope: 'global',
   });
 
   const showTimelineOptions = useLocalStorageStateInternal(false, {
     key: 'show-timeline-options',
     get,
     set,
+    scope: 'global',
   });
 
   const api: ExtensionApi | undefined = useMemo(() => {

@@ -22,7 +22,7 @@ export function useExtensionApi() {
 
 export function useLocalStorageState<T>(
   defaultValue: T,
-  options: {key: string},
+  options: {key: string; scope?: 'host' | 'global'},
 ): [
   {data: T; loading: boolean},
   (value: SetStateAction<T>, options?: {persist?: boolean}) => void,
@@ -40,6 +40,7 @@ export function useLocalStorageStateInternal<T>(
   defaultValue: T,
   options: {
     key: string;
+    scope?: 'host' | 'global';
     get: ExtensionApi['storage']['local']['get'];
     set: ExtensionApi['storage']['local']['set'];
   },
@@ -55,11 +56,18 @@ export function useLocalStorageStateInternal<T>(
     async function queryStorage() {
       const result = await get([options.key]);
 
-      setData(result[options.key] ?? defaultValue);
+      let value;
+      if (options.scope === 'global') {
+        value = result[options.key];
+      } else if (!options.scope || options.scope === 'host') {
+        value = result[options.key]?.[window.location.host];
+      }
+
+      setData(value ?? defaultValue);
       setLoading(false);
     }
     queryStorage();
-  }, [get, defaultValue, options.key]);
+  }, [get, defaultValue, options.key, options.scope]);
 
   const setState = useCallback(
     (value: SetStateAction<T>, setterOptions?: {persist?: boolean}) => {
@@ -69,20 +77,30 @@ export function useLocalStorageStateInternal<T>(
 
         if (typeof value === 'function') {
           derivedValue = (value as Function)(prev);
-          if (persist) {
-            set({[options.key]: derivedValue});
-          }
-          return derivedValue;
+        } else {
+          derivedValue = value;
         }
 
         if (persist) {
-          set({[options.key]: value});
+          if (options.scope === 'global') {
+            set({[options.key]: derivedValue});
+          } else if (!options.scope || options.scope === 'host') {
+            // eslint-disable-next-line promise/catch-or-return
+            get([options.key]).then((prev) => {
+              const next = {
+                ...prev[options.key],
+                [window.location.host]: derivedValue,
+              };
+
+              set({[options.key]: next});
+            });
+          }
         }
 
-        return value;
+        return derivedValue;
       });
     },
-    [options.key, set],
+    [get, options.key, options.scope, set],
   );
 
   return useMemo(

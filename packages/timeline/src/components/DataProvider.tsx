@@ -37,6 +37,7 @@ export function DataProvider({
   const [{data: persistedSnapshots, loading}, setPersistedSnapshots] =
     useLocalStorageState<Snapshot[] | undefined>(undefined, {
       key: `${type}-snapshots`,
+      scope: 'host',
     });
 
   useEffect(() => {
