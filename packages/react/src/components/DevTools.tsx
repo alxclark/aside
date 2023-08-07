@@ -9,7 +9,11 @@ import React, {
 import {fromWebpage, WebpageApi} from '@aside/web';
 import {RemoteRoot, createRemoteRoot} from '@remote-ui/react';
 import {createEndpoint, Endpoint, release, retain} from '@remote-ui/rpc';
-import {ContentScriptApiForWebpage} from '@aside/extension';
+import {makeStatefulSubscribable} from '@remote-ui/async-subscription';
+import {
+  ContentScriptApiForWebpage,
+  StatefulExtensionApi as SubscribableApi,
+} from '@aside/extension';
 import type {RemoteChannel} from '@remote-ui/core';
 
 import {AllComponents} from '../ui';
@@ -99,6 +103,8 @@ function ExtensionApiProvider({
 }: PropsWithChildren<{
   endpoint: Endpoint<ContentScriptApiForWebpage>;
 }>) {
+  const [subscribableApi, setSubscribableApi] = useState<SubscribableApi>();
+
   const get: ExtensionApi['storage']['local']['get'] = useCallback(
     (keys) => endpoint.call.getLocalStorage(keys),
     [endpoint],
@@ -157,8 +163,26 @@ function ExtensionApiProvider({
     scope: 'global',
   });
 
+  useEffect(() => {
+    async function getApi() {
+      const api = await endpoint.call.getApi();
+
+      // Make stateful all stateless subscribable received by the devtools
+      setSubscribableApi({
+        network: {
+          requests: makeStatefulSubscribable(api.network.requests),
+        },
+      });
+    }
+
+    getApi();
+  }, [endpoint.call]);
+
   const api: ExtensionApi | undefined = useMemo(() => {
     return {
+      network: {
+        requests: subscribableApi?.network.requests!,
+      },
       storage: {
         local: {
           get,
@@ -185,7 +209,10 @@ function ExtensionApiProvider({
     showFilter,
     showPreviousValues,
     showTimelineOptions,
+    subscribableApi?.network.requests,
   ]);
+
+  if (!subscribableApi) return null;
 
   return (
     <ExtensionApiContext.Provider value={api}>
@@ -198,7 +225,12 @@ function createContentScriptEndpoint() {
   return createEndpoint<ContentScriptApiForWebpage>(
     fromWebpage({context: 'webpage'}),
     {
-      callable: ['getDevToolsChannel', 'getLocalStorage', 'setLocalStorage'],
+      callable: [
+        'getDevToolsChannel',
+        'getLocalStorage',
+        'setLocalStorage',
+        'getApi',
+      ],
     },
   );
 }

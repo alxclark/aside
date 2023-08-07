@@ -24,7 +24,14 @@ export function DataProvider({
   type,
   icon,
   displayName,
-  observer: {snapshot, snapshots, clearSnapshots, previous, setRecordSnapshot},
+  observer: {
+    snapshot,
+    snapshots,
+    clearSnapshots,
+    previous,
+    setRecordSnapshot,
+    skipDiffing,
+  },
   children,
 }: Props) {
   const [initialSnapshots, setInitialSnapshots] = useState<
@@ -68,13 +75,21 @@ export function DataProvider({
       snapshots: [...(initialSnapshots ?? []), ...snapshots],
       clearSnapshots,
       previous,
+      skipDiffing,
     }),
-    [clearSnapshots, initialSnapshots, previous, snapshot, snapshots],
+    [
+      clearSnapshots,
+      initialSnapshots,
+      previous,
+      skipDiffing,
+      snapshot,
+      snapshots,
+    ],
   );
 
-  // console.log({observer});
-
   const rows: Snapshot[] = useMemo(() => {
+    if (observer.skipDiffing) return observer.snapshots;
+
     return observer.snapshots.map((next, index) => {
       const prev = observer.snapshots[index - 1] ?? previous ?? {};
 
@@ -98,7 +113,7 @@ export function DataProvider({
         nodes,
       };
     });
-  }, [observer.snapshots, previous]);
+  }, [observer.skipDiffing, observer.snapshots, previous]);
 
   const name = useCallback((row: Snapshot) => {
     if (row.initial) return 'Initial';

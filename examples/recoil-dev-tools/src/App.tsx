@@ -1,9 +1,20 @@
 /* eslint-disable import/order */
-import React, {createContext, useContext, useState} from 'react';
+import React, {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import {RecoilRoot} from 'recoil';
 import {useRecoilObserver} from '@aside/recoil';
 import {Pane, PaneToolbar, Tab, Tabs} from '@aside/chrome-ui';
-import {Aside, DevTools, useLocalStorageState} from '@aside/react';
+import {
+  Aside,
+  DevTools,
+  useLocalStorageState,
+  useNetworkRequests,
+} from '@aside/react';
 
 import 'todomvc-app-css/index.css';
 
@@ -14,6 +25,7 @@ import {
   TimelineDetails,
   DataView,
   Provider as DataStoreProvider,
+  DataStoreDescriptor,
 } from '@aside/timeline';
 
 import {NewTodo, Todos} from './components';
@@ -62,35 +74,73 @@ function AsideDevTools() {
     [count],
   );
 
+  const appStores: DataStoreDescriptor[] = useMemo(
+    () => [
+      {
+        type: 'react',
+        displayName: 'React',
+        observer: reactObserver,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      },
+      {
+        type: 'count',
+        displayName: 'Count',
+        observer: countObserver,
+        icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
+      },
+      {
+        type: 'recoil',
+        displayName: 'Recoil',
+        observer: recoilObserver,
+        icon: 'https://recoiljs.org/img/favicon.png',
+      },
+    ],
+    [countObserver, reactObserver, recoilObserver],
+  );
+
   return (
     <Aside>
       <DevTools>
-        <DataStoreProvider
-          stores={[
-            {
-              type: 'react',
-              displayName: 'React',
-              observer: reactObserver,
-              icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-            },
-            {
-              type: 'count',
-              displayName: 'Count',
-              observer: countObserver,
-              icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
-            },
-            {
-              type: 'recoil',
-              displayName: 'Recoil',
-              observer: recoilObserver,
-              icon: 'https://recoiljs.org/img/favicon.png',
-            },
-          ]}
-        >
+        <DataProvider appStores={appStores}>
           <AsideApp />
-        </DataStoreProvider>
+        </DataProvider>
       </DevTools>
     </Aside>
+  );
+}
+
+function DataProvider({
+  appStores,
+  children,
+}: PropsWithChildren<{appStores: DataStoreDescriptor[]}>) {
+  const networkRequests = useNetworkRequests();
+
+  const networkStore: DataStoreDescriptor = useMemo(() => {
+    const last = networkRequests[networkRequests.length - 1];
+
+    return {
+      displayName: 'Network',
+      type: 'network',
+      observer: {
+        snapshot: {
+          id: last?.time.toString() + last?.request.url,
+          createdAt: last?.time.toString(),
+          nodes: last,
+        },
+        snapshots: networkRequests.map((request) => ({
+          id: request.time.toString() + request.request.url,
+          createdAt: request.time.toString(),
+          nodes: request,
+        })),
+        skipDiffing: true,
+      },
+    };
+  }, [networkRequests]);
+
+  return (
+    <DataStoreProvider stores={[...appStores, networkStore]}>
+      {children}
+    </DataStoreProvider>
   );
 }
 
@@ -101,6 +151,7 @@ function AsideApp() {
   const [tab, setTab] = useLocalStorageState('timeline', {
     key: 'tab',
   });
+  const network = useDataStore('network');
 
   if (tab.loading) return null;
 
@@ -116,10 +167,11 @@ function AsideApp() {
       </PaneToolbar>
 
       {tab.data === 'timeline' && (
-        <Timeline data={[recoil.data, react.data, count.data]}>
+        <Timeline data={[recoil.data, react.data, count.data, network.data]}>
           <TimelineDetails type="recoil" />
           <TimelineDetails type="react" />
           <TimelineDetails type="count" />
+          <TimelineDetails type="network" />
         </Timeline>
       )}
       {tab.data === 'recoil' && <DataView type="recoil" />}

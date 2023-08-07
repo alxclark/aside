@@ -11,6 +11,7 @@ export interface Observer {
   snapshot: Snapshot;
   clearSnapshots?: () => void;
   setRecordSnapshot?: (value: boolean) => void;
+  skipDiffing?: boolean;
 }
 
 export interface DataStore {

@@ -1,4 +1,6 @@
+import {NetworkRequest} from '@aside/extension';
 import {SetStateAction} from 'react';
+import {StatefulRemoteSubscribable} from '@remote-ui/async-subscription';
 
 type LocalStorageState<T> = [
   {data: T; loading: boolean},
@@ -6,6 +8,9 @@ type LocalStorageState<T> = [
 ];
 
 export interface ExtensionApi {
+  network: {
+    requests: StatefulRemoteSubscribable<NetworkRequest[]>;
+  };
   storage: {
     local: {
       get(

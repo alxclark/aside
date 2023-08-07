@@ -6,9 +6,12 @@ import {
   useMemo,
   useState,
 } from 'react';
+import type {StatefulRemoteSubscribable} from '@remote-ui/async-subscription';
 
 import {ExtensionApiContext} from './context';
 import {ExtensionApi} from './types';
+
+type Subscriber<T> = Parameters<StatefulRemoteSubscribable<T>['subscribe']>[0];
 
 export function useExtensionApi() {
   const api = useContext(ExtensionApiContext);
@@ -113,4 +116,42 @@ export function useLocalStorageStateInternal<T>(
     ],
     [data, loading, setState],
   );
+}
+
+export function useNetworkRequests() {
+  const api = useExtensionApi();
+
+  return useSubscription(api.network.requests);
+}
+
+export function useSubscription<T>(
+  subscription: StatefulRemoteSubscribable<T>,
+): T {
+  const [, setValue] = useState(subscription.current);
+
+  useEffect(() => {
+    let didUnsubscribe = false;
+
+    const checkForUpdates: Subscriber<T> = (newValue) => {
+      if (didUnsubscribe) {
+        return;
+      }
+
+      setValue(newValue);
+    };
+
+    const unsubscribe = subscription.subscribe(checkForUpdates);
+
+    // Because we're subscribing in a passive effect,
+    // it's possible for an update to occur between render and the effect handler.
+    // Check for this and schedule an update if work has occurred.
+    checkForUpdates(subscription.current);
+
+    return () => {
+      didUnsubscribe = true;
+      unsubscribe();
+    };
+  }, [subscription]);
+
+  return subscription.current;
 }

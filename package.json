@@ -35,7 +35,6 @@
     "@changesets/cli": "^2.26.2",
     "@remote-ui/react": "latest",
     "@remote-ui/rpc": "latest",
-    "@rollup/plugin-node-resolve": "^15.1.0",
     "@vitejs/plugin-react": "^4.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

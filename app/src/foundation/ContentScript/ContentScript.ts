@@ -82,7 +82,7 @@ export function contentScript() {
 
 function createDevtoolsEndpoint(port: Runtime.Port) {
   return createEndpoint<DevToolsApiForContentScript>(fromPort(port), {
-    callable: ['getDevToolsChannel'],
+    callable: ['getDevToolsChannel', 'getApi'],
   });
 }
 
@@ -106,6 +106,9 @@ function exposeWebpage(
     },
     setLocalStorage(items) {
       return browser.storage.local.set(items);
+    },
+    getApi() {
+      return devtools.call.getApi();
     },
   };
 

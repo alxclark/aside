@@ -8,6 +8,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {
   ContentScriptApiForDevTools,
   DevToolsApiForContentScript,
+  NetworkRequest,
   fromPort,
 } from '@aside/extension';
 import {
@@ -20,7 +21,8 @@ import {
 } from '@aside/chrome-ui/react';
 import {Runtime} from 'webextension-polyfill';
 import '@aside/chrome-ui/css';
-import {DevtoolsNetwork} from 'webextension-polyfill/namespaces/devtools_network';
+
+import {useRemoteSubscribable} from '../../utilities/subscription';
 
 export function BrowserExtensionRenderer() {
   const controller = useMemo(
@@ -32,10 +34,11 @@ export function BrowserExtensionRenderer() {
   );
   const [receiver, setReceiver] = useState(createRemoteReceiver());
   const [port, setPort] = useState<Runtime.Port | undefined>();
-  const [_networkRequests, setNetworkRequests] = useState<
-    (Request | DevtoolsNetwork.Request)[]
-  >([]);
+  const [networkRequests, setNetworkRequests] = useState<NetworkRequest[]>([]);
   const [connected, setConnected] = useState(false);
+
+  const {subscribable: requests, clear: clearRequestsSubscribable} =
+    useRemoteSubscribable(networkRequests);
 
   useEffect(() => {
     const listener = () => {
@@ -64,10 +67,6 @@ export function BrowserExtensionRenderer() {
     // Once content-script connect, we will accept the port sent.
     browser.runtime.onConnect.addListener(onConnectListener);
 
-    browser.devtools.network.onRequestFinished.addListener(async (request) => {
-      setNetworkRequests((prev) => [...prev, request]);
-    });
-
     function onAcceptedPortListener(message: any, port: Runtime.Port) {
       console.log('Received message from CS', message);
       if (
@@ -89,12 +88,34 @@ export function BrowserExtensionRenderer() {
       // since the connect listener will be called on page reload once the dev tools is loaded.
       setReceiver(createRemoteReceiver());
       setPort(port);
+      clearRequestsSubscribable();
     }
 
     return () => {
       contentScriptPort.onMessage.removeListener(onAcceptedPortListener);
       browser.runtime.onConnect.removeListener(onConnectListener);
     };
+  }, [clearRequestsSubscribable]);
+
+  useEffect(() => {
+    const listener = async (request: any) => {
+      console.log({request});
+      setNetworkRequests((prev) => {
+        return [
+          ...prev,
+          {
+            type: request._resourceType,
+            time: request.time,
+            request: {url: request.request.url},
+          },
+        ];
+      });
+    };
+
+    browser.devtools.network.onRequestFinished.addListener(listener);
+
+    return () =>
+      browser.devtools.network.onRequestFinished.removeListener(listener);
   }, []);
 
   useEffect(() => {
@@ -108,6 +129,7 @@ export function BrowserExtensionRenderer() {
           'log',
           'renewReceiver',
           'mountDevTools',
+          'getApi',
         ],
       },
     );
@@ -119,12 +141,19 @@ export function BrowserExtensionRenderer() {
       renewReceiver() {
         setReceiver(createRemoteReceiver());
       },
+      getApi() {
+        return {
+          network: {
+            requests,
+          },
+        };
+      },
     };
 
     contentScript.expose(devToolsApi);
 
     port.postMessage({sender: 'dev', type: 'ready'});
-  }, [receiver, port]);
+  }, [receiver, port, requests]);
 
   useEffect(() => {
     if (!port) return;
