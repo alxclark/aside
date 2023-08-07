@@ -99,7 +99,6 @@ export function BrowserExtensionRenderer() {
 
   useEffect(() => {
     const listener = async (request: any) => {
-      console.log({request});
       setNetworkRequests((prev) => {
         return [
           ...prev,

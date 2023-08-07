@@ -22,6 +22,7 @@ export type Props = PropsWithChildren<DataStoreDescriptor>;
 
 export function DataProvider({
   type,
+  rowName,
   icon,
   displayName,
   observer: {
@@ -115,11 +116,15 @@ export function DataProvider({
     });
   }, [observer.skipDiffing, observer.snapshots, previous]);
 
-  const name = useCallback((row: Snapshot) => {
-    if (row.initial) return 'Initial';
+  const name = useCallback(
+    (row: Snapshot) => {
+      if (rowName) return rowName(row);
+      if (row.initial) return 'Initial';
 
-    return Object.keys(row.nodes).sort().join(', ');
-  }, []);
+      return Object.keys(row.nodes).sort().join(', ');
+    },
+    [rowName],
+  );
 
   const query = useCallback((row: Snapshot) => {
     let baseQuery = JSON.stringify(row.nodes);

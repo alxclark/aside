@@ -1,7 +1,7 @@
-export interface Snapshot {
+export interface Snapshot<T = {[key: string]: any}> {
   id: string;
   createdAt: string;
-  nodes: {[key: string]: any};
+  nodes: T;
   initial?: boolean;
 }
 
@@ -19,9 +19,10 @@ export interface DataStore {
   observer: Observer;
 }
 
-export interface DataStoreDescriptor {
+export interface DataStoreDescriptor<T extends Snapshot = Snapshot> {
   type: string;
   displayName: string;
+  rowName?: (row: T) => string;
   icon?: string;
   observer: Observer;
 }

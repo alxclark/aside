@@ -26,9 +26,11 @@ import {
   DataView,
   Provider as DataStoreProvider,
   DataStoreDescriptor,
+  Snapshot,
 } from '@aside/timeline';
 
 import {NewTodo, Todos} from './components';
+import {NetworkRequest} from '@aside/extension';
 
 export function App() {
   const count = useState(0);
@@ -115,27 +117,40 @@ function DataProvider({
 }: PropsWithChildren<{appStores: DataStoreDescriptor[]}>) {
   const networkRequests = useNetworkRequests();
 
-  const networkStore: DataStoreDescriptor = useMemo(() => {
-    const last = networkRequests[networkRequests.length - 1];
+  const networkStore: DataStoreDescriptor<Snapshot<NetworkRequest>> =
+    useMemo(() => {
+      const last = networkRequests[networkRequests.length - 1];
 
-    return {
-      displayName: 'Network',
-      type: 'network',
-      observer: {
-        snapshot: {
-          id: last?.time.toString() + last?.request.url,
-          createdAt: last?.time.toString(),
-          nodes: last,
+      return {
+        displayName: 'Network',
+        type: 'network',
+        rowName: (row) => {
+          console.log(row);
+          if (!row?.nodes.request?.url) return row.nodes.type;
+          const urlParts = row.nodes.request.url.split('/');
+          const lastUrlPath = urlParts[urlParts.length - 1];
+
+          if (lastUrlPath.length === 0) {
+            return row.nodes.type;
+          }
+
+          return lastUrlPath;
         },
-        snapshots: networkRequests.map((request) => ({
-          id: request.time.toString() + request.request.url,
-          createdAt: request.time.toString(),
-          nodes: request,
-        })),
-        skipDiffing: true,
-      },
-    };
-  }, [networkRequests]);
+        observer: {
+          snapshot: {
+            id: last?.time.toString() + last?.request.url,
+            createdAt: last?.time.toString(),
+            nodes: last,
+          },
+          snapshots: networkRequests.map((request) => ({
+            id: request.time.toString() + request.request.url,
+            createdAt: request.time.toString(),
+            nodes: request,
+          })),
+          skipDiffing: true,
+        },
+      };
+    }, [networkRequests]);
 
   return (
     <DataStoreProvider stores={[...appStores, networkStore]}>
