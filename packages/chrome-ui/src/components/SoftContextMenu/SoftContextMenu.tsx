@@ -38,7 +38,7 @@ export function SoftContextMenuItem({children, id}: SoftContextMenuItemProps) {
     <div
       className={classNames(
         !context.selected.includes(id) && 'pl-[26px]',
-        'h-[20px] px-2 py-[7px] text-gray-200 flex items-center hover:bg-[#1a73e8] hover:text-white font-helvetica flex gap-2',
+        'h-[20px] px-2 py-[7px] text-gray-200 flex items-center hover:bg-focus hover:text-white font-helvetica flex gap-2',
       )}
       onClick={() => context.onPress(id)}
       onKeyDown={() => context.onPress(id)}

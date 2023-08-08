@@ -23,10 +23,10 @@ export function TableRow({children, id}: Props) {
       ref={rowRef}
       style={{height: rowHeight}}
       className={classNames(
-        'bg-[#292929] text-gray-200',
+        'bg-grid-odd text-gray-200',
         selectedId === id
-          ? 'bg-[#10639d]'
-          : 'even:bg-[#232323] hover:bg-[#172436]',
+          ? 'bg-grid-selected'
+          : 'even:bg-grid-even hover:bg-grid-hover',
       )}
       onClick={() => setSelectedId(id)}
     >

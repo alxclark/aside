@@ -43,12 +43,18 @@ module.exports = {
       input: {
         active: '#106099',
       },
-      // same as Chrome
       icon: {
         default: '#9aa0a6',
         error: 'rgb(242, 139, 130)',
         toggled: 'rgb(138, 180, 248)',
         subdued: '#757575',
+      },
+      focus: '#1a73e8',
+      grid: {
+        hover: '#172436',
+        selected: '#10639d',
+        even: '#232323',
+        odd: '#292929',
       },
     },
     fontFamily: {

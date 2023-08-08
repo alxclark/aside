@@ -43,7 +43,7 @@ export function Table({
   const headings = columns.map(({title, width}) => (
     <th
       className={classNames(
-        'px-1 py-1 font-normal text-gray-200 text-left border-gray-400 truncate hover:bg-[#454545]',
+        'px-1 py-1 font-normal text-gray-200 text-left border-gray-400 truncate hover:bg-grid-hover',
         border && 'border-x',
       )}
       style={{maxWidth: width, width}}
