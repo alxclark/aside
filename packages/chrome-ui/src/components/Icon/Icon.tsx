@@ -18,7 +18,13 @@ import {
 import {PowerOff} from './icons/PowerOff';
 
 export interface Props {
+  /**
+   * The identifier for the icon to display.
+   */
   source: IconSource;
+  /**
+   * The color of the icon.
+   */
   color?: Color;
   height?: number;
   width?: number;
@@ -26,7 +32,6 @@ export interface Props {
 
 export type IconSource =
   | 'start'
-  | 'curly'
   | 'filter'
   | 'cancel'
   | 'cog'
