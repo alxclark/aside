@@ -5,7 +5,7 @@ import {DataStoreDescriptor} from '../types';
 import {DataProvider} from './DataProvider';
 
 export interface ProviderProps extends PropsWithChildren {
-  stores: DataStoreDescriptor[];
+  stores: DataStoreDescriptor<any>[];
 }
 
 export function Provider({stores, children}: ProviderProps) {
