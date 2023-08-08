@@ -45,7 +45,7 @@ export function ArrayRenderer({
           />
         </div>
       ))}
-      {renderer.showDiffs &&
+      {renderer.showPreviousValues &&
         previous &&
         previous.length > value.length &&
         previous.slice(value.length).map((child, index) => (

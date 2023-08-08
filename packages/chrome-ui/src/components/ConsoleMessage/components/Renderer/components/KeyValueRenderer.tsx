@@ -47,12 +47,14 @@ export function KeyValueRenderer({
         )}
       >
         <KeyRenderer collapsible={collapsible} path={path} preview={preview} />
-        {previous !== undefined && value !== previous && renderer.showDiffs && (
-          <>
-            <Renderer depth={depth} value={previous} path={path} preview />
-            <span className="text-white">{' → '}</span>
-          </>
-        )}
+        {previous !== undefined &&
+          value !== previous &&
+          renderer.showPreviousValues && (
+            <>
+              <Renderer depth={depth} value={previous} path={path} preview />
+              <span className="text-white">{' → '}</span>
+            </>
+          )}
         <Renderer depth={depth} value={value} path={path} preview />
       </span>
       {collapsible && open && !preview && (

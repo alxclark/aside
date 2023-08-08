@@ -1,16 +1,17 @@
-export type DiffValue =
+export type ConsoleValue =
   | DiffNode
   | string
   | boolean
   | number
   | any[]
   | null
-  | undefined;
+  | undefined
+  | object;
 
 export interface DiffNode {
   __tag: 'diff';
-  previous?: DiffValue;
-  next: DiffValue;
+  previous?: ConsoleValue;
+  next: ConsoleValue;
 }
 
 export interface Diff {
@@ -18,7 +19,7 @@ export interface Diff {
 }
 
 export interface RendererContextType {
-  showDiffs: boolean;
+  showPreviousValues: boolean;
   /**
    * A dictionary of all opened collapsibles
    * example: {'myKey.nested.array.0': true}

@@ -44,7 +44,7 @@ PrimitiveDiff.args = {
       previous: '',
     },
   },
-  showDiffs: true,
+  showPreviousValues: true,
 } as Props;
 
 export const ArrayDiff = Template.bind({}) as any;
@@ -77,7 +77,7 @@ ArrayDiff.args = {
       previous: [object],
     },
   },
-  showDiffs: true,
+  showPreviousValues: true,
 } as Props;
 
 export const ObjectDiff = Template.bind({}) as any;
@@ -105,7 +105,7 @@ ObjectDiff.args = {
       previous: {wallet: {amount: 10000}},
     },
   },
-  showDiffs: true,
+  showPreviousValues: true,
 } as Props;
 
 export const NestedDiff = Template.bind({}) as any;
@@ -136,7 +136,7 @@ NestedDiff.args = {
       },
     ],
   },
-  showDiffs: true,
+  showPreviousValues: true,
 } as Props;
 
 export const ArrayOfNumbers = Template.bind({}) as any;

@@ -35,7 +35,7 @@ export type {
   Props as ConsoleMessageProps,
   Diff,
   DiffNode,
-  DiffValue,
+  ConsoleValue,
 } from './ConsoleMessage';
 
 import {Table, TableRow, TableCell} from './Table';

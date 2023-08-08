@@ -17,11 +17,11 @@ export function DiffRenderer({
   path: string[];
   depth?: number;
 }) {
-  const {showDiffs} = useRenderer();
+  const {showPreviousValues} = useRenderer();
 
   return (
     <>
-      {showDiffs && depth === 0 && !isCollapsible(value.next) && (
+      {showPreviousValues && depth === 0 && !isCollapsible(value.next) && (
         <>
           <Renderer value={value.previous} path={path} preview />
           <span className="text-white">{' → '}</span>

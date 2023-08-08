@@ -71,7 +71,7 @@ export function RecordRenderer({
               path={[...path, key]}
             />
           ))}
-          {renderer.showDiffs &&
+          {renderer.showPreviousValues &&
             removedKeys.map((key) => (
               <KeyValueRenderer
                 key={key}

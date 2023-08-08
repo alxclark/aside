@@ -22,7 +22,7 @@ export function TimelineDetails({
     <>
       <ConsoleMessage
         value={matchingRow.nodes}
-        showDiffs={api.timeline.showPreviousValues[0].data}
+        showPreviousValues={api.timeline.showPreviousValues[0].data}
       />
       {children}
     </>
