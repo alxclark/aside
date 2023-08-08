@@ -1,44 +1,36 @@
-import classNames from 'classnames';
 import React, {PropsWithChildren} from 'react';
 
-import {Icon, IconSource} from '../Icon';
 import {Carret} from '../Carret';
 
 export type Props = PropsWithChildren<{
+  /**
+   * Callback to execute when pressed.
+   */
   onPress?: () => void;
-  icon?: IconSource;
-  pressed?: boolean;
+  /**
+   * Title for the underlying button. The title is shown in a popup when a user hovers the button.
+   */
   title?: string;
-  iconHeight?: number;
-  color?: string;
-  alert?: boolean;
+  /**
+   * A visual variation of the button.
+   */
+  variant?: 'icon';
+  /**
+   * Whether the button should show a disclosure icon.
+   */
   disclosure?: boolean;
 }>;
 
-export function Button({
-  children,
-  onPress,
-  icon,
-  pressed,
-  title,
-  iconHeight = 13,
-  color,
-  alert,
-  disclosure,
-}: Props) {
-  if (icon) {
+export function Button({children, onPress, title, variant, disclosure}: Props) {
+  if (variant === 'icon') {
     return (
       <button
         title={title}
         aria-label={title}
-        className={classNames(
-          'w-[28px] h-[26px] flex items-center justify-center text-gray-300 cursor-default',
-          pressed && 'text-lightblue',
-          alert ? 'text-lightred' : 'hover:text-white',
-        )}
+        className="w-[28px] h-[26px] flex items-center justify-center text-gray-300 cursor-default"
         onClick={() => onPress?.()}
       >
-        <Icon source={icon} height={iconHeight} color={color} />
+        {children}
       </button>
     );
   }

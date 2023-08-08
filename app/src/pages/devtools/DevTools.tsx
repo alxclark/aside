@@ -184,7 +184,7 @@ export function BrowserExtensionRenderer() {
           direction="column"
           gap="10px"
         >
-          <Icon source="power-off" height={80} color="#45484b" />
+          <Icon source="power-off" height={80} color="icon-subdued" />
           <Text align="center">This website is not connected to Aside.</Text>
           <Text align="center">
             Learn how to integrate your application at{' '}

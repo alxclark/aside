@@ -72,7 +72,7 @@ function TimelineExample() {
             <TableCell>
               <Flex gap="5px" alignItems="center">
                 <View margin="0 0 0 2px">
-                  <Icon source="start" color="#2883ff" height={13} />
+                  <Icon source="start" height={13} />
                 </View>
                 todo:1, todos
               </Flex>
@@ -82,7 +82,7 @@ function TimelineExample() {
             <TableCell>
               <Flex gap="5px" alignItems="center">
                 <View margin="0 0 0 1px">
-                  <Icon source="curly" color="#e5ab04" height={15} />
+                  <Icon source="curly" height={15} />
                 </View>
                 todo:2, todos
               </Flex>
@@ -92,7 +92,7 @@ function TimelineExample() {
             <TableCell>
               <Flex gap="5px" alignItems="center">
                 <View margin="0 0 0 1px">
-                  <Icon source="curly" color="#e5ab04" height={15} />
+                  <Icon source="curly" height={15} />
                 </View>
                 todo:2
               </Flex>

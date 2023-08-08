@@ -44,7 +44,7 @@ export function SoftContextMenuItem({children, id}: SoftContextMenuItemProps) {
       onKeyDown={() => context.onPress(id)}
     >
       {context.selected.includes(id) && (
-        <Icon source="checkmark" color="#757575" height={10} />
+        <Icon source="checkmark" color="icon-subdued" height={10} />
       )}
       {children}
     </div>

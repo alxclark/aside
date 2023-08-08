@@ -9,6 +9,7 @@ import {TextField} from '../TextField';
 import {View} from '../View';
 // eslint-disable-next-line @shopify/strict-component-boundaries
 import {Default} from '../Table/Table.stories';
+import {Icon} from '../Icon';
 
 import {
   PaneContent,
@@ -36,36 +37,45 @@ const Children = () => {
       <PaneToolbar>
         <Flex justifyContent="space-between">
           <Flex alignItems="center">
-            <Button icon="vertical-ellipsis" title="More tools" />
+            <Button title="More tools" variant="icon">
+              <Icon source="vertical-ellipsis" />
+            </Button>
             <Tabs selected="network" setSelected={console.log}>
               <Tab id="console" label="Console" />
               <Tab id="network" label="Network" />
             </Tabs>
           </Flex>
-          <Button icon="close" iconHeight={10} title="Close drawer" />
+          <Button title="Close drawer" variant="icon">
+            <Icon source="close" height={10} />
+          </Button>
         </Flex>
       </PaneToolbar>
       <PaneToolbar>
         <Flex justifyContent="space-between" alignItems="start">
           <Flex alignItems="center" wrap>
             <PaneToolbarSection>
-              <Button
-                icon="record-on"
-                color="rgb(242, 139, 130)"
-                title="Stop recording"
-                iconHeight={19}
-              />
-              <Button icon="cancel" title="Clear" />
+              <Button title="Stop recording" variant="icon">
+                <Icon source="record-on" height={19} color="icon-error" />
+              </Button>
+              <Button variant="icon">
+                <Icon source="cancel" />
+              </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
               <Button
-                icon="filter"
-                iconHeight={12}
-                pressed={showFilter}
+                variant="icon"
                 title="Filter"
                 onPress={() => setShowFilter((prev) => !prev)}
-              />
-              <Button icon="search" title="Search" iconHeight={20} />
+              >
+                <Icon
+                  source="filter"
+                  height={12}
+                  color={showFilter ? 'icon-toggled' : 'icon-default'}
+                />
+              </Button>
+              <Button title="Search">
+                <Icon source="search" height={20} />
+              </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
               <PaneToolbarItem>
@@ -86,12 +96,13 @@ const Children = () => {
             </PaneToolbarItem>
           </Flex>
           <PaneToolbarSection separatorBefore>
-            <Button
-              icon="cog"
-              iconHeight={14}
-              pressed={showPreferences}
-              onPress={() => setShowPreferences((prev) => !prev)}
-            />
+            <Button onPress={() => setShowPreferences((prev) => !prev)}>
+              <Icon
+                source="cog"
+                height={14}
+                color={showPreferences ? 'icon-toggled' : 'icon-default'}
+              />
+            </Button>
           </PaneToolbarSection>
         </Flex>
       </PaneToolbar>

@@ -21,8 +21,8 @@ module.exports = {
       surface: '#f8f9fa',
       // accent: '#E9B42D',
       // accent: '#fe5c43',
-      accent: "#14d6b5",
-      transparent: 'transparent'
+      accent: '#14d6b5',
+      transparent: 'transparent',
     },
     extend: {
       backgroundImage: {

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
 import {useExtensionApi, useLocalStorageState} from '@aside/react';
 import {
@@ -17,6 +18,7 @@ import {
   SoftContextMenu,
   SoftContextMenuItem,
   Divider,
+  Icon,
 } from '@aside/chrome-ui';
 
 import {TimelineData} from './types';
@@ -143,25 +145,40 @@ export function Timeline({children, data}: TimelineProps) {
           <Flex alignItems="center" wrap>
             <PaneToolbarSection>
               <Button
-                icon={recordSnapshot ? 'record-on' : 'record-off'}
-                alert={recordSnapshot.data}
                 title="Stop recording"
-                iconHeight={recordSnapshot ? 19 : 13}
+                variant="icon"
                 onPress={() => {
                   setRecordSnapshot((prev) => !prev);
                 }}
-              />
-              <Button icon="cancel" title="Clear" onPress={handleClear} />
+              >
+                <Icon
+                  source={recordSnapshot ? 'record-on' : 'record-off'}
+                  color={recordSnapshot.data ? 'icon-error' : 'icon-default'}
+                  height={recordSnapshot ? 19 : 13}
+                />
+              </Button>
+              <Button title="Clear" variant="icon" onPress={handleClear}>
+                <Icon source="cancel" height={15} />
+              </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
               <Button
-                icon="filter"
-                iconHeight={12}
-                alert={filter.data.length > 0}
-                pressed={showFilter.data}
+                variant="icon"
                 title="Filter"
                 onPress={() => setShowFilter((prev) => !prev)}
-              />
+              >
+                <Icon
+                  source="filter"
+                  height={12}
+                  color={
+                    filter.data.length > 0
+                      ? 'icon-error'
+                      : showFilter.data
+                      ? 'icon-toggled'
+                      : undefined
+                  }
+                />
+              </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
               <PaneToolbarItem>
@@ -198,11 +215,17 @@ export function Timeline({children, data}: TimelineProps) {
           </Flex>
           <PaneToolbarSection separatorBefore>
             <Button
-              icon="cog"
-              iconHeight={14}
-              pressed={showTimelineOptions.data}
+              variant="icon"
               onPress={() => setShowTimelineOptions((prev) => !prev)}
-            />
+            >
+              <Icon
+                source="cog"
+                height={14}
+                color={
+                  showTimelineOptions.data ? 'icon-toggled' : 'icon-default'
+                }
+              />
+            </Button>
           </PaneToolbarSection>
         </Flex>
       </PaneToolbar>

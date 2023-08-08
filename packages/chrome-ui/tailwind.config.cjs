@@ -36,14 +36,19 @@ module.exports = {
       checkbox: {
         accent: 'rgb(255, 165, 0)',
       },
-      lightblue: 'rgb(138, 180, 248)',
-      lightred: 'rgb(242, 139, 130)',
       background: 'rgb(32, 33, 36)',
       text: {
         secondary: 'rgb(154, 160, 166)',
       },
       input: {
         active: '#106099',
+      },
+      // same as Chrome
+      icon: {
+        default: '#9aa0a6',
+        error: 'rgb(242, 139, 130)',
+        toggled: 'rgb(138, 180, 248)',
+        subdued: '#757575',
       },
     },
     fontFamily: {

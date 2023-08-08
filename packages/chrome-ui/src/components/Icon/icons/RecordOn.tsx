@@ -1,16 +1,10 @@
 import React from 'react';
 
-import type {Props} from '../Icon';
-
-export function RecordOn({
-  height,
-  width,
-  color = 'currentColor',
-}: Omit<Props, 'source'>) {
+export function RecordOn() {
   return (
     <svg
-      width={width}
-      height={height}
+      width="18"
+      height="18"
       viewBox="0 0 18 18"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +15,7 @@ export function RecordOn({
       />
       <path
         d="M3 8.99999C3 12.31 5.69 15 9 15C12.31 15 15 12.31 15 8.99999C15 5.68999 12.31 2.99999 9 2.99999C5.69 2.99999 3 5.68999 3 8.99999Z"
-        fill={color}
+        fill="currentColor"
       />
       <defs>
         <radialGradient
@@ -33,7 +27,7 @@ export function RecordOn({
           gradientTransform="translate(9 8.99999) scale(9 9)"
         >
           <stop />
-          <stop stopColor={color} offset="1" stopOpacity="0" />
+          <stop stopColor="currentColor" offset="1" stopOpacity="0" />
         </radialGradient>
       </defs>
     </svg>

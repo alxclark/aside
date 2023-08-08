@@ -1,7 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
+
+import {Color} from '../../types';
 
 import {
-  Curly,
   Start,
   Filter,
   Cancel,
@@ -17,7 +19,7 @@ import {PowerOff} from './icons/PowerOff';
 
 export interface Props {
   source: IconSource;
-  color?: string;
+  color?: Color;
   height?: number;
   width?: number;
 }
@@ -36,32 +38,46 @@ export type IconSource =
   | 'power-off'
   | 'checkmark';
 
-export function Icon({source, ...props}: Props) {
+export function Icon({source, height, width, color = 'icon-default'}: Props) {
+  return (
+    <div
+      style={{height, width}}
+      className={classNames(
+        color === 'icon-error' && 'text-icon-error',
+        color === 'icon-default' && 'text-icon-default',
+        color === 'icon-toggled' && 'text-icon-toggled',
+        color === 'icon-subdued' && 'text-icon-subdued',
+      )}
+    >
+      <IconSvg source={source} />
+    </div>
+  );
+}
+
+function IconSvg({source}: Pick<Props, 'source'>) {
   switch (source) {
-    case 'curly':
-      return <Curly {...props} />;
     case 'start':
-      return <Start {...props} />;
+      return <Start />;
     case 'filter':
-      return <Filter {...props} />;
+      return <Filter />;
     case 'cancel':
-      return <Cancel {...props} />;
+      return <Cancel />;
     case 'cog':
-      return <Cog {...props} />;
+      return <Cog />;
     case 'vertical-ellipsis':
-      return <VerticalEllipsis {...props} />;
+      return <VerticalEllipsis />;
     case 'close':
-      return <Close {...props} />;
+      return <Close />;
     case 'record-on':
-      return <RecordOn {...props} />;
+      return <RecordOn />;
     case 'record-off':
-      return <RecordOff {...props} />;
+      return <RecordOff />;
     case 'search':
-      return <Search {...props} />;
+      return <Search />;
     case 'power-off':
-      return <PowerOff {...props} />;
+      return <PowerOff />;
     case 'checkmark':
-      return <Checkmark {...props} />;
+      return <Checkmark />;
     default:
       return null;
   }
