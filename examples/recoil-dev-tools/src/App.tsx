@@ -125,7 +125,6 @@ function DataProvider({
         displayName: 'Network',
         type: 'network',
         rowName: (row) => {
-          console.log(row);
           if (!row?.nodes.request?.url) return row.nodes.type;
           const urlParts = row.nodes.request.url.split('/');
           const lastUrlPath = urlParts[urlParts.length - 1];
