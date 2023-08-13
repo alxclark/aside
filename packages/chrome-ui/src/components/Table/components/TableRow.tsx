@@ -1,14 +1,12 @@
 import React, {useEffect, useRef} from 'react';
 import classNames from 'classnames';
+import {TableRowProps} from '@aside/chrome-ui-remote';
 
 import {useTable} from '../hooks';
 
-export interface Props {
-  children: React.ReactNode;
-  id: string;
-}
+export type {TableRowProps};
 
-export function TableRow({children, id}: Props) {
+export function TableRow({children, id}: TableRowProps) {
   const {selectedId, setSelectedId, rowHeight} = useTable();
   const rowRef = useRef<HTMLTableRowElement>(null);
 

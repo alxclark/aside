@@ -1,11 +1,8 @@
-import React, {CSSProperties} from 'react';
+import {TextProps} from '@aside/chrome-ui-remote';
 
-export interface Props {
-  children: React.ReactNode;
-  align?: CSSProperties['textAlign'];
-}
+export type {TextProps};
 
-export function Text({children, align}: Props) {
+export function Text({children, align}: TextProps) {
   return (
     <p className="text-text-secondary text-sm" style={{textAlign: align}}>
       {children}

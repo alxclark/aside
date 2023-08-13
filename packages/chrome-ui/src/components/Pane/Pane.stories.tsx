@@ -37,7 +37,7 @@ const Children = () => {
       <PaneToolbar>
         <Flex justifyContent="space-between">
           <Flex alignItems="center">
-            <Button title="More tools" variant="icon">
+            <Button title="More tools" size="icon">
               <Icon source="vertical-ellipsis" />
             </Button>
             <Tabs selected="network" setSelected={console.log}>
@@ -45,7 +45,7 @@ const Children = () => {
               <Tab id="network" label="Network" />
             </Tabs>
           </Flex>
-          <Button title="Close drawer" variant="icon">
+          <Button title="Close drawer" size="icon">
             <Icon source="close" height={10} />
           </Button>
         </Flex>
@@ -54,18 +54,18 @@ const Children = () => {
         <Flex justifyContent="space-between" alignItems="start">
           <Flex alignItems="center" wrap>
             <PaneToolbarSection>
-              <Button title="Stop recording" variant="icon">
+              <Button title="Stop recording" size="icon">
                 <Icon source="record-on" height={19} color="icon-error" />
               </Button>
-              <Button variant="icon">
+              <Button size="icon">
                 <Icon source="cancel" />
               </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
               <Button
-                variant="icon"
+                size="icon"
                 title="Filter"
-                onPress={() => setShowFilter((prev) => !prev)}
+                onClick={() => setShowFilter((prev) => !prev)}
               >
                 <Icon
                   source="filter"
@@ -96,7 +96,7 @@ const Children = () => {
             </PaneToolbarItem>
           </Flex>
           <PaneToolbarSection separatorBefore>
-            <Button onPress={() => setShowPreferences((prev) => !prev)}>
+            <Button onClick={() => setShowPreferences((prev) => !prev)}>
               <Icon
                 source="cog"
                 height={14}

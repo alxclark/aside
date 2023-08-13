@@ -1,29 +1,36 @@
 import {createRemoteReactComponent} from '@remote-ui/react';
+import {PropsWithChildren} from 'react';
 
-import type {Props} from './Pane';
-import type {
-  PaneContentProps,
-  PaneToolbarProps,
-  PaneToolbarSectionProps,
-  PaneToolbarItemProps,
-} from './components';
+export type PaneProps = PropsWithChildren<{}>;
 
-const Pane = createRemoteReactComponent<'ChromeUIPane', Props>('ChromeUIPane');
+const Pane = createRemoteReactComponent<'ChromeUIPane', PaneProps>(
+  'ChromeUIPane',
+);
+
+export type PaneContentProps = PropsWithChildren<{}>;
 
 const PaneContent = createRemoteReactComponent<
   'ChromeUIPaneContent',
   PaneContentProps
 >('ChromeUIPaneContent');
 
+export type PaneToolbarProps = PropsWithChildren<{}>;
+
 const PaneToolbar = createRemoteReactComponent<
   'ChromeUIPaneToolbar',
   PaneToolbarProps
 >('ChromeUIPaneToolbar');
 
+export type PaneToolbarSectionProps = PropsWithChildren<{
+  separatorBefore?: boolean;
+}>;
+
 const PaneToolbarSection = createRemoteReactComponent<
   'ChromeUIPaneToolbarSection',
   PaneToolbarSectionProps
 >('ChromeUIPaneToolbarSection');
+
+export type PaneToolbarItemProps = PropsWithChildren<{}>;
 
 const PaneToolbarItem = createRemoteReactComponent<
   'ChromeUIPaneToolbarItem',

@@ -1,0 +1,30 @@
+{
+  "name": "@aside/chrome-ui-remote",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "BSD-3-Clause",
+  "files": [
+    "build"
+  ],
+  "main": "./build/js/aside-chrome-ui-remote.umd.js",
+  "module": "./build/js/aside-chrome-ui-remote.es.js",
+  "exports": {
+    ".": {
+      "import": "./build/js/aside-chrome-ui-remote.es.js",
+      "require": "./build/js/aside-chrome-ui-remote.umd.js"
+    }
+  },
+  "types": "build/ts/index.d.ts",
+  "scripts": {
+    "lint": "tsc",
+    "build": "vite build",
+    "clean": "rm -rf build"
+  },
+  "peerDependencies": {
+    "@remote-ui/react": "^5.0.2"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

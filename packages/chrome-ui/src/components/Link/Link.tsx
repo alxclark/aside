@@ -1,11 +1,9 @@
 import React from 'react';
+import {LinkProps} from '@aside/chrome-ui-remote';
 
-export interface Props {
-  children: React.ReactNode;
-  to: string;
-}
+export type {LinkProps};
 
-export function Link({children, to}: Props) {
+export function Link({children, to}: LinkProps) {
   return (
     <a href={to} className="text-lightblue underline">
       {children}

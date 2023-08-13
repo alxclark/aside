@@ -1,12 +1,11 @@
-import {PropsWithChildren, createContext, useContext, useMemo} from 'react';
+import {createContext, useContext, useMemo} from 'react';
 import classNames from 'classnames';
+import {
+  SoftContextMenuProps,
+  SoftContextMenuItemProps,
+} from '@aside/chrome-ui-remote';
 
 import {Icon} from '../Icon';
-
-export interface SoftContextMenuProps extends PropsWithChildren {
-  selected: string[];
-  onPress(id: string): void;
-}
 
 export function SoftContextMenu({
   children,
@@ -22,10 +21,6 @@ export function SoftContextMenu({
       </SoftContextMenuContext.Provider>
     </div>
   );
-}
-
-export interface SoftContextMenuItemProps extends PropsWithChildren {
-  id: string;
 }
 
 export function SoftContextMenuItem({children, id}: SoftContextMenuItemProps) {

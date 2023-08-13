@@ -1,21 +1,8 @@
+import React from 'react';
+import {ViewProps} from '@aside/chrome-ui-remote';
 import classNames from 'classnames';
-import React, {CSSProperties} from 'react';
 
-export interface Props {
-  children: React.ReactNode;
-  flexGrow?: boolean;
-  width?: number;
-  border?: 'left';
-  fullHeight?: boolean;
-  margin?: CSSProperties['margin'];
-  padding?: CSSProperties['padding'];
-  maxHeight?: CSSProperties['maxHeight'];
-  maxWidth?: CSSProperties['maxWidth'];
-  minWidth?: CSSProperties['minWidth'];
-  overflow?: CSSProperties['overflow'];
-  overflowWrap?: CSSProperties['overflowWrap'];
-  position?: CSSProperties['position'];
-}
+export type {ViewProps};
 
 export function View({
   children,
@@ -31,7 +18,7 @@ export function View({
   minWidth,
   overflowWrap,
   position,
-}: Props) {
+}: ViewProps) {
   return (
     <div
       style={{

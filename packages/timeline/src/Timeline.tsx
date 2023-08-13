@@ -5,7 +5,6 @@ import {
   PaneToolbar,
   Flex,
   PaneToolbarSection,
-  Button,
   PaneToolbarItem,
   Checkbox,
   View,
@@ -20,6 +19,7 @@ import {
   Divider,
   Icon,
 } from '@aside/chrome-ui';
+import {Button} from '@aside/chrome-ui-remote';
 
 import {TimelineData} from './types';
 import {TimelineItemContext} from './contexts';
@@ -146,8 +146,8 @@ export function Timeline({children, data}: TimelineProps) {
             <PaneToolbarSection>
               <Button
                 title="Stop recording"
-                variant="icon"
-                onPress={() => {
+                size="icon"
+                onClick={() => {
                   setRecordSnapshot((prev) => !prev);
                 }}
               >
@@ -157,15 +157,15 @@ export function Timeline({children, data}: TimelineProps) {
                   height={recordSnapshot ? 19 : 13}
                 />
               </Button>
-              <Button title="Clear" variant="icon" onPress={handleClear}>
+              <Button title="Clear" size="icon" onClick={handleClear}>
                 <Icon source="cancel" height={15} />
               </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
               <Button
-                variant="icon"
+                size="icon"
                 title="Filter"
-                onPress={() => setShowFilter((prev) => !prev)}
+                onClick={() => setShowFilter((prev) => !prev)}
               >
                 <Icon
                   source="filter"
@@ -191,10 +191,7 @@ export function Timeline({children, data}: TimelineProps) {
               </PaneToolbarItem>
             </PaneToolbarSection>
             <View position="relative">
-              <Button
-                disclosure
-                onPress={() => setShowDataTypeMenu((prev) => !prev)}
-              >
+              <Button onClick={() => setShowDataTypeMenu((prev) => !prev)}>
                 {getDataTypesText()}
               </Button>
               {showDataTypeMenu && (
@@ -215,8 +212,8 @@ export function Timeline({children, data}: TimelineProps) {
           </Flex>
           <PaneToolbarSection separatorBefore>
             <Button
-              variant="icon"
-              onPress={() => setShowTimelineOptions((prev) => !prev)}
+              size="icon"
+              onClick={() => setShowTimelineOptions((prev) => !prev)}
             >
               <Icon
                 source="cog"

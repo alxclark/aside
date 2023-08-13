@@ -1,27 +1,8 @@
 import classNames from 'classnames';
-import React, {PropsWithChildren, useEffect, useMemo, useRef} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
+import {TableProps} from '@aside/chrome-ui-remote';
 
 import {TableContext} from './context';
-
-export type Props = PropsWithChildren<{
-  columns: Column[];
-  onSelect?(rowId: string): void;
-  selected?: string;
-  border?: boolean;
-  scrollable?: boolean;
-  rowHeight?: string;
-}>;
-
-export interface Column {
-  title: string;
-  /**
-   * Initial width of the column.
-   */
-  width?: number;
-  onSort?(direction: SortDirection): void;
-}
-
-export type SortDirection = 'ascending' | 'descending';
 
 export function Table({
   columns,
@@ -31,7 +12,7 @@ export function Table({
   scrollable,
   selected,
   rowHeight,
-}: Props) {
+}: TableProps) {
   const tablebodyRef = useRef<HTMLTableSectionElement | null>(null);
 
   useEffect(() => {

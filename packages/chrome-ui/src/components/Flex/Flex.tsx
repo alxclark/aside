@@ -1,15 +1,8 @@
-import classNames from 'classnames';
 import React from 'react';
+import classNames from 'classnames';
+import {FlexProps} from '@aside/chrome-ui-remote';
 
-export interface Props {
-  children: React.ReactNode;
-  direction?: 'row' | 'column';
-  fullHeight?: boolean;
-  gap?: string;
-  alignItems?: 'center' | 'start';
-  justifyContent?: 'space-between' | 'center';
-  wrap?: boolean;
-}
+export type {FlexProps};
 
 export function Flex({
   children,
@@ -19,7 +12,7 @@ export function Flex({
   alignItems,
   justifyContent,
   wrap,
-}: Props) {
+}: FlexProps) {
   return (
     <div
       style={{gap}}

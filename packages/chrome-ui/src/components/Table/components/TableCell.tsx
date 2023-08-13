@@ -1,13 +1,12 @@
 import classNames from 'classnames';
 import React from 'react';
+import {TableCellProps} from '@aside/chrome-ui-remote';
 
 import {useTable} from '../hooks';
 
-export interface Props {
-  children?: React.ReactNode;
-}
+export type {TableCellProps};
 
-export function TableCell({children}: Props) {
+export function TableCell({children}: TableCellProps) {
   const {border} = useTable();
 
   return (

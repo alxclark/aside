@@ -77,6 +77,10 @@ export function createUnsafeEncoder(
     }
 
     if (typeof value === 'object') {
+      if (value?.constructor?.name === 'SyntheticBaseEvent') {
+        return [null];
+      }
+
       if (Array.isArray(value)) {
         seen.set(value, [undefined]);
 

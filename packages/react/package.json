@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@aside/web": "0.6.0",
-    "@aside/chrome-ui": "0.6.0"
+    "@aside/chrome-ui-remote": "0.0.1"
   },
   "devDependencies": {
     "@aside/extension": "0.6.0"

@@ -1,14 +1,8 @@
-import classNames from 'classnames';
 import React from 'react';
+import {TextFieldProps} from '@aside/chrome-ui-remote';
+import classNames from 'classnames';
 
-export interface Props {
-  id: string;
-  placeholder?: string;
-  onChange?(value: string): void;
-  value?: string;
-}
-
-export function TextField({id, placeholder, onChange, value}: Props) {
+export function TextField({id, placeholder, onChange, value}: TextFieldProps) {
   const hasValue = value && value.length > 0;
 
   return (
