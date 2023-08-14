@@ -44,15 +44,14 @@ module.exports = {
       checkbox: {
         accent: 'rgb(255, 165, 0)',
       },
-      // TODO: conflict with shadcn
-      // background: 'rgb(32, 33, 36)',
+      background: 'rgb(32, 33, 36)',
       text: {
         secondary: 'rgb(154, 160, 166)',
       },
-      // input: {
-      // TODO: conflict with shadcn
-      // active: '#106099',
-      // },
+      input: {
+        // TODO: conflict with shadcn
+        active: '#106099',
+      },
       icon: {
         default: '#9aa0a6',
         error: 'rgb(242, 139, 130)',
@@ -68,9 +67,9 @@ module.exports = {
       },
       // shadcn
       border: 'hsl(var(--border))',
-      input: 'hsl(var(--input))',
+      // input: 'hsl(var(--input))',
       ring: 'hsl(var(--ring))',
-      background: 'hsl(var(--background))',
+      // background: 'hsl(var(--background))',
       foreground: 'hsl(var(--foreground))',
       primary: {
         DEFAULT: 'hsl(var(--primary))',
