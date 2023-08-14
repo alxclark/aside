@@ -152,13 +152,12 @@ export function Timeline({children, data}: TimelineProps) {
                 }}
               >
                 <Icon
-                  source={recordSnapshot ? 'record-on' : 'record-off'}
-                  color={recordSnapshot.data ? 'icon-error' : 'icon-default'}
-                  height={recordSnapshot ? 19 : 13}
+                  source={recordSnapshot.data ? 'record-on' : 'record-off'}
+                  variant={recordSnapshot.data ? 'error' : 'default'}
                 />
               </Button>
               <Button title="Clear" size="icon" onClick={handleClear}>
-                <Icon source="cancel" height={15} />
+                <Icon source="cancel" />
               </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
@@ -168,14 +167,14 @@ export function Timeline({children, data}: TimelineProps) {
                 onClick={() => setShowFilter((prev) => !prev)}
               >
                 <Icon
-                  source="filter"
-                  height={12}
-                  color={
+                  className="p-px"
+                  source={showFilter.data ? 'filter-filled' : 'filter'}
+                  variant={
                     filter.data.length > 0
-                      ? 'icon-error'
+                      ? 'error'
                       : showFilter.data
-                      ? 'icon-toggled'
-                      : undefined
+                      ? 'toggled'
+                      : 'default'
                   }
                 />
               </Button>
@@ -216,11 +215,8 @@ export function Timeline({children, data}: TimelineProps) {
               onClick={() => setShowTimelineOptions((prev) => !prev)}
             >
               <Icon
-                source="cog"
-                height={14}
-                color={
-                  showTimelineOptions.data ? 'icon-toggled' : 'icon-default'
-                }
+                source={showTimelineOptions.data ? 'cog-filled' : 'cog'}
+                variant={showTimelineOptions.data ? 'toggled' : 'default'}
               />
             </Button>
           </PaneToolbarSection>

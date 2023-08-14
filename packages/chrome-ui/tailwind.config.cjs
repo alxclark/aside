@@ -54,7 +54,7 @@ module.exports = {
       },
       icon: {
         default: '#9aa0a6',
-        error: 'rgb(242, 139, 130)',
+        error: '#E46962',
         toggled: 'rgb(138, 180, 248)',
         subdued: '#757575',
       },
@@ -127,4 +127,5 @@ module.exports = {
     },
   },
   plugins: [require('tailwindcss-animate')],
+  safelist: ['p-px'],
 };

@@ -46,7 +46,7 @@ const Children = () => {
             </Tabs>
           </Flex>
           <Button title="Close drawer" size="icon">
-            <Icon source="close" height={10} />
+            <Icon source="close" />
           </Button>
         </Flex>
       </PaneToolbar>
@@ -55,7 +55,7 @@ const Children = () => {
           <Flex alignItems="center" wrap>
             <PaneToolbarSection>
               <Button title="Stop recording" size="icon">
-                <Icon source="record-on" height={19} color="icon-error" />
+                <Icon source="record-on" variant="error" />
               </Button>
               <Button size="icon">
                 <Icon source="cancel" />
@@ -69,12 +69,11 @@ const Children = () => {
               >
                 <Icon
                   source="filter"
-                  height={12}
-                  color={showFilter ? 'icon-toggled' : 'icon-default'}
+                  variant={showFilter ? 'toggled' : 'default'}
                 />
               </Button>
               <Button title="Search">
-                <Icon source="search" height={20} />
+                <Icon source="search" />
               </Button>
             </PaneToolbarSection>
             <PaneToolbarSection>
@@ -99,8 +98,7 @@ const Children = () => {
             <Button onClick={() => setShowPreferences((prev) => !prev)}>
               <Icon
                 source="cog"
-                height={14}
-                color={showPreferences ? 'icon-toggled' : 'icon-default'}
+                variant={showPreferences ? 'toggled' : 'default'}
               />
             </Button>
           </PaneToolbarSection>

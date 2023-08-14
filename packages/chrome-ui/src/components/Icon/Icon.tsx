@@ -1,6 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 import {IconProps} from '@aside/chrome-ui-remote';
+import {cva} from 'class-variance-authority';
+
+import {VariantsFromProps} from '../../utilities/style';
 
 import {
   Start,
@@ -13,27 +15,38 @@ import {
   RecordOff,
   Search,
   Checkmark,
+  FilterFilled,
+  CogFilled,
 } from './icons';
 import {PowerOff} from './icons/PowerOff';
 
 export type {IconProps};
 
-export function Icon({
-  source,
-  height,
-  width,
-  color = 'icon-default',
-}: IconProps) {
+type Variants = VariantsFromProps<IconProps, 'variant' | 'size'>;
+
+const iconVariants = cva<Variants>('', {
+  variants: {
+    variant: {
+      default: 'text-icon-default hover:text-white',
+      error: 'text-icon-error',
+      toggled: 'text-icon-toggled',
+      subdued: 'text-icon-subdued',
+    },
+    size: {
+      default: 'w-[16px] h-[16px]',
+      sm: 'w-2.5 h-2.5',
+      lg: 'w-10 h-10',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+    size: 'default',
+  },
+});
+
+export function Icon({source, variant, size, className}: IconProps) {
   return (
-    <div
-      style={{height, width}}
-      className={classNames(
-        color === 'icon-error' && 'text-icon-error',
-        color === 'icon-default' && 'text-icon-default',
-        color === 'icon-toggled' && 'text-icon-toggled',
-        color === 'icon-subdued' && 'text-icon-subdued',
-      )}
-    >
+    <div className={iconVariants({variant, size, className})}>
       <IconSvg source={source} />
     </div>
   );
@@ -45,10 +58,14 @@ function IconSvg({source}: Pick<IconProps, 'source'>) {
       return <Start />;
     case 'filter':
       return <Filter />;
+    case 'filter-filled':
+      return <FilterFilled />;
     case 'cancel':
       return <Cancel />;
     case 'cog':
       return <Cog />;
+    case 'cog-filled':
+      return <CogFilled />;
     case 'vertical-ellipsis':
       return <VerticalEllipsis />;
     case 'close':

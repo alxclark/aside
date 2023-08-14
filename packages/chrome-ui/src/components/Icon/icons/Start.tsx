@@ -3,8 +3,8 @@ import React from 'react';
 export function Start() {
   return (
     <svg
-      height={80}
-      width={80}
+      height="auto"
+      width="auto"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 96 960 960"
       fill="currentColor"

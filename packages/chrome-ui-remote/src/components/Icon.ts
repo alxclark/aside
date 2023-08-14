@@ -5,12 +5,9 @@ export interface IconProps {
    * The identifier for the icon to display.
    */
   source: IconSource;
-  /**
-   * The color of the icon.
-   */
-  color?: Color;
-  height?: number;
-  width?: number;
+  variant?: 'default' | 'error' | 'toggled' | 'subdued';
+  size?: 'default' | 'sm' | 'lg';
+  className?: string;
 }
 
 export type Color =
@@ -22,8 +19,10 @@ export type Color =
 export type IconSource =
   | 'start'
   | 'filter'
+  | 'filter-filled'
   | 'cancel'
   | 'cog'
+  | 'cog-filled'
   | 'vertical-ellipsis'
   | 'close'
   | 'record-on'
