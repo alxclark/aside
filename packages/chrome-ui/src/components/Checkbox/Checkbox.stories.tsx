@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
-import {Checkbox, Props} from './Checkbox';
+import {Checkbox, CheckboxProps} from './Checkbox';
 
 import '../../../build/css/styles.css';
 
@@ -19,7 +19,7 @@ Checked.args = {
   id: 'preserve-log',
   label: 'Preserve log',
   onChange: console.log,
-} as Props;
+} as CheckboxProps;
 
 export const Unchecked = Template.bind({}) as any;
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
@@ -28,4 +28,4 @@ Unchecked.args = {
   id: 'preserve-log',
   label: 'Preserve log',
   onChange: console.log,
-} as Props;
+} as CheckboxProps;

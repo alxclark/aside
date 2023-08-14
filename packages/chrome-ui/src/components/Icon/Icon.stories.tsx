@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
-import {Icon, Props} from './Icon';
+import {Icon, IconProps} from './Icon';
 
 import '../../../build/css/styles.css';
 
@@ -17,4 +17,4 @@ export const Filter = Template.bind({}) as any;
 Filter.args = {
   source: 'filter',
   color: 'icon-default',
-} as Props;
+} as IconProps;

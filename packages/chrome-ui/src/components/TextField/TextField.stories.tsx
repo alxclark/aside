@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
-import {TextField, Props} from './TextField';
+import {TextField, TextFieldProps} from './TextField';
 
 import '../../../build/css/styles.css';
 
@@ -18,4 +18,4 @@ Default.args = {
   id: 'filter',
   placeholder: 'Filter',
   onChange: console.log,
-} as Props;
+} as TextFieldProps;

@@ -12,6 +12,7 @@
     "@aside/react": "0.6.0",
     "@aside/recoil": "0.6.0",
     "@aside/timeline": "0.3.0",
+    "@aside/chrome-ui-remote": "0.3.0",
     "recoil": "latest",
     "todomvc-app-css": "latest",
     "react": "18.2.0"

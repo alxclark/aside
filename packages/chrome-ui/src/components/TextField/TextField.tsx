@@ -2,6 +2,8 @@ import React from 'react';
 import {TextFieldProps} from '@aside/chrome-ui-remote';
 import classNames from 'classnames';
 
+export type {TextFieldProps};
+
 export function TextField({id, placeholder, onChange, value}: TextFieldProps) {
   const hasValue = value && value.length > 0;
 

@@ -2,6 +2,7 @@
 import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
 import {useExtensionApi, useLocalStorageState} from '@aside/react';
 import {
+  Button,
   PaneToolbar,
   Flex,
   PaneToolbarSection,
@@ -18,8 +19,7 @@ import {
   SoftContextMenuItem,
   Divider,
   Icon,
-} from '@aside/chrome-ui';
-import {Button} from '@aside/chrome-ui-remote';
+} from '@aside/chrome-ui-remote';
 
 import {TimelineData} from './types';
 import {TimelineItemContext} from './contexts';

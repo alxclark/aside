@@ -4,6 +4,8 @@ import {TableProps} from '@aside/chrome-ui-remote';
 
 import {TableContext} from './context';
 
+export type {TableProps};
+
 export function Table({
   columns,
   children,

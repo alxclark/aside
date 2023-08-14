@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
-import {ConsoleMessage, Props} from './ConsoleMessage';
+import {ConsoleMessage, ConsoleMessageProps} from './ConsoleMessage';
 
 import '../../../build/css/styles.css';
 
@@ -17,7 +17,7 @@ export const Default = Template.bind({}) as any;
 Default.args = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   value: {something: {1: 'hey'}, else: 5},
-} as Props;
+} as ConsoleMessageProps;
 
 export const PrimitiveDiff = Template.bind({}) as any;
 
@@ -45,7 +45,7 @@ PrimitiveDiff.args = {
     },
   },
   showPreviousValues: true,
-} as Props;
+} as ConsoleMessageProps;
 
 export const ArrayDiff = Template.bind({}) as any;
 const object = {apple: true};
@@ -78,7 +78,7 @@ ArrayDiff.args = {
     },
   },
   showPreviousValues: true,
-} as Props;
+} as ConsoleMessageProps;
 
 export const ObjectDiff = Template.bind({}) as any;
 
@@ -106,7 +106,7 @@ ObjectDiff.args = {
     },
   },
   showPreviousValues: true,
-} as Props;
+} as ConsoleMessageProps;
 
 export const NestedDiff = Template.bind({}) as any;
 
@@ -137,7 +137,7 @@ NestedDiff.args = {
     ],
   },
   showPreviousValues: true,
-} as Props;
+} as ConsoleMessageProps;
 
 export const ArrayOfNumbers = Template.bind({}) as any;
 
@@ -145,7 +145,7 @@ ArrayOfNumbers.args = {
   value: {
     numbers: [1, 2, 3, 4],
   },
-} as Props;
+} as ConsoleMessageProps;
 
 export const ArrayOfObjects = Template.bind({}) as any;
 
@@ -153,4 +153,4 @@ ArrayOfObjects.args = {
   value: {
     objects: [{apple: true}, {banana: true}, {pear: true}, {kiwi: true}],
   },
-} as Props;
+} as ConsoleMessageProps;
