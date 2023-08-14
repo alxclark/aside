@@ -1,4 +1,4 @@
-import {Flex, Text} from '@aside/chrome-ui';
+import {Flex, Text} from '@aside/chrome-ui-remote';
 
 export function EmptyView() {
   return (

@@ -1,10 +1,9 @@
 import React from 'react';
+import {CarretProps} from '@aside/chrome-ui-remote';
 
-export interface Props {
-  direction: 'down' | 'right';
-}
+export type {CarretProps};
 
-export function Carret({direction}: Props) {
+export function Carret({direction}: CarretProps) {
   let className = 'h-[8px] inline w-[7px] mr-[3px]';
 
   if (direction === 'down') {

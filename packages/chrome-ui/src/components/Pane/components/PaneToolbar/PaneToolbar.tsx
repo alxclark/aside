@@ -1,9 +1,12 @@
-import React, {PropsWithChildren} from 'react';
+import React from 'react';
+import {
+  PaneToolbarProps,
+  PaneToolbarSectionProps,
+  PaneToolbarItemProps,
+} from '@aside/chrome-ui-remote';
 
 import {Divider} from '../../../Divider';
 import {Flex} from '../../../Flex';
-
-export interface PaneToolbarProps extends PropsWithChildren {}
 
 export function PaneToolbar({children}: PaneToolbarProps) {
   return (
@@ -11,10 +14,6 @@ export function PaneToolbar({children}: PaneToolbarProps) {
       {children}
     </div>
   );
-}
-
-export interface PaneToolbarSectionProps extends PropsWithChildren {
-  separatorBefore?: boolean;
 }
 
 export function PaneToolbarSection({
@@ -29,8 +28,6 @@ export function PaneToolbarSection({
     </Flex>
   );
 }
-
-export interface PaneToolbarItemProps extends PropsWithChildren {}
 
 export function PaneToolbarItem({children}: PaneToolbarItemProps) {
   return (

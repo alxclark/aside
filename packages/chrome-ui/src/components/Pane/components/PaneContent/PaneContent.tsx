@@ -1,12 +1,9 @@
 import React from 'react';
+import {PaneContentProps} from '@aside/chrome-ui-remote';
 
 import {View} from '../../../View';
 
-export interface Props {
-  children: React.ReactNode;
-}
-
-export function PaneContent({children}: Props) {
+export function PaneContent({children}: PaneContentProps) {
   return (
     <View flexGrow maxHeight="100%" overflow="scroll">
       {children}

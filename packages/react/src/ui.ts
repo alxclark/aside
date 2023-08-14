@@ -1,3 +1,3 @@
-import {ChromeUIComponents} from '@aside/chrome-ui';
+import {Components} from '@aside/chrome-ui-remote';
 
-export const AllComponents = [...ChromeUIComponents];
+export const AllComponents = [...Components];

@@ -1,5 +1,5 @@
 import React, {Component, ErrorInfo, ReactNode} from 'react';
-import {Flex, Text} from '@aside/chrome-ui';
+import {Flex, Text} from '@aside/chrome-ui-remote';
 
 interface Props {
   children?: ReactNode;

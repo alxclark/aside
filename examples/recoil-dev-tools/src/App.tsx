@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import {RecoilRoot} from 'recoil';
 import {useRecoilObserver} from '@aside/recoil';
-import {Pane, PaneToolbar, Tab, Tabs} from '@aside/chrome-ui';
+import {Pane, PaneToolbar, Tab, Tabs} from '@aside/chrome-ui-remote';
 import {
   Aside,
   DevTools,

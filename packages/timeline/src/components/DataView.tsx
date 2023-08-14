@@ -1,5 +1,5 @@
 import React from 'react';
-import {ConsoleMessage} from '@aside/chrome-ui';
+import {ConsoleMessage} from '@aside/chrome-ui-remote';
 
 import {useDataStore} from '../hooks';
 

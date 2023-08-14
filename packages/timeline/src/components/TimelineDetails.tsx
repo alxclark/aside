@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {ConsoleMessage} from '@aside/chrome-ui';
+import {ConsoleMessage} from '@aside/chrome-ui-remote';
 import {useExtensionApi} from '@aside/react';
 
 import {useTimelineItem, useDataStore} from '../hooks';

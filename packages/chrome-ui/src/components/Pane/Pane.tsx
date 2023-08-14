@@ -1,10 +1,11 @@
-import React, {PropsWithChildren} from 'react';
+import React from 'react';
+import {PaneProps} from '@aside/chrome-ui-remote';
 
 import {Flex} from '../Flex';
 
-export type Props = PropsWithChildren<{}>;
+export type {PaneProps};
 
-export function Pane({children}: Props) {
+export function Pane({children}: PaneProps) {
   return (
     <Flex fullHeight direction="column">
       {children}

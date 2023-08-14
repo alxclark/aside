@@ -11,6 +11,7 @@
     "jsx": "preserve",
   },
   "references": [
-    { "path": "../react" },
+    { "path": "../react/tsconfig.json" },
+    { "path": "../chrome-ui-remote/tsconfig.json" },
   ]
 }

@@ -1,1 +1,1 @@
-export {Image, type Props as ImageProps} from './Image';
+export * from './Image';

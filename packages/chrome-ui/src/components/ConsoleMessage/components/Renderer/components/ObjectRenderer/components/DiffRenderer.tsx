@@ -1,8 +1,8 @@
 import React from 'react';
+import type {DiffNode} from '@aside/chrome-ui-remote';
 
 // eslint-disable-next-line import/no-cycle
 import {Renderer} from '../../../Renderer';
-import {DiffNode} from '../../../../../types';
 import {useRenderer} from '../../../../../hooks';
 import {isCollapsible} from '../../../utilities';
 

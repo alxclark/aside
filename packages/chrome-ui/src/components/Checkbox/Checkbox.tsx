@@ -1,13 +1,9 @@
 import React from 'react';
+import {CheckboxProps} from '@aside/chrome-ui-remote';
 
-export interface Props {
-  id: string;
-  label: string;
-  checked?: boolean;
-  onChange(): void;
-}
+export type {CheckboxProps};
 
-export function Checkbox({label, checked, onChange, id}: Props) {
+export function Checkbox({label, checked, onChange, id}: CheckboxProps) {
   return (
     <div className="flex items-center">
       <input

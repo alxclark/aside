@@ -1,16 +1,14 @@
-import React, {PropsWithChildren, useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import classNames from 'classnames';
+import {TabsProps, TabProps} from '@aside/chrome-ui-remote';
 
 import {useTabs} from './hooks';
 import {TabsContext} from './context';
 import {TabsContextType} from './types';
 
-export type Props = PropsWithChildren<{
-  selected: string;
-  setSelected?(id: string): void;
-}>;
+export type {TabsProps, TabProps};
 
-export function Tabs({selected, setSelected = () => {}, children}: Props) {
+export function Tabs({selected, setSelected = () => {}, children}: TabsProps) {
   const context: TabsContextType = useMemo(
     () => ({selected, setSelected}),
     [selected, setSelected],
@@ -19,11 +17,6 @@ export function Tabs({selected, setSelected = () => {}, children}: Props) {
   return (
     <TabsContext.Provider value={context}>{children}</TabsContext.Provider>
   );
-}
-
-export interface TabProps {
-  label: string;
-  id: string;
 }
 
 export function Tab({label, id}: TabProps) {

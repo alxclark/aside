@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import {Color} from '../../types';
+import {IconProps} from '@aside/chrome-ui-remote';
 
 import {
   Start,
@@ -17,33 +16,14 @@ import {
 } from './icons';
 import {PowerOff} from './icons/PowerOff';
 
-export interface Props {
-  /**
-   * The identifier for the icon to display.
-   */
-  source: IconSource;
-  /**
-   * The color of the icon.
-   */
-  color?: Color;
-  height?: number;
-  width?: number;
-}
+export type {IconProps};
 
-export type IconSource =
-  | 'start'
-  | 'filter'
-  | 'cancel'
-  | 'cog'
-  | 'vertical-ellipsis'
-  | 'close'
-  | 'record-on'
-  | 'record-off'
-  | 'search'
-  | 'power-off'
-  | 'checkmark';
-
-export function Icon({source, height, width, color = 'icon-default'}: Props) {
+export function Icon({
+  source,
+  height,
+  width,
+  color = 'icon-default',
+}: IconProps) {
   return (
     <div
       style={{height, width}}
@@ -59,7 +39,7 @@ export function Icon({source, height, width, color = 'icon-default'}: Props) {
   );
 }
 
-function IconSvg({source}: Pick<Props, 'source'>) {
+function IconSvg({source}: Pick<IconProps, 'source'>) {
   switch (source) {
     case 'start':
       return <Start />;

@@ -19,8 +19,11 @@ import {
   Link,
   Icon,
 } from '@aside/chrome-ui/react';
+// eslint-disable-next-line import/order
 import {Runtime} from 'webextension-polyfill';
 import '@aside/chrome-ui/css';
+
+import {createUnsafeEncoder} from '@aside/core';
 
 import {useRemoteSubscribable} from '../../utilities/subscription';
 
@@ -123,6 +126,7 @@ export function BrowserExtensionRenderer() {
     const contentScript = createEndpoint<ContentScriptApiForDevTools>(
       fromPort(port),
       {
+        createEncoder: createUnsafeEncoder,
         callable: [
           'getDevToolsChannel',
           'log',

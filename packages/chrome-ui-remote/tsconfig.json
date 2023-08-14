@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "include": ["src", "../../config/typescript/extension.d.ts"],
+  "exclude": ["dist", "build", "node_modules"],
+  "compilerOptions": {
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "outDir": "./build/ts",
+    "rootDir": "./src",
+    "jsx": "preserve",
+    "types": [
+      "vitest/globals"
+    ]
+  },
+  "references": []
+}

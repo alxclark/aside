@@ -7,94 +7,53 @@ import {
   PaneToolbarItem,
   PaneToolbarSection,
 } from './Pane';
-export {
-  Pane,
-  PaneContent,
-  PaneToolbar,
-  PaneToolbarItem,
-  PaneToolbarSection,
-} from './Pane';
-export type {
-  Props as PaneProps,
-  PaneContentProps,
-  PaneToolbarItemProps,
-  PaneToolbarProps,
-  PaneToolbarSectionProps,
-} from './Pane';
+export * from './Pane';
 
 import {Button} from './Button';
-export {Button} from './Button';
-
-import {Navigation, NavigationTab} from './Navigation';
-export {Navigation, NavigationTab} from './Navigation';
-export type {NavigationProps, NavigationTabProps} from './Navigation';
+export * from './Button';
 
 import {ConsoleMessage} from './ConsoleMessage';
-export {ConsoleMessage} from './ConsoleMessage';
-export type {
-  Props as ConsoleMessageProps,
-  Diff,
-  DiffNode,
-  ConsoleValue,
-} from './ConsoleMessage';
+export * from './ConsoleMessage';
 
 import {Table, TableRow, TableCell} from './Table';
-export {Table} from './Table';
-export type {TableProps} from './Table';
-
-export {TableRow} from './Table';
-export type {TableRowProps} from './Table';
-
-export {TableCell} from './Table';
-export type {TableCellProps} from './Table';
+export * from './Table';
 
 import {Flex} from './Flex';
-export {Flex} from './Flex';
-export type {FlexProps} from './Flex';
+export * from './Flex';
 
 import {View} from './View';
-export {View} from './View';
-export type {ViewProps} from './View';
+export * from './View';
 
 import {Icon} from './Icon';
-export {Icon} from './Icon';
-export type {IconProps} from './Icon';
+export * from './Icon';
 
 import {TextField} from './TextField';
-export {TextField} from './TextField';
-export type {Props as TextFieldProps} from './TextField';
+export * from './TextField';
 
 import {Text} from './Text';
-export {Text} from './Text';
-export type {TextProps} from './Text';
+export * from './Text';
 
 import {Tabs, Tab} from './Tabs';
-export {Tabs, Tab} from './Tabs';
-export type {Props as TabsProps, TabProps} from './Tabs';
+export * from './Tabs';
 
 import {Checkbox} from './Checkbox';
-export {Checkbox} from './Checkbox';
-export type {CheckboxProps} from './Checkbox';
+export * from './Checkbox';
 
 import {Divider} from './Divider';
-export {Divider} from './Divider';
-export type {DividerProps} from './Divider';
+export * from './Divider';
 
 import {Image} from './Image';
-export {Image} from './Image';
-export type {ImageProps} from './Image';
+export * from './Image';
 
 import {Link} from './Link';
-export {Link} from './Link';
+export * from './Link';
 
 import {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
-export {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
+export * from './SoftContextMenu';
 
 export const AllComponents = {
   Pane,
   Button,
-  Navigation,
-  NavigationTab,
   ConsoleMessage,
   Table,
   TableRow,

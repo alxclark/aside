@@ -1,18 +1,4 @@
-export type ConsoleValue =
-  | DiffNode
-  | string
-  | boolean
-  | number
-  | any[]
-  | null
-  | undefined
-  | object;
-
-export interface DiffNode {
-  __tag: 'diff';
-  previous?: ConsoleValue;
-  next: ConsoleValue;
-}
+import {DiffNode} from '@aside/chrome-ui-remote';
 
 export interface Diff {
   [key: string]: DiffNode;

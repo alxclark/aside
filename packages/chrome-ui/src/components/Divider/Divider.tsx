@@ -1,10 +1,9 @@
 import React from 'react';
+import {DividerProps} from '@aside/chrome-ui-remote';
 
-export interface Props {
-  horizontal?: boolean;
-}
+export type {DividerProps};
 
-export function Divider({horizontal}: Props) {
+export function Divider({horizontal}: DividerProps) {
   if (horizontal) {
     return <div className="h-[1px] bg-hairline w-full my-[4px]" />;
   }

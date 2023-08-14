@@ -5,7 +5,7 @@ import '../../../../../.storybook/styles.css';
 import {Flex, ConsoleMessage, View} from '..';
 import {Icon} from '../Icon';
 
-import {Table, Props} from './Table';
+import {Table, TableProps} from './Table';
 import {TableRow, TableCell} from './components';
 
 export default {
@@ -53,7 +53,7 @@ Default.args = {
   ],
   rowHeight: '20px',
   children: <Children />,
-} as Props;
+} as TableProps;
 
 const TimelineTemplate = () => <TimelineExample />;
 

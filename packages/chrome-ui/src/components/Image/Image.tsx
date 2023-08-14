@@ -1,15 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import classNames from 'classnames';
+import {ImageProps} from '@aside/chrome-ui-remote';
 
-export interface Props {
-  source: string;
-  height?: number;
-  width?: number;
-  filter?: 'grayscale' | 'none';
-}
+export type {ImageProps};
 
-export function Image({source, height, filter, width}: Props) {
+export function Image({source, height, filter, width}: ImageProps) {
   return (
     <img
       src={source}
