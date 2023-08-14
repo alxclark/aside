@@ -12,11 +12,11 @@ const buttonVariants = cva<Variants>(
   {
     variants: {
       variant: {
-        default: 'text-gray-300 hover:text-white relative',
+        default: 'text-gray-300 hover:text-white',
       },
       size: {
         default: 'px-1',
-        icon: 'w-[28px] h-[26px]',
+        icon: 'w-6 h-6',
       },
     },
     defaultVariants: {
