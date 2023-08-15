@@ -6,7 +6,7 @@ import {cn} from '../../utilities/style';
 export type {CarretProps};
 
 export function Carret({direction, className}: CarretProps) {
-  let classes = cn('h-[8px] inline w-[7px] mr-[3px]', className);
+  let classes = cn('h-2 inline w-2', className);
 
   if (direction === 'down') {
     classes += ' rotate-90';
