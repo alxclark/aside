@@ -127,5 +127,5 @@ module.exports = {
     },
   },
   plugins: [require('tailwindcss-animate')],
-  safelist: ['p-px'],
+  safelist: ['p-px', 'ml-1'],
 };

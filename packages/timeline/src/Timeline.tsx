@@ -19,6 +19,7 @@ import {
   SoftContextMenuItem,
   Divider,
   Icon,
+  Carret,
 } from '@aside/chrome-ui-remote';
 
 import {TimelineData} from './types';
@@ -192,6 +193,7 @@ export function Timeline({children, data}: TimelineProps) {
             <View position="relative">
               <Button onClick={() => setShowDataTypeMenu((prev) => !prev)}>
                 {getDataTypesText()}
+                <Carret className="ml-1" direction="down" />
               </Button>
               {showDataTypeMenu && (
                 <SoftContextMenu

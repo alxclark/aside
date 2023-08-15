@@ -51,7 +51,11 @@ export * from './Link';
 import {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
 export * from './SoftContextMenu';
 
+import {Carret} from './Carret';
+export * from './Carret';
+
 export const AllComponents = {
+  Carret,
   Pane,
   Button,
   ConsoleMessage,

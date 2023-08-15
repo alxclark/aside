@@ -1,18 +1,20 @@
 import React from 'react';
 import {CarretProps} from '@aside/chrome-ui-remote';
 
+import {cn} from '../../utilities/style';
+
 export type {CarretProps};
 
-export function Carret({direction}: CarretProps) {
-  let className = 'h-[8px] inline w-[7px] mr-[3px]';
+export function Carret({direction, className}: CarretProps) {
+  let classes = cn('h-[8px] inline w-[7px] mr-[3px]', className);
 
   if (direction === 'down') {
-    className += ' rotate-90';
+    classes += ' rotate-90';
   }
 
   return (
     <svg
-      className={className}
+      className={classes}
       width="50"
       height="71"
       viewBox="0 0 50 71"
