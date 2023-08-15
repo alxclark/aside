@@ -5,15 +5,15 @@ export type {CheckboxProps};
 
 export function Checkbox({label, checked, onChange, id}: CheckboxProps) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center gap-1">
       <input
         id={id}
-        className="accent-checkbox-accent bg-transparent m-[3px] ml-1"
+        className="accent-checkbox-accent bg-transparent"
         type="checkbox"
         onChange={() => onChange()}
         checked={checked}
       />
-      <label className="ml-[3px] text-gray-300" htmlFor={id}>
+      <label className="ml-1 text-gray-300" htmlFor={id}>
         {label}
       </label>
     </div>

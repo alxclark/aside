@@ -6,7 +6,6 @@ import {
 } from '@aside/chrome-ui-remote';
 
 import {Divider} from '../../../Divider';
-import {Flex} from '../../../Flex';
 
 export function PaneToolbar({children}: PaneToolbarProps) {
   return (
@@ -21,20 +20,18 @@ export function PaneToolbarSection({
   separatorBefore,
 }: PaneToolbarSectionProps) {
   return (
-    <Flex alignItems="center">
+    <div className="flex items-center">
       {separatorBefore && <Divider />}
       {children}
       {!separatorBefore && <Divider />}
-    </Flex>
+    </div>
   );
 }
 
 export function PaneToolbarItem({children}: PaneToolbarItemProps) {
   return (
     <div className="h-[26px]">
-      <Flex alignItems="center" fullHeight>
-        {children}
-      </Flex>
+      <div className="flex items-center h-full px-1">{children}</div>
     </div>
   );
 }
