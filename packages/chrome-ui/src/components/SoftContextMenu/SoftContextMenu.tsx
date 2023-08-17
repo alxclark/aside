@@ -15,7 +15,7 @@ export function SoftContextMenu({
   const context = useMemo(() => ({selected, onPress}), [onPress, selected]);
 
   return (
-    <div className="bg-background border border-hairline absolute top-full z-20 text-inherit min-w-[160px] py-[4px] shadow-lg">
+    <div className="bg-background border border-border absolute top-full z-20 text-inherit min-w-[160px] py-[4px] shadow-lg">
       <SoftContextMenuContext.Provider value={context}>
         {children}
       </SoftContextMenuContext.Provider>
@@ -33,7 +33,7 @@ export function SoftContextMenuItem({children, id}: SoftContextMenuItemProps) {
     <div
       className={classNames(
         !context.selected.includes(id) && 'pl-[26px]',
-        'h-[20px] px-2 py-[7px] text-gray-200 flex items-center hover:bg-focus hover:text-white font-helvetica flex gap-2',
+        'h-[20px] px-2 py-[7px] text-foreground flex items-center hover:bg-softcontext-accent hover:text-accent-foreground font-helvetica flex gap-2',
       )}
       onClick={() => context.onPress(id)}
       onKeyDown={() => context.onPress(id)}

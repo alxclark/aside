@@ -24,7 +24,7 @@ export function DiffRenderer({
       {showPreviousValues && depth === 0 && !isCollapsible(value.next) && (
         <>
           <Renderer value={value.previous} path={path} preview />
-          <span className="text-white">{' → '}</span>
+          <span className="text-console-punctuation">{' → '}</span>
         </>
       )}
       <Renderer

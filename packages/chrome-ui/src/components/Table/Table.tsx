@@ -26,7 +26,7 @@ export function Table({
   const headings = columns.map(({title, width}) => (
     <th
       className={classNames(
-        'px-1 py-1 font-normal text-gray-200 text-left border-gray-400 truncate hover:bg-grid-hover',
+        'px-1 py-1 font-normal text-foreground text-left border-border truncate hover:bg-muted',
         border && 'border-x',
       )}
       style={{maxWidth: width, width}}
@@ -51,11 +51,11 @@ export function Table({
   return (
     <TableContext.Provider value={tableContext}>
       <table
-        className={classNames('w-full border-collapse border-gray-400 h-full')}
+        className={classNames('w-full border-collapse border-border h-full')}
       >
         <thead
           className={classNames(
-            'bg-gray-500 w-full sticky top-0 z-10',
+            'bg-grid-head w-full sticky top-0 z-10',
             'shadow-table',
           )}
         >
@@ -70,7 +70,7 @@ export function Table({
             {columns.map(({title}) => (
               <td
                 key={title}
-                className={classNames('border-gray-400', border && 'border-x')}
+                className={classNames('border-border', border && 'border-x')}
               />
             ))}
           </tr>

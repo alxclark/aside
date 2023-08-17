@@ -10,12 +10,10 @@ export function TextField({id, placeholder, onChange, value}: TextFieldProps) {
   return (
     <input
       className={classNames(
-        'text-gray-100 bg-background h-[20px] pl-[3px] w-full',
-        hasValue
-          ? 'border-input-active'
-          : 'border-elevation-1 hover:border-gray-400',
+        'text-foreground bg-background h-[20px] pl-[3px] w-full',
+        hasValue ? 'border-ring' : 'border-primary hover:border-border',
         'border',
-        'placeholder:text-text-secondary focus-visible:outline-none focus:border-input-active',
+        'placeholder:text-primary-foreground focus-visible:outline-none focus:border-ring',
       )}
       value={value}
       placeholder={placeholder}

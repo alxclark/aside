@@ -27,7 +27,7 @@ type Variants = VariantsFromProps<IconProps, 'variant' | 'size'>;
 const iconVariants = cva<Variants>('', {
   variants: {
     variant: {
-      default: 'text-icon-default hover:text-white',
+      default: 'text-icon-default hover:text-accent-foreground',
       error: 'text-icon-error',
       toggled: 'text-icon-toggled',
       subdued: 'text-icon-subdued',

@@ -88,7 +88,7 @@ export function RecordRenderer({
 }
 
 function SimplePreview() {
-  return <span className="text-white">{'{…}'}</span>;
+  return <span className="text-console-punctuation">{'{…}'}</span>;
 }
 
 function DescriptivePreview({
@@ -104,7 +104,7 @@ function DescriptivePreview({
 
   return (
     <span className={classNames(path.length === 0 && 'italic')}>
-      <span className="text-white">{'{'}</span>
+      <span className="text-console-punctuation">{'{'}</span>
       {keys.map((key, index) => (
         <React.Fragment key={key}>
           <KeyValueRenderer
@@ -113,10 +113,12 @@ function DescriptivePreview({
             value={value[key]}
             path={[...path, key]}
           />
-          {index !== keys.length - 1 && <span className="text-white">, </span>}
+          {index !== keys.length - 1 && (
+            <span className="text-console-punctuation">, </span>
+          )}
         </React.Fragment>
       ))}
-      <span className="text-white">{'}'}</span>
+      <span className="text-console-punctuation">{'}'}</span>
     </span>
   );
 }

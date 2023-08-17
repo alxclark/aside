@@ -12,7 +12,7 @@ const buttonVariants = cva<Variants>(
   {
     variants: {
       variant: {
-        default: 'text-gray-300 hover:text-white',
+        default: 'text-primary-foreground hover:text-accent-foreground',
       },
       size: {
         default: 'px-1',

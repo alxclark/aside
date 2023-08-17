@@ -21,7 +21,7 @@ export function TableRow({children, id}: TableRowProps) {
       ref={rowRef}
       style={{height: rowHeight}}
       className={classNames(
-        'bg-grid-odd text-gray-200',
+        'bg-grid-odd text-foreground',
         selectedId === id
           ? 'bg-grid-selected'
           : 'even:bg-grid-even hover:bg-grid-hover',

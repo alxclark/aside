@@ -12,7 +12,7 @@ export function TableCell({children}: TableCellProps) {
   return (
     <td
       className={classNames(
-        'border-gray-400 px-1 truncate',
+        'border-border px-1 truncate',
         border && 'border-x',
       )}
     >

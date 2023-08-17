@@ -4,8 +4,7 @@
 
 .aside {
   font-size: 12px;
-  background: #202124;
-  padding: 0 !important;
+  background: var(--background);
   color-scheme: dark;
 }
 
@@ -14,3 +13,81 @@
   padding: 0;
   height: 0;
 }
+
+@layer base {
+  :root {
+    --background: 225 5.9% 13.3%;
+    --foreground: 210 15.52% 77.25%;
+
+    --muted: 228 4.5% 21.8%;
+    --muted-foreground: 210 6.3% 62.7%;
+
+    --tabs-foreground: 0 0% 100%;
+    --tabs-accent: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+
+    --border: 214 5% 30%;
+
+    --input: 214.3 31.8% 91.4%;
+
+    --checkbox-accent: 39 100% 50%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+
+    --primary: 225 4.7% 16.9%;
+    --primary-foreground: 210 6.3% 62.7%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 210 40% 98%;
+
+    --ring: 205 81% 33%;
+
+    --radius: 0.5rem;
+
+    --console: 212 15% 78%;
+    --console-number: 252 100% 75%;
+    --console-boolean: 252 100% 75%;
+    --console-key: 199 60% 60%;
+    --console-preview: 210 6% 63%;
+    --console-string: 175 65% 52%;
+    --console-array: 0 0% 100%;
+    --console-punctuation: 0 0% 100%;
+
+    --softcontext-accent: 214 82% 51%;
+
+    --icon-default: 204 11% 65%;
+    --icon-error: 6 71% 60%;
+    --icon-toggled: 214 74% 72%;
+    --icon-subdued: 0 0% 46%;
+
+    --grid-head: 225 4.65% 16.86%;
+    --grid-hover: 218.71 38.27% 15.88%;
+    --grid-selected: 200 79% 38%;
+    --grid-even: 0 0% 14%;
+    --grid-odd: 0 0% 16%;
+  }
+
+  .dark {
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+

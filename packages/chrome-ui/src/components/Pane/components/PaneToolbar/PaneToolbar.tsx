@@ -9,9 +9,7 @@ import {Divider} from '../../../Divider';
 
 export function PaneToolbar({children}: PaneToolbarProps) {
   return (
-    <div className="w-full border-b border-hairline bg-elevation-1">
-      {children}
-    </div>
+    <div className="w-full border-b border-border bg-primary">{children}</div>
   );
 }
 

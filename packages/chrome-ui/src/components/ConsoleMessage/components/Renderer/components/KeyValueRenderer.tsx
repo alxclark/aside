@@ -52,7 +52,7 @@ export function KeyValueRenderer({
           renderer.showPreviousValues && (
             <>
               <Renderer depth={depth} value={previous} path={path} preview />
-              <span className="text-white">{' → '}</span>
+              <span className="text-console-punctuation">{' → '}</span>
             </>
           )}
         <Renderer depth={depth} value={value} path={path} preview />

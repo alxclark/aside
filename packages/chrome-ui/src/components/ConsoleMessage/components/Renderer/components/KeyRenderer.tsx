@@ -27,15 +27,15 @@ export function KeyRenderer({
       )}
       <span
         className={classNames(
-          preview
-            ? 'text-console-object-gray'
-            : 'text-console-object-blue font-bold',
+          preview ? 'text-console-preview' : 'text-console-key font-bold',
           path.length === 0 && preview && 'italic',
         )}
       >
         {label}
       </span>
-      <span className={classNames(preview && 'text-white')}>:</span>
+      <span className={classNames(preview && 'text-console-punctuation')}>
+        :
+      </span>
     </span>
   );
 }

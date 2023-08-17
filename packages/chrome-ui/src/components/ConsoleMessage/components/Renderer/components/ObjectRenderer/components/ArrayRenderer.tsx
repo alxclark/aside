@@ -63,16 +63,16 @@ export function ArrayRenderer({
 }
 
 function SimplePreview({length}: {length: number}) {
-  return <span className="text-white">Array({length})</span>;
+  return <span className="text-console-array">Array({length})</span>;
 }
 
 function DescriptivePreview({value, path}: {value: any[]; path: string[]}) {
   return (
     <>
       {value.length > 0 && (
-        <span className="text-console-object-gray">({value.length})</span>
+        <span className="text-console-preview">({value.length})</span>
       )}
-      <span className="text-white">
+      <span className="text-console-array">
         {value.length > 0 && ' '}[
         {value.map((child, index) => (
           <React.Fragment key={`${child}`}>

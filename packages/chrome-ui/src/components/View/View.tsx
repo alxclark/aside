@@ -34,7 +34,7 @@ export function View({
       }}
       className={classNames(
         flexGrow && 'grow',
-        border && 'border-gray-400',
+        border && 'border-border',
         border === 'left' && 'border-l',
         fullHeight && 'h-full',
       )}

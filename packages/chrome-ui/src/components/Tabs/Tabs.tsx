@@ -24,8 +24,9 @@ export function Tab({label, id}: TabProps) {
 
   const className = classNames(
     'h-[26px] px-3 font-sans cursor-default',
-    selected !== id && 'text-gray-300 hover:text-white hover:bg-elevation-2',
-    selected === id && 'bg-black text-white',
+    selected !== id &&
+      'text-primary-foreground hover:text-accent-foreground hover:bg-muted',
+    selected === id && 'bg-tabs-accent text-tabs-foreground',
   );
 
   const handleClick = useCallback(() => {

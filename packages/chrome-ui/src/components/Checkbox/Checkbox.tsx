@@ -13,7 +13,7 @@ export function Checkbox({label, checked, onChange, id}: CheckboxProps) {
         onChange={() => onChange()}
         checked={checked}
       />
-      <label className="ml-1 text-gray-300" htmlFor={id}>
+      <label className="ml-1 text-primary-foreground" htmlFor={id}>
         {label}
       </label>
     </div>

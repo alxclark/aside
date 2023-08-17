@@ -31,7 +31,7 @@ export function ConsoleMessage({
 
   return (
     <RendererContext.Provider value={context}>
-      <div className="px-6 py-[2px] font-menlo text-code-gray text-[11px] border-b border-gray-400">
+      <div className="px-6 py-[2px] font-menlo text-console text-[11px] border-b border-border">
         <Renderer value={value} />
       </div>
     </RendererContext.Provider>
