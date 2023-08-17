@@ -51,10 +51,10 @@ module.exports = {
         punctuation: 'hsl(var(--console-punctuation))',
       },
       checkbox: {
-        accent: 'var(--checkbox-accent)',
+        accent: 'hsl(var(--checkbox-accent))',
       },
       softcontext: {
-        accent: 'var(--softcontext-accent)',
+        accent: 'hsl(var(--softcontext-accent))',
       },
       icon: {
         default: 'hsl(var(--icon-default))',
