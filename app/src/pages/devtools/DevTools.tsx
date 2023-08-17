@@ -114,7 +114,7 @@ export function BrowserExtensionRenderer() {
       });
     };
 
-    browser.devtools.network.onRequestFinished.addListener(listener);
+    // browser.devtools.network.onRequestFinished.addListener(listener);
 
     return () =>
       browser.devtools.network.onRequestFinished.removeListener(listener);
