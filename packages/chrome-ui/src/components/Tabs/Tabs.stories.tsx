@@ -1,25 +1,23 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
-import {Tabs, Tab} from './Tabs';
+import {Tabs, TabsList, TabsTrigger} from './Tabs';
 
 export default {
   title: 'ChromeUI/Tabs',
   component: Tabs,
 };
 
-const Template = (args: any) => (
-  <Tabs {...args} selected="messages" setSelected={console.log} />
-);
+const Template = (args: any) => <Tabs {...args} defaultValue="messages" />;
 
 const Children = () => {
   return (
-    <>
-      <Tab id="state" label="State" />
-      <Tab id="timeline" label="Timeline" />
-      <Tab id="messages" label="Messages" />
-      <Tab id="options" label="Options" />
-    </>
+    <TabsList>
+      <TabsTrigger value="state">State</TabsTrigger>
+      <TabsTrigger value="timeline">Timeline</TabsTrigger>
+      <TabsTrigger value="messages">Messages</TabsTrigger>
+      <TabsTrigger value="options">Options</TabsTrigger>
+    </TabsList>
   );
 };
 

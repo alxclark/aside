@@ -30,7 +30,7 @@ export * from './TextField';
 import {Text} from './Text';
 export * from './Text';
 
-import {Tabs, Tab} from './Tabs';
+import {Tabs, TabsList, TabsTrigger, TabsContent} from './Tabs';
 export * from './Tabs';
 
 import {Checkbox} from './Checkbox';
@@ -66,7 +66,9 @@ export const AllComponents = {
   PaneToolbarItem,
   PaneToolbarSection,
   Tabs,
-  Tab,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
   Checkbox,
   Divider,
   TextField,

@@ -8,7 +8,13 @@ import React, {
 } from 'react';
 import {RecoilRoot} from 'recoil';
 import {useRecoilObserver} from '@aside/recoil';
-import {Pane, PaneToolbar, Tab, Tabs} from '@aside/chrome-ui-remote';
+import {
+  Pane,
+  PaneToolbar,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from '@aside/chrome-ui-remote';
 import {
   Aside,
   DevTools,
@@ -162,21 +168,24 @@ function AsideApp() {
   const recoil = useDataStore('recoil');
   const react = useDataStore('react');
   const count = useDataStore('count');
+  const network = useDataStore('network');
+
   const [tab, setTab] = useLocalStorageState('timeline', {
     key: 'tab',
   });
-  const network = useDataStore('network');
 
   if (tab.loading) return null;
 
   return (
     <Pane>
       <PaneToolbar>
-        <Tabs selected={tab.data} setSelected={(selected) => setTab(selected)}>
-          <Tab id="timeline" label="Timeline" />
-          <Tab id="recoil" label="Recoil" />
-          <Tab id="react" label="React" />
-          <Tab id="count" label="Count" />
+        <Tabs defaultValue={tab.data} onValueChange={setTab}>
+          <TabsList>
+            <TabsTrigger value="timeline">Timeline</TabsTrigger>
+            <TabsTrigger value="recoil">Recoil</TabsTrigger>
+            <TabsTrigger value="react">React</TabsTrigger>
+            <TabsTrigger value="count">Count</TabsTrigger>
+          </TabsList>
         </Tabs>
       </PaneToolbar>
 

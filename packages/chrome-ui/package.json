@@ -42,18 +42,19 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
+    "@aside/chrome-ui-remote": "^0.0.1",
     "autoprefixer": "^10.4.13",
     "classnames": "latest",
     "postcss": "^8.4.18",
     "postcss-cli": "^10.0.0",
-    "tailwindcss": "^3.2.1",
-    "@aside/chrome-ui-remote": "^0.0.1"
+    "tailwindcss": "^3.2.1"
   },
   "publishConfig": {
     "access": "public"

@@ -15,7 +15,7 @@ import {
 } from './Pane';
 import {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
 import {Table, TableCell, TableRow} from './Table';
-import {Tabs, Tab} from './Tabs';
+import {Tabs, TabsList, TabsTrigger, TabsContent} from './Tabs';
 import {Text} from './Text';
 import {TextField} from './TextField';
 import {View} from './View';
@@ -51,7 +51,9 @@ export const Components = [
   PaneToolbarItem,
   PaneToolbarSection,
   Tabs,
-  Tab,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
   Checkbox,
   Divider,
   TextField,

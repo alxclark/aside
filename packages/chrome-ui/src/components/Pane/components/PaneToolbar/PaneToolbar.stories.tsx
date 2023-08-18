@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from 'react';
 
-import {Tabs, Tab} from '../../../Tabs';
+import {Tabs, TabsList, TabsTrigger} from '../../../Tabs';
 
 import {PaneToolbar} from './PaneToolbar';
 
@@ -14,11 +14,13 @@ const Template = (args: any) => <PaneToolbar {...args} />;
 
 const Children = () => {
   return (
-    <Tabs selected="messages" setSelected={console.log}>
-      <Tab id="state" label="State" />
-      <Tab id="timeline" label="Timeline" />
-      <Tab id="messages" label="Messages" />
-      <Tab id="options" label="Options" />
+    <Tabs defaultValue="messages">
+      <TabsList>
+        <TabsTrigger value="state">State</TabsTrigger>
+        <TabsTrigger value="timeline">Timeline</TabsTrigger>
+        <TabsTrigger value="messages">Messages</TabsTrigger>
+        <TabsTrigger value="options">Options</TabsTrigger>
+      </TabsList>
     </Tabs>
   );
 };
