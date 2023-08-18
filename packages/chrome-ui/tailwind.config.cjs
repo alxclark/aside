@@ -12,7 +12,8 @@ module.exports = {
     },
     extend: {
       boxShadow: {
-        table: 'inset 0px -1px 0px 0px hsl(var(--border))',
+        table:
+          'inset 0px -1px 0px 0px hsl(var(--border)), inset 0px 1px 0px 0px hsl(var(--border))',
       },
     },
     colors: {
