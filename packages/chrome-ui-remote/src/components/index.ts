@@ -3,7 +3,6 @@ import {Carret} from './Carret';
 import {Checkbox} from './Checkbox';
 import {ConsoleMessage} from './ConsoleMessage';
 import {Divider} from './Divider';
-import {Flex} from './Flex';
 import {Icon} from './Icon';
 import {Image} from './Image';
 import {Link} from './Link';
@@ -26,7 +25,6 @@ export * from './Carret';
 export * from './Checkbox';
 export * from './ConsoleMessage';
 export * from './Divider';
-export * from './Flex';
 export * from './Icon';
 export * from './Image';
 export * from './Link';
@@ -41,7 +39,6 @@ export * from './View';
 export const Components = [
   Button,
   Carret,
-  Flex,
   Icon,
   ConsoleMessage,
   Table,

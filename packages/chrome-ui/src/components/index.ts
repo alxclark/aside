@@ -18,9 +18,6 @@ export * from './ConsoleMessage';
 import {Table, TableRow, TableCell} from './Table';
 export * from './Table';
 
-import {Flex} from './Flex';
-export * from './Flex';
-
 import {View} from './View';
 export * from './View';
 
@@ -62,7 +59,6 @@ export const AllComponents = {
   Table,
   TableRow,
   TableCell,
-  Flex,
   View,
   Icon,
   PaneContent,

@@ -1,16 +1,10 @@
-import {Flex, Text} from '@aside/chrome-ui-remote';
+import {Text, View} from '@aside/chrome-ui-remote';
 
 export function EmptyView() {
   return (
-    <Flex
-      fullHeight
-      justifyContent="center"
-      alignItems="center"
-      direction="column"
-      gap="10px"
-    >
+    <View className="flex h-full justify-center items-center flex-col gap-2">
       <Text>Recording activity...</Text>
       <Text>Perform an action or hit ⌘ R to record the reload.</Text>
-    </Flex>
+    </View>
   );
 }

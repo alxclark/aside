@@ -104,5 +104,42 @@ module.exports = {
     },
   },
   plugins: [require('tailwindcss-animate')],
-  safelist: ['p-px', 'ml-1'],
+  safelist: [
+    // width
+    'w-40',
+    'min-w-40',
+    'max-w-40',
+    // padding
+    'p-px',
+    'p-1',
+    'p-2',
+    'py-1',
+    'px-0.5',
+    'p-0.5',
+    // margin
+    'ml-1',
+    // height
+    'h-full',
+    'max-h-full',
+    // flex
+    'flex',
+    'flex-col',
+    'shrink',
+    'shrink-0',
+    'grow',
+    'items-center',
+    'items-start',
+    'justify-center',
+    'justify-between',
+    // gap
+    'gap-1',
+    'gap-2',
+    // position
+    'relative',
+    'overflow-scroll',
+    'overflow-hidden',
+    'break-words',
+    // border
+    'border-l',
+  ],
 };

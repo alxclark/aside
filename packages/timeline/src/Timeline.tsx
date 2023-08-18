@@ -4,7 +4,6 @@ import {useExtensionApi, useLocalStorageState} from '@aside/react';
 import {
   Button,
   PaneToolbar,
-  Flex,
   PaneToolbarSection,
   PaneToolbarItem,
   Checkbox,
@@ -142,8 +141,8 @@ export function Timeline({children, data}: TimelineProps) {
   return (
     <>
       <PaneToolbar>
-        <Flex justifyContent="space-between" alignItems="start">
-          <Flex alignItems="center" wrap>
+        <View className="flex justify-between items-start">
+          <View className="flex items-center flex-wrap">
             <PaneToolbarSection>
               <Button
                 title="Stop recording"
@@ -190,7 +189,7 @@ export function Timeline({children, data}: TimelineProps) {
                 />
               </PaneToolbarItem>
             </PaneToolbarSection>
-            <View position="relative">
+            <View className="relative">
               <Button onClick={() => setShowDataTypeMenu((prev) => !prev)}>
                 {getDataTypesText()}
                 <Carret className="ml-1" direction="down" />
@@ -210,7 +209,7 @@ export function Timeline({children, data}: TimelineProps) {
                 </SoftContextMenu>
               )}
             </View>
-          </Flex>
+          </View>
           <PaneToolbarSection separatorBefore>
             <Button
               size="icon"
@@ -222,14 +221,14 @@ export function Timeline({children, data}: TimelineProps) {
               />
             </Button>
           </PaneToolbarSection>
-        </Flex>
+        </View>
       </PaneToolbar>
       {showFilter.data && (
         <>
           <PaneToolbar>
-            <Flex alignItems="center" wrap justifyContent="space-between">
-              <Flex alignItems="center" gap="4px" wrap>
-                <View padding="3px 4px" width={163}>
+            <View className="flex items-center flex-wrap justify-between">
+              <View className="flex items-center gap-2 flex-wrap">
+                <View className="w-40 p-0.5">
                   <TextField
                     value={filter.data}
                     onChange={setFilter}
@@ -237,23 +236,22 @@ export function Timeline({children, data}: TimelineProps) {
                     id="filter"
                   />
                 </View>
-                <Flex wrap gap="7px">
-                  <Checkbox
-                    id="invert"
-                    label="Invert"
-                    checked={invertFilter.data}
-                    onChange={() => setInvertFilter((prev) => !prev)}
-                  />
-                </Flex>
-              </Flex>
-            </Flex>
+
+                <Checkbox
+                  id="invert"
+                  label="Invert"
+                  checked={invertFilter.data}
+                  onChange={() => setInvertFilter((prev) => !prev)}
+                />
+              </View>
+            </View>
           </PaneToolbar>
         </>
       )}
       {showTimelineOptions.data && (
         <PaneToolbar>
-          <Flex>
-            <View flexGrow>
+          <View className="flex">
+            <View className="grow">
               <PaneToolbarItem>
                 <Checkbox
                   id="large-rows"
@@ -263,18 +261,13 @@ export function Timeline({children, data}: TimelineProps) {
                 />
               </PaneToolbarItem>
             </View>
-          </Flex>
+          </View>
         </PaneToolbar>
       )}
       <PaneContent>
         {filteredRows.length > 0 ? (
-          <Flex fullHeight direction="row">
-            <View
-              maxHeight="100%"
-              overflow="scroll"
-              minWidth={150}
-              maxWidth={150}
-            >
+          <View className="flex h-full">
+            <View className="max-h-full overflow-scroll w-40 shrink-0">
               <Table
                 onSelect={(rowId) => setSelectedRow(rowId)}
                 selected={selectedRow}
@@ -286,7 +279,7 @@ export function Timeline({children, data}: TimelineProps) {
                 {filteredRows.map((row) => (
                   <TableRow key={row.id} id={row.id}>
                     <TableCell>
-                      <Flex gap="5px" alignItems="center">
+                      <View className="flex gap-1 items-center">
                         <Image
                           source={getRow(row.type)?.icon ?? ''}
                           height={11}
@@ -294,23 +287,18 @@ export function Timeline({children, data}: TimelineProps) {
                           filter={row.id === selectedRow ? 'grayscale' : 'none'}
                         />
                         {getRow(row.type)?.name(row)}
-                      </Flex>
+                      </View>
                     </TableCell>
                   </TableRow>
                 ))}
               </Table>
             </View>
-            <View
-              flexGrow
-              border="left"
-              overflowWrap="break-word"
-              overflow="hidden"
-            >
+            <View className="grow border-l border-border break-words overflow-hidden">
               <TimelineItemContext.Provider value={selectedRow}>
                 {children}
               </TimelineItemContext.Provider>
             </View>
-          </Flex>
+          </View>
         ) : (
           <EmptyView />
         )}

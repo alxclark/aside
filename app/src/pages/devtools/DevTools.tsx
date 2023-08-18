@@ -13,7 +13,6 @@ import {
 } from '@aside/extension';
 import {
   AllComponents as ChromeUIComponents,
-  Flex,
   Text,
   View,
   Link,
@@ -180,14 +179,8 @@ export function BrowserExtensionRenderer() {
 
   if (!connected) {
     return (
-      <View padding={10} fullHeight>
-        <Flex
-          fullHeight
-          justifyContent="center"
-          alignItems="center"
-          direction="column"
-          gap="10px"
-        >
+      <View className="p-2 h-full">
+        <View className="flex h-full justify-center items-center flex-col gap-2">
           <Icon source="power-off" size="lg" variant="subdued" />
           <Text align="center">This website is not connected to Aside.</Text>
           <Text align="center">
@@ -197,7 +190,7 @@ export function BrowserExtensionRenderer() {
             </Link>
             .
           </Text>
-        </Flex>
+        </View>
       </View>
     );
   }

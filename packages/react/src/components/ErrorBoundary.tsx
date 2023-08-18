@@ -1,5 +1,5 @@
 import React, {Component, ErrorInfo, ReactNode} from 'react';
-import {Flex, Text} from '@aside/chrome-ui-remote';
+import {View, Text} from '@aside/chrome-ui-remote';
 
 interface Props {
   children?: ReactNode;
@@ -26,16 +26,10 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <Flex
-          fullHeight
-          justifyContent="center"
-          alignItems="center"
-          direction="column"
-          gap="10px"
-        >
+        <View className="h-full justify-center items-center flex-col gap-2">
           <Text>Aw snap!</Text>
           <Text>Something went wrong while displaying the devtools panel.</Text>
-        </Flex>
+        </View>
       );
     }
 
