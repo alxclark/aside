@@ -293,7 +293,7 @@ export function Timeline({children, data}: TimelineProps) {
                 ))}
               </Table>
             </View>
-            <View className="grow border-l border-border break-words overflow-hidden">
+            <View className="grow border-l-2 border-border break-words overflow-hidden">
               <TimelineItemContext.Provider value={selectedRow}>
                 {children}
               </TimelineItemContext.Provider>

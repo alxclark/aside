@@ -12,7 +12,7 @@ module.exports = {
     },
     extend: {
       boxShadow: {
-        table: 'inset 0px 0px 0px 1px #4a4c50',
+        table: 'inset 0px -1px 0px 0px hsl(var(--border))',
       },
     },
     colors: {
@@ -141,5 +141,6 @@ module.exports = {
     'break-words',
     // border
     'border-l',
+    'border-l-2',
   ],
 };
