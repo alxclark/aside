@@ -2,13 +2,15 @@ import {createEndpoint} from '@remote-ui/rpc';
 import type {Endpoint} from '@remote-ui/rpc';
 import {
   ContentScriptApiForWebpage,
-  fromPort,
   ContentScriptApiForDevTools,
   DevToolsApiForContentScript,
-} from '@aside/extension';
-import {fromWebpage, WebpageApi} from '@aside/web';
-import {createUnsafeEncoder} from '@aside/core';
+  fromWebpage,
+  WebpageApi,
+} from '@aside/core';
 import {Runtime} from 'webextension-polyfill';
+
+import {createUnsafeEncoder} from '../Remote';
+import {fromPort} from '../Remote/rpc';
 
 interface Current {
   webpage?: Endpoint<WebpageApi>;

@@ -9,8 +9,7 @@ import {
   ContentScriptApiForDevTools,
   DevToolsApiForContentScript,
   NetworkRequest,
-  fromPort,
-} from '@aside/extension';
+} from '@aside/core';
 import {
   AllComponents as ChromeUIComponents,
   Text,
@@ -18,12 +17,10 @@ import {
   Link,
   Icon,
 } from '@aside/chrome-ui/react';
-// eslint-disable-next-line import/order
 import {Runtime} from 'webextension-polyfill';
 import '@aside/chrome-ui/css';
 
-import {createUnsafeEncoder} from '@aside/core';
-
+import {createUnsafeEncoder, fromPort} from '../../foundation/Remote';
 import {useRemoteSubscribable} from '../../utilities/subscription';
 
 export function BrowserExtensionRenderer() {

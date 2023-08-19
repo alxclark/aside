@@ -22,7 +22,6 @@ export const sharedConfig: UserConfig = {
       // defined in the package.json files.
       // This is a problem during development, since
       // we don't want to rely on assets from the build directory.
-      '@aside/extension': `${r('../packages/extension/src')}`,
       '@aside/web': `${r('../packages/web/src')}`,
       '@aside/react': `${r('../packages/react/src')}`,
       '@aside/core': `${r('../packages/core/src')}`,

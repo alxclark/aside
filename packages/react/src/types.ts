@@ -1,4 +1,4 @@
-import {NetworkRequest} from '@aside/extension';
+import {NetworkRequest} from '@aside/core';
 import {SetStateAction} from 'react';
 import {StatefulRemoteSubscribable} from '@remote-ui/async-subscription';
 

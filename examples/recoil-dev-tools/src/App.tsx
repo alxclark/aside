@@ -36,7 +36,7 @@ import {
 } from '@aside/timeline';
 
 import {NewTodo, Todos} from './components';
-import {NetworkRequest} from '@aside/extension';
+import {NetworkRequest} from '@aside/core';
 
 export function App() {
   const count = useState(0);

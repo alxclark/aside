@@ -25,7 +25,7 @@
     "@aside/chrome-ui-remote": "0.0.1"
   },
   "devDependencies": {
-    "@aside/extension": "0.6.0"
+    "@aside/core": "0.6.0"
   },
   "publishConfig": {
     "access": "public"

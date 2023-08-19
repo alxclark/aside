@@ -6,14 +6,15 @@ import React, {
   useRef,
   useMemo,
 } from 'react';
-import {fromWebpage, WebpageApi} from '@aside/web';
+import {
+  fromWebpage,
+  WebpageApi,
+  ContentScriptApiForWebpage,
+  StatefulExtensionApi as SubscribableApi,
+} from '@aside/core';
 import {RemoteRoot, createRemoteRoot} from '@remote-ui/react';
 import {createEndpoint, Endpoint, release, retain} from '@remote-ui/rpc';
 import {makeStatefulSubscribable} from '@remote-ui/async-subscription';
-import {
-  ContentScriptApiForWebpage,
-  StatefulExtensionApi as SubscribableApi,
-} from '@aside/extension';
 import type {RemoteChannel} from '@remote-ui/core';
 
 import {AllComponents} from '../ui';

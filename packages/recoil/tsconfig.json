@@ -14,7 +14,7 @@
     ],
   },
   "references": [
-    { "path": "../extension" },
+    { "path": "../core" },
     { "path": "../chrome-ui" },
     { "path": "../react" },
     { "path": "../timeline" },

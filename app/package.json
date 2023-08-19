@@ -54,8 +54,6 @@
     "tslib": "latest"
   },
   "dependencies": {
-    "@aside/extension": "0.6.0",
-    "@aside/web": "0.6.0",
     "@aside/react": "0.6.0",
     "@aside/core": "0.6.0",
     "@aside/chrome-ui": "0.6.0",

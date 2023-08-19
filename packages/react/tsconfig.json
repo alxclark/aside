@@ -15,7 +15,6 @@
   "references": [
     { "path": "../chrome-ui" },
     { "path": "../chrome-ui-remote/tsconfig.json" },
-    { "path": "../web" },
-    { "path": "../extension" }
+    { "path": "../core" }
   ]
 }

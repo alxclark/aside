@@ -32,10 +32,9 @@ export default defineConfig({
       // defined in the package.json files.
       // This is a problem during development, since
       // we don't want to rely on assets from the build directory.
-      '@aside/extension': `${r('../../packages/extension/src')}`,
+      '@aside/core': `${r('../../packages/core/src')}`,
       '@aside/web': `${r('../../packages/web/src')}`,
       '@aside/react': `${r('../../packages/react/src')}`,
-      '@aside/core': `${r('../../packages/core/src')}`,
       '@aside/chrome-ui-remote': `${r('../../packages/chrome-ui-remote/src')}`,
       '@aside/timeline': `${r('../../packages/timeline/src')}`,
       '@aside/recoil': `${r('../../packages/recoil/src')}`,
