@@ -2,7 +2,7 @@ import React, {PropsWithChildren} from 'react';
 import {ConsoleMessage} from '@aside/chrome-ui-remote';
 import {useExtensionApi} from '@aside/react';
 
-import {useActivityItem, useDataStore} from '../hooks';
+import {useActivityItem, useActivityStore} from '../hooks';
 
 export function ActivityDetails({
   children,
@@ -10,7 +10,7 @@ export function ActivityDetails({
 }: PropsWithChildren<{type: string}>) {
   const api = useExtensionApi();
   const selected = useActivityItem();
-  const {rows} = useDataStore(type).data;
+  const {rows} = useActivityStore(type).data;
 
   if (!selected) return null;
 

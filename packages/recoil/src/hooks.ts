@@ -1,16 +1,16 @@
 import {PropsWithChildren, useMemo} from 'react';
 import {useRecoilSnapshot, Snapshot as RecoilSnapshot} from 'recoil';
-import {useObserver, Observer, Snapshot} from '@aside/timeline';
+import {useMonitor, Monitor, Snapshot} from '@aside/activity';
 
 export type Props = PropsWithChildren<{
   ignoredRecoilKeys?: string[];
 }>;
 
-export function useRecoilObserver({
+export function useRecoilMonitor({
   ignoredRecoilKeys,
 }: {
   ignoredRecoilKeys?: string[];
-} = {}): Observer {
+} = {}): Monitor {
   const recoilSnapshot = useRecoilSnapshot();
   const ignoredRecoilKeysDependency = ignoredRecoilKeys?.sort().join();
 
@@ -20,7 +20,7 @@ export function useRecoilObserver({
     [ignoredRecoilKeysDependency, recoilSnapshot.getID()],
   );
 
-  return useObserver(snapshot.nodes, [snapshot.nodes]);
+  return useMonitor(snapshot.nodes, [snapshot.nodes]);
 }
 
 // Recoil snapshots need to be manually retained in order to extract the data from it.

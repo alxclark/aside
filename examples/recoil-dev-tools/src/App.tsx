@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import {RecoilRoot} from 'recoil';
-import {useRecoilObserver} from '@aside/recoil';
+import {useRecoilMonitor} from '@aside/recoil';
 import {
   Pane,
   PaneToolbar,
@@ -22,11 +22,11 @@ import 'todomvc-app-css/index.css';
 
 import {
   Activity,
-  useMonitor,
   ActivityDetails,
   ActivityView,
-  Provider as AsideActivity,
+  ActivityProvider,
   ActivityStoreDescriptor,
+  useMonitor,
   useNetworkActivity,
 } from '@aside/activity';
 
@@ -57,7 +57,7 @@ const CountContext = createContext<
 >(undefined);
 
 function AsideDevTools() {
-  const recoilMonitor = useRecoilObserver({
+  const recoilMonitor = useRecoilMonitor({
     ignoredRecoilKeys: ['todosBase'],
   });
 
@@ -103,24 +103,24 @@ function AsideDevTools() {
   return (
     <Aside>
       <DevTools>
-        <ActivityProvider appActivity={appActivity}>
+        <AppActivityProvider activity={appActivity}>
           <AsideApp />
-        </ActivityProvider>
+        </AppActivityProvider>
       </DevTools>
     </Aside>
   );
 }
 
-function ActivityProvider({
-  appActivity,
+function AppActivityProvider({
+  activity,
   children,
-}: PropsWithChildren<{appActivity: ActivityStoreDescriptor[]}>) {
+}: PropsWithChildren<{activity: ActivityStoreDescriptor[]}>) {
   const networkActivity = useNetworkActivity();
 
   return (
-    <AsideActivity stores={[...appActivity, networkActivity]}>
+    <ActivityProvider activity={[...activity, networkActivity]}>
       {children}
-    </AsideActivity>
+    </ActivityProvider>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import {ConsoleMessage} from '@aside/chrome-ui-remote';
 
-import {useDataStore} from '../hooks';
+import {useActivityStore} from '../hooks';
 
 export interface ActivityViewProps {
   children?: React.ReactNode;
@@ -9,7 +9,7 @@ export interface ActivityViewProps {
 }
 
 export function ActivityView({children, type}: ActivityViewProps) {
-  const monitor = useDataStore(type).monitor;
+  const monitor = useActivityStore(type).monitor;
 
   return (
     <>

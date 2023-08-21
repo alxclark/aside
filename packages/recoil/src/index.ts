@@ -1,1 +1,1 @@
-export {useRecoilObserver} from './hooks';
+export {useRecoilMonitor} from './hooks';

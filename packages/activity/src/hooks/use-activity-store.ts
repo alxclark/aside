@@ -2,7 +2,7 @@ import {useContext} from 'react';
 
 import {ActivityStoreContextMap} from '../contexts';
 
-export function useDataStore(type: string) {
+export function useActivityStore(type: string) {
   const context = ActivityStoreContextMap.get(type);
 
   if (!context) {

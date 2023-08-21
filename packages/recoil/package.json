@@ -28,7 +28,7 @@
   "devDependencies": {
     "@aside/core": "0.6.0",
     "@aside/chrome-ui": "0.6.0",
-    "@aside/timeline": "0.3.0"
+    "@aside/activity": "0.0.1"
   },
   "publishConfig": {
     "access": "public"
