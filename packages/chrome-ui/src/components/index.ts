@@ -45,11 +45,21 @@ export * from './Image';
 import {Link} from './Link';
 export * from './Link';
 
-import {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
-export * from './SoftContextMenu';
-
 import {Carret} from './Carret';
 export * from './Carret';
+
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './Dropdown';
+export * from './Dropdown';
 
 export const AllComponents = {
   Carret,
@@ -75,6 +85,13 @@ export const AllComponents = {
   Text,
   Image,
   Link,
-  SoftContextMenu,
-  SoftContextMenuItem,
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 };

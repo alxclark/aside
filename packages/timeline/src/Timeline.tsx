@@ -14,11 +14,13 @@ import {
   TableRow,
   TableCell,
   Image,
-  SoftContextMenu,
-  SoftContextMenuItem,
-  Divider,
   Icon,
   Carret,
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from '@aside/chrome-ui-remote';
 
 import {TimelineData} from './types';
@@ -76,13 +78,15 @@ export function Timeline({children, data}: TimelineProps) {
     string | undefined
   >();
 
-  const [showDataTypeMenu, setShowDataTypeMenu] = useState(false);
-
   const handleSelectedDataType = useCallback(
     (id: string) => {
       if (id === 'all') {
-        console.log(rows.map((row) => row.type));
-        setSelectedDataTypes(rows.map((row) => row.type));
+        const allSelected = data.length === selectedDataTypes.length;
+        if (allSelected) {
+          setSelectedDataTypes([]);
+        } else {
+          setSelectedDataTypes(data.map((row) => row.type));
+        }
       } else {
         setSelectedDataTypes((prev) => {
           if (prev.includes(id)) {
@@ -93,7 +97,7 @@ export function Timeline({children, data}: TimelineProps) {
         });
       }
     },
-    [rows, setSelectedDataTypes],
+    [data, selectedDataTypes.length, setSelectedDataTypes],
   );
 
   const selectedRow = useMemo(() => {
@@ -112,7 +116,7 @@ export function Timeline({children, data}: TimelineProps) {
   }
 
   function getDataTypesText() {
-    if (selectedDataTypes.length === rows.length) {
+    if (selectedDataTypes.length === data.length) {
       return 'All types';
     }
 
@@ -189,26 +193,32 @@ export function Timeline({children, data}: TimelineProps) {
                 />
               </PaneToolbarItem>
             </PaneToolbarSection>
-            <View className="relative">
-              <Button onClick={() => setShowDataTypeMenu((prev) => !prev)}>
-                {getDataTypesText()}
-                <Carret className="ml-1" direction="down" />
-              </Button>
-              {showDataTypeMenu && (
-                <SoftContextMenu
-                  selected={selectedDataTypes}
-                  onPress={handleSelectedDataType}
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Button>
+                  {getDataTypesText()}
+                  <Carret className="ml-1" direction="down" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuCheckboxItem
+                  checked={selectedDataTypes.length === data.length}
+                  onCheckedChange={() => handleSelectedDataType('all')}
                 >
-                  <SoftContextMenuItem id="all">All</SoftContextMenuItem>
-                  <Divider horizontal />
-                  {data.map(({type, displayName}) => (
-                    <SoftContextMenuItem id={type} key={type}>
-                      {displayName}
-                    </SoftContextMenuItem>
-                  ))}
-                </SoftContextMenu>
-              )}
-            </View>
+                  All
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuSeparator />
+                {data.map(({type, displayName}) => (
+                  <DropdownMenuCheckboxItem
+                    checked={selectedDataTypes.includes(type)}
+                    onCheckedChange={() => handleSelectedDataType(type)}
+                    key={type}
+                  >
+                    {displayName}
+                  </DropdownMenuCheckboxItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </View>
           <PaneToolbarSection separatorBefore>
             <Button

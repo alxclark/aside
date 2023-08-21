@@ -113,6 +113,7 @@ module.exports = {
     // padding
     'p-px',
     'p-1',
+    'pl-1',
     'p-2',
     'py-1',
     'px-0.5',

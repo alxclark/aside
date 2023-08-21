@@ -3,6 +3,17 @@ import {Carret} from './Carret';
 import {Checkbox} from './Checkbox';
 import {ConsoleMessage} from './ConsoleMessage';
 import {Divider} from './Divider';
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './Dropdown';
 import {Icon} from './Icon';
 import {Image} from './Image';
 import {Link} from './Link';
@@ -13,7 +24,6 @@ import {
   PaneToolbarItem,
   PaneToolbarSection,
 } from './Pane';
-import {SoftContextMenu, SoftContextMenuItem} from './SoftContextMenu';
 import {Table, TableCell, TableRow} from './Table';
 import {Tabs, TabsList, TabsTrigger, TabsContent} from './Tabs';
 import {Text} from './Text';
@@ -29,12 +39,12 @@ export * from './Icon';
 export * from './Image';
 export * from './Link';
 export * from './Pane';
-export * from './SoftContextMenu';
 export * from './Table';
 export * from './Tabs';
 export * from './Text';
 export * from './TextField';
 export * from './View';
+export * from './Dropdown';
 
 export const Components = [
   Button,
@@ -60,6 +70,13 @@ export const Components = [
   Text,
   Image,
   Link,
-  SoftContextMenu,
-  SoftContextMenuItem,
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 ];
