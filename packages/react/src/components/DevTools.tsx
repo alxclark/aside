@@ -199,6 +199,15 @@ function ExtensionApiProvider({
         showPreviousValues,
         showTimelineOptions,
       },
+      activity: {
+        recordSnapshot,
+        filter,
+        showFilter,
+        preserveLog,
+        invertFilter,
+        showPreviousValues,
+        showTimelineOptions,
+      },
     };
   }, [
     filter,
