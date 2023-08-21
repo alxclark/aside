@@ -28,4 +28,13 @@ export interface ExtensionApi {
     showPreviousValues: LocalStorageState<boolean>;
     showTimelineOptions: LocalStorageState<boolean>;
   };
+  activity: {
+    preserveLog: LocalStorageState<boolean>;
+    recordSnapshot: LocalStorageState<boolean>;
+    invertFilter: LocalStorageState<boolean>;
+    showFilter: LocalStorageState<boolean>;
+    filter: LocalStorageState<string>;
+    showPreviousValues: LocalStorageState<boolean>;
+    showTimelineOptions: LocalStorageState<boolean>;
+  };
 }

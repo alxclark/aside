@@ -37,6 +37,7 @@ export default defineConfig({
       '@aside/react': `${r('../../packages/react/src')}`,
       '@aside/chrome-ui-remote': `${r('../../packages/chrome-ui-remote/src')}`,
       '@aside/timeline': `${r('../../packages/timeline/src')}`,
+      '@aside/activity': `${r('../../packages/activity/src')}`,
       '@aside/recoil': `${r('../../packages/recoil/src')}`,
     },
   },

@@ -3,12 +3,15 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 import {
   TabsContentProps,
   TabsListProps,
+  TabsProps,
   TabsTriggerProps,
 } from '@aside/chrome-ui-remote';
 
 import {cn} from '../../utilities/style';
 
-const Tabs = TabsPrimitive.Root;
+const Tabs = (props: TabsProps) => (
+  <TabsPrimitive.Root className="flex flex-col grow" {...props} />
+);
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
@@ -44,7 +47,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+      'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 flex data-[state=active]:grow flex-col',
       className,
     )}
     {...props}

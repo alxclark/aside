@@ -1,0 +1,32 @@
+{
+  "name": "@aside/activity",
+  "version": "0.0.1",
+  "type": "module",
+  "license": "BSD-3-Clause",
+  "files": [
+    "build"
+  ],
+  "main": "./build/js/activity.umd.js",
+  "module": "./build/js/activity.es.js",
+  "types": "./build/ts/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./build/js/activity.es.js",
+      "require": "./build/js/activity.umd.js"
+    }
+  },
+  "scripts": {
+    "clean": "rm -rf build",
+    "test": "vitest test",
+    "build": "vite build",
+    "lint": "tsc"
+  },
+  "dependencies": {
+    "@aside/react": "0.6.0",
+    "@aside/chrome-ui-remote": "^0.0.1"
+  },
+  "devDependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
+}

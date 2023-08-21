@@ -12,31 +12,25 @@ import {
   Pane,
   PaneToolbar,
   Tabs,
+  TabsContent,
   TabsList,
   TabsTrigger,
 } from '@aside/chrome-ui-remote';
-import {
-  Aside,
-  DevTools,
-  useLocalStorageState,
-  useNetworkRequests,
-} from '@aside/react';
+import {Aside, DevTools, useLocalStorageState} from '@aside/react';
 
 import 'todomvc-app-css/index.css';
 
 import {
-  Timeline,
-  useDataStore,
-  useObserver,
-  TimelineDetails,
-  DataView,
-  Provider as DataStoreProvider,
-  DataStoreDescriptor,
-  Snapshot,
-} from '@aside/timeline';
+  Activity,
+  useMonitor,
+  ActivityDetails,
+  ActivityView,
+  Provider as AsideActivity,
+  ActivityStoreDescriptor,
+  useNetworkActivity,
+} from '@aside/activity';
 
 import {NewTodo, Todos} from './components';
-import {NetworkRequest} from '@aside/core';
 
 export function App() {
   const count = useState(0);
@@ -63,114 +57,75 @@ const CountContext = createContext<
 >(undefined);
 
 function AsideDevTools() {
-  const recoilObserver = useRecoilObserver({
+  const recoilMonitor = useRecoilObserver({
     ignoredRecoilKeys: ['todosBase'],
   });
 
   const count = useContext(CountContext);
-  const reactObserver = useObserver(
+  const reactMonitor = useMonitor(
     {
       CountContext: count,
     },
     [count],
   );
 
-  const countObserver = useObserver(
+  const countMonitor = useMonitor(
     {
       count: count![0],
     },
     [count],
   );
 
-  const appStores: DataStoreDescriptor[] = useMemo(
+  const appActivity: ActivityStoreDescriptor[] = useMemo(
     () => [
       {
         type: 'react',
         displayName: 'React',
-        observer: reactObserver,
+        monitor: reactMonitor,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
       },
       {
         type: 'count',
         displayName: 'Count',
-        observer: countObserver,
+        monitor: countMonitor,
         icon: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg',
       },
       {
         type: 'recoil',
         displayName: 'Recoil',
-        observer: recoilObserver,
+        monitor: recoilMonitor,
         icon: 'https://recoiljs.org/img/favicon.png',
       },
     ],
-    [countObserver, reactObserver, recoilObserver],
+    [countMonitor, reactMonitor, recoilMonitor],
   );
 
   return (
     <Aside>
       <DevTools>
-        <DataProvider appStores={appStores}>
+        <ActivityProvider appActivity={appActivity}>
           <AsideApp />
-        </DataProvider>
+        </ActivityProvider>
       </DevTools>
     </Aside>
   );
 }
 
-function DataProvider({
-  appStores,
+function ActivityProvider({
+  appActivity,
   children,
-}: PropsWithChildren<{appStores: DataStoreDescriptor[]}>) {
-  const networkRequests = useNetworkRequests();
-
-  const networkStore: DataStoreDescriptor<Snapshot<NetworkRequest>> =
-    useMemo(() => {
-      const last = networkRequests[networkRequests.length - 1];
-
-      return {
-        displayName: 'Network',
-        type: 'network',
-        rowName: (row) => {
-          if (!row?.nodes.request?.url) return row.nodes.type;
-          const urlParts = row.nodes.request.url.split('/');
-          const lastUrlPath = urlParts[urlParts.length - 1];
-
-          if (lastUrlPath.length === 0) {
-            return row.nodes.type;
-          }
-
-          return lastUrlPath;
-        },
-        observer: {
-          snapshot: {
-            id: last?.time.toString() + last?.request.url,
-            createdAt: last?.time.toString(),
-            nodes: last,
-          },
-          snapshots: networkRequests.map((request) => ({
-            id: request.time.toString() + request.request.url,
-            createdAt: request.time.toString(),
-            nodes: request,
-          })),
-          skipDiffing: true,
-        },
-      };
-    }, [networkRequests]);
+}: PropsWithChildren<{appActivity: ActivityStoreDescriptor[]}>) {
+  const networkActivity = useNetworkActivity();
 
   return (
-    <DataStoreProvider stores={[...appStores, networkStore]}>
+    <AsideActivity stores={[...appActivity, networkActivity]}>
       {children}
-    </DataStoreProvider>
+    </AsideActivity>
   );
 }
 
 function AsideApp() {
-  const recoil = useDataStore('recoil');
-  const react = useDataStore('react');
-  const count = useDataStore('count');
-  const network = useDataStore('network');
-
-  const [tab, setTab] = useLocalStorageState('timeline', {
+  const [tab, setTab] = useLocalStorageState('activity', {
     key: 'tab',
   });
 
@@ -178,28 +133,34 @@ function AsideApp() {
 
   return (
     <Pane>
-      <PaneToolbar>
-        <Tabs defaultValue={tab.data} onValueChange={setTab}>
+      <Tabs defaultValue={tab.data} onValueChange={setTab}>
+        <PaneToolbar>
           <TabsList>
-            <TabsTrigger value="timeline">Timeline</TabsTrigger>
+            <TabsTrigger value="activity">Activity</TabsTrigger>
             <TabsTrigger value="recoil">Recoil</TabsTrigger>
             <TabsTrigger value="react">React</TabsTrigger>
             <TabsTrigger value="count">Count</TabsTrigger>
           </TabsList>
-        </Tabs>
-      </PaneToolbar>
+        </PaneToolbar>
 
-      {tab.data === 'timeline' && (
-        <Timeline data={[recoil.data, react.data, count.data, network.data]}>
-          <TimelineDetails type="recoil" />
-          <TimelineDetails type="react" />
-          <TimelineDetails type="count" />
-          <TimelineDetails type="network" />
-        </Timeline>
-      )}
-      {tab.data === 'recoil' && <DataView type="recoil" />}
-      {tab.data === 'react' && <DataView type="react" />}
-      {tab.data === 'count' && <DataView type="count" />}
+        <TabsContent value="activity">
+          <Activity>
+            <ActivityDetails type="recoil" />
+            <ActivityDetails type="react" />
+            <ActivityDetails type="count" />
+            <ActivityDetails type="network" />
+          </Activity>
+        </TabsContent>
+        <TabsContent value="recoil">
+          <ActivityView type="recoil" />
+        </TabsContent>
+        <TabsContent value="react">
+          <ActivityView type="react" />
+        </TabsContent>
+        <TabsContent value="count">
+          <ActivityView type="count" />
+        </TabsContent>
+      </Tabs>
     </Pane>
   );
 }
