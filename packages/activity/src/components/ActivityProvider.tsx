@@ -41,7 +41,6 @@ export function ActivityProvider({activity, children}: Props) {
       !initialSnapshots &&
       !preserveLog.loading
     ) {
-      console.log(preserveLog.data, persistedSnapshots);
       setInitialSnapshots(preserveLog.data ? persistedSnapshots : {});
     }
   }, [
@@ -65,8 +64,6 @@ export function ActivityProvider({activity, children}: Props) {
       },
       {},
     );
-
-    console.log({result});
 
     setPersistedSnapshots(result, {
       persist: preserveLog.data,
