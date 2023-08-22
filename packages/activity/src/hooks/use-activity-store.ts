@@ -1,13 +1,19 @@
-import {useContext} from 'react';
+import {useMemo} from 'react';
 
-import {ActivityStoreContextMap} from '../contexts';
+import {useActivity} from './use-activity';
 
 export function useActivityStore(type: string) {
-  const context = ActivityStoreContextMap.get(type);
+  const activity = useActivity();
 
-  if (!context) {
-    throw new Error(`No data store for type ${type}`);
-  }
+  return useMemo(() => {
+    const store = activity.find((store) => store.data.type === type);
 
-  return useContext(context);
+    if (!store) {
+      throw new Error(
+        `No activity store of type ${type} available in context.`,
+      );
+    }
+
+    return store;
+  }, [activity, type]);
 }

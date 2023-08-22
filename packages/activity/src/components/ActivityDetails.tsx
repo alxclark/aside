@@ -22,7 +22,7 @@ export function ActivityDetails({
     <>
       <ConsoleMessage
         value={matchingRow.nodes}
-        showPreviousValues={api.timeline.showPreviousValues[0].data}
+        showPreviousValues={api.activity.showPreviousValues[0].data}
       />
       {children}
     </>

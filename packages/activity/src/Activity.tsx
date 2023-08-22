@@ -30,7 +30,7 @@ import {useActivity} from './hooks/use-activity';
 export interface ActivityProps extends PropsWithChildren {}
 
 export function Activity({children}: ActivityProps) {
-  const data = useActivity();
+  const activity = useActivity();
 
   const {timeline} = useExtensionApi();
   const [filter, setFilter] = timeline.filter;
@@ -43,27 +43,35 @@ export function Activity({children}: ActivityProps) {
   const [showPreviousValues, setShowPreviousValues] =
     timeline.showPreviousValues;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const initialDataTypes = useMemo(() => data.map((row) => row.type), []);
+  const initialDataTypes = useMemo(
+    () => activity.map((row) => row.data.type),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   const [{data: selectedDataTypes}, setSelectedDataTypes] =
     useLocalStorageState(initialDataTypes, {
       key: 'selected-data-types',
     });
 
-  const rows = data
+  const rows = activity
     .flatMap((column) =>
-      column.rows.map((row, index) => ({...row, type: column.type, index})),
+      column.data.rows.map((row, index) => ({
+        ...row,
+        type: column.data.type,
+        index,
+      })),
     )
     .sort((left, right) => {
       if (left.createdAt === right.createdAt) return 0;
       return left.createdAt < right.createdAt ? -1 : 1;
     });
 
-  const getRow = (type: string) => data.find((group) => group.type === type);
+  const getRow = (type: string) =>
+    activity.find((store) => store.data.type === type);
 
   const filteredRows = rows.filter((row) => {
-    const rowDescriptor = getRow(row.type);
+    const rowDescriptor = getRow(row.type)?.data;
     const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
     const isEmpty = Object.keys(row.nodes).length === 0;
     const included = query?.includes(filter.data ?? '');
@@ -81,11 +89,11 @@ export function Activity({children}: ActivityProps) {
   const handleSelectedDataType = useCallback(
     (id: string) => {
       if (id === 'all') {
-        const allSelected = data.length === selectedDataTypes.length;
+        const allSelected = activity.length === selectedDataTypes.length;
         if (allSelected) {
           setSelectedDataTypes([]);
         } else {
-          setSelectedDataTypes(data.map((row) => row.type));
+          setSelectedDataTypes(activity.map((row) => row.data.type));
         }
       } else {
         setSelectedDataTypes((prev) => {
@@ -97,7 +105,7 @@ export function Activity({children}: ActivityProps) {
         });
       }
     },
-    [data, selectedDataTypes.length, setSelectedDataTypes],
+    [activity, selectedDataTypes.length, setSelectedDataTypes],
   );
 
   const selectedRow = useMemo(() => {
@@ -111,16 +119,16 @@ export function Activity({children}: ActivityProps) {
   }, [explicitlySelectedRow, filteredRows]);
 
   function handleClear() {
-    data.forEach(({onDelete}) => onDelete?.());
+    activity.forEach(({data: {onDelete}}) => onDelete?.());
     setSelectedRow(undefined);
   }
 
   function getDataTypesText() {
-    if (selectedDataTypes.length === data.length) {
+    if (selectedDataTypes.length === activity.length) {
       return 'All types';
     }
 
-    const row = getRow(selectedDataTypes[0]);
+    const row = getRow(selectedDataTypes[0])?.data;
     if (selectedDataTypes.length === 1 && row) {
       return `${row.displayName} only`;
     }
@@ -202,13 +210,13 @@ export function Activity({children}: ActivityProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuCheckboxItem
-                  checked={selectedDataTypes.length === data.length}
+                  checked={selectedDataTypes.length === activity.length}
                   onCheckedChange={() => handleSelectedDataType('all')}
                 >
                   All
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuSeparator />
-                {data.map(({type, displayName}) => (
+                {activity.map(({data: {type, displayName}}) => (
                   <DropdownMenuCheckboxItem
                     checked={selectedDataTypes.includes(type)}
                     onCheckedChange={() => handleSelectedDataType(type)}
@@ -291,12 +299,12 @@ export function Activity({children}: ActivityProps) {
                     <TableCell>
                       <View className="flex gap-1 items-center">
                         <Image
-                          source={getRow(row.type)?.icon ?? ''}
+                          source={getRow(row.type)?.data?.icon ?? ''}
                           height={11}
                           width={11}
                           filter={row.id === selectedRow ? 'grayscale' : 'none'}
                         />
-                        {getRow(row.type)?.name(row)}
+                        {getRow(row.type)?.data.name(row)}
                       </View>
                     </TableCell>
                   </TableRow>

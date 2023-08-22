@@ -1,16 +1,13 @@
 import {useContext} from 'react';
 
-import {ActivityStoreContextMap} from '../contexts';
-import {ActivityData} from '../types';
+import {ActivityStoreContext} from '../contexts';
 
 export function useActivity() {
-  return [...ActivityStoreContextMap.entries()].reduce<ActivityData[]>(
-    (allStores, [, storeContext]) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const activityStore = useContext(storeContext);
+  const activity = useContext(ActivityStoreContext);
 
-      return [...allStores, activityStore.data];
-    },
-    [],
-  );
+  if (!activity) {
+    throw new Error(`No activity available in context`);
+  }
+
+  return activity;
 }
