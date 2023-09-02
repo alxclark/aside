@@ -1,3 +1,5 @@
+import {IconProps} from '@aside/chrome-ui-remote';
+
 export interface Snapshot<T = {[key: string]: any}> {
   id: string;
   createdAt: string;
@@ -23,14 +25,20 @@ export interface ActivityStoreDescriptor<T extends Snapshot = Snapshot> {
   type: string;
   displayName: string;
   rowName?: (row: T) => string;
-  icon?: string;
+  icon?:
+    | ((row: T) => Pick<IconProps, 'source' | 'variant'> | `https://${string}`)
+    | Pick<IconProps, 'source' | 'variant'>
+    | `https://${string}`;
   monitor: Monitor;
 }
 
 export interface ActivityData<T extends Snapshot = Snapshot> {
   type: string;
   displayName: string;
-  icon: string;
+  icon?:
+    | ((row: T) => Pick<IconProps, 'source' | 'variant'> | `https://${string}`)
+    | Pick<IconProps, 'source' | 'variant'>
+    | `https://${string}`;
   rows: T[];
   name: (row: T) => string;
   query?: (row: T) => string;

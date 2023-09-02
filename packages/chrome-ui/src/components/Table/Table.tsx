@@ -10,10 +10,11 @@ export function Table({
   columns,
   children,
   onSelect,
-  border = true,
+  border = false,
   scrollable,
   selected,
   rowHeight,
+  className,
 }: TableProps) {
   const tablebodyRef = useRef<HTMLTableSectionElement | null>(null);
 
@@ -51,7 +52,10 @@ export function Table({
   return (
     <TableContext.Provider value={tableContext}>
       <table
-        className={classNames('w-full border-collapse border-border h-full')}
+        className={classNames(
+          'w-full border-collapse border-border',
+          className,
+        )}
       >
         <thead
           className={classNames(

@@ -123,6 +123,7 @@ module.exports = {
     // height
     'h-full',
     'max-h-full',
+    'min-h-full',
     // flex
     'flex',
     'flex-col',

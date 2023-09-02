@@ -8,6 +8,7 @@ export type TableProps = PropsWithChildren<{
   border?: boolean;
   scrollable?: boolean;
   rowHeight?: string;
+  className?: string;
 }>;
 
 export interface Column {

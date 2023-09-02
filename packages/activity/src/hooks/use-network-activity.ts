@@ -14,6 +14,12 @@ export function useNetworkActivity() {
       return {
         displayName: 'Network',
         type: 'network',
+        icon: (row) => {
+          return {
+            source: 'cog',
+            variant: 'toggled',
+          };
+        },
         rowName: (row) => {
           if (!row?.nodes.request?.url) return row.nodes.type;
           const urlParts = row.nodes.request.url.split('/');

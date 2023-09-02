@@ -26,6 +26,7 @@ import {
 import {ActivityItemContext} from './contexts';
 import {EmptyView} from './components';
 import {useActivity} from './hooks/use-activity';
+import {ActivityStore, Snapshot} from './types';
 
 export interface ActivityProps extends PropsWithChildren {}
 
@@ -285,29 +286,21 @@ export function Activity({children}: ActivityProps) {
       <PaneContent>
         {filteredRows.length > 0 ? (
           <View className="flex h-full">
-            <View className="max-h-full overflow-scroll w-40 shrink-0">
+            <View className="max-h-full overflow-scroll w-40 shrink-0 relative">
               <Table
                 onSelect={(rowId) => setSelectedRow(rowId)}
                 selected={selectedRow}
                 columns={[{title: 'Name', width: 30}]}
-                border={false}
                 scrollable
                 rowHeight="21px"
+                className="absolute"
               >
                 {filteredRows.map((row) => (
-                  <TableRow key={row.id} id={row.id}>
-                    <TableCell>
-                      <View className="flex gap-1 items-center">
-                        <Image
-                          source={getRow(row.type)?.data?.icon ?? ''}
-                          height={11}
-                          width={11}
-                          filter={row.id === selectedRow ? 'grayscale' : 'none'}
-                        />
-                        {getRow(row.type)?.data.name(row)}
-                      </View>
-                    </TableCell>
-                  </TableRow>
+                  <ActivityRow
+                    row={row}
+                    column={getRow(row.type)}
+                    key={row.id}
+                  />
                 ))}
               </Table>
             </View>
@@ -322,5 +315,61 @@ export function Activity({children}: ActivityProps) {
         )}
       </PaneContent>
     </>
+  );
+}
+
+type ActivityRowType = Snapshot & {
+  type: string;
+  index: number;
+};
+
+function ActivityRow({
+  row,
+  column,
+  selectedRow,
+}: {
+  row: ActivityRowType;
+  column?: ActivityStore;
+  selectedRow?: string;
+}) {
+  function renderIcon() {
+    if (!column?.data.icon) {
+      return <Icon source="cancel" size="sm" variant="subdued" />;
+    }
+
+    const computedIcon =
+      typeof column.data.icon === 'function'
+        ? column.data.icon(row)
+        : column.data.icon;
+
+    if (typeof computedIcon === 'string') {
+      return (
+        <Image
+          source={computedIcon}
+          height={11}
+          width={11}
+          filter={row.id === selectedRow ? 'grayscale' : 'none'}
+        />
+      );
+    }
+
+    return (
+      <Icon
+        source={computedIcon.source}
+        variant={computedIcon.variant}
+        size="sm"
+      />
+    );
+  }
+
+  return (
+    <TableRow key={row.id} id={row.id}>
+      <TableCell>
+        <View className="flex gap-1 items-center">
+          {renderIcon()}
+          {column?.data.name(row)}
+        </View>
+      </TableCell>
+    </TableRow>
   );
 }
