@@ -19,6 +19,7 @@ import {
   CogFilled,
 } from './icons';
 import {PowerOff} from './icons/PowerOff';
+import {FileScript} from './icons/FileScript';
 
 export type {IconProps};
 
@@ -31,9 +32,11 @@ const iconVariants = cva<Variants>('', {
       error: 'text-icon-error',
       toggled: 'text-icon-toggled',
       subdued: 'text-icon-subdued',
+      yellow: 'text-icon-yellow',
     },
     size: {
       default: 'w-[16px] h-[16px]',
+      md: 'w-[11px] h-[11px]',
       sm: 'w-2.5 h-2.5',
       lg: 'w-10 h-10',
     },
@@ -80,6 +83,8 @@ function IconSvg({source}: Pick<IconProps, 'source'>) {
       return <PowerOff />;
     case 'checkmark':
       return <Checkmark />;
+    case 'file-script':
+      return <FileScript />;
     default:
       return null;
   }

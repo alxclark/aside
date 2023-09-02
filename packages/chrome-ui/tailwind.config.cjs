@@ -62,6 +62,7 @@ module.exports = {
         error: 'hsl(var(--icon-error))',
         toggled: 'hsl(var(--icon-toggled))',
         subdued: 'hsl(var(--icon-subdued))',
+        yellow: 'hsl(var(--icon-yellow))',
       },
       grid: {
         head: 'hsl(var(--grid-head))',
@@ -118,6 +119,7 @@ module.exports = {
     'py-1',
     'px-0.5',
     'p-0.5',
+    'pl-0.5',
     // margin
     'ml-1',
     // height
@@ -145,5 +147,9 @@ module.exports = {
     // border
     'border-l',
     'border-l-2',
+    'invert',
+    'invert-0',
+    'brightness-0',
+    'brightness-100',
   ],
 };

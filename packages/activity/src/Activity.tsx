@@ -300,6 +300,7 @@ export function Activity({children}: ActivityProps) {
                     row={row}
                     column={getRow(row.type)}
                     key={row.id}
+                    selectedRow={selectedRow}
                   />
                 ))}
               </Table>
@@ -357,7 +358,12 @@ function ActivityRow({
       <Icon
         source={computedIcon.source}
         variant={computedIcon.variant}
-        size="sm"
+        size="md"
+        className={
+          row.id === selectedRow
+            ? 'brightness-0 invert'
+            : 'brightness-100 invert-1'
+        }
       />
     );
   }
@@ -365,7 +371,7 @@ function ActivityRow({
   return (
     <TableRow key={row.id} id={row.id}>
       <TableCell>
-        <View className="flex gap-1 items-center">
+        <View className="flex gap-1 items-center pl-0.5">
           {renderIcon()}
           {column?.data.name(row)}
         </View>

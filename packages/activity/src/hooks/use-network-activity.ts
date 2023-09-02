@@ -16,8 +16,8 @@ export function useNetworkActivity() {
         type: 'network',
         icon: (row) => {
           return {
-            source: 'cog',
-            variant: 'toggled',
+            source: 'file-script',
+            variant: 'yellow',
           };
         },
         rowName: (row) => {
