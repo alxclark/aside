@@ -9,7 +9,7 @@ export function Image({source, height, filter, width}: ImageProps) {
   return (
     <img
       src={source}
-      style={{height, width}}
+      style={{maxHeight: height, maxWidth: width}}
       className={classNames(
         filter === 'grayscale' ? 'grayscale' : 'grayscale-0',
       )}

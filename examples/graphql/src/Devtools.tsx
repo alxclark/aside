@@ -84,10 +84,8 @@ function AppActivityProvider({
   // will extract the GraphQL cache.
   useEffect(() => {
     const unsubscribe = onRequestFinished((request) => {
-      console.log({request});
-
       if (
-        request.type === 'fetch' &&
+        request._resourceType === 'fetch' &&
         request.request.method === 'POST' &&
         request.request.postData.mimeType === 'application/json'
       ) {

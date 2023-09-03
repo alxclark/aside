@@ -49,8 +49,9 @@ export interface StatefulExtensionApi {
 }
 
 export interface NetworkRequest {
-  type: string;
+  _resourceType: 'image' | 'script' | 'preflight' | 'fetch' | 'websocket';
   time: number;
+  startedDateTime: string;
   request: PostRequest | BaseRequest<'GET'> | BaseRequest<'PUT'>;
 }
 

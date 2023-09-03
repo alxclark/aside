@@ -26,9 +26,9 @@ export interface ActivityStoreDescriptor<T extends Snapshot = Snapshot> {
   displayName: string;
   rowName?: (row: T) => string;
   icon?:
-    | ((row: T) => Pick<IconProps, 'source' | 'variant'> | `https://${string}`)
+    | ((row: T) => Pick<IconProps, 'source' | 'variant'> | string)
     | Pick<IconProps, 'source' | 'variant'>
-    | `https://${string}`;
+    | string;
   monitor: Monitor;
 }
 
