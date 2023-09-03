@@ -37,21 +37,36 @@ export interface DevToolsApiForContentScript extends RemoteApi {
 export interface ExtensionApi {
   network: {
     requests: RemoteSubscribable<NetworkRequest[]>;
+    onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
   };
 }
 
 export interface StatefulExtensionApi {
   network: {
     requests: StatefulRemoteSubscribable<NetworkRequest[]>;
+    onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
   };
 }
 
 export interface NetworkRequest {
   type: string;
   time: number;
-  request: {
-    url: string;
+  request: PostRequest | BaseRequest<'GET'> | BaseRequest<'PUT'>;
+}
+
+interface PostRequest extends BaseRequest<'POST'> {
+  method: 'POST';
+  postData: {
+    mimeType: string;
+    text: string;
   };
+}
+
+interface BaseRequest<T = string> {
+  method: T;
+  httpVersion: string;
+  queryString: string;
+  url: string;
 }
 
 export interface WebpageApi extends RemoteApi {

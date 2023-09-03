@@ -1,0 +1,23 @@
+{
+  "name": "graphql-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "clean-vite": "rm -rf ./node_modules/.vite"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.8.2",
+    "@aside/activity": "0.0.1",
+    "@aside/chrome-ui-remote": "0.0.1",
+    "@aside/react": "0.6.0",
+    "graphql": "16.6.0",
+    "react": "18.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "vite": "^3.0.9"
+  }
+}

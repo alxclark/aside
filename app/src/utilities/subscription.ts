@@ -48,7 +48,7 @@ export function useRemoteSubscribable<T>(value: T): {
   useEffect(() => {
     const subscribers = subscriberRef.current!;
     subscribers.forEach((callback) => callback(valueRef.current));
-  }, []);
+  }, [value]);
 
   return useMemo(() => {
     return {

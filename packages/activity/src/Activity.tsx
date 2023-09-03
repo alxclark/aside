@@ -247,7 +247,7 @@ export function Activity({children}: ActivityProps) {
           <PaneToolbar>
             <View className="flex items-center flex-wrap justify-between">
               <View className="flex items-center gap-2 flex-wrap">
-                <View className="w-40 p-0.5">
+                <View className="w-52 p-0.5">
                   <TextField
                     value={filter.data}
                     onChange={setFilter}
@@ -286,7 +286,7 @@ export function Activity({children}: ActivityProps) {
       <PaneContent>
         {filteredRows.length > 0 ? (
           <View className="flex h-full">
-            <View className="max-h-full overflow-scroll w-40 shrink-0 relative">
+            <View className="max-h-full overflow-scroll w-52 shrink-0 relative">
               <Table
                 onSelect={(rowId) => setSelectedRow(rowId)}
                 selected={selectedRow}
@@ -371,7 +371,7 @@ function ActivityRow({
   return (
     <TableRow key={row.id} id={row.id}>
       <TableCell>
-        <View className="flex gap-1 items-center pl-0.5">
+        <View className="flex gap-1.5 items-center pl-0.5">
           {renderIcon()}
           {column?.data.name(row)}
         </View>

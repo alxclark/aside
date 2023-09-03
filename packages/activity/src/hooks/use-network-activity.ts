@@ -21,11 +21,13 @@ export function useNetworkActivity() {
           };
         },
         rowName: (row) => {
-          if (!row?.nodes.request?.url) return row.nodes.type;
+          if (!row?.nodes.request.url) {
+            return row.nodes.type;
+          }
           const urlParts = row.nodes.request.url.split('/');
-          const lastUrlPath = urlParts[urlParts.length - 1];
+          const lastUrlPath = urlParts.findLast((part) => part.length > 0);
 
-          if (lastUrlPath.length === 0) {
+          if (!lastUrlPath || lastUrlPath.length === 0) {
             return row.nodes.type;
           }
 

@@ -10,6 +10,7 @@ type LocalStorageState<T> = [
 export interface ExtensionApi {
   network: {
     requests: StatefulRemoteSubscribable<NetworkRequest[]>;
+    onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
   };
   storage: {
     local: {

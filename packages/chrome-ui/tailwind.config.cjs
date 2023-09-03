@@ -108,7 +108,7 @@ module.exports = {
   plugins: [require('tailwindcss-animate')],
   safelist: [
     // width
-    'w-40',
+    'w-52',
     'min-w-40',
     'max-w-40',
     // padding
@@ -138,6 +138,7 @@ module.exports = {
     'justify-between',
     // gap
     'gap-1',
+    'gap-1.5',
     'gap-2',
     // position
     'relative',

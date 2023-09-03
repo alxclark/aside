@@ -3,8 +3,8 @@ import {
   createController,
   createRemoteReceiver,
 } from '@remote-ui/react/host';
-import {createEndpoint} from '@remote-ui/rpc';
-import React, {useEffect, useMemo, useState} from 'react';
+import {Endpoint, createEndpoint} from '@remote-ui/rpc';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   ContentScriptApiForDevTools,
   DevToolsApiForContentScript,
@@ -35,9 +35,16 @@ export function BrowserExtensionRenderer() {
   const [port, setPort] = useState<Runtime.Port | undefined>();
   const [networkRequests, setNetworkRequests] = useState<NetworkRequest[]>([]);
   const [connected, setConnected] = useState(false);
+  const endpointRef =
+    useRef<Endpoint<ContentScriptApiForDevTools | undefined>>();
 
   const {subscribable: requests, clear: clearRequestsSubscribable} =
     useRemoteSubscribable(networkRequests);
+
+  const requestSubscribers = useMemo(
+    () => new Set<(request: NetworkRequest) => void>(),
+    [],
+  );
 
   useEffect(() => {
     const listener = () => {
@@ -97,16 +104,24 @@ export function BrowserExtensionRenderer() {
   }, [clearRequestsSubscribable]);
 
   useEffect(() => {
-    const listener = async (request: any) => {
-      setNetworkRequests((prev) => {
-        return [
-          ...prev,
-          {
-            type: request._resourceType,
-            time: request.time,
-            request: {url: request.request.url},
-          },
-        ];
+    const listener = async (rawRequest: any) => {
+      const request: any = {};
+
+      // Loop through the properties of the Proxy and copy them to the new object
+      // eslint-disable-next-line guard-for-in
+      for (const property in rawRequest) {
+        request[property] = rawRequest[property];
+      }
+
+      // The proxy object here ends up not being serialized by remote-ui.
+      // we need to create a copy from the full value
+      requestSubscribers.forEach((callback) => callback(request));
+
+      // getHAR is not typed correctly
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      /** @ts-ignore */
+      browser.devtools.network.getHAR((har) => {
+        setNetworkRequests(har.entries);
       });
     };
 
@@ -114,7 +129,18 @@ export function BrowserExtensionRenderer() {
 
     return () =>
       browser.devtools.network.onRequestFinished.removeListener(listener);
-  }, []);
+  }, [requestSubscribers]);
+
+  const onRequestFinished = useCallback(
+    (callback: any) => {
+      requestSubscribers.add(callback);
+
+      return () => {
+        requestSubscribers.delete(callback);
+      };
+    },
+    [requestSubscribers],
+  );
 
   useEffect(() => {
     if (!port) return;
@@ -144,15 +170,17 @@ export function BrowserExtensionRenderer() {
         return {
           network: {
             requests,
+            onRequestFinished,
           },
         };
       },
     };
 
     contentScript.expose(devToolsApi);
+    endpointRef.current = contentScript;
 
     port.postMessage({sender: 'dev', type: 'ready'});
-  }, [receiver, port, requests]);
+  }, [receiver, port, requests, onRequestFinished]);
 
   useEffect(() => {
     if (!port) return;

@@ -172,6 +172,7 @@ function ExtensionApiProvider({
       setSubscribableApi({
         network: {
           requests: makeStatefulSubscribable(api.network.requests),
+          onRequestFinished: api.network.onRequestFinished,
         },
       });
     }
@@ -183,6 +184,7 @@ function ExtensionApiProvider({
     return {
       network: {
         requests: subscribableApi?.network.requests!,
+        onRequestFinished: subscribableApi?.network.onRequestFinished!,
       },
       storage: {
         local: {
