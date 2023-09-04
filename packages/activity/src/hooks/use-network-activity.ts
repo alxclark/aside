@@ -1,15 +1,15 @@
-import {useNetworkRequests} from '@aside/react';
+import {useNetwork} from '@aside/react';
 import {NetworkRequest} from '@aside/core';
 import {useMemo} from 'react';
 
 import {ActivityStoreDescriptor, Snapshot} from '../types';
 
 export function useNetworkActivity() {
-  const networkRequests = useNetworkRequests();
+  const {requests, clear} = useNetwork();
 
   const networkActivity: ActivityStoreDescriptor<Snapshot<NetworkRequest>> =
     useMemo(() => {
-      const last = networkRequests[networkRequests.length - 1];
+      const last = requests[requests.length - 1];
 
       return {
         displayName: 'Network',
@@ -50,15 +50,16 @@ export function useNetworkActivity() {
             createdAt: last?.startedDateTime,
             nodes: last,
           },
-          snapshots: networkRequests.map((request) => ({
+          snapshots: requests.map((request) => ({
             id: request.time.toString() + request.request.url,
             createdAt: request.startedDateTime,
             nodes: request,
           })),
           skipDiffing: true,
+          clearSnapshots: () => clear(),
         },
       };
-    }, [networkRequests]);
+    }, [clear, requests]);
 
   return networkActivity;
 }

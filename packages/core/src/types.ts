@@ -36,6 +36,7 @@ export interface DevToolsApiForContentScript extends RemoteApi {
 
 export interface ExtensionApi {
   network: {
+    clear(): void;
     requests: RemoteSubscribable<NetworkRequest[]>;
     onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
   };
@@ -43,9 +44,16 @@ export interface ExtensionApi {
 
 export interface StatefulExtensionApi {
   network: {
+    clear(): void;
     requests: StatefulRemoteSubscribable<NetworkRequest[]>;
     onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
   };
+}
+
+export interface NetworkApi {
+  clear(): void;
+  requests: NetworkRequest[];
+  onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
 }
 
 export interface NetworkRequest {

@@ -4,11 +4,10 @@ import {
   createRemoteReceiver,
 } from '@remote-ui/react/host';
 import {Endpoint, createEndpoint} from '@remote-ui/rpc';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ContentScriptApiForDevTools,
   DevToolsApiForContentScript,
-  NetworkRequest,
 } from '@aside/core';
 import {
   AllComponents as ChromeUIComponents,
@@ -20,8 +19,8 @@ import {
 import {Runtime} from 'webextension-polyfill';
 import '@aside/chrome-ui/css';
 
+import {useNetworkApi} from '../../foundation/api';
 import {createUnsafeEncoder, fromPort} from '../../foundation/Remote';
-import {useRemoteSubscribable} from '../../utilities/subscription';
 
 export function BrowserExtensionRenderer() {
   const controller = useMemo(
@@ -33,18 +32,11 @@ export function BrowserExtensionRenderer() {
   );
   const [receiver, setReceiver] = useState(createRemoteReceiver());
   const [port, setPort] = useState<Runtime.Port | undefined>();
-  const [networkRequests, setNetworkRequests] = useState<NetworkRequest[]>([]);
   const [connected, setConnected] = useState(false);
   const endpointRef =
     useRef<Endpoint<ContentScriptApiForDevTools | undefined>>();
 
-  const {subscribable: requests, clear: clearRequestsSubscribable} =
-    useRemoteSubscribable(networkRequests);
-
-  const requestSubscribers = useMemo(
-    () => new Set<(request: NetworkRequest) => void>(),
-    [],
-  );
+  const network = useNetworkApi();
 
   useEffect(() => {
     const listener = () => {
@@ -74,7 +66,7 @@ export function BrowserExtensionRenderer() {
     browser.runtime.onConnect.addListener(onConnectListener);
 
     function onAcceptedPortListener(message: any, port: Runtime.Port) {
-      console.log('Received message from CS', message);
+      // console.log('Received message from CS', message);
       if (
         message?.type === 'accept-port' &&
         message?.sender === 'content-script'
@@ -94,53 +86,20 @@ export function BrowserExtensionRenderer() {
       // since the connect listener will be called on page reload once the dev tools is loaded.
       setReceiver(createRemoteReceiver());
       setPort(port);
-      clearRequestsSubscribable();
     }
 
     return () => {
       contentScriptPort.onMessage.removeListener(onAcceptedPortListener);
       browser.runtime.onConnect.removeListener(onConnectListener);
     };
-  }, [clearRequestsSubscribable]);
+  }, [network]);
 
   useEffect(() => {
-    const listener = async (rawRequest: any) => {
-      const request: any = {};
-
-      // Loop through the properties of the Proxy and copy them to the new object
-      // eslint-disable-next-line guard-for-in
-      for (const property in rawRequest) {
-        request[property] = rawRequest[property];
-      }
-
-      // The proxy object here ends up not being serialized by remote-ui.
-      // we need to create a copy from the full value
-      requestSubscribers.forEach((callback) => callback(request));
-
-      // getHAR is not typed correctly
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      /** @ts-ignore */
-      browser.devtools.network.getHAR((har) => {
-        setNetworkRequests(har.entries);
-      });
-    };
-
-    browser.devtools.network.onRequestFinished.addListener(listener);
-
-    return () =>
-      browser.devtools.network.onRequestFinished.removeListener(listener);
-  }, [requestSubscribers]);
-
-  const onRequestFinished = useCallback(
-    (callback: any) => {
-      requestSubscribers.add(callback);
-
-      return () => {
-        requestSubscribers.delete(callback);
-      };
-    },
-    [requestSubscribers],
-  );
+    port?.onDisconnect.addListener(() => {
+      console.log('disconnected port');
+      network.reset();
+    });
+  }, [network, port?.onDisconnect]);
 
   useEffect(() => {
     if (!port) return;
@@ -168,10 +127,7 @@ export function BrowserExtensionRenderer() {
       },
       getApi() {
         return {
-          network: {
-            requests,
-            onRequestFinished,
-          },
+          network: network.api,
         };
       },
     };
@@ -180,7 +136,7 @@ export function BrowserExtensionRenderer() {
     endpointRef.current = contentScript;
 
     port.postMessage({sender: 'dev', type: 'ready'});
-  }, [receiver, port, requests, onRequestFinished]);
+  }, [receiver, port, network.api]);
 
   useEffect(() => {
     if (!port) return;

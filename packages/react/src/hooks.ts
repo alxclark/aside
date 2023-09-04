@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react';
 import type {StatefulRemoteSubscribable} from '@remote-ui/async-subscription';
+import {NetworkApi} from '@aside/core';
 
 import {ExtensionApiContext} from './context';
 import {ExtensionApi} from './types';
@@ -115,6 +116,20 @@ export function useLocalStorageStateInternal<T>(
       setState,
     ],
     [data, loading, setState],
+  );
+}
+
+export function useNetwork(): NetworkApi {
+  const api = useExtensionApi();
+  const requestSubscription = useSubscription(api.network.requests);
+
+  return useMemo(
+    () => ({
+      clear: api.network.clear,
+      onRequestFinished: api.network.onRequestFinished,
+      requests: requestSubscription,
+    }),
+    [api.network.clear, api.network.onRequestFinished, requestSubscription],
   );
 }
 

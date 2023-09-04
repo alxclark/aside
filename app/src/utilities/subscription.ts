@@ -58,7 +58,9 @@ export function useRemoteSubscribable<T>(value: T): {
           return getCurrent();
         },
       }),
-      clear: () => subscriberRef.current?.clear(),
+      clear: () => {
+        subscriberRef.current?.clear();
+      },
     };
   }, [getCurrent, subscribe]);
 }

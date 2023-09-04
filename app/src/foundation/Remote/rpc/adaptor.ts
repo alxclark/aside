@@ -13,7 +13,6 @@ export function fromPort(port: Runtime.Port): MessageEndpoint {
   return {
     postMessage(message) {
       try {
-        // let filtered = [...message, [...message[1], message[2]?.filter((paylod) => )]]
         port.postMessage(message);
       } catch (error) {
         console.log(error);
