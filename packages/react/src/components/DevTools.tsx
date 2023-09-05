@@ -223,6 +223,8 @@ function ExtensionApiProvider({
     showFilter,
     showPreviousValues,
     showTimelineOptions,
+    subscribableApi?.network.clear,
+    subscribableApi?.network.onRequestFinished,
     subscribableApi?.network.requests,
   ]);
 
