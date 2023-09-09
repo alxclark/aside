@@ -83,7 +83,7 @@ function AppActivityProvider({
   // the browser and when a GraphQL request is identified,
   // will extract the GraphQL cache.
   useEffect(() => {
-    const unsubscribe = onRequestFinished((request) => {
+    const result = onRequestFinished((request) => {
       if (
         request._resourceType === 'fetch' &&
         request.request.method === 'POST' &&
@@ -101,7 +101,10 @@ function AppActivityProvider({
       }
     });
 
-    return () => unsubscribe();
+    return () => {
+      // eslint-disable-next-line promise/catch-or-return
+      result.then((unsubscribe) => unsubscribe());
+    };
   }, [onRequestFinished, refreshCache]);
 
   return (

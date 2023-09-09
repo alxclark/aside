@@ -16,6 +16,7 @@ export function useNetworkApi(): {
     [],
   );
 
+  // Read HAR to retrieve requests that happened before the devtools was ready.
   useEffect(() => {
     // getHAR is not typed correctly
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -37,7 +38,6 @@ export function useNetworkApi(): {
 
       setNetworkRequests((prev) => [...prev, request]);
 
-      console.log('calling request subscribers', requestSubscribers.size);
       requestSubscribers.forEach((callback) => callback(request));
     };
 
@@ -72,17 +72,9 @@ export function useNetworkApi(): {
   );
 
   const reset = useCallback(() => {
-    console.log('called reset');
-
     clearSubscription();
     requestSubscribers.clear();
-
-    // getHAR is not typed correctly
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    /** @ts-ignore */
-    browser.devtools.network.getHAR((har) => {
-      setNetworkRequests(har.entries);
-    });
+    setNetworkRequests([]);
   }, [clearSubscription, requestSubscribers]);
 
   return useMemo(() => ({api, reset}), [api, reset]);

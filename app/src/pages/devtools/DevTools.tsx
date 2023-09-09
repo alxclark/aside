@@ -95,13 +95,6 @@ export function BrowserExtensionRenderer() {
   }, [network]);
 
   useEffect(() => {
-    port?.onDisconnect.addListener(() => {
-      console.log('disconnected port');
-      network.reset();
-    });
-  }, [network, port?.onDisconnect]);
-
-  useEffect(() => {
     if (!port) return;
 
     const contentScript = createEndpoint<ContentScriptApiForDevTools>(
@@ -143,6 +136,10 @@ export function BrowserExtensionRenderer() {
 
     function listener() {
       setPort(undefined);
+      network.reset();
+
+      setConnected(false);
+      setReceiver(createRemoteReceiver());
     }
 
     port.onDisconnect.addListener(listener);
@@ -150,13 +147,15 @@ export function BrowserExtensionRenderer() {
     return () => {
       port.onDisconnect.removeListener(listener);
     };
-  }, [port]);
+  }, [network, port]);
 
   useEffect(() => {
-    if (receiver.attached.root.children.length > 0) {
+    if (receiver.state === 'mounted') {
       setConnected(true);
+    } else {
+      setConnected(false);
     }
-  }, [receiver.attached.root.children.length]);
+  }, [receiver.state]);
 
   if (!connected) {
     return (

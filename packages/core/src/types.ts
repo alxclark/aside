@@ -38,7 +38,9 @@ export interface ExtensionApi {
   network: {
     clear(): void;
     requests: RemoteSubscribable<NetworkRequest[]>;
-    onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
+    onRequestFinished(
+      callback: (request: NetworkRequest) => void,
+    ): Promise<() => void>;
   };
 }
 
@@ -46,7 +48,9 @@ export interface StatefulExtensionApi {
   network: {
     clear(): void;
     requests: StatefulRemoteSubscribable<NetworkRequest[]>;
-    onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
+    onRequestFinished(
+      callback: (request: NetworkRequest) => void,
+    ): Promise<() => void>;
   };
 }
 
