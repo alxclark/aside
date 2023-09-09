@@ -48,7 +48,7 @@ export function useNetworkApi(): {
   }, [requestSubscribers]);
 
   const onRequestFinished = useCallback(
-    (callback: any) => {
+    async (callback: any) => {
       requestSubscribers.add(callback);
 
       return () => {
