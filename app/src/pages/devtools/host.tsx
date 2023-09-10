@@ -24,6 +24,7 @@ export function Host() {
   const contentScriptEndpointRef =
     useRef<Endpoint<ContentScriptApiForDevtools | undefined>>();
   const [api, resetApi] = useApi();
+  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
     // Attempt a connection in case content-script already loaded and can intercept the port.
@@ -80,6 +81,9 @@ export function Host() {
 
     const devToolsApi: DevtoolsApiForContentScript = {
       getRemoteChannel() {
+        // If a webpage requests a remote channel,
+        // we know that it's attempting to connect and we can render the remote renderer.
+        setConnected(true);
         return receiver.receive;
       },
       getApi() {
@@ -108,7 +112,7 @@ export function Host() {
     };
   }, [port, resetApi]);
 
-  if (receiver.state === 'unmounted') {
+  if (!connected) {
     return <NotConnected />;
   }
 
