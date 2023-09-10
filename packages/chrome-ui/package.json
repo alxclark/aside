@@ -5,33 +5,19 @@
   "files": [
     "build"
   ],
-  "main": "./build/remote/js/chrome-ui.umd.js",
-  "module": "./build/remote/js/chrome-ui.es.js",
+  "main": "./build/js/chrome-ui.umd.js",
+  "module": "./build/js/chrome-ui.es.js",
   "exports": {
     ".": {
-      "import": "./build/remote/js/chrome-ui.es.js",
-      "require": "./build/remote/js/chrome-ui.umd.js"
-    },
-    "./react": {
-      "import": "./build/react/js/chrome-ui.es.js",
-      "require": "./build/react/js/chrome-ui.umd.js"
+      "import": "./build/js/chrome-ui.es.js",
+      "require": "./build/js/chrome-ui.umd.js"
     },
     "./css": {
       "import": "./build/css/styles.css",
       "require": "./build/css/styles.css"
     }
   },
-  "types": "build/ts/remote/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "build/ts/remote/index.d.ts"
-      ],
-      "react": [
-        "build/ts/index.d.ts"
-      ]
-    }
-  },
+  "types": "build/ts/index.d.ts",
   "scripts": {
     "dev": "postcss ./src/styles.css --dir build/css --watch",
     "build": "cross-env NODE_ENV=production run-p build:react build:css",

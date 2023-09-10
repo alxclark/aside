@@ -44,9 +44,9 @@ const buttonExample = `function App() {
   return (
     <div>
       <Aside>
-        <DevTools>
+        <Devtools>
           <ConsoleMessage value={{count}} />
-        </DevTools>
+        </Devtools>
       </Aside>
     </div>
   );

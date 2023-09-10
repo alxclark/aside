@@ -11,15 +11,15 @@ yarn add @aside/chrome-ui-remote
 ## Usage
 
 ```tsx
-import {Aside, DevTools} from '@aside/react';
+import {Aside, Devtools} from '@aside/react';
 import {Button} from '@aside/chrome-ui-remote';
 
 function App() {
   return (
     <Aside>
-      <DevTools>
+      <Devtools>
         <Button>Click me!</Button>
-      </DevTools>
+      </Devtools>
     </Aside>
   );
 }

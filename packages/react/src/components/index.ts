@@ -1,3 +1,3 @@
 export {Aside} from './Aside';
-export {DevTools} from './DevTools';
+export {Devtools} from './Devtools';
 export {RemoteRenderer} from './RemoteRenderer';

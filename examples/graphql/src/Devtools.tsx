@@ -19,7 +19,7 @@ import {
 } from '@aside/chrome-ui-remote';
 import {
   Aside,
-  DevTools as AsideDevtools,
+  Devtools as AsideDevtools,
   useExtensionApi,
   useLocalStorageState,
 } from '@aside/react';

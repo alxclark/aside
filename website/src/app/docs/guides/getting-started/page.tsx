@@ -51,7 +51,7 @@ export default function GettingStarted() {
         </ListItem>
         <ListItem index={3}>
           <Heading level={4} className="mb-3">
-            Import Aside, DevTools and UI components
+            Import Aside, Devtools and UI components
           </Heading>
           <p className="mb-5">
             Render both components into your application and you now have a
@@ -107,16 +107,16 @@ export default function GettingStarted() {
 }
 
 const yarnInstall = `yarn install @aside/react @aside/chrome-ui`;
-const imports = `import {Aside, DevTools} from '@aside/react';
+const imports = `import {Aside, Devtools} from '@aside/react';
 import {Button} from '@aside/chrome-ui';`;
 const buttonRender = `<Aside>
-  <DevTools>
+  <Devtools>
     <Button
       onPress={() => console.log('Pressed !')}
     >
       Press me!
     </Button>
-  </DevTools>
+  </Devtools>
 </Aside>`;
 const buttonExample = `function App() {
   const [count, setCount] = useState(0);
@@ -125,9 +125,9 @@ const buttonExample = `function App() {
     <div>
       <MyButton onPress={() => setCount(count + 1)}>Increment</ MyButton>
       <Aside>
-        <DevTools>
+        <Devtools>
           <ConsoleMessage value={{count}} />
-        </DevTools>
+        </Devtools>
       </Aside>
     </div>
   );

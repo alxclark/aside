@@ -27,13 +27,13 @@ The chrome extension is powered by Shopify's [remote-ui](https://github.com/Shop
 yarn add @aside/react @aside/chrome-ui
 ```
 
-2. Import the `Aside` and `DevTools` component and render a remote component in your application.
+2. Import the `Aside` and `Devtools` component and render a remote component in your application.
 
 In the example below, we are using `Button` from `@aside/chrome-ui`. Chrome UI is one of the UI packages that Aside offers. It mirrors the native Chrome look and feel and is our recommendation for new users.
 
 ```jsx
 import React, {useState} from 'react';
-import {Aside, DevTools} from '@aside/react';
+import {Aside, Devtools} from '@aside/react';
 import {Button} from '@aside/chrome-ui';
 
 export function App({children}) {
@@ -43,9 +43,9 @@ export function App({children}) {
     <div>
       {count}
       <Aside>
-        <DevTools>
+        <Devtools>
           <Button onPress={(prev) => setCount(prev + 1)}>Increment</Button>
-        </DevTools>
+        </Devtools>
       </Aside>
     </div>
   );

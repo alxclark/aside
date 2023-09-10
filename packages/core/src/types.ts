@@ -12,7 +12,7 @@ interface RemoteApi {
 // Content-script
 
 export interface ContentScriptApiForWebpage extends RemoteApi {
-  getDevToolsChannel(): Promise<RemoteChannel>;
+  getRemoteChannel(): Promise<RemoteChannel>;
   getLocalStorage(
     keys?: string | {[key: string]: any} | string[] | null | undefined,
   ): Promise<{[key: string]: any}>;
@@ -20,17 +20,16 @@ export interface ContentScriptApiForWebpage extends RemoteApi {
   getApi(): Promise<ExtensionApi>;
 }
 
-export interface ContentScriptApiForDevTools extends RemoteApi {
-  mountDevTools(): void;
-  unmountDevTools(): void;
+export interface ContentScriptApiForDevtools extends RemoteApi {
+  mountDevtools(): void;
+  unmountDevtools(): void;
   log(source: string, ...params: any[]): void;
 }
 
 // Dev tools
 
-export interface DevToolsApiForContentScript extends RemoteApi {
-  getDevToolsChannel(): RemoteChannel;
-  renewReceiver(): void;
+export interface DevtoolsApiForContentScript extends RemoteApi {
+  getRemoteChannel(): RemoteChannel;
   getApi(): ExtensionApi;
 }
 
@@ -57,7 +56,9 @@ export interface StatefulExtensionApi {
 export interface NetworkApi {
   clear(): void;
   requests: NetworkRequest[];
-  onRequestFinished(callback: (request: NetworkRequest) => void): () => void;
+  onRequestFinished(
+    callback: (request: NetworkRequest) => void,
+  ): Promise<() => void>;
 }
 
 export interface NetworkRequest {
@@ -83,8 +84,8 @@ interface BaseRequest<T = string> {
 }
 
 export interface WebpageApi extends RemoteApi {
-  mountDevTools(): void;
-  unmountDevTools(): void;
+  mountDevtools(): void;
+  unmountDevtools(): void;
   log(source: string, ...params: any): void;
   resetChannel(): void;
 }

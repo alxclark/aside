@@ -10,7 +10,7 @@ import {isDev, log, port, r} from './utils';
  * Stub index.html to use Vite in development
  */
 async function stubIndexHtml() {
-  const views = ['options', 'popup', 'background', 'devtools'];
+  const views = ['background', 'devtools'];
 
   for (const view of views) {
     await fs.ensureDir(r(`extension/dist/pages/${view}`));

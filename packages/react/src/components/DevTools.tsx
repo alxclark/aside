@@ -27,14 +27,14 @@ import {ErrorBoundary} from './ErrorBoundary';
 
 const contentScript = createContentScriptEndpoint();
 
-export function DevTools({children}: PropsWithChildren<{}>) {
-  const [devToolsRoot, setDevToolsRoot] = useState<RemoteRoot | undefined>();
+export function Devtools({children}: PropsWithChildren<{}>) {
+  const [devToolsRoot, setDevtoolsRoot] = useState<RemoteRoot | undefined>();
   const channelRef = useRef<RemoteChannel | null>(null);
   const endpointRef = useRef<Endpoint<ContentScriptApiForWebpage> | null>(null);
 
-  const mountDevTools = useCallback(
+  const mountDevtools = useCallback(
     async (endpoint: Endpoint<ContentScriptApiForWebpage>) => {
-      const channel = await endpoint.call.getDevToolsChannel();
+      const channel = await endpoint.call.getRemoteChannel();
       retain(channel);
 
       channelRef.current = channel;
@@ -44,18 +44,18 @@ export function DevTools({children}: PropsWithChildren<{}>) {
         components: AllComponents,
       });
 
-      setDevToolsRoot(root);
+      setDevtoolsRoot(root);
     },
     [],
   );
 
   useEffect(() => {
     const webpageApi: WebpageApi = {
-      async mountDevTools() {
-        return mountDevTools(contentScript);
+      async mountDevtools() {
+        return mountDevtools(contentScript);
       },
-      unmountDevTools() {
-        setDevToolsRoot(undefined);
+      unmountDevtools() {
+        setDevtoolsRoot(undefined);
       },
       log(source, ...params: any[]) {
         const sourcePrefix = `[${source}]`;
@@ -68,15 +68,15 @@ export function DevTools({children}: PropsWithChildren<{}>) {
     };
 
     contentScript.expose(webpageApi);
-  }, [setDevToolsRoot, mountDevTools]);
+  }, [setDevtoolsRoot, mountDevtools]);
 
   // Attempt to mount the dev tools.
   // If the other side of the endpoint is not ready yet,
-  // `mountDevTools` will be called on the webpage api,
+  // `mountDevtools` will be called on the webpage api,
   // correctly setting up the remote endpoint.
   useEffect(() => {
-    mountDevTools(contentScript);
-  }, [mountDevTools]);
+    mountDevtools(contentScript);
+  }, [mountDevtools]);
 
   const handleUnmount = useCallback(() => {
     release(channelRef.current);
@@ -242,7 +242,7 @@ function createContentScriptEndpoint() {
     fromWebpage({context: 'webpage'}),
     {
       callable: [
-        'getDevToolsChannel',
+        'getRemoteChannel',
         'getLocalStorage',
         'setLocalStorage',
         'getApi',

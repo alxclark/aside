@@ -9,9 +9,9 @@ describe('ContentScript', () => {
   const mockCreateEndpoint = vi.fn((..._args: any[]) => {
     return {
       call: {
-        getDevToolsChannel: vi.fn(),
-        mountDevTools: vi.fn(),
-        unmountDevTools: vi.fn(),
+        getRemoteChannel: vi.fn(),
+        mountDevtools: vi.fn(),
+        unmountDevtools: vi.fn(),
         log: vi.fn(),
       },
       expose: vi.fn(),
@@ -109,7 +109,7 @@ describe('ContentScript', () => {
         );
 
         expect(mockCreateEndpoint).toHaveBeenCalledWith(expect.anything(), {
-          callable: ['getDevToolsChannel'],
+          callable: ['getRemoteChannel'],
         });
       });
 
@@ -141,7 +141,7 @@ describe('ContentScript', () => {
         );
 
         expect(mockCreateEndpoint).toHaveBeenCalledWith(expect.anything(), {
-          callable: ['mountDevTools', 'unmountDevTools', 'log', 'resetChannel'],
+          callable: ['mountDevtools', 'unmountDevtools', 'log', 'resetChannel'],
           createEncoder: expect.anything(),
         });
       });

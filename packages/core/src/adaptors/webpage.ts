@@ -97,7 +97,7 @@ function idToString(something: unknown) {
 // 3. Content script tries to apply (5) onto the same ID that was used before the reload
 // [2, undefined, 0] ?
 // 4. CS releases ID used before reload (seems like a problem)
-// 5. Webpage calls rpc.mountDevTools (???)
+// 5. Webpage calls rpc.mountDevtools (???)
 // 6. ERROR: Webpage receives function result (6) from RPC for (3.) and the function was already revoked
 // 7. CS tries to ask devtools for an RPC channel
 // 8. ERROR: CS receives result from (5.): Attempted to call a function that was already revoked

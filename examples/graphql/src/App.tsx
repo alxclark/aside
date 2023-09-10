@@ -22,7 +22,7 @@ export function App() {
 const client = new ApolloClient({
   uri: 'https://flyby-router-demo.herokuapp.com/',
   cache: new InMemoryCache(),
-  connectToDevTools: true,
+  connectToDevtools: true,
 });
 
 function GraphQLProvider({children}: PropsWithChildren) {

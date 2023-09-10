@@ -26,6 +26,6 @@
   "references": [
     { "path": "../packages/react" },
     { "path": "../packages/core" },
-    { "path": "../packages/chrome-ui" },
+    { "path": "../packages/chrome-ui/tsconfig.json" },
   ]
 }

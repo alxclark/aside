@@ -2,8 +2,8 @@ import {createEndpoint} from '@remote-ui/rpc';
 import type {Endpoint} from '@remote-ui/rpc';
 import {
   ContentScriptApiForWebpage,
-  ContentScriptApiForDevTools,
-  DevToolsApiForContentScript,
+  ContentScriptApiForDevtools,
+  DevtoolsApiForContentScript,
   fromWebpage,
   WebpageApi,
 } from '@aside/core';
@@ -14,7 +14,7 @@ import {fromPort} from '../Remote/rpc';
 
 interface Current {
   webpage?: Endpoint<WebpageApi>;
-  devtools?: Endpoint<DevToolsApiForContentScript>;
+  devtools?: Endpoint<DevtoolsApiForContentScript>;
   port?: Runtime.Port;
 }
 
@@ -51,7 +51,7 @@ export function contentScript() {
     // Unmount the client side remote-components.
     // This wipes the devtools UI completely.
     try {
-      await current.webpage?.call.unmountDevTools();
+      await current.webpage?.call.unmountDevtools();
     } catch (error) {
       console.log('webpage terminate failed');
     }
@@ -71,37 +71,37 @@ export function contentScript() {
       if (current.port === port) {
         current.port = undefined;
       }
-      current.webpage?.call.unmountDevTools();
+      current.webpage?.call.unmountDevtools();
     });
 
     current.devtools = devtools;
     current.webpage = webpage;
     current.port = port;
 
-    webpage.call.mountDevTools();
+    webpage.call.mountDevtools();
   }
 }
 
 function createDevtoolsEndpoint(port: Runtime.Port) {
-  return createEndpoint<DevToolsApiForContentScript>(fromPort(port), {
-    callable: ['getDevToolsChannel', 'getApi'],
+  return createEndpoint<DevtoolsApiForContentScript>(fromPort(port), {
+    callable: ['getRemoteChannel', 'getApi'],
   });
 }
 
 function createWebpageEndpoint() {
   return createEndpoint<WebpageApi>(fromWebpage({context: 'content-script'}), {
-    callable: ['mountDevTools', 'unmountDevTools', 'log', 'resetChannel'],
+    callable: ['mountDevtools', 'unmountDevtools', 'log', 'resetChannel'],
     createEncoder: createUnsafeEncoder,
   });
 }
 
 function exposeWebpage(
   webpage: Endpoint<WebpageApi>,
-  devtools: Endpoint<DevToolsApiForContentScript>,
+  devtools: Endpoint<DevtoolsApiForContentScript>,
 ) {
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
-    async getDevToolsChannel() {
-      return devtools.call.getDevToolsChannel();
+    async getRemoteChannel() {
+      return devtools.call.getRemoteChannel();
     },
     getLocalStorage(keys) {
       return browser.storage.local.get(keys);
@@ -118,15 +118,15 @@ function exposeWebpage(
 }
 
 function exposeDevtools(
-  devtools: Endpoint<DevToolsApiForContentScript>,
+  devtools: Endpoint<DevtoolsApiForContentScript>,
   webpage: Endpoint<WebpageApi>,
 ) {
-  const contentScriptApiForDevtools: ContentScriptApiForDevTools = {
-    mountDevTools() {
-      return webpage.call.mountDevTools();
+  const contentScriptApiForDevtools: ContentScriptApiForDevtools = {
+    mountDevtools() {
+      return webpage.call.mountDevtools();
     },
-    unmountDevTools() {
-      return webpage.call.unmountDevTools();
+    unmountDevtools() {
+      return webpage.call.unmountDevtools();
     },
     log(source, ...params) {
       return webpage.call.log(source, ...params);

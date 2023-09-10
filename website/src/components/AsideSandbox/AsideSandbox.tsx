@@ -44,7 +44,7 @@ export function AsideSandbox({code, scope, height, display = 'all'}: Props) {
             )}
           </>
         ),
-        DevTools: ({children}: PropsWithChildren) => (
+        Devtools: ({children}: PropsWithChildren) => (
           <>
             <div className="z-10 text-xs rounded-full bg-dark-surface3 absolute left-[50%] top-0 translate-x-[-50%] translate-y-[-50%] px-2 py-0.5 text-accent font-semibold">
               Extension

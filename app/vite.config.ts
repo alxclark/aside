@@ -25,7 +25,10 @@ export const sharedConfig: UserConfig = {
       '@aside/web': `${r('../packages/web/src')}`,
       '@aside/react': `${r('../packages/react/src')}`,
       '@aside/core': `${r('../packages/core/src')}`,
-      '@aside/chrome-ui/react': `${r('../packages/chrome-ui/src')}`,
+      '@aside/chrome-ui/css': `${r(
+        '../packages/chrome-ui/build/css/styles.css',
+      )}`,
+      '@aside/chrome-ui': `${r('../packages/chrome-ui/src')}`,
       '@aside/chrome-ui-remote': `${r('../packages/chrome-ui-remote/src')}`,
       '@aside/timeline': `${r('../packages/timeline/src')}`,
     },
@@ -84,8 +87,6 @@ export default defineConfig(({command, mode}) => {
       rollupOptions: {
         input: {
           background: r('src/pages/background/index.html'),
-          options: r('src/pages/options/index.html'),
-          popup: r('src/pages/popup/index.html'),
           devtools: r('src/pages/devtools/index.html'),
           devtoolsPanel: r('src/pages/devtools/panel.html'),
         },

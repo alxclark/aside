@@ -16,7 +16,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@aside/chrome-ui-remote';
-import {Aside, DevTools, useLocalStorageState} from '@aside/react';
+import {Aside, Devtools, useLocalStorageState} from '@aside/react';
 
 import 'todomvc-app-css/index.css';
 
@@ -40,7 +40,7 @@ export function App() {
       <CountContext.Provider value={count}>
         <ReactCount />
         <RecoilTodoMVC />
-        <AsideDevTools />
+        <AsideDevtools />
       </CountContext.Provider>
     </RecoilRoot>
   );
@@ -56,7 +56,7 @@ const CountContext = createContext<
   [number, React.Dispatch<React.SetStateAction<number>>] | undefined
 >(undefined);
 
-function AsideDevTools() {
+function AsideDevtools() {
   const recoilMonitor = useRecoilMonitor({
     ignoredRecoilKeys: ['todosBase'],
   });
@@ -102,11 +102,11 @@ function AsideDevTools() {
 
   return (
     <Aside>
-      <DevTools>
+      <Devtools>
         <AppActivityProvider activity={appActivity}>
           <AsideApp />
         </AppActivityProvider>
-      </DevTools>
+      </Devtools>
     </Aside>
   );
 }
