@@ -8,6 +8,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {
   ContentScriptApiForDevtools,
   DevtoolsApiForContentScript,
+  StatelessExtensionApi,
 } from '@aside/core';
 import {Runtime} from 'webextension-polyfill';
 
@@ -23,7 +24,7 @@ export function Host() {
   const [port, setPort] = useState<Runtime.Port | undefined>();
   const contentScriptEndpointRef =
     useRef<Endpoint<ContentScriptApiForDevtools | undefined>>();
-  const [api, resetApi] = useApi();
+  const hostApi = useApi();
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
@@ -86,8 +87,10 @@ export function Host() {
         setConnected(true);
         return receiver.receive;
       },
-      getApi() {
-        return api;
+      async getApi() {
+        return hostApi.api({
+          __futureApiContext: null,
+        }) as Promise<StatelessExtensionApi>;
       },
     };
 
@@ -95,14 +98,14 @@ export function Host() {
     contentScriptEndpointRef.current = contentScript;
 
     port.postMessage({sender: 'dev', type: 'ready'});
-  }, [receiver, port, api]);
+  }, [receiver, port, hostApi]);
 
   useEffect(() => {
     if (!port) return;
 
     function listener() {
       setPort(undefined);
-      resetApi();
+      hostApi.reset();
     }
 
     port.onDisconnect.addListener(listener);
@@ -110,7 +113,7 @@ export function Host() {
     return () => {
       port.onDisconnect.removeListener(listener);
     };
-  }, [port, resetApi]);
+  }, [hostApi, port]);
 
   if (!connected) {
     return <NotConnected />;

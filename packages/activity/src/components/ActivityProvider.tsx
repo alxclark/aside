@@ -18,7 +18,7 @@ export function ActivityProvider({activity, children}: Props) {
   >(undefined);
 
   const [preserveLog] = useExtensionApi().activity.preserveLog;
-  const recordSnapshot = useExtensionApi().activity.recordSnapshot[0];
+  const [recordSnapshot] = useExtensionApi().activity.recordSnapshot;
 
   const [{data: persistedSnapshots, loading}, setPersistedSnapshots] =
     useLocalStorageState<{[key: string]: Snapshot[]} | undefined>(undefined, {
@@ -27,32 +27,21 @@ export function ActivityProvider({activity, children}: Props) {
     });
 
   useEffect(() => {
-    if (recordSnapshot.loading) return;
+    if (recordSnapshot) return;
 
     activity.forEach((store) =>
-      store.monitor.setRecordSnapshot?.(recordSnapshot.data),
+      store.monitor.setRecordSnapshot?.(recordSnapshot),
     );
-  }, [activity, recordSnapshot.data, recordSnapshot.loading]);
+  }, [activity, recordSnapshot]);
 
   useEffect(() => {
-    if (
-      !loading &&
-      persistedSnapshots &&
-      !initialSnapshots &&
-      !preserveLog.loading
-    ) {
-      setInitialSnapshots(preserveLog.data ? persistedSnapshots : {});
+    if (!loading && persistedSnapshots && !initialSnapshots && !preserveLog) {
+      setInitialSnapshots(preserveLog ? persistedSnapshots : {});
     }
-  }, [
-    initialSnapshots,
-    loading,
-    persistedSnapshots,
-    preserveLog.data,
-    preserveLog.loading,
-  ]);
+  }, [initialSnapshots, loading, persistedSnapshots, preserveLog]);
 
   useEffect(() => {
-    if (loading || preserveLog.loading) return;
+    if (loading || preserveLog) return;
 
     const result = activity.reduce<{[key: string]: Snapshot[]}>(
       (prev, curr) => {
@@ -66,22 +55,15 @@ export function ActivityProvider({activity, children}: Props) {
     );
 
     setPersistedSnapshots(result, {
-      persist: preserveLog.data,
+      persist: preserveLog,
     });
-  }, [
-    activity,
-    initialSnapshots,
-    loading,
-    preserveLog.data,
-    preserveLog.loading,
-    setPersistedSnapshots,
-  ]);
+  }, [activity, initialSnapshots, loading, preserveLog, setPersistedSnapshots]);
 
   const value: ActivityStore[] = useMemo(() => {
     return activity.map((store) => ({
       data: {
         type: store.type,
-        icon: store.icon ?? '',
+        icon: store.icon ?? {source: 'file-script'},
         name: (row: Snapshot) => {
           if (store.rowName) return store.rowName(row);
           if (row.initial) return 'Initial';

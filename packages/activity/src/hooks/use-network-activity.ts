@@ -36,7 +36,9 @@ export function useNetworkActivity() {
             return row.nodes._resourceType;
           }
           const urlParts = row.nodes.request.url.split('/');
-          const lastUrlPath = urlParts.findLast((part) => part.length > 0);
+          const lastUrlPath = urlParts
+            .reverse()
+            .find((part) => part.length > 0);
 
           if (!lastUrlPath || lastUrlPath.length === 0) {
             return row.nodes._resourceType;

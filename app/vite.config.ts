@@ -30,7 +30,6 @@ export const sharedConfig: UserConfig = {
       )}`,
       '@aside/chrome-ui': `${r('../packages/chrome-ui/src')}`,
       '@aside/chrome-ui-remote': `${r('../packages/chrome-ui-remote/src')}`,
-      '@aside/timeline': `${r('../packages/timeline/src')}`,
     },
   },
   define: {

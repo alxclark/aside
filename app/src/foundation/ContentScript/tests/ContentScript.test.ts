@@ -141,7 +141,7 @@ describe('ContentScript', () => {
         );
 
         expect(mockCreateEndpoint).toHaveBeenCalledWith(expect.anything(), {
-          callable: ['mountDevtools', 'unmountDevtools', 'log', 'resetChannel'],
+          callable: ['mountDevtools', 'unmountDevtools', 'log'],
           createEncoder: expect.anything(),
         });
       });

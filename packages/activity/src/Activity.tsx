@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
-import {useExtensionApi, useLocalStorageState} from '@aside/react';
+import {useLocalStorageState} from '@aside/react';
 import {
   Button,
   PaneToolbar,
@@ -33,19 +33,18 @@ export interface ActivityProps extends PropsWithChildren {}
 export function Activity({children}: ActivityProps) {
   const activity = useActivity();
 
-  const {timeline} = useExtensionApi();
-  const [filter, setFilter] = timeline.filter;
-  const [invertFilter, setInvertFilter] = timeline.invertFilter;
-  const [showFilter, setShowFilter] = timeline.showFilter;
-  const [preserveLog, setPreserveLog] = timeline.preserveLog;
-  const [recordSnapshot, setRecordSnapshot] = timeline.recordSnapshot;
+  const [filter, setFilter] = activity.filter;
+  const [invertFilter, setInvertFilter] = activity.invertFilter;
+  const [showFilter, setShowFilter] = activity.showFilter;
+  const [preserveLog, setPreserveLog] = activity.preserveLog;
+  const [recordSnapshot, setRecordSnapshot] = activity.recordSnapshot;
   const [showTimelineOptions, setShowTimelineOptions] =
-    timeline.showTimelineOptions;
+    activity.showTimelineOptions;
   const [showPreviousValues, setShowPreviousValues] =
-    timeline.showPreviousValues;
+    activity.showPreviousValues;
 
   const initialDataTypes = useMemo(
-    () => activity.map((row) => row.data.type),
+    () => activity.stores.map((row) => row.data.type),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
@@ -55,7 +54,7 @@ export function Activity({children}: ActivityProps) {
       key: 'selected-data-types',
     });
 
-  const rows = activity
+  const rows = activity.stores
     .flatMap((column) =>
       column.data.rows.map((row, index) => ({
         ...row,
@@ -69,18 +68,16 @@ export function Activity({children}: ActivityProps) {
     });
 
   const getRow = (type: string) =>
-    activity.find((store) => store.data.type === type);
+    activity.stores.find((store) => store.data.type === type);
 
   const filteredRows = rows.filter((row) => {
     const rowDescriptor = getRow(row.type)?.data;
     const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
     const isEmpty = Object.keys(row.nodes).length === 0;
-    const included = query?.includes(filter.data ?? '');
+    const included = query?.includes(filter ?? '');
     const isAcceptedType = selectedDataTypes.includes(row.type);
 
-    return (
-      (invertFilter.data ? !included : included) && !isEmpty && isAcceptedType
-    );
+    return (invertFilter ? !included : included) && !isEmpty && isAcceptedType;
   });
 
   const [explicitlySelectedRow, setSelectedRow] = useState<
@@ -90,11 +87,11 @@ export function Activity({children}: ActivityProps) {
   const handleSelectedDataType = useCallback(
     (id: string) => {
       if (id === 'all') {
-        const allSelected = activity.length === selectedDataTypes.length;
+        const allSelected = activity.stores.length === selectedDataTypes.length;
         if (allSelected) {
           setSelectedDataTypes([]);
         } else {
-          setSelectedDataTypes(activity.map((row) => row.data.type));
+          setSelectedDataTypes(activity.stores.map((row) => row.data.type));
         }
       } else {
         setSelectedDataTypes((prev) => {
@@ -120,12 +117,12 @@ export function Activity({children}: ActivityProps) {
   }, [explicitlySelectedRow, filteredRows]);
 
   function handleClear() {
-    activity.forEach(({data: {onDelete}}) => onDelete?.());
+    activity.stores.forEach(({data: {onDelete}}) => onDelete?.());
     setSelectedRow(undefined);
   }
 
   function getDataTypesText() {
-    if (selectedDataTypes.length === activity.length) {
+    if (selectedDataTypes.length === activity.stores.length) {
       return 'All types';
     }
 
@@ -139,16 +136,6 @@ export function Activity({children}: ActivityProps) {
     }
 
     return 'Hide all';
-  }
-
-  if (
-    recordSnapshot.loading ||
-    filter.loading ||
-    showFilter.loading ||
-    preserveLog.loading ||
-    invertFilter.loading
-  ) {
-    return null;
   }
 
   return (
@@ -165,8 +152,8 @@ export function Activity({children}: ActivityProps) {
                 }}
               >
                 <Icon
-                  source={recordSnapshot.data ? 'record-on' : 'record-off'}
-                  variant={recordSnapshot.data ? 'error' : 'default'}
+                  source={recordSnapshot ? 'record-on' : 'record-off'}
+                  variant={recordSnapshot ? 'error' : 'default'}
                 />
               </Button>
               <Button title="Clear" size="icon" onClick={handleClear}>
@@ -181,11 +168,11 @@ export function Activity({children}: ActivityProps) {
               >
                 <Icon
                   className="p-px"
-                  source={showFilter.data ? 'filter-filled' : 'filter'}
+                  source={showFilter ? 'filter-filled' : 'filter'}
                   variant={
-                    filter.data.length > 0
+                    filter.length > 0
                       ? 'error'
-                      : showFilter.data
+                      : showFilter
                       ? 'toggled'
                       : 'default'
                   }
@@ -197,7 +184,7 @@ export function Activity({children}: ActivityProps) {
                 <Checkbox
                   id="log"
                   label="Preserve log"
-                  checked={preserveLog.data}
+                  checked={preserveLog}
                   onChange={() => setPreserveLog((prev) => !prev)}
                 />
               </PaneToolbarItem>
@@ -211,13 +198,13 @@ export function Activity({children}: ActivityProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuCheckboxItem
-                  checked={selectedDataTypes.length === activity.length}
+                  checked={selectedDataTypes.length === activity.stores.length}
                   onCheckedChange={() => handleSelectedDataType('all')}
                 >
                   All
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuSeparator />
-                {activity.map(({data: {type, displayName}}) => (
+                {activity.stores.map(({data: {type, displayName}}) => (
                   <DropdownMenuCheckboxItem
                     checked={selectedDataTypes.includes(type)}
                     onCheckedChange={() => handleSelectedDataType(type)}
@@ -235,21 +222,21 @@ export function Activity({children}: ActivityProps) {
               onClick={() => setShowTimelineOptions((prev) => !prev)}
             >
               <Icon
-                source={showTimelineOptions.data ? 'cog-filled' : 'cog'}
-                variant={showTimelineOptions.data ? 'toggled' : 'default'}
+                source={showTimelineOptions ? 'cog-filled' : 'cog'}
+                variant={showTimelineOptions ? 'toggled' : 'default'}
               />
             </Button>
           </PaneToolbarSection>
         </View>
       </PaneToolbar>
-      {showFilter.data && (
+      {showFilter && (
         <>
           <PaneToolbar>
             <View className="flex items-center flex-wrap justify-between">
               <View className="flex items-center gap-2 flex-wrap">
                 <View className="w-52 p-0.5">
                   <TextField
-                    value={filter.data}
+                    value={filter}
                     onChange={setFilter}
                     placeholder="Filter"
                     id="filter"
@@ -259,7 +246,7 @@ export function Activity({children}: ActivityProps) {
                 <Checkbox
                   id="invert"
                   label="Invert"
-                  checked={invertFilter.data}
+                  checked={invertFilter}
                   onChange={() => setInvertFilter((prev) => !prev)}
                 />
               </View>
@@ -267,7 +254,7 @@ export function Activity({children}: ActivityProps) {
           </PaneToolbar>
         </>
       )}
-      {showTimelineOptions.data && (
+      {showTimelineOptions && (
         <PaneToolbar>
           <View className="flex">
             <View className="grow">
@@ -276,7 +263,7 @@ export function Activity({children}: ActivityProps) {
                   id="large-rows"
                   label="Show previous values"
                   onChange={() => setShowPreviousValues((prev) => !prev)}
-                  checked={showPreviousValues.data}
+                  checked={showPreviousValues}
                 />
               </PaneToolbarItem>
             </View>

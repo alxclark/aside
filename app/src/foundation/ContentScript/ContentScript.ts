@@ -90,7 +90,7 @@ function createDevtoolsEndpoint(port: Runtime.Port) {
 
 function createWebpageEndpoint() {
   return createEndpoint<WebpageApi>(fromWebpage({context: 'content-script'}), {
-    callable: ['mountDevtools', 'unmountDevtools', 'log', 'resetChannel'],
+    callable: ['mountDevtools', 'unmountDevtools', 'log'],
     createEncoder: createUnsafeEncoder,
   });
 }

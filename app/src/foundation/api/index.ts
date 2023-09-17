@@ -1,20 +1,32 @@
-import {ExtensionApi} from '@aside/core';
+import {ApiCreatorWithReset, StatelessExtensionApiOnHost} from '@aside/core';
 import {useMemo} from 'react';
 
 import {useNetworkApi} from './network';
+import {useStorageApi} from './storage';
+import {useActivityApi} from './activity';
 
-export function useApi(): [ExtensionApi, () => void] {
+export function useApi(): ApiCreatorWithReset<StatelessExtensionApiOnHost> {
   const network = useNetworkApi();
+  const activity = useActivityApi();
+  const storage = useStorageApi();
 
   return useMemo(() => {
-    const api: ExtensionApi = {
-      network: network.api,
-    };
+    const createApi: ApiCreatorWithReset<StatelessExtensionApiOnHost>['api'] =
+      async (context) => {
+        const api: StatelessExtensionApiOnHost = {
+          network: await network.api(context),
+          activity: await activity.api(context),
+          storage: await storage.api(context),
+        };
+
+        return api;
+      };
 
     const reset = () => {
       network.reset();
+      activity.reset();
     };
 
-    return [api, reset];
-  }, [network]);
+    return {api: createApi, reset};
+  }, [activity, network, storage]);
 }

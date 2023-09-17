@@ -1,14 +1,13 @@
 import React, {PropsWithChildren} from 'react';
 import {ConsoleMessage} from '@aside/chrome-ui-remote';
-import {useExtensionApi} from '@aside/react';
 
-import {useActivityItem, useActivityStore} from '../hooks';
+import {useActivityItem, useActivityStore, useActivity} from '../hooks';
 
 export function ActivityDetails({
   children,
   type,
 }: PropsWithChildren<{type: string}>) {
-  const api = useExtensionApi();
+  const {showPreviousValues} = useActivity();
   const selected = useActivityItem();
   const {rows} = useActivityStore(type).data;
 
@@ -22,7 +21,7 @@ export function ActivityDetails({
     <>
       <ConsoleMessage
         value={matchingRow.nodes}
-        showPreviousValues={api.activity.showPreviousValues[0].data}
+        showPreviousValues={showPreviousValues[0]}
       />
       {children}
     </>

@@ -12,7 +12,10 @@ export function TableRow({children, id}: TableRowProps) {
 
   useEffect(() => {
     if (selectedId === id) {
-      rowRef.current?.scrollIntoView({behavior: 'instant', block: 'nearest'});
+      rowRef.current?.scrollIntoView({
+        behavior: 'instant' as any,
+        block: 'nearest',
+      });
     }
   }, [id, selectedId]);
 

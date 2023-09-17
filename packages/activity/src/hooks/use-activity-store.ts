@@ -6,7 +6,7 @@ export function useActivityStore(type: string) {
   const activity = useActivity();
 
   return useMemo(() => {
-    const store = activity.find((store) => store.data.type === type);
+    const store = activity.stores.find((store) => store.data.type === type);
 
     if (!store) {
       throw new Error(
@@ -15,5 +15,5 @@ export function useActivityStore(type: string) {
     }
 
     return store;
-  }, [activity, type]);
+  }, [activity.stores, type]);
 }

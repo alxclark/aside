@@ -4,13 +4,12 @@ import React, {
   useEffect,
   useCallback,
   useRef,
-  useMemo,
 } from 'react';
 import {
   fromWebpage,
   WebpageApi,
   ContentScriptApiForWebpage,
-  StatefulExtensionApi as SubscribableApi,
+  StatefullExtensionApi,
 } from '@aside/core';
 import {RemoteRoot, createRemoteRoot} from '@remote-ui/react';
 import {createEndpoint, Endpoint, release, retain} from '@remote-ui/rpc';
@@ -19,8 +18,6 @@ import type {RemoteChannel} from '@remote-ui/core';
 
 import {AllComponents} from '../ui';
 import {ExtensionApiContext} from '../context';
-import {ExtensionApi} from '../types';
-import {useLocalStorageStateInternal} from '../hooks';
 
 import {RemoteRenderer} from './RemoteRenderer';
 import {ErrorBoundary} from './ErrorBoundary';
@@ -62,9 +59,6 @@ export function Devtools({children}: PropsWithChildren<{}>) {
 
         console.log(sourcePrefix, ...params);
       },
-      async resetChannel() {
-        console.log('reset channel');
-      },
     };
 
     contentScript.expose(webpageApi);
@@ -104,76 +98,56 @@ function ExtensionApiProvider({
 }: PropsWithChildren<{
   endpoint: Endpoint<ContentScriptApiForWebpage>;
 }>) {
-  const [subscribableApi, setSubscribableApi] = useState<SubscribableApi>();
-
-  const get: ExtensionApi['storage']['local']['get'] = useCallback(
-    (keys) => endpoint.call.getLocalStorage(keys),
-    [endpoint],
-  );
-  const set: ExtensionApi['storage']['local']['set'] = useCallback(
-    (items) => endpoint.call.setLocalStorage(items),
-    [endpoint],
-  );
-
-  const recordSnapshot = useLocalStorageStateInternal(true, {
-    key: 'record-snapshot',
-    get,
-    set,
-    scope: 'global',
-  });
-
-  const filter = useLocalStorageStateInternal('', {
-    key: 'filter',
-    get,
-    set,
-    scope: 'global',
-  });
-
-  const showFilter = useLocalStorageStateInternal(true, {
-    key: 'show-filter',
-    get,
-    set,
-    scope: 'global',
-  });
-
-  const preserveLog = useLocalStorageStateInternal(false, {
-    key: 'preserve-log',
-    get,
-    set,
-    scope: 'global',
-  });
-
-  const invertFilter = useLocalStorageStateInternal(false, {
-    key: 'invert-filter',
-    get,
-    set,
-    scope: 'global',
-  });
-
-  const showPreviousValues = useLocalStorageStateInternal(false, {
-    key: 'show-previous-values',
-    get,
-    set,
-    scope: 'global',
-  });
-
-  const showTimelineOptions = useLocalStorageStateInternal(false, {
-    key: 'show-timeline-options',
-    get,
-    set,
-    scope: 'global',
-  });
+  const [statefulApi, setStatefulApi] = useState<StatefullExtensionApi>();
 
   useEffect(() => {
     async function getApi() {
       const api = await endpoint.call.getApi();
 
+      console.log({api});
+
       // Make stateful all stateless subscribable received by the devtools
-      setSubscribableApi({
+      setStatefulApi({
         network: {
           requests: makeStatefulSubscribable(api.network.requests),
           onRequestFinished: api.network.onRequestFinished,
           clear: api.network.clear,
+        },
+        activity: {
+          filter: [
+            makeStatefulSubscribable(api.activity.filter[0]),
+            api.activity.filter[1],
+          ],
+          invertFilter: [
+            makeStatefulSubscribable(api.activity.invertFilter[0]),
+            api.activity.invertFilter[1],
+          ],
+          preserveLog: [
+            makeStatefulSubscribable(api.activity.preserveLog[0]),
+            api.activity.preserveLog[1],
+          ],
+          recordSnapshot: [
+            makeStatefulSubscribable(api.activity.recordSnapshot[0]),
+            api.activity.recordSnapshot[1],
+          ],
+          showFilter: [
+            makeStatefulSubscribable(api.activity.showFilter[0]),
+            api.activity.showFilter[1],
+          ],
+          showPreviousValues: [
+            makeStatefulSubscribable(api.activity.showPreviousValues[0]),
+            api.activity.showPreviousValues[1],
+          ],
+          showTimelineOptions: [
+            makeStatefulSubscribable(api.activity.showTimelineOptions[0]),
+            api.activity.showTimelineOptions[1],
+          ],
+        },
+        storage: {
+          local: {
+            get: api.storage.local.get,
+            set: api.storage.local.set,
+          },
         },
       });
     }
@@ -181,57 +155,12 @@ function ExtensionApiProvider({
     getApi();
   }, [endpoint.call]);
 
-  const api: ExtensionApi | undefined = useMemo(() => {
-    return {
-      network: {
-        requests: subscribableApi?.network.requests!,
-        onRequestFinished: subscribableApi?.network.onRequestFinished!,
-        clear: subscribableApi?.network.clear!,
-      },
-      storage: {
-        local: {
-          get,
-          set,
-        },
-      },
-      timeline: {
-        recordSnapshot,
-        filter,
-        showFilter,
-        preserveLog,
-        invertFilter,
-        showPreviousValues,
-        showTimelineOptions,
-      },
-      activity: {
-        recordSnapshot,
-        filter,
-        showFilter,
-        preserveLog,
-        invertFilter,
-        showPreviousValues,
-        showTimelineOptions,
-      },
-    };
-  }, [
-    filter,
-    get,
-    invertFilter,
-    preserveLog,
-    recordSnapshot,
-    set,
-    showFilter,
-    showPreviousValues,
-    showTimelineOptions,
-    subscribableApi?.network.clear,
-    subscribableApi?.network.onRequestFinished,
-    subscribableApi?.network.requests,
-  ]);
+  if (!statefulApi) return null;
 
-  if (!subscribableApi) return null;
+  console.log({statefulApi});
 
   return (
-    <ExtensionApiContext.Provider value={api}>
+    <ExtensionApiContext.Provider value={statefulApi}>
       {children}
     </ExtensionApiContext.Provider>
   );

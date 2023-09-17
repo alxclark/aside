@@ -59,6 +59,14 @@
   dependencies:
     tslib "~2.0.1"
 
+"@aside/timeline@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@aside/timeline/-/timeline-0.3.0.tgz#97d923a0d89d58eb878886c49d2d0cf691f627ac"
+  integrity sha512-vchl6Hd4B/sxijxGT5Ignhibnt9mr+ZL+gsWjLtvRBasP+MPzZ8gBpJXkdiaJiDGJKuwZHiKwSvK4b/l0Mtzrw==
+  dependencies:
+    "@aside/chrome-ui" "0.6.0"
+    "@aside/react" "0.6.0"
+
 "@aside/web@0.6.0":
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/@aside/web/-/web-0.6.0.tgz#f00667b6aa64e0ab8fcdf1b33d63e46959804cdf"

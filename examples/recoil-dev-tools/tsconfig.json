@@ -18,5 +18,5 @@
     "jsx": "react"
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }, {"path": "../../packages/react"}, {"path": "../../packages/timeline"}, {"path": "../../packages/recoil"}, {"path": "../../packages/chrome-ui-remote"}, {"path": "../../packages/activity"}]
+  "references": [{ "path": "./tsconfig.node.json" }, {"path": "../../packages/react"}, {"path": "../../packages/recoil"}, {"path": "../../packages/chrome-ui-remote"}, {"path": "../../packages/activity"}]
 }

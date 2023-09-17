@@ -1,7 +1,6 @@
 import {createContext} from 'react';
+import {StatefullExtensionApi} from '@aside/core';
 
-import {ExtensionApi} from './types';
-
-export const ExtensionApiContext = createContext<ExtensionApi | undefined>(
-  undefined,
-);
+export const ExtensionApiContext = createContext<
+  StatefullExtensionApi | undefined
+>(undefined);
