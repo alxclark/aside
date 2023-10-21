@@ -68,11 +68,15 @@ export function useNetworkApi(): ApiCreatorWithReset<
   const api: ApiCreatorWithReset<
     StatelessExtensionApiOnHost['network']
   >['api'] = useMemo(
-    () => async () => ({
-      clear,
-      onRequestFinished,
-      requests,
-    }),
+    () => async () =>
+      [
+        {
+          clear,
+          onRequestFinished,
+          requests,
+        },
+        () => {},
+      ],
     [clear, onRequestFinished, requests],
   );
 
