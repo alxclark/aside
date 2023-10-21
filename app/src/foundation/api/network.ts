@@ -1,5 +1,5 @@
 import {
-  ApiCreatorWithReset,
+  ApiCreator,
   NetworkRequest,
   StatelessExtensionApiOnHost,
 } from '@aside/core';
@@ -7,7 +7,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {useRemoteSubscribable} from '../../utilities/subscription';
 
-export function useNetworkApi(): ApiCreatorWithReset<
+export function useNetworkApi(): ApiCreator<
   StatelessExtensionApiOnHost['network']
 > {
   const [networkRequests, setNetworkRequests] = useState<NetworkRequest[]>([]);
@@ -65,22 +65,25 @@ export function useNetworkApi(): ApiCreatorWithReset<
     setNetworkRequests([]);
   }, []);
 
-  const api: ApiCreatorWithReset<
-    StatelessExtensionApiOnHost['network']
-  >['api'] = useMemo(
-    () => async () => ({
-      clear,
-      onRequestFinished,
-      requests,
-    }),
-    [clear, onRequestFinished, requests],
-  );
-
   const reset = useCallback(() => {
     clearSubscription();
     requestSubscribers.clear();
     setNetworkRequests([]);
   }, [clearSubscription, requestSubscribers]);
+
+  const api: ApiCreator<StatelessExtensionApiOnHost['network']>['api'] =
+    useMemo(
+      () => async () =>
+        [
+          {
+            clear,
+            onRequestFinished,
+            requests,
+          },
+          reset,
+        ],
+      [clear, onRequestFinished, requests, reset],
+    );
 
   return useMemo(() => ({api, reset}), [api, reset]);
 }

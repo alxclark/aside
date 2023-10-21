@@ -15,7 +15,6 @@ import {
   TabsList,
   TabsTrigger,
   TabsContent,
-  Button,
 } from '@aside/chrome-ui-remote';
 import {
   Aside,

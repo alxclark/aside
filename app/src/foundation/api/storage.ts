@@ -7,16 +7,16 @@ export function useStorageApi(): ApiCreator<
   return useMemo(
     () => ({
       api: async () => {
-        return {
-          local: {
-            get: (keys) => {
-              return browser.storage.local.get(keys);
-            },
-            set: (items) => {
-              return browser.storage.local.set(items);
-            },
+        const local: StatelessExtensionApiOnHost['storage']['local'] = {
+          get: (keys) => {
+            return browser.storage.local.get(keys);
+          },
+          set: (items) => {
+            return browser.storage.local.set(items);
           },
         };
+
+        return [{local}, () => {}];
       },
     }),
     [],

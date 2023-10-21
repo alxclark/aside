@@ -1,61 +1,68 @@
-import {ApiCreatorWithReset, StatelessExtensionApiOnHost} from '@aside/core';
+import {ApiCreator, StatelessExtensionApiOnHost} from '@aside/core';
 import {useMemo} from 'react';
 
-import {useRemoteSubscribableWithStorage} from './shared';
+import {createPersistedRemoteSubscribable} from '../../utilities/subscribable';
 
-export function useActivityApi(): ApiCreatorWithReset<
+export function useActivityApi(): ApiCreator<
   StatelessExtensionApiOnHost['activity']
 > {
-  const [filter, setFilter, clearFilter, filterReady] =
-    useRemoteSubscribableWithStorage('', {storageKey: 'filter'});
-
-  const [invertFilter, setInvertFilter, clearInvertFilter, inverfilterReady] =
-    useRemoteSubscribableWithStorage(false, {storageKey: 'invertFilter'});
-
-  const [preserveLog, setPreserveLog, clearPreserveLog, preserveLogReady] =
-    useRemoteSubscribableWithStorage(false, {storageKey: 'preserveLog'});
-
-  const [
-    recordSnapshot,
-    setRecordSnapshot,
-    clearRecordSnapshot,
-    recordSnapshotReady,
-  ] = useRemoteSubscribableWithStorage(false, {storageKey: 'recordSnapshot'});
-
-  const [showFilter, setShowFilter, clearShowFilter, showFilterReady] =
-    useRemoteSubscribableWithStorage(false, {storageKey: 'showFilter'});
-
-  const [
-    showPreviousValues,
-    setShowPreviousValues,
-    clearShowPreviousValues,
-    showPreviousValuesReady,
-  ] = useRemoteSubscribableWithStorage(false, {
-    storageKey: 'showPreviousValues',
-  });
-
-  const [
-    showTimelineOptions,
-    setShowTimelineOptions,
-    clearShowTimelineOptions,
-    showTimelineOptionsReady,
-  ] = useRemoteSubscribableWithStorage(false, {
-    storageKey: 'showTimelineOptions',
-  });
-
   return useMemo(() => {
-    const createApi: ApiCreatorWithReset<
+    const createApi: ApiCreator<
       StatelessExtensionApiOnHost['activity']
     >['api'] = async (_context) => {
-      await Promise.all([
-        filterReady,
-        inverfilterReady,
-        preserveLogReady,
-        recordSnapshotReady,
-        showFilterReady,
-        showPreviousValuesReady,
-        showTimelineOptionsReady,
-      ]);
+      const {
+        subscribable: filter,
+        update: setFilter,
+        clear: clearFilter,
+      } = await createPersistedRemoteSubscribable('', {storageKey: 'filter'});
+
+      const {
+        subscribable: invertFilter,
+        update: setInvertFilter,
+        clear: clearInvertFilter,
+      } = await createPersistedRemoteSubscribable(false, {
+        storageKey: 'invertFilter',
+      });
+
+      const {
+        subscribable: preserveLog,
+        update: setPreserveLog,
+        clear: clearPreserveLog,
+      } = await createPersistedRemoteSubscribable(false, {
+        storageKey: 'preserveLog',
+      });
+
+      const {
+        subscribable: recordSnapshot,
+        update: setRecordSnapshot,
+        clear: clearRecordSnapshot,
+      } = await createPersistedRemoteSubscribable(false, {
+        storageKey: 'recordSnapshot',
+      });
+
+      const {
+        subscribable: showFilter,
+        update: setShowFilter,
+        clear: clearShowFilter,
+      } = await createPersistedRemoteSubscribable(false, {
+        storageKey: 'showFilter',
+      });
+
+      const {
+        subscribable: showPreviousValues,
+        update: setShowPreviousValues,
+        clear: clearShowPreviousValues,
+      } = await createPersistedRemoteSubscribable(false, {
+        storageKey: 'showPreviousValues',
+      });
+
+      const {
+        subscribable: showTimelineOptions,
+        update: setShowTimelineOptions,
+        clear: clearShowTimelineOptions,
+      } = await createPersistedRemoteSubscribable(false, {
+        storageKey: 'showTimelineOptions',
+      });
 
       const api: StatelessExtensionApiOnHost['activity'] = {
         filter: [filter, setFilter],
@@ -67,48 +74,19 @@ export function useActivityApi(): ApiCreatorWithReset<
         showTimelineOptions: [showTimelineOptions, setShowTimelineOptions],
       };
 
-      return api;
+      const reset = () => {
+        clearFilter();
+        clearInvertFilter();
+        clearPreserveLog();
+        clearRecordSnapshot();
+        clearShowFilter();
+        clearShowPreviousValues();
+        clearShowTimelineOptions();
+      };
+
+      return [api, reset];
     };
 
-    const reset = () => {
-      clearFilter();
-      clearInvertFilter();
-      clearPreserveLog();
-      clearRecordSnapshot();
-      clearShowFilter();
-      clearShowPreviousValues();
-      clearShowTimelineOptions();
-    };
-
-    return {api: createApi, reset};
-  }, [
-    clearFilter,
-    clearInvertFilter,
-    clearPreserveLog,
-    clearRecordSnapshot,
-    clearShowFilter,
-    clearShowPreviousValues,
-    clearShowTimelineOptions,
-    filter,
-    filterReady,
-    inverfilterReady,
-    invertFilter,
-    preserveLog,
-    preserveLogReady,
-    recordSnapshot,
-    recordSnapshotReady,
-    setFilter,
-    setInvertFilter,
-    setPreserveLog,
-    setRecordSnapshot,
-    setShowFilter,
-    setShowPreviousValues,
-    setShowTimelineOptions,
-    showFilter,
-    showFilterReady,
-    showPreviousValues,
-    showPreviousValuesReady,
-    showTimelineOptions,
-    showTimelineOptionsReady,
-  ]);
+    return {api: createApi};
+  }, []);
 }

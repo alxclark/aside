@@ -9,6 +9,7 @@ import {
   ContentScriptApiForDevtools,
   DevtoolsApiForContentScript,
   StatelessExtensionApi,
+  StatelessExtensionApiOnHost,
 } from '@aside/core';
 import {Runtime} from 'webextension-polyfill';
 
@@ -24,8 +25,24 @@ export function Host() {
   const [port, setPort] = useState<Runtime.Port | undefined>();
   const contentScriptEndpointRef =
     useRef<Endpoint<ContentScriptApiForDevtools | undefined>>();
-  const hostApi = useApi();
+  const hostCleanupRef = useRef<() => void | undefined>();
   const [connected, setConnected] = useState(false);
+
+  const hostApi = useApi();
+  const statelessApiRef = useRef<StatelessExtensionApiOnHost | undefined>();
+
+  useEffect(() => {
+    async function createApi() {
+      const [statelessApi, cleanup] = await hostApi.api({
+        __futureApiContext: null,
+      });
+
+      statelessApiRef.current = statelessApi;
+      hostCleanupRef.current = cleanup;
+    }
+
+    createApi();
+  }, [hostApi]);
 
   useEffect(() => {
     // Attempt a connection in case content-script already loaded and can intercept the port.
@@ -88,9 +105,8 @@ export function Host() {
         return receiver.receive;
       },
       async getApi() {
-        return hostApi.api({
-          __futureApiContext: null,
-        }) as Promise<StatelessExtensionApi>;
+        // When passing the api over RPC it will wrap functions in proxies (function return wrapped in promise).
+        return statelessApiRef.current as StatelessExtensionApi;
       },
     };
 
@@ -105,7 +121,7 @@ export function Host() {
 
     function listener() {
       setPort(undefined);
-      hostApi.reset();
+      hostCleanupRef.current?.();
     }
 
     port.onDisconnect.addListener(listener);

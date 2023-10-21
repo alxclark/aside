@@ -26,12 +26,10 @@ export interface ApiContext {
   __futureApiContext: null;
 }
 
-export interface ApiCreator<T> {
-  api(context: ApiContext): Promise<T>;
-}
+type ResetFunction = () => void;
 
-export interface ApiCreatorWithReset<T> extends ApiCreator<T> {
-  reset(): void;
+export interface ApiCreator<T> {
+  api(context: ApiContext): Promise<[T, ResetFunction]>;
 }
 
 export type SetStateProxy<T> = (prevState: T) => Promise<T>;
