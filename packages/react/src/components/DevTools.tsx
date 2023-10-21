@@ -104,8 +104,6 @@ function ExtensionApiProvider({
     async function getApi() {
       const api = await endpoint.call.getApi();
 
-      console.log({api});
-
       // Make stateful all stateless subscribable received by the devtools
       setStatefulApi({
         network: {
@@ -156,8 +154,6 @@ function ExtensionApiProvider({
   }, [endpoint.call]);
 
   if (!statefulApi) return null;
-
-  console.log({statefulApi});
 
   return (
     <ExtensionApiContext.Provider value={statefulApi}>

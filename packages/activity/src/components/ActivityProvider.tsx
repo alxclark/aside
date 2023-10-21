@@ -30,19 +30,22 @@ export function ActivityProvider({activity, children}: Props) {
     });
 
   useEffect(() => {
-    if (recordSnapshot) return;
-
     activity.forEach((store) =>
       store.monitor.setRecordSnapshot?.(recordSnapshot),
     );
   }, [activity, recordSnapshot]);
 
   useEffect(() => {
-    console.log({loading, persistedSnapshots, initialSnapshots, preserveLog});
     if (!loading && persistedSnapshots && !initialSnapshots) {
       setInitialSnapshots(preserveLog ? persistedSnapshots : {});
     }
-  }, [initialSnapshots, loading, persistedSnapshots, preserveLog]);
+  }, [
+    initialSnapshots,
+    loading,
+    persistedSnapshots,
+    preserveLog,
+    recordSnapshot,
+  ]);
 
   useEffect(() => {
     if (loading || !preserveLog) return;
