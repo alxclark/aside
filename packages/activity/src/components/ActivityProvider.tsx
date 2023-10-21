@@ -1,9 +1,10 @@
 import React, {PropsWithChildren, useEffect, useMemo, useState} from 'react';
-import {useExtensionApi, useLocalStorageState} from '@aside/react';
+import {useLocalStorageState} from '@aside/react';
 
 import {Snapshot, ActivityStore, ActivityStoreDescriptor} from '../types';
 import {createDiff} from '../diff';
 import {ActivityStoreContext} from '../contexts';
+import {useActivity} from '../hooks';
 
 export type Props = PropsWithChildren<{
   activity: ActivityStoreDescriptor<any>[];
@@ -17,8 +18,10 @@ export function ActivityProvider({activity, children}: Props) {
     | undefined
   >(undefined);
 
-  const [preserveLog] = useExtensionApi().activity.preserveLog;
-  const [recordSnapshot] = useExtensionApi().activity.recordSnapshot;
+  const {
+    preserveLog: [preserveLog],
+    recordSnapshot: [recordSnapshot],
+  } = useActivity();
 
   const [{data: persistedSnapshots, loading}, setPersistedSnapshots] =
     useLocalStorageState<{[key: string]: Snapshot[]} | undefined>(undefined, {
@@ -35,13 +38,14 @@ export function ActivityProvider({activity, children}: Props) {
   }, [activity, recordSnapshot]);
 
   useEffect(() => {
-    if (!loading && persistedSnapshots && !initialSnapshots && !preserveLog) {
+    console.log({loading, persistedSnapshots, initialSnapshots, preserveLog});
+    if (!loading && persistedSnapshots && !initialSnapshots) {
       setInitialSnapshots(preserveLog ? persistedSnapshots : {});
     }
   }, [initialSnapshots, loading, persistedSnapshots, preserveLog]);
 
   useEffect(() => {
-    if (loading || preserveLog) return;
+    if (loading || !preserveLog) return;
 
     const result = activity.reduce<{[key: string]: Snapshot[]}>(
       (prev, curr) => {
