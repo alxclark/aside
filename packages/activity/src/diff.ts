@@ -22,7 +22,7 @@ export function createDiff(input: DiffInput): {[key: string]: any} {
   }
 
   for (const key in next) {
-    if (!(key in previous)) {
+    if (!previous || !(key in previous)) {
       diff[key] = createDiffNode(next[key], undefined);
     } else if (isObject(next[key]) && isObject(previous[key])) {
       const nestedDiff = createDiff({previous: previous[key], next: next[key]});

@@ -20,7 +20,8 @@
     "lint": "turbo run lint",
     "clean": "turbo run clean",
     "bundle-extension": "turbo run pack",
-    "test:app": "yarn workspace app test"
+    "test:app": "yarn workspace app test",
+    "test:activity": "yarn workspace @aside/activity test"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "@changesets/cli": "^2.26.2",
     "@remote-ui/react": "latest",
     "@remote-ui/rpc": "latest",
+    "@shopify/react-testing": "^5.1.3",
     "@vitejs/plugin-react": "^4.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

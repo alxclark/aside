@@ -1,8 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {resolve} from 'path';
 
 import {defineConfig} from 'vite';
+import react from '@vitejs/plugin-react';
+
+// eslint-disable-next-line id-length
+export const r = (...args: string[]) => resolve(__dirname, '..', ...args);
 
 export default defineConfig({
+  plugins: [react()],
   build: {
     emptyOutDir: false,
     outDir: 'build/js',
@@ -17,12 +23,22 @@ export default defineConfig({
       output: {
         globals: {
           react: 'React',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+
           '@aside/react': 'AsideReact',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
+
           '@aside/chrome-ui': 'AsideChromeUi',
         },
       },
     },
   },
-});
+  resolve: {
+    alias: {
+      '@aside/react': `${r('./react/src')}`,
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: [`${r('../config/testing/setup.ts')}`],
+  },
+} as any);

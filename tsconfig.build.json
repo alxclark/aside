@@ -16,7 +16,12 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": [
+      "vite/client",
+      "vitest/globals",
+      "@shopify/react-testing/matchers"
+    ]
   },
   "exclude": ["node_modules"]
 }

@@ -9,9 +9,6 @@
     "outDir": "./build/ts",
     "rootDir": "./src",
     "jsx": "preserve",
-    "types": [
-      "vitest/globals"
-    ],
   },
   "references": [
     { "path": "../core/tsconfig.json" },

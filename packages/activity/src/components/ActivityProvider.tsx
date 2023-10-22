@@ -47,6 +47,8 @@ export function ActivityProvider({activity, children}: Props) {
     recordSnapshot,
   ]);
 
+  console.log({initialSnapshots: initialSnapshots?.graphql});
+
   useEffect(() => {
     if (loading || !preserveLog) return;
 
@@ -103,6 +105,8 @@ export function ActivityProvider({activity, children}: Props) {
       },
     }));
   }, [activity, initialSnapshots, setPersistedSnapshots]);
+
+  console.log(JSON.stringify(value));
 
   return (
     <ActivityStoreContext.Provider value={value}>

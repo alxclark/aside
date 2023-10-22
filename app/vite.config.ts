@@ -103,7 +103,7 @@ export default defineConfig(({command, mode}) => {
     test: {
       globals: true,
       environment: 'jsdom',
-      setupFiles: [`${r('./src/tests/setup.ts')}`],
+      setupFiles: [`${r('../config/testing/setup.ts')}`],
     },
   };
 });
