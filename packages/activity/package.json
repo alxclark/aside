@@ -1,6 +1,6 @@
 {
   "name": "@aside/activity",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "license": "BSD-3-Clause",
   "files": [
@@ -22,8 +22,8 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@aside/react": "0.6.0",
-    "@aside/chrome-ui-remote": "^0.0.1"
+    "@aside/react": "0.7.0",
+    "@aside/chrome-ui-remote": "^0.1.0"
   },
   "devDependencies": {},
   "publishConfig": {

@@ -1,5 +1,17 @@
 # @aside/timeline
 
+## 0.1.0
+
+### Minor Changes
+
+- 7cfa220: Improved internals and public API
+
+### Patch Changes
+
+- Updated dependencies [7cfa220]
+  - @aside/chrome-ui-remote@0.1.0
+  - @aside/react@0.7.0
+
 ## 0.3.0
 
 ### Minor Changes

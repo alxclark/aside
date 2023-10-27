@@ -1,5 +1,16 @@
 # @aside/recoil
 
+## 0.7.0
+
+### Minor Changes
+
+- 7cfa220: Improved internals and public API
+
+### Patch Changes
+
+- Updated dependencies [7cfa220]
+  - @aside/react@0.7.0
+
 ## 0.6.0
 
 ### Minor Changes

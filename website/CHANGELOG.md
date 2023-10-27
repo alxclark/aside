@@ -1,5 +1,12 @@
 # website
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [7cfa220]
+  - @aside/chrome-ui@0.7.0
+
 ## 0.1.3
 
 ### Patch Changes

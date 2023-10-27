@@ -1,6 +1,6 @@
 {
   "name": "@aside/react",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "license": "BSD-3-Clause",
   "files": [
@@ -32,10 +32,10 @@
   },
   "dependencies": {
     "@aside/web": "0.6.0",
-    "@aside/chrome-ui-remote": "0.0.1"
+    "@aside/chrome-ui-remote": "0.1.0"
   },
   "devDependencies": {
-    "@aside/core": "0.6.0"
+    "@aside/core": "0.7.0"
   },
   "publishConfig": {
     "access": "public"

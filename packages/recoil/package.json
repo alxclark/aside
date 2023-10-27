@@ -1,6 +1,6 @@
 {
   "name": "@aside/recoil",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "type": "module",
   "files": [
     "build"
@@ -22,13 +22,13 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@aside/react": "0.6.0",
+    "@aside/react": "0.7.0",
     "recoil": "^0.7.5"
   },
   "devDependencies": {
-    "@aside/core": "0.6.0",
-    "@aside/chrome-ui": "0.6.0",
-    "@aside/activity": "0.0.1"
+    "@aside/core": "0.7.0",
+    "@aside/chrome-ui": "0.7.0",
+    "@aside/activity": "0.1.0"
   },
   "publishConfig": {
     "access": "public"
