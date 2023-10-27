@@ -33,6 +33,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@aside/react/testing': `${r('./react/src/testing/mount.tsx')}`,
       '@aside/react': `${r('./react/src')}`,
     },
   },

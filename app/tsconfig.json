@@ -19,7 +19,7 @@
       "vitest/globals"
     ],
     "paths": {
-      "tests/*": ["src/tests/*"],
+      "testing/*": ["src/testing/*"],
     }
   },
   "exclude": ["dist", "node_modules"],

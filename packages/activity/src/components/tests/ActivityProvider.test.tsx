@@ -1,9 +1,15 @@
 import React from 'react';
-import {mount, createMockStatefulRemoteSubscribable} from '@aside/react';
+import {
+  mount,
+  createMockStatefulRemoteSubscribable,
+} from '@aside/react/testing';
 
 import {ActivityProvider} from '../ActivityProvider';
 import {ActivityStoreContext} from '../../contexts';
-import {createActivityStoreDescriptor, createSnapshot} from '../../tests/mocks';
+import {
+  createActivityStoreDescriptor,
+  createSnapshot,
+} from '../../testing/mocks';
 
 describe('ActivityProvider', () => {
   afterEach(() => {
@@ -173,3 +179,5 @@ describe('ActivityProvider', () => {
     });
   });
 });
+
+export {};

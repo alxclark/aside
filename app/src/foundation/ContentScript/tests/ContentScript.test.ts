@@ -1,5 +1,5 @@
-import {createPort, mockBrowser} from 'tests/browser';
 import {createEndpoint} from '@remote-ui/rpc';
+import {createPort, mockBrowser} from 'testing/browser';
 
 import {contentScript} from '../ContentScript';
 
