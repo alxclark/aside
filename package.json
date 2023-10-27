@@ -17,7 +17,7 @@
     "build-storybook": "build-storybook",
     "build": "turbo run build",
     "turbo-dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "type-check": "turbo run type-check",
     "clean": "turbo run clean",
     "bundle-extension": "turbo run pack",
     "test:app": "yarn workspace app test",

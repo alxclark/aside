@@ -16,7 +16,7 @@
   },
   "types": "build/ts/index.d.ts",
   "scripts": {
-    "lint": "tsc",
+    "type-check": "tsc",
     "build": "vite build",
     "clean": "rm -rf build"
   },

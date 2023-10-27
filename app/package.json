@@ -24,7 +24,7 @@
     "start:chromium": "web-ext run --start-url http://www.localhost:3000/ --source-dir ./extension --target=chromium",
     "start:firefox": "web-ext run --source-dir ./extension --target=firefox-desktop",
     "clear": "rimraf extension/dist extension/manifest.json extension.*",
-    "lint": "tsc",
+    "type-check": "tsc",
     "test": "vitest test",
     "clean-vite": "rm -rf ./node_modules/.vite"
   },

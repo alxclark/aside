@@ -6,7 +6,7 @@
   "main": "src/index.ts",
   "license": "BSD-3-Clause",
   "scripts": {
-    "lint": "tsc",
+    "type-check": "tsc",
     "clean": "rm -rf build"
   },
   "dependencies": {

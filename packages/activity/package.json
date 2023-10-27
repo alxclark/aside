@@ -19,7 +19,7 @@
     "clean": "rm -rf build",
     "test": "vitest test",
     "build": "vite build",
-    "lint": "tsc"
+    "type-check": "tsc"
   },
   "dependencies": {
     "@aside/react": "0.6.0",

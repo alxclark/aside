@@ -23,7 +23,7 @@
     "build": "cross-env NODE_ENV=production run-p build:react build:css",
     "build:react": "vite build",
     "build:css": "postcss ./src/styles.css --dir build/css",
-    "lint": "tsc",
+    "type-check": "tsc",
     "clean": "rm -rf build"
   },
   "dependencies": {

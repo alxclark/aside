@@ -10,9 +10,9 @@
         "build/**/css/**/*"
       ]
     },
-    "lint": {
+    "type-check": {
       "dependsOn": [
-        "^lint"
+        "^type-check"
       ],
       "outputs": [
         "build/ts/**/*"
