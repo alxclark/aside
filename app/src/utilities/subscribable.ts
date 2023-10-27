@@ -44,7 +44,6 @@ export async function createPersistedRemoteSubscribable<T>(
       current = computedValue;
 
       subscribers.forEach((callback) => {
-        console.log('notifying subs', subscribers.size);
         callback(computedValue);
       });
       browser.storage.local.set({[storageKey]: computedValue});

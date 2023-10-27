@@ -47,8 +47,6 @@ export function ActivityProvider({activity, children}: Props) {
     recordSnapshot,
   ]);
 
-  console.log({initialSnapshots: initialSnapshots?.graphql});
-
   useEffect(() => {
     if (loading || !preserveLog) return;
 
@@ -106,8 +104,6 @@ export function ActivityProvider({activity, children}: Props) {
     }));
   }, [activity, initialSnapshots, setPersistedSnapshots]);
 
-  console.log(JSON.stringify(value));
-
   return (
     <ActivityStoreContext.Provider value={value}>
       {children}
@@ -126,7 +122,7 @@ function getRows(
     ...store.monitor.snapshots,
   ];
 
-  if (store.monitor.skipDiffing) return snapshots;
+  if (!store.monitor.diff) return snapshots;
 
   return snapshots.map((next, index) => {
     const prev = snapshots[index - 1] ?? store.monitor.previous ?? {};

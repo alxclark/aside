@@ -21,7 +21,7 @@ export function createActivityStoreDescriptor(
       snapshots: partial?.monitor?.snapshots?.map(createSnapshot) ?? [snapshot],
       clearSnapshots: partial?.monitor?.clearSnapshots,
       setRecordSnapshot: partial?.monitor?.setRecordSnapshot,
-      skipDiffing: partial?.monitor?.skipDiffing,
+      diff: false,
       previous: createSnapshot(partial?.monitor?.previous),
     },
   };

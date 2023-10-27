@@ -23,7 +23,7 @@ describe('ActivityProvider', () => {
   });
 
   describe('when an activity store is provided', () => {
-    it('provided an enhanced version of each store descriptors provided', async () => {
+    it('provides an enhanced version of each store descriptors provided', async () => {
       const store = createActivityStoreDescriptor({
         icon: 'https://graphql.org/img/logo.svg',
         displayName: 'GraphQL',
@@ -109,7 +109,7 @@ describe('ActivityProvider', () => {
     });
 
     describe('when there is persisted snapshots in the extension local storage', () => {
-      it('appends the persisted snapshots to the store', async () => {
+      it('appends the persisted snapshots to the store when `preserveLog` is true', async () => {
         const persistedSnapshot = createSnapshot({
           id: '1',
           createdAt: Date.now().toString(),
@@ -176,8 +176,71 @@ describe('ActivityProvider', () => {
           }),
         ]);
       });
+
+      it('does not append the persisted snapshots to the store when `preserveLog` is false', async () => {
+        const persistedSnapshot = createSnapshot({
+          id: '1',
+          createdAt: Date.now().toString(),
+          nodes: {
+            PersistedQuery: null,
+          },
+        });
+
+        const newSnapshot = createSnapshot({
+          id: '2',
+          createdAt: Date.now().toString(),
+          nodes: {
+            SomeQuery: null,
+          },
+        });
+
+        const store = createActivityStoreDescriptor({
+          type: 'graphql',
+          monitor: {
+            snapshots: [newSnapshot],
+          },
+        });
+
+        const storagePromise = Promise.resolve({
+          // Use a proxy to return a value for each storage key
+          snapshots: new Proxy(
+            {},
+            {
+              get() {
+                return {
+                  graphql: [persistedSnapshot],
+                };
+              },
+            },
+          ),
+        });
+
+        const provider = await mount(<ActivityProvider activity={[store]} />, {
+          extensionApi: {
+            storage: {
+              local: {
+                get: vi.fn().mockReturnValue(storagePromise),
+              },
+            },
+            activity: {
+              preserveLog: [
+                createMockStatefulRemoteSubscribable(false),
+                vi.fn(),
+              ],
+            },
+          },
+        });
+
+        await provider.act(() => storagePromise);
+
+        expect(provider).toProvideReactContext(ActivityStoreContext, [
+          expect.objectContaining({
+            data: expect.objectContaining({
+              rows: [expect.objectContaining({id: newSnapshot.id})],
+            }),
+          }),
+        ]);
+      });
     });
   });
 });
-
-export {};

@@ -57,7 +57,6 @@ export function useNetworkActivity() {
             createdAt: request.startedDateTime,
             nodes: request,
           })),
-          skipDiffing: true,
           clearSnapshots: () => clear(),
         },
       };

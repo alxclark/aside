@@ -14,7 +14,11 @@ export interface Monitor {
   snapshot: Snapshot;
   clearSnapshots?: () => void;
   setRecordSnapshot?: (value: boolean) => void;
-  skipDiffing?: boolean;
+  /**
+   * Whether to diff successive snapshots.
+   * Defaults to false.
+   */
+  diff?: boolean;
 }
 
 export interface ActivityStore {

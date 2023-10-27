@@ -2,7 +2,11 @@ import {useCallback, useEffect, useId, useMemo, useRef, useState} from 'react';
 
 import {Monitor, Snapshot} from '../types';
 
-export function useMonitor(object: {[key: string]: any}, deps: any[]): Monitor {
+export function useMonitor(
+  object: {[key: string]: any},
+  deps: any[],
+  options: {diff?: boolean} = {},
+): Monitor {
   const id = useId();
 
   const [snapshots, setSnapshots] = useState<Snapshot[]>([]);
@@ -56,8 +60,16 @@ export function useMonitor(object: {[key: string]: any}, deps: any[]): Monitor {
       snapshots,
       clearSnapshots,
       setRecordSnapshot,
+      diff: options.diff ?? true,
     }),
-    [clearSnapshots, current, previous, setRecordSnapshot, snapshots],
+    [
+      clearSnapshots,
+      current,
+      options.diff,
+      previous,
+      setRecordSnapshot,
+      snapshots,
+    ],
   );
 }
 

@@ -65,7 +65,6 @@ export const sharedConfig: UserConfig = {
 };
 
 export default defineConfig(({command, mode}) => {
-  console.log(mode);
   return {
     ...sharedConfig,
     base: command === 'serve' ? `http://localhost:${port}/` : '/dist/',
