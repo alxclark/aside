@@ -10,7 +10,7 @@ export async function getManifest() {
 
   // update this file to update this manifest.json
   // can also be conditional based on your need
-  const manifest: Manifest.WebExtensionManifest = {
+  const manifest: Manifest.WebExtensionManifest & {key?: string} = {
     manifest_version: 3,
     name: pkg.displayName || pkg.name,
     version: pkg.version,
@@ -52,6 +52,10 @@ export async function getManifest() {
     //   },
     // ],
   };
+
+  if (process.env.MANIFEST_KEY) {
+    manifest.key = process.env.MANIFEST_KEY;
+  }
 
   if (isDev) {
     // for content script, as browsers will cache them for each reload,

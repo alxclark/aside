@@ -3,6 +3,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_APP_TITLE: string;
+  readonly MANIFEST_KEY: string;
   // more env variables...
 }
 
