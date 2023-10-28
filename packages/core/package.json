@@ -9,9 +9,7 @@
     "type-check": "tsc",
     "clean": "rm -rf build"
   },
-  "dependencies": {
-    "webextension-polyfill": "^0.10.0"
-  },
+  "dependencies": {},
   "publishConfig": {
     "access": "public"
   }

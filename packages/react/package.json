@@ -31,11 +31,10 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
-    "@aside/web": "0.6.0",
     "@aside/chrome-ui-remote": "0.1.0"
   },
   "devDependencies": {
-    "@aside/core": "0.7.0"
+    "@aside/core": "^0.7.0"
   },
   "publishConfig": {
     "access": "public"

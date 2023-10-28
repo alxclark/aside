@@ -59,6 +59,19 @@
   dependencies:
     tslib "~2.0.1"
 
+"@aside/chrome-ui@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@aside/chrome-ui/-/chrome-ui-0.6.0.tgz#e7bfc77494660081f431d232f07fdfac2eabd936"
+  integrity sha512-AhGP6THSol5R7V8CcHMY2huqaRcdOEU42JRTLJCYJedJ74HoxydeNhbaQ0FfE+pK875POa6XwVLHX7shT34tSQ==
+
+"@aside/react@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@aside/react/-/react-0.6.0.tgz#679a8a32cd12cf73c65859ed953a93923cc1ba52"
+  integrity sha512-rhqVNyTai9dZ51eKUQY5Ye/yUVueNY8fVrreZ2bIHBs7kMIQMichJxASF+yiN4sp9khLhh671jWsgTKhjRfI0w==
+  dependencies:
+    "@aside/chrome-ui" "0.6.0"
+    "@aside/web" "0.6.0"
+
 "@aside/timeline@0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@aside/timeline/-/timeline-0.3.0.tgz#97d923a0d89d58eb878886c49d2d0cf691f627ac"

@@ -33,7 +33,6 @@ export default defineConfig({
       // This is a problem during development, since
       // we don't want to rely on assets from the build directory.
       '@aside/core': `${r('../../packages/core/src')}`,
-      '@aside/web': `${r('../../packages/web/src')}`,
       '@aside/react': `${r('../../packages/react/src')}`,
       '@aside/chrome-ui-remote': `${r('../../packages/chrome-ui-remote/src')}`,
       '@aside/activity': `${r('../../packages/activity/src')}`,
