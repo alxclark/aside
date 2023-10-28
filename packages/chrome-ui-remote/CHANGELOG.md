@@ -1,5 +1,11 @@
 # @aside/chrome-ui-remote
 
+## 0.1.2
+
+### Patch Changes
+
+- 502d9e6: Fix typescript config
+
 ## 0.1.1
 
 ### Patch Changes

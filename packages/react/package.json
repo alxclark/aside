@@ -1,6 +1,6 @@
 {
   "name": "@aside/react",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "type": "module",
   "license": "BSD-3-Clause",
   "files": [
@@ -31,7 +31,7 @@
     "clean": "rm -rf build"
   },
   "dependencies": {
-    "@aside/chrome-ui-remote": "0.1.1"
+    "@aside/chrome-ui-remote": "0.1.2"
   },
   "devDependencies": {
     "@aside/core": "^0.7.1"

@@ -1,5 +1,11 @@
 # @aside/chrome-ui
 
+## 0.7.2
+
+### Patch Changes
+
+- 502d9e6: Fix typescript config
+
 ## 0.7.1
 
 ### Patch Changes

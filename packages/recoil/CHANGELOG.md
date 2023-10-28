@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.7.2
+
+### Patch Changes
+
+- 502d9e6: Fix typescript config
+- Updated dependencies [502d9e6]
+  - @aside/react@0.7.2
+
 ## 0.7.1
 
 ### Patch Changes

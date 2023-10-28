@@ -1,5 +1,13 @@
 # @aside/react
 
+## 0.7.2
+
+### Patch Changes
+
+- 502d9e6: Fix typescript config
+- Updated dependencies [502d9e6]
+  - @aside/chrome-ui-remote@0.1.2
+
 ## 0.7.1
 
 ### Patch Changes
