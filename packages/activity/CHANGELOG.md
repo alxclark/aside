@@ -1,5 +1,14 @@
 # @aside/timeline
 
+## 0.1.1
+
+### Patch Changes
+
+- 6fad7bc: Fix dependencies
+- Updated dependencies [6fad7bc]
+  - @aside/chrome-ui-remote@0.1.1
+  - @aside/react@0.7.1
+
 ## 0.1.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @aside/chrome-ui
 
+## 0.7.1
+
+### Patch Changes
+
+- 6fad7bc: Fix dependencies
+
 ## 0.7.0
 
 ### Minor Changes

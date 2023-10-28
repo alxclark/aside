@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.7.1
+
+### Patch Changes
+
+- 6fad7bc: Fix dependencies
+- Updated dependencies [6fad7bc]
+  - @aside/react@0.7.1
+
 ## 0.7.0
 
 ### Minor Changes

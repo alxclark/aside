@@ -1,6 +1,6 @@
 {
   "name": "@aside/chrome-ui",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "license": "BSD-3-Clause",
   "files": [
     "build"
@@ -36,7 +36,7 @@
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
-    "@aside/chrome-ui-remote": "^0.1.0",
+    "@aside/chrome-ui-remote": "^0.1.1",
     "autoprefixer": "^10.4.13",
     "classnames": "latest",
     "postcss": "^8.4.18",
