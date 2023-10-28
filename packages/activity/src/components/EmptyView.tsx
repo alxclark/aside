@@ -1,3 +1,4 @@
+import React from 'react';
 import {Text, View} from '@aside/chrome-ui-remote';
 
 export function EmptyView() {

@@ -35,6 +35,7 @@ export default defineConfig({
     alias: {
       '@aside/react/testing': `${r('./react/src/testing/mount.tsx')}`,
       '@aside/react': `${r('./react/src')}`,
+      '@aside/chrome-ui-remote': `${r('./chrome-ui-remote/src')}`,
     },
   },
   test: {

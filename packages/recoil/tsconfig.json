@@ -8,7 +8,7 @@
     "emitDeclarationOnly": true,
     "outDir": "./build/ts",
     "rootDir": "./src",
-    "jsx": "preserve",
+    "jsx": "react",
     "types": [
       "vitest/globals"
     ],
@@ -17,6 +17,6 @@
     { "path": "../core" },
     { "path": "../chrome-ui" },
     { "path": "../react" },
-    { "path": "../activity" },
+    { "path": "../activity/tsconfig.json" },
   ]
 }

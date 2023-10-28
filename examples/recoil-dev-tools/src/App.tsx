@@ -58,7 +58,7 @@ const CountContext = createContext<
 
 function AsideDevtools() {
   const recoilMonitor = useRecoilMonitor({
-    ignoredRecoilKeys: ['todosBase'],
+    exclude: ['todosBase'],
   });
 
   const count = useContext(CountContext);

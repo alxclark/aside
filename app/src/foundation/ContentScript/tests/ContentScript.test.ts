@@ -109,7 +109,7 @@ describe('ContentScript', () => {
         );
 
         expect(mockCreateEndpoint).toHaveBeenCalledWith(expect.anything(), {
-          callable: ['getRemoteChannel'],
+          callable: ['getRemoteChannel', 'getApi'],
         });
       });
 

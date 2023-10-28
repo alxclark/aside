@@ -7,7 +7,7 @@
     "emitDeclarationOnly": true,
     "outDir": "./build/ts",
     "rootDir": "./src",
-    "jsx": "preserve",
+    "jsx": "react",
     "types": [
       "vitest/globals"
     ]

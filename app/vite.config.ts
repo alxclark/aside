@@ -23,6 +23,7 @@ export const sharedConfig: UserConfig = {
       // This is a problem during development, since
       // we don't want to rely on assets from the build directory.
       '@aside/react': `${r('../packages/react/src')}`,
+      '@aside/activity': `${r('../packages/activity/src')}`,
       '@aside/core': `${r('../packages/core/src')}`,
       '@aside/chrome-ui/css': `${r(
         '../packages/chrome-ui/build/css/styles.css',

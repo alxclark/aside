@@ -26,9 +26,19 @@ export default defineConfig({
       },
     },
   },
+  resolve: {
+    alias: {
+      '@aside/react/testing': `${r(
+        '../packages/activity/src/testing/mount.tsx',
+      )}`,
+      '@aside/react': `${r('../packages/react/src')}`,
+      '@aside/chrome-ui-remote': `${r('../packages/chrome-ui-remote/src')}`,
+      '@aside/activity': `${r('../packages/activity/src')}`,
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: [`${r('./src/tests/setup.ts')}`],
+    setupFiles: [`${r('../config/testing/setup.ts')}`],
   },
 } as any);

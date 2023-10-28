@@ -1,23 +1,22 @@
-import {PropsWithChildren, useMemo} from 'react';
+import {useMemo} from 'react';
 import {useRecoilSnapshot, Snapshot as RecoilSnapshot} from 'recoil';
 import {useMonitor, Monitor, Snapshot} from '@aside/activity';
 
-export type Props = PropsWithChildren<{
-  ignoredRecoilKeys?: string[];
-}>;
+export interface RecoilMonitorOptions {
+  include?: string[];
+  exclude?: string[];
+}
 
-export function useRecoilMonitor({
-  ignoredRecoilKeys,
-}: {
-  ignoredRecoilKeys?: string[];
-} = {}): Monitor {
+export function useRecoilMonitor(options: RecoilMonitorOptions): Monitor {
   const recoilSnapshot = useRecoilSnapshot();
-  const ignoredRecoilKeysDependency = ignoredRecoilKeys?.sort().join();
+  const keyDependency = `${options.include?.sort().join()}-${options.exclude
+    ?.sort()
+    .join()}`;
 
   const {snapshot} = useMemo(
-    () => transformSnapshot(recoilSnapshot, {ignoredRecoilKeys}),
+    () => transformSnapshot(recoilSnapshot, options),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ignoredRecoilKeysDependency, recoilSnapshot.getID()],
+    [keyDependency, recoilSnapshot.getID()],
   );
 
   return useMonitor(snapshot.nodes, [snapshot.nodes]);
@@ -26,9 +25,9 @@ export function useRecoilMonitor({
 // Recoil snapshots need to be manually retained in order to extract the data from it.
 // In order to make it simpler to pass it to the remote, we pre-process
 // each snapshot and generate an object containing all values and a diff of the state.
-function transformSnapshot(
+export function transformSnapshot(
   recoilSnapshot: RecoilSnapshot,
-  options: {ignoredRecoilKeys?: string[]},
+  options?: RecoilMonitorOptions,
 ) {
   const createdAt = new Date().getTime().toString();
   const id = `${String(recoilSnapshot.getID())}-${createdAt}`;
@@ -46,7 +45,14 @@ function transformSnapshot(
     if (hasAtomFamilyPrefix) {
       const [prefix, ...rest] = parts;
 
-      if (options.ignoredRecoilKeys?.includes(prefix)) continue;
+      if (options?.exclude?.includes(prefix)) continue;
+      if (
+        options?.include &&
+        options.include?.length > 0 &&
+        !options.include?.includes(prefix)
+      ) {
+        continue;
+      }
 
       const itemKey = rest
         .join('')
@@ -59,7 +65,15 @@ function transformSnapshot(
         .getLoadable(node)
         .getValue();
     } else {
-      if (options.ignoredRecoilKeys?.includes(parts[0])) continue;
+      if (options?.exclude?.includes(parts[0])) continue;
+      if (
+        options?.include &&
+        options.include?.length > 0 &&
+        !options.include?.includes(parts[0])
+      ) {
+        continue;
+      }
+
       snapshot.nodes[node.key] = recoilSnapshot.getLoadable(node).getValue();
     }
   }

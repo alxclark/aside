@@ -1,3 +1,4 @@
+import React from 'react';
 import {TextProps} from '@aside/chrome-ui-remote';
 
 export type {TextProps};
