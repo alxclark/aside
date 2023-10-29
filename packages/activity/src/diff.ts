@@ -13,6 +13,8 @@ export function createDiff(input: DiffInput): {[key: string]: any} {
   const {previous, next} = input;
   const diff: {[key: string]: any} = {};
 
+  if (next === previous) return {};
+
   if (
     typeof next !== 'object' &&
     typeof previous !== 'object' &&
