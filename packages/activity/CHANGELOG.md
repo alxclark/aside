@@ -1,5 +1,11 @@
 # @aside/timeline
 
+## 0.1.3
+
+### Patch Changes
+
+- bdbad7c: Fix array diffing
+
 ## 0.1.2
 
 ### Patch Changes
