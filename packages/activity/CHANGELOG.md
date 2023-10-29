@@ -1,5 +1,11 @@
 # @aside/timeline
 
+## 0.1.4
+
+### Patch Changes
+
+- d5e2645: Fix typings
+
 ## 0.1.3
 
 ### Patch Changes
