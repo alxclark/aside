@@ -37,7 +37,7 @@ function Button({
     <button
       {...props}
       className={cn(buttonVariants({variant, size, className}))}
-      onClick={onClick}
+      onClick={() => onClick?.()}
     >
       {children}
     </button>
