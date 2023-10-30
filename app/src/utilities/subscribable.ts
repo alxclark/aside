@@ -1,5 +1,6 @@
 import {SetStateActionWithProxy, SetStateProxy} from '@aside/core';
 import {createRemoteSubscribable} from '@remote-ui/async-subscription';
+import {RETAIN_METHOD} from '@remote-ui/rpc';
 
 type SubscribeCallback<T> = (value: T) => void;
 
@@ -60,5 +61,5 @@ export async function createPersistedRemoteSubscribable<T>(
 }
 
 function isProxy<T>(value: any): value is SetStateProxy<T> {
-  return typeof value === 'function' && value?.name === 'proxy';
+  return typeof value === 'function' && RETAIN_METHOD in value;
 }
