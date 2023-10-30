@@ -1,4 +1,4 @@
-import {createEndpoint} from '@remote-ui/rpc';
+import {createEndpoint, retain} from '@remote-ui/rpc';
 import type {Endpoint} from '@remote-ui/rpc';
 import {
   ContentScriptApiForWebpage,
@@ -109,8 +109,11 @@ function exposeWebpage(
     setLocalStorage(items) {
       return browser.storage.local.set(items);
     },
-    getApi() {
-      return devtools.call.getApi();
+    async getApi() {
+      const api = await devtools.call.getApi();
+      retain(api);
+
+      return api;
     },
   };
 
