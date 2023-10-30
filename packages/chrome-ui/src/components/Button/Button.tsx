@@ -1,5 +1,4 @@
-import * as React from 'react';
-import {Slot} from '@radix-ui/react-slot';
+import React from 'react';
 import {cva} from 'class-variance-authority';
 import {ButtonProps} from '@aside/chrome-ui-remote';
 
@@ -26,20 +25,24 @@ const buttonVariants = cva<Variants>(
   },
 );
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({className, variant, size, asChild = false, ...props}, ref) => {
-    const Comp = asChild ? Slot : 'button';
-
-    return (
-      <Comp
-        className={cn(buttonVariants({variant, size, className}))}
-        ref={ref}
-        {...props}
-      />
-    );
-  },
-);
-
-Button.displayName = 'Button';
+function Button({
+  className,
+  variant,
+  size,
+  children,
+  onClick,
+  ...props
+}: ButtonProps) {
+  console.log({onClick});
+  return (
+    <button
+      {...props}
+      className={cn(buttonVariants({variant, size, className}))}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+}
 
 export {Button, buttonVariants, type ButtonProps};
