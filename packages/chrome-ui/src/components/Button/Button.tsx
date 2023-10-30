@@ -33,7 +33,6 @@ function Button({
   onClick,
   ...props
 }: ButtonProps) {
-  console.log({onClick});
   return (
     <button
       {...props}
