@@ -26,10 +26,10 @@ export function RecordRenderer({
   const parentKey = path.slice(0, -1).join('.');
   const parentOpened = renderer.opened[parentKey];
 
-  const handleClick = useCallback(
-    () => renderer.setOpened(key, !opened),
-    [key, opened, renderer],
-  );
+  const handleClick = useCallback(() => {
+    if (depth === 0) return;
+    renderer.setOpened(key, !opened);
+  }, [depth, key, opened, renderer]);
 
   if (preview) {
     if (opened && depth === 0) return null;
@@ -50,10 +50,14 @@ export function RecordRenderer({
     <>
       {!nested && (
         <div className="relative" onClick={handleClick} onKeyDown={handleClick}>
-          <div className="absolute left-[-10px] top-[-1px]">
-            <Carret direction={opened ? 'down' : 'right'} />
-          </div>
-          <DescriptivePreview depth={depth} value={value} path={path} />
+          {depth !== 0 && (
+            <>
+              <div className="absolute left-[-10px] top-[-1px]">
+                <Carret direction={opened ? 'down' : 'right'} />
+              </div>
+              <DescriptivePreview depth={depth} value={value} path={path} />
+            </>
+          )}
         </div>
       )}
       {opened && (
@@ -103,7 +107,13 @@ function DescriptivePreview({
   const keys = Object.keys(value).sort();
 
   return (
-    <span className={classNames(path.length === 0 && 'italic')}>
+    <span
+      className={classNames(
+        path.length === 0 && 'italic',
+        // todo: Set the preview to only 4 lines
+        // 'line-clamp-4'
+      )}
+    >
       <span className="text-console-punctuation">{'{'}</span>
       {keys.map((key, index) => (
         <React.Fragment key={key}>
