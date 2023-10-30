@@ -36,7 +36,7 @@ export function useActivityApi(): ApiCreator<
         subscribable: recordSnapshot,
         update: setRecordSnapshot,
         clear: clearRecordSnapshot,
-      } = await createPersistedRemoteSubscribable(false, {
+      } = await createPersistedRemoteSubscribable(true, {
         storageKey: 'recordSnapshot',
       });
 
