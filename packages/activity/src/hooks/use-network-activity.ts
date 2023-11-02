@@ -1,5 +1,5 @@
 import {useNetwork} from '@aside/react';
-import {NetworkRequest} from '@aside/core';
+import {type NetworkRequest} from '@aside/core';
 import {useMemo} from 'react';
 
 import {ActivityStoreDescriptor, Snapshot} from '../types';

@@ -25,7 +25,9 @@
     "@aside/react": "^0.7.2",
     "@aside/chrome-ui-remote": "^0.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@aside/core": "^0.7.1"
+  },
   "publishConfig": {
     "access": "public"
   }
