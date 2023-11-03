@@ -20,8 +20,8 @@
     "build": "vite build",
     "clean": "rm -rf build"
   },
-  "peerDependencies": {
-    "@remote-ui/react": "^5.0.2"
+  "dependencies": {
+    "@remote-ui/react": "^4.5.0"
   },
   "devDependencies": {},
   "publishConfig": {

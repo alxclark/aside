@@ -1,4 +1,4 @@
-import {DOMAttributes, HTMLAttributes} from 'react';
+import {type DOMAttributes, type HTMLAttributes} from 'react';
 
 /**
  * Aside's encoder strips out React's SyntheticBaseEvent

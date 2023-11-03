@@ -17,7 +17,6 @@ export default defineConfig({
       external: [
         'react',
         '@aside/chrome-ui-remote',
-        '@aside/timeline',
         '@aside/core',
         '@remote-ui/async-subscription',
         '@remote-ui/rpc',
@@ -27,7 +26,6 @@ export default defineConfig({
         globals: {
           react: 'React',
           '@aside/chrome-ui-remote': 'AsideChromeUiRemote',
-          '@aside/timeline': 'AsideTimeline',
           '@aside/core': 'AsideCore',
           '@remote-ui/async-subscription': 'RemoteUiAsyncSubscription',
           '@remote-ui/rpc': 'RemoteUiRpc',

@@ -1,5 +1,9 @@
-import {ActivityApi, NetworkRequest, StorageApi} from '@aside/core';
-import {StatefulRemoteSubscribable} from '@remote-ui/async-subscription';
+import {
+  type ActivityApi,
+  type NetworkRequest,
+  type StorageApi,
+} from '@aside/core';
+import {type StatefulRemoteSubscribable} from '@remote-ui/async-subscription';
 
 export interface ExtensionApi {
   network: {

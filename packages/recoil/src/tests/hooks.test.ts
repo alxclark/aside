@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import {Snapshot} from 'recoil';
+import {type Snapshot} from 'recoil';
 
 import {transformSnapshot} from '../hooks';
 
