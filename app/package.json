@@ -57,6 +57,7 @@
     "@aside/react": "0.7.2",
     "@aside/core": "0.7.1",
     "@aside/chrome-ui": "0.7.2",
-    "react": "18.2.0"
+    "react": "18.2.0",
+    "@remote-ui/react": "5.0.2"
   }
 }
