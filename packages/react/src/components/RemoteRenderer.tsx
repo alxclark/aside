@@ -14,7 +14,7 @@ export function RemoteRenderer({
 
   useEffect(() => {
     return () => {
-      render(null, root, root.mount, reconciler);
+      render(null as any, root, root.mount, reconciler);
       onUnmount?.();
     };
   }, [onUnmount, root]);

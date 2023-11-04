@@ -1,9 +1,10 @@
+import {ButtonHTMLAttributes} from 'react';
 import {createRemoteReactComponent} from '@remote-ui/react';
 
 import {RemoteSafeAttributes} from '../types';
 
 export interface ButtonProps
-  extends RemoteSafeAttributes<React.ButtonHTMLAttributes<HTMLButtonElement>> {
+  extends RemoteSafeAttributes<ButtonHTMLAttributes<HTMLButtonElement>> {
   asChild?: boolean;
   variant?: 'default';
   size?: 'default' | 'icon';
