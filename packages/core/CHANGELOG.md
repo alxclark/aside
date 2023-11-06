@@ -1,5 +1,11 @@
 # @aside/core
 
+## 0.7.3
+
+### Patch Changes
+
+- 41ad8af: Leaner build
+
 ## 0.7.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @aside/react
 
+## 0.7.4
+
+### Patch Changes
+
+- 41ad8af: Leaner build
+- Updated dependencies [41ad8af]
+  - @aside/chrome-ui-remote@0.1.4
+  - @aside/core@0.7.3
+
 ## 0.7.3
 
 ### Patch Changes

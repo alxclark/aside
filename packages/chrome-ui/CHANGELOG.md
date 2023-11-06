@@ -1,5 +1,11 @@
 # @aside/chrome-ui
 
+## 0.7.4
+
+### Patch Changes
+
+- 41ad8af: Leaner build
+
 ## 0.7.3
 
 ### Patch Changes

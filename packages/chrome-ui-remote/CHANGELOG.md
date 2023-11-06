@@ -1,5 +1,11 @@
 # @aside/chrome-ui-remote
 
+## 0.1.4
+
+### Patch Changes
+
+- 41ad8af: Leaner build
+
 ## 0.1.3
 
 ### Patch Changes

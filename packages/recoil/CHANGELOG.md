@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.7.4
+
+### Patch Changes
+
+- 41ad8af: Leaner build
+- Updated dependencies [41ad8af]
+  - @aside/activity@0.1.6
+
 ## 0.7.3
 
 ### Patch Changes
