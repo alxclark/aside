@@ -1,5 +1,11 @@
 # @aside/chrome-ui-remote
 
+## 0.1.3
+
+### Patch Changes
+
+- f628019: Add proper package dependencies and externals during bundling
+
 ## 0.1.2
 
 ### Patch Changes

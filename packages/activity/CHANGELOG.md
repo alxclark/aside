@@ -1,5 +1,14 @@
 # @aside/activity
 
+## 0.1.5
+
+### Patch Changes
+
+- f628019: Add proper package dependencies and externals during bundling
+- Updated dependencies [f628019]
+  - @aside/chrome-ui-remote@0.1.3
+  - @aside/react@0.7.3
+
 ## 0.1.4
 
 ### Patch Changes

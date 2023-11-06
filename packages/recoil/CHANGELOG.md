@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.7.3
+
+### Patch Changes
+
+- f628019: Add proper package dependencies and externals during bundling
+- Updated dependencies [f628019]
+  - @aside/activity@0.1.5
+
 ## 0.7.2
 
 ### Patch Changes

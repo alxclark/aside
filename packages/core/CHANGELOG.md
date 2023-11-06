@@ -1,5 +1,11 @@
 # @aside/core
 
+## 0.7.2
+
+### Patch Changes
+
+- f628019: Add proper package dependencies and externals during bundling
+
 ## 0.7.1
 
 ### Patch Changes
