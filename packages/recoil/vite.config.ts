@@ -16,12 +16,13 @@ export default defineConfig({
       fileName: (format) => `recoil.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', 'recoil', '@aside/react', '@aside/timeline'],
+      external: ['react', 'recoil', '@aside/react', '@aside/activity'],
       output: {
         globals: {
           react: 'React',
+          recoil: 'Recoil',
           '@aside/react': 'AsideReact',
-          '@aside/timeline': 'AsideTimeline',
+          '@aside/activity': 'AsideActivity',
         },
       },
     },

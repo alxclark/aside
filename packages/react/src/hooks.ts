@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import type {StatefulRemoteSubscribable} from '@remote-ui/async-subscription';
-import {NetworkApi} from '@aside/core';
+import {type NetworkApi} from '@aside/core';
 
 import {ExtensionApiContext} from './context';
 import {ExtensionApi} from './types';

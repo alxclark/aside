@@ -1,6 +1,6 @@
 import {useContext, useMemo} from 'react';
 import {useExtensionApi, useSubscription} from '@aside/react';
-import {GetterSetterTuple} from '@aside/core';
+import {type GetterSetterTuple} from '@aside/core';
 
 import {ActivityStoreContext} from '../contexts';
 import {ActivityContext} from '../types';

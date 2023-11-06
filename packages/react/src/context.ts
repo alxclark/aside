@@ -1,5 +1,5 @@
 import {createContext} from 'react';
-import {StatefullExtensionApi} from '@aside/core';
+import {type StatefullExtensionApi} from '@aside/core';
 
 export const ExtensionApiContext = createContext<
   StatefullExtensionApi | undefined

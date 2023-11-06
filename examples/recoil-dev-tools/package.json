@@ -11,7 +11,6 @@
   "dependencies": {
     "@aside/react": "0.7.2",
     "@aside/recoil": "0.7.2",
-    "@aside/timeline": "0.3.0",
     "@aside/chrome-ui-remote": "0.1.2",
     "@aside/activity": "0.1.4",
     "recoil": "latest",

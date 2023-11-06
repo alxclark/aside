@@ -14,13 +14,22 @@ export default defineConfig({
       fileName: (format) => `aside-react.${format}.js`,
     },
     rollupOptions: {
-      external: ['react', '@aside-web', '@aside/chrome-ui', '@aside/timeline'],
+      external: [
+        'react',
+        '@aside/chrome-ui-remote',
+        '@aside/core',
+        '@remote-ui/async-subscription',
+        '@remote-ui/rpc',
+        '@remote-ui/react',
+      ],
       output: {
         globals: {
           react: 'React',
-          '@aside/react': 'AsideReact',
-          '@aside/chrome-ui': 'AsideChromeUi',
-          '@aside/timeline': 'AsideTimeline',
+          '@aside/chrome-ui-remote': 'AsideChromeUiRemote',
+          '@aside/core': 'AsideCore',
+          '@remote-ui/async-subscription': 'RemoteUiAsyncSubscription',
+          '@remote-ui/rpc': 'RemoteUiRpc',
+          '@remote-ui/react': 'RemoteUiReact',
         },
       },
     },

@@ -1,7 +1,7 @@
-import {RemoteChannel} from '@remote-ui/core';
+import {type RemoteChannel} from '@remote-ui/core';
 import {
-  RemoteSubscribable,
-  StatefulRemoteSubscribable,
+  type RemoteSubscribable,
+  type StatefulRemoteSubscribable,
 } from '@remote-ui/async-subscription';
 
 import {ExtensionApi, NetworkApi, NetworkRequest, StorageApi} from './api';
