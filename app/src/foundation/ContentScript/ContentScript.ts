@@ -21,33 +21,36 @@ interface Current {
 export function contentScript() {
   const current: Current = {};
 
-  // Attempt a connection in case Devtools already loaded and can intercept the port.
-  const contentScriptPort = browser.runtime.connect({name: 'content-script'});
-  // Wait to receive a message from devtools accepting to use the port.
-  contentScriptPort.onMessage.addListener(onAcceptedPortListener);
+  setup({devtoolsPort: undefined});
 
-  // In case content-script loads first, we listen for devtools connection.
-  // Once devtools connect, we will accept the port sent.
   browser.runtime.onConnect.addListener(onConnectListener);
 
-  async function onAcceptedPortListener(message: any, port: Runtime.Port) {
+  const contentScriptPort = browser.runtime.connect({
+    name: 'content-script',
+  });
+  contentScriptPort.onMessage.addListener(onAcceptedPortListener);
+
+  async function onAcceptedPortListener(
+    message: any,
+    devtoolsPort: Runtime.Port,
+  ) {
     if (message?.type === 'accept-port' && message?.sender === 'dev') {
-      return setup(port);
+      return setup({devtoolsPort});
     }
   }
 
-  async function onConnectListener(port: Runtime.Port) {
-    port.postMessage({type: 'accept-port', sender: 'content-script'});
+  async function onConnectListener(devtoolsPort: Runtime.Port) {
+    devtoolsPort.postMessage({type: 'accept-port', sender: 'content-script'});
 
     const listener = (message: any) => {
       if (message.type === 'ready' && message.sender === 'dev') {
-        setup(port);
+        setup({devtoolsPort});
       }
     };
-    port.onMessage.addListener(listener);
+    devtoolsPort.onMessage.addListener(listener);
   }
 
-  async function setup(port: Runtime.Port) {
+  async function setup({devtoolsPort}: {devtoolsPort?: Runtime.Port}) {
     // Unmount the client side remote-components.
     // This wipes the devtools UI completely.
     try {
@@ -56,29 +59,31 @@ export function contentScript() {
       console.log('webpage terminate failed');
     }
 
-    // Create a brand new devtools endpoint
-    const devtools = createDevtoolsEndpoint(port);
+    if (devtoolsPort) {
+      // Create a brand new devtools endpoint
+      const devtools = createDevtoolsEndpoint(devtoolsPort);
 
-    // Use the same webpage endpoint or create a new one if there's none.
-    const webpage = current.webpage ?? createWebpageEndpoint();
+      // Use the same webpage endpoint or create a new one if there's none.
+      const webpage = current.webpage ?? createWebpageEndpoint();
 
-    // Even if the webpage already existed, the methods exposed to the webpage
-    // depend on the new dev tools endpoint, so we need to re-expose all methods anyway.
-    exposeWebpage(webpage, devtools);
-    exposeDevtools(devtools, webpage);
+      // Even if the webpage already existed, the methods exposed to the webpage
+      // depend on the new dev tools endpoint, so we need to re-expose all methods anyway.
+      exposeWebpage(webpage, devtools);
+      exposeDevtools(devtools, webpage);
 
-    port.onDisconnect.addListener(() => {
-      if (current.port === port) {
-        current.port = undefined;
-      }
-      current.webpage?.call.unmountDevtools();
-    });
+      devtoolsPort.onDisconnect.addListener(() => {
+        if (current.port === devtoolsPort) {
+          current.port = undefined;
+        }
+        current.webpage?.call.unmountDevtools();
+      });
 
-    current.devtools = devtools;
-    current.webpage = webpage;
-    current.port = port;
+      current.devtools = devtools;
+      current.webpage = webpage;
+      current.port = devtoolsPort;
 
-    webpage.call.mountDevtools();
+      webpage.call.mountDevtools();
+    }
   }
 }
 
@@ -95,12 +100,33 @@ function createWebpageEndpoint() {
   });
 }
 
+let channelPromiseResolve: any;
+
 function exposeWebpage(
   webpage: Endpoint<WebpageApi>,
-  devtools: Endpoint<DevtoolsApiForContentScript>,
+  devtools?: Endpoint<DevtoolsApiForContentScript>,
 ) {
+  console.log({channelPromiseResolve, devtools});
+  if (channelPromiseResolve && devtools) {
+    console.log('returned the channel promise');
+    devtools.call
+      .getRemoteChannel()
+      .then(channelPromiseResolve)
+      .catch(() => console.error('Could not return a channel promise'));
+
+    channelPromiseResolve = undefined;
+  }
+
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
     async getRemoteChannel() {
+      browser.runtime.sendMessage({type: 'mount'});
+
+      if (!devtools) {
+        return new Promise((resolve) => {
+          channelPromiseResolve = resolve;
+        });
+      }
+
       return devtools.call.getRemoteChannel();
     },
     getLocalStorage(keys) {
@@ -110,6 +136,10 @@ function exposeWebpage(
       return browser.storage.local.set(items);
     },
     async getApi() {
+      if (!devtools) {
+        throw new Error('Cannot get api since no devtools is connected');
+      }
+
       const api = await devtools.call.getApi();
       retain(api);
 
