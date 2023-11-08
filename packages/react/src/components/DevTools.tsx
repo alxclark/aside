@@ -32,6 +32,7 @@ export function Devtools({children}: PropsWithChildren<{}>) {
   const mountDevtools = useCallback(
     async (endpoint: Endpoint<ContentScriptApiForWebpage>) => {
       const channel = await endpoint.call.getRemoteChannel();
+
       retain(channel);
 
       channelRef.current = channel;
@@ -64,14 +65,6 @@ export function Devtools({children}: PropsWithChildren<{}>) {
     contentScript.expose(webpageApi);
   }, [setDevtoolsRoot, mountDevtools]);
 
-  // Attempt to mount the dev tools.
-  // If the other side of the endpoint is not ready yet,
-  // `mountDevtools` will be called on the webpage api,
-  // correctly setting up the remote endpoint.
-  useEffect(() => {
-    mountDevtools(contentScript);
-  }, [mountDevtools]);
-
   const handleUnmount = useCallback(() => {
     release(channelRef.current);
     channelRef.current = null;
@@ -103,6 +96,8 @@ function ExtensionApiProvider({
   useEffect(() => {
     async function getApi() {
       const api = await endpoint.call.getApi();
+
+      console.log({api});
 
       retain(api);
 

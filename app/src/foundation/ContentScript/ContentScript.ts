@@ -51,8 +51,6 @@ export function contentScript() {
   }
 
   async function setup({devtoolsPort}: {devtoolsPort?: Runtime.Port}) {
-    // Unmount the client side remote-components.
-    // This wipes the devtools UI completely.
     try {
       await current.webpage?.call.unmountDevtools();
     } catch (error) {
@@ -83,6 +81,10 @@ export function contentScript() {
       current.port = devtoolsPort;
 
       webpage.call.mountDevtools();
+    } else {
+      const webpage = current.webpage ?? createWebpageEndpoint();
+      exposeWebpage(webpage);
+      current.webpage = webpage;
     }
   }
 }
