@@ -131,7 +131,11 @@ function AsideApp() {
         </PaneToolbar>
 
         <TabsContent value="activity">
-          <Activity>
+          <Activity
+            storage={{
+              disabled: true,
+            }}
+          >
             <ActivityDetails type="graphql" />
             <ActivityDetails type="network" />
           </Activity>

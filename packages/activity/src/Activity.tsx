@@ -28,9 +28,13 @@ import {EmptyView} from './components';
 import {useActivity} from './hooks/use-activity';
 import {ActivityStore, Snapshot} from './types';
 
-export interface ActivityProps extends PropsWithChildren {}
+export interface ActivityProps extends PropsWithChildren {
+  storage?: {
+    disabled?: boolean;
+  };
+}
 
-export function Activity({children}: ActivityProps) {
+export function Activity({children, storage}: ActivityProps) {
   const activity = useActivity();
 
   const [filter, setFilter] = activity.filter;
@@ -179,16 +183,18 @@ export function Activity({children}: ActivityProps) {
                 />
               </Button>
             </PaneToolbarSection>
-            <PaneToolbarSection>
-              <PaneToolbarItem>
-                <Checkbox
-                  id="log"
-                  label="Preserve log"
-                  checked={preserveLog}
-                  onChange={() => setPreserveLog((prev) => !prev)}
-                />
-              </PaneToolbarItem>
-            </PaneToolbarSection>
+            {!storage?.disabled && (
+              <PaneToolbarSection>
+                <PaneToolbarItem>
+                  <Checkbox
+                    id="log"
+                    label="Preserve log"
+                    checked={preserveLog}
+                    onChange={() => setPreserveLog((prev) => !prev)}
+                  />
+                </PaneToolbarItem>
+              </PaneToolbarSection>
+            )}
             <DropdownMenu>
               <DropdownMenuTrigger>
                 <Button>
