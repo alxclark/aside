@@ -10,8 +10,8 @@ export function TextField({id, placeholder, onChange, value}: TextFieldProps) {
   return (
     <input
       className={classNames(
-        'text-foreground bg-background h-[20px] pl-[3px] w-full',
-        hasValue ? 'border-ring' : 'border-primary hover:border-border',
+        'text-foreground bg-background h-[18px] pl-[3px] w-full rounded-sm text-[12px]',
+        hasValue ? 'border-ring' : 'border-border',
         'border',
         'placeholder:text-primary-foreground focus-visible:outline-none focus:border-ring',
       )}

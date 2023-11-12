@@ -52,7 +52,7 @@
     --destructive: 0 100% 50%;
     --destructive-foreground: 210 40% 98%;
 
-    --ring: 205 81% 33%;
+    --ring: 216.77 89.86% 72.94%;
 
     --radius: 0.5rem;
 
@@ -74,10 +74,10 @@
     --icon-yellow: 31.96 84.4% 57.25%;
 
     --grid-head: 225 4.65% 16.86%;
-    --grid-hover: 218.71 38.27% 15.88%;
-    --grid-selected: 200 79% 38%;
-    --grid-even: 0 0% 14%;
-    --grid-odd: 0 0% 16%;
+    --grid-hover: 150 1.43% 27.45%;
+    --grid-selected: 202.37deg 100% 23.14%;
+    --grid-even: 210 2.44% 16.08%;
+    --grid-odd: 0 0% 12.16%;
   }
 
   .dark {

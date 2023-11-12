@@ -240,7 +240,7 @@ export function Activity({children, storage}: ActivityProps) {
           <PaneToolbar>
             <View className="flex items-center flex-wrap justify-between">
               <View className="flex items-center gap-2 flex-wrap">
-                <View className="w-52 p-0.5">
+                <View className="w-52 px-1 py-0.5">
                   <TextField
                     value={filter}
                     onChange={setFilter}
