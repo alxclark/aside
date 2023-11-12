@@ -96,9 +96,6 @@ function ExtensionApiProvider({
   useEffect(() => {
     async function getApi() {
       const api = await endpoint.call.getApi();
-
-      console.log({api});
-
       retain(api);
 
       // Make stateful all stateless subscribable received by the devtools

@@ -1,16 +1,14 @@
+import {
+  WEBPAGE_INITIATED_CONNECTION,
+  setupContentScriptHMR,
+} from '../../foundation/ContentScript';
 import {isForbiddenUrl} from '../../env';
-import {setupContentScriptHMR} from '../../foundation/ContentScript';
 
 if (import.meta.env.DEV) {
   setupContentScriptHMR();
 }
 
 async function background() {
-  browser.webNavigation.onCommitted.addListener(async ({tabId}) => {
-    // const port = browser.tabs.connect(tabId, {name: 'background'});
-    // console.log({port});
-  });
-
   browser.webNavigation.onCommitted.addListener(({tabId, frameId, url}) => {
     // Filter out non main window events.
     if (frameId !== 0) return;
@@ -20,15 +18,14 @@ async function background() {
     browser.action.setBadgeText({text: 'OFF', tabId});
   });
 
-  browser.runtime.onConnect.addListener((port) => {
-    console.log({port});
-    console.log('i love ya');
-  });
+  // When the content-script attempts to connect to the devtools panel,
+  // it expects at least one listener to be active. Since in most cases,
+  // users will browse webpages without the devtools panel open, we need
+  // to provide a dummy listener to prevent the connection from failing.
+  browser.runtime.onConnect.addListener(() => {});
 
   browser.runtime.onMessage.addListener(async (message, sender) => {
-    console.log({message});
-
-    if (message.type === 'mount') {
+    if (message.type === WEBPAGE_INITIATED_CONNECTION) {
       browser.action.setBadgeText({text: 'ON', tabId: sender?.tab?.id});
       return true;
     }

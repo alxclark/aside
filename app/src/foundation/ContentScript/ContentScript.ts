@@ -8,9 +8,12 @@ import {
   WebpageApi,
 } from '@aside/core';
 import {Runtime} from 'webextension-polyfill';
+import {type RemoteChannel} from '@remote-ui/core';
 
 import {createUnsafeEncoder} from '../Remote';
 import {fromPort} from '../Remote/rpc';
+
+import {WEBPAGE_INITIATED_CONNECTION} from './messages';
 
 interface Current {
   webpage?: Endpoint<WebpageApi>;
@@ -102,15 +105,18 @@ function createWebpageEndpoint() {
   });
 }
 
-let channelPromiseResolve: any;
+// When the webpage mounts, it starts requesting a channel from the devtools.
+// If the devtools is not yet opened and we can't return the channel from the content-script,
+// we return an empty promise and resolve it when the devtools ends up opening.
+let channelPromiseResolve:
+  | ((value: RemoteChannel | PromiseLike<RemoteChannel>) => void)
+  | undefined;
 
 function exposeWebpage(
   webpage: Endpoint<WebpageApi>,
   devtools?: Endpoint<DevtoolsApiForContentScript>,
 ) {
-  console.log({channelPromiseResolve, devtools});
   if (channelPromiseResolve && devtools) {
-    console.log('returned the channel promise');
     devtools.call
       .getRemoteChannel()
       .then(channelPromiseResolve)
@@ -121,7 +127,7 @@ function exposeWebpage(
 
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
     async getRemoteChannel() {
-      browser.runtime.sendMessage({type: 'mount'});
+      browser.runtime.sendMessage({type: WEBPAGE_INITIATED_CONNECTION});
 
       if (!devtools) {
         return new Promise((resolve) => {
