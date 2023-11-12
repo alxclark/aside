@@ -48,6 +48,10 @@ export function Devtools({children}: PropsWithChildren<{}>) {
   );
 
   useEffect(() => {
+    contentScript.call.showWebpageUsesAside();
+  }, []);
+
+  useEffect(() => {
     const webpageApi: WebpageApi = {
       async mountDevtools() {
         return mountDevtools(contentScript);
@@ -171,6 +175,7 @@ function createContentScriptEndpoint() {
         'getLocalStorage',
         'setLocalStorage',
         'getApi',
+        'showWebpageUsesAside',
       ],
     },
   );

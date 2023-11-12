@@ -126,9 +126,10 @@ function exposeWebpage(
   }
 
   const contentScriptApiForWebpage: ContentScriptApiForWebpage = {
-    async getRemoteChannel() {
+    showWebpageUsesAside() {
       browser.runtime.sendMessage({type: WEBPAGE_INITIATED_CONNECTION});
-
+    },
+    async getRemoteChannel() {
       if (!devtools) {
         return new Promise((resolve) => {
           channelPromiseResolve = resolve;
