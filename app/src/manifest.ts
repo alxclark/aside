@@ -29,14 +29,21 @@ export async function getManifest() {
       service_worker: './dist/background/index.global.js',
       type: 'module',
     } as any,
+    action: {
+      default_icon: {
+        16: './assets/logo-16.png',
+        48: './assets/logo-48.png',
+        128: './assets/logo-128.png',
+      },
+    },
     icons: {
       16: './assets/logo-16.png',
       48: './assets/logo-48.png',
       128: './assets/logo-128.png',
     },
     permissions: isDev
-      ? ['scripting', 'storage', 'unlimitedStorage']
-      : ['storage', 'unlimitedStorage'],
+      ? ['scripting', 'storage', 'unlimitedStorage', 'webNavigation']
+      : ['storage', 'unlimitedStorage', 'webNavigation'],
     host_permissions: ['http://*/', 'https://*/'],
     content_scripts: [
       {

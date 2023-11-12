@@ -27,6 +27,7 @@ export function Host() {
     useRef<Endpoint<ContentScriptApiForDevtools | undefined>>();
   const hostCleanupRef = useRef<() => void | undefined>();
   const [connected, setConnected] = useState(false);
+  const [apiIsReady, setApiIsReady] = useState(false);
 
   const hostApi = useApi();
   const statelessApiRef = useRef<StatelessExtensionApiOnHost | undefined>();
@@ -39,12 +40,15 @@ export function Host() {
 
       statelessApiRef.current = statelessApi;
       hostCleanupRef.current = cleanup;
+      setApiIsReady(true);
     }
 
     createApi();
   }, [hostApi]);
 
   useEffect(() => {
+    if (!apiIsReady) return;
+
     // Attempt a connection in case content-script already loaded and can intercept the port.
     const contentScriptPort = browser.tabs.connect(
       browser.devtools.inspectedWindow.tabId,
@@ -84,7 +88,7 @@ export function Host() {
       contentScriptPort.onMessage.removeListener(onAcceptedPortListener);
       browser.runtime.onConnect.removeListener(onConnectListener);
     };
-  }, []);
+  }, [apiIsReady]);
 
   useEffect(() => {
     if (!port) return;
