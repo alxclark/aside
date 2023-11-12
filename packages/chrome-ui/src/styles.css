@@ -16,14 +16,17 @@
 
 @layer base {
   :root {
-    --background: 225 5.9% 13.3%;
+    --background: 0 0% 15.69%;
     --foreground: 210 15.52% 77.25%;
 
     --muted: 228 4.5% 21.8%;
     --muted-foreground: 210 6.3% 62.7%;
 
-    --tabs-foreground: 0 0% 100%;
-    --tabs-accent: 0 0% 0%;
+    --tabs-foreground: 0 0% 78.04%;
+    --tabs-background: 0 0% 23.53%;
+    --tabs-accent-foreground: 217.32 89.13% 81.96%;
+    --tabs-accent-border: 216.77deg 89.86% 72.94%;
+    --tabs-hover: 0 0% 31.37%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
@@ -37,7 +40,7 @@
     --card: 0 0% 100%;
     --card-foreground: 222.2 47.4% 11.2%;
 
-    --primary: 225 4.7% 16.9%;
+    --primary: 0 0% 15.69%;
     --primary-foreground: 210 6.3% 62.7%;
 
     --secondary: 210 40% 96.1%;

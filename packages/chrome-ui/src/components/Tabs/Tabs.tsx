@@ -17,7 +17,11 @@ const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   TabsListProps
 >(({className, ...props}, ref) => (
-  <TabsPrimitive.List ref={ref} className={cn('', className)} {...props} />
+  <TabsPrimitive.List
+    ref={ref}
+    className={cn('bg-tabs-background', className)}
+    {...props}
+  />
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
@@ -29,10 +33,10 @@ const TabsTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       'inline-flex items-center justify-center whitespace-nowrap px-3 py-1',
-      'text-primary-foreground hover:text-accent-foreground hover:bg-muted',
+      'text-tabs-foreground hover:text-accent-foreground hover:bg-tabs-hover',
       'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50',
-      'data-[state=active]:bg-tabs-accent data-[state=active]:text-tabs-foreground',
+      'data-[state=active]:border-b-[1.5px] border-tabs-accent-border data-[state=active]:text-tabs-accent-foreground',
       className,
     )}
     {...props}

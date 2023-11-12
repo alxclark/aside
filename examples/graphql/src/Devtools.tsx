@@ -133,7 +133,7 @@ function AsideApp() {
         <TabsContent value="activity">
           <Activity
             storage={{
-              disabled: true,
+              disabled: false,
             }}
           >
             <ActivityDetails type="graphql" />

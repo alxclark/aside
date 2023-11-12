@@ -77,7 +77,12 @@ module.exports = {
       },
       tabs: {
         foreground: 'hsl(var(--tabs-foreground))',
-        accent: 'hsl(var(--tabs-accent))',
+        background: 'hsl(var(--tabs-background))',
+        accent: {
+          foreground: 'hsl(var(--tabs-accent-foreground))',
+          border: 'hsl(var(--tabs-accent-border))',
+        },
+        hover: 'hsl(var(--tabs-hover))',
       },
     },
     fontFamily: {
