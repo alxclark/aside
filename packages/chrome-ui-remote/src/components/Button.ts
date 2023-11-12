@@ -1,14 +1,14 @@
-import {ButtonHTMLAttributes} from 'react';
 import {createRemoteReactComponent} from '@remote-ui/react';
+import {PropsWithChildren} from 'react';
 
-import {RemoteSafeAttributes} from '../types';
-
-export interface ButtonProps
-  extends RemoteSafeAttributes<ButtonHTMLAttributes<HTMLButtonElement>> {
+export type ButtonProps = PropsWithChildren<{
   asChild?: boolean;
   variant?: 'default';
   size?: 'default' | 'icon';
-}
+  onClick?: () => void;
+  title?: string;
+  className?: string;
+}>;
 
 export const Button = createRemoteReactComponent<'ChromeUIButton', ButtonProps>(
   'ChromeUIButton',
