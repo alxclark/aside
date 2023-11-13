@@ -102,6 +102,10 @@ export function Activity({children, storage}: ActivityProps) {
       return `${bytes} B`;
     }
 
+    if (rows.length === 0) {
+      return '0 B transferred';
+    }
+
     if (rows.length === filteredRows.length) {
       return `${getSize(rows)} transferred`;
     }
