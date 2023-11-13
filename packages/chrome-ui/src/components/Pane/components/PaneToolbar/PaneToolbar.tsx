@@ -6,10 +6,18 @@ import {
 } from '@aside/chrome-ui-remote';
 
 import {Divider} from '../../../Divider';
+import {cn} from '../../../../utilities/style';
 
-export function PaneToolbar({children}: PaneToolbarProps) {
+export function PaneToolbar({children, separatorBefore}: PaneToolbarProps) {
   return (
-    <div className="w-full border-b border-border bg-primary">{children}</div>
+    <div
+      className={cn(
+        'w-full border-border bg-primary',
+        separatorBefore ? 'border-t' : 'border-b',
+      )}
+    >
+      {children}
+    </div>
   );
 }
 

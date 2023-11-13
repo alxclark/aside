@@ -69,7 +69,8 @@ export function Activity({children, storage}: ActivityProps) {
     .sort((left, right) => {
       if (left.createdAt === right.createdAt) return 0;
       return left.createdAt < right.createdAt ? -1 : 1;
-    });
+    })
+    .filter((row) => Object.keys(row.nodes).length !== 0);
 
   const getRow = (type: string) =>
     activity.stores.find((store) => store.data.type === type);
@@ -77,12 +78,36 @@ export function Activity({children, storage}: ActivityProps) {
   const filteredRows = rows.filter((row) => {
     const rowDescriptor = getRow(row.type)?.data;
     const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
-    const isEmpty = Object.keys(row.nodes).length === 0;
     const included = query?.includes(filter ?? '');
     const isAcceptedType = selectedDataTypes.includes(row.type);
 
-    return (invertFilter ? !included : included) && !isEmpty && isAcceptedType;
+    return (invertFilter ? !included : included) && isAcceptedType;
   });
+
+  const rowsByteLabel = useMemo(() => {
+    function getSize(object: any) {
+      // eslint-disable-next-line node/no-unsupported-features/node-builtins
+      const bytes = new TextEncoder().encode(JSON.stringify(object)).length;
+      const kiloBytes = bytes / 1024;
+      const megaBytes = kiloBytes / 1024;
+
+      if (megaBytes > 1) {
+        return `${megaBytes.toFixed(2)} MB`;
+      }
+
+      if (kiloBytes > 1) {
+        return `${kiloBytes.toFixed(2)} kB`;
+      }
+
+      return `${bytes} B`;
+    }
+
+    if (rows.length === filteredRows.length) {
+      return `${getSize(rows)} transferred`;
+    }
+
+    return `${getSize(filteredRows)} / ${getSize(rows)} transferred`;
+  }, [filteredRows, rows]);
 
   const [explicitlySelectedRow, setSelectedRow] = useState<
     string | undefined
@@ -308,6 +333,29 @@ export function Activity({children, storage}: ActivityProps) {
           <EmptyView />
         )}
       </PaneContent>
+      <PaneToolbar separatorBefore>
+        <View className="flex items-center flex-wrap px-1">
+          <PaneToolbarSection>
+            <View className="flex">
+              <View className="grow">
+                <PaneToolbarItem>
+                  {rows.length === filteredRows.length
+                    ? rows.length
+                    : `${filteredRows.length} / ${rows.length}`}{' '}
+                  events
+                </PaneToolbarItem>
+              </View>
+            </View>
+          </PaneToolbarSection>
+          <PaneToolbarSection>
+            <View className="flex">
+              <View className="grow">
+                <PaneToolbarItem>{rowsByteLabel}</PaneToolbarItem>
+              </View>
+            </View>
+          </PaneToolbarSection>
+        </View>
+      </PaneToolbar>
     </>
   );
 }

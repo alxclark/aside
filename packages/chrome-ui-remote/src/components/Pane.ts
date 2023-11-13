@@ -14,7 +14,9 @@ const PaneContent = createRemoteReactComponent<
   PaneContentProps
 >('ChromeUIPaneContent');
 
-export type PaneToolbarProps = PropsWithChildren<{}>;
+export type PaneToolbarProps = PropsWithChildren<{
+  separatorBefore?: boolean;
+}>;
 
 const PaneToolbar = createRemoteReactComponent<
   'ChromeUIPaneToolbar',
