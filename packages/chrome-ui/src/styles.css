@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.aside {
-  font-size: 12px;
-  background: var(--background);
-  color-scheme: dark;
-}
-
 ::-webkit-scrollbar {
   width: 0;
   padding: 0;
@@ -16,6 +10,10 @@
 
 @layer base {
   :root {
+    font-size: 16px;
+    background: var(--background);
+    color-scheme: dark;
+
     --background: 0 0% 15.69%;
     --foreground: 210 15.52% 77.25%;
 
@@ -86,6 +84,10 @@
 }
 
 @layer base {
+  html, body {
+    font-family: "Helvetica Neue", sans-serif
+  }
+
   * {
     @apply border-border;
   }
