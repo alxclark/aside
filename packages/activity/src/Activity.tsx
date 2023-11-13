@@ -77,8 +77,10 @@ export function Activity({children, storage}: ActivityProps) {
 
   const filteredRows = rows.filter((row) => {
     const rowDescriptor = getRow(row.type)?.data;
-    const query = rowDescriptor?.query?.(row) ?? rowDescriptor?.name(row);
-    const included = query?.includes(filter ?? '');
+    const query =
+      rowDescriptor?.query?.(row).toLowerCase() ??
+      rowDescriptor?.name(row).toLowerCase();
+    const included = query?.includes(filter.toLowerCase() ?? '');
     const isAcceptedType = selectedDataTypes.includes(row.type);
 
     return (invertFilter ? !included : included) && isAcceptedType;
