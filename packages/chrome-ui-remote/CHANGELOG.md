@@ -1,5 +1,11 @@
 # @aside/chrome-ui-remote
 
+## 0.1.5
+
+### Patch Changes
+
+- 77ee186: Stability changes
+
 ## 0.1.4
 
 ### Patch Changes

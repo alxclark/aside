@@ -1,5 +1,13 @@
 # @aside/recoil
 
+## 0.7.5
+
+### Patch Changes
+
+- 77ee186: Stability changes
+- Updated dependencies [77ee186]
+  - @aside/activity@0.1.7
+
 ## 0.7.4
 
 ### Patch Changes

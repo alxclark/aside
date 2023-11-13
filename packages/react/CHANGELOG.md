@@ -1,5 +1,14 @@
 # @aside/react
 
+## 0.7.5
+
+### Patch Changes
+
+- 77ee186: Stability changes
+- Updated dependencies [77ee186]
+  - @aside/chrome-ui-remote@0.1.5
+  - @aside/core@0.7.4
+
 ## 0.7.4
 
 ### Patch Changes

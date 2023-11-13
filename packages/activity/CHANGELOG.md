@@ -1,5 +1,14 @@
 # @aside/activity
 
+## 0.1.7
+
+### Patch Changes
+
+- 77ee186: Stability changes
+- Updated dependencies [77ee186]
+  - @aside/chrome-ui-remote@0.1.5
+  - @aside/react@0.7.5
+
 ## 0.1.6
 
 ### Patch Changes

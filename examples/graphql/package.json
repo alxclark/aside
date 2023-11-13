@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.2",
-    "@aside/activity": "0.1.6",
-    "@aside/chrome-ui-remote": "0.1.4",
-    "@aside/react": "0.7.4",
+    "@aside/activity": "0.1.7",
+    "@aside/chrome-ui-remote": "0.1.5",
+    "@aside/react": "0.7.5",
     "graphql": "16.6.0",
     "react": "18.2.0"
   },

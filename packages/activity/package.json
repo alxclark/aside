@@ -1,6 +1,6 @@
 {
   "name": "@aside/activity",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "license": "BSD-3-Clause",
   "files": [
@@ -22,14 +22,14 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@aside/react": "^0.7.4",
-    "@aside/chrome-ui-remote": "^0.1.4"
+    "@aside/react": "^0.7.5",
+    "@aside/chrome-ui-remote": "^0.1.5"
   },
   "peerDependencies": {
     "react": ">=17.0.0 <19.0.0"
   },
   "devDependencies": {
-    "@aside/core": "^0.7.3"
+    "@aside/core": "^0.7.4"
   },
   "publishConfig": {
     "access": "public"

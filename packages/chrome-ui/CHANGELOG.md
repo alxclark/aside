@@ -1,5 +1,11 @@
 # @aside/chrome-ui
 
+## 0.7.5
+
+### Patch Changes
+
+- 77ee186: Stability changes
+
 ## 0.7.4
 
 ### Patch Changes

@@ -9,10 +9,10 @@
     "clean-vite": "rm -rf ./node_modules/.vite"
   },
   "dependencies": {
-    "@aside/react": "0.7.4",
-    "@aside/recoil": "0.7.4",
-    "@aside/chrome-ui-remote": "0.1.4",
-    "@aside/activity": "0.1.6",
+    "@aside/react": "0.7.5",
+    "@aside/recoil": "0.7.5",
+    "@aside/chrome-ui-remote": "0.1.5",
+    "@aside/activity": "0.1.7",
     "recoil": "latest",
     "todomvc-app-css": "latest",
     "react": "18.2.0"

@@ -1,5 +1,11 @@
 # @aside/core
 
+## 0.7.4
+
+### Patch Changes
+
+- 77ee186: Stability changes
+
 ## 0.7.3
 
 ### Patch Changes
