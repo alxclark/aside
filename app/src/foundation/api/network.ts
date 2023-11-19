@@ -3,16 +3,36 @@ import {
   NetworkRequest,
   StatelessExtensionApiOnHost,
 } from '@aside/core';
-import {useCallback, useEffect, useMemo, useState} from 'react';
-
-import {useRemoteSubscribable} from '../../utilities/subscription';
+import {useCallback, useEffect, useMemo} from 'react';
+import {signal, effect} from '@preact/signals-core';
+import {createRemoteSubscribable} from '@remote-ui/async-subscription';
 
 export function useNetworkApi(): ApiCreator<
   StatelessExtensionApiOnHost['network']
 > {
-  const [networkRequests, setNetworkRequests] = useState<NetworkRequest[]>([]);
-  const {subscribable: requests, clear: clearSubscription} =
-    useRemoteSubscribable(networkRequests);
+  const networkRequests = useMemo(() => {
+    return signal<NetworkRequest[]>([]);
+  }, []);
+
+  const {subscribable: requests, clear: clearSubscription} = useMemo(() => {
+    return {
+      subscribable: createRemoteSubscribable({
+        subscribe: (callback) => {
+          const dispose = effect(() => {
+            callback(networkRequests.value);
+          });
+
+          return () => dispose();
+        },
+        get current() {
+          return networkRequests.value;
+        },
+      }),
+      clear: () => {
+        networkRequests.value = [];
+      },
+    };
+  }, [networkRequests]);
 
   const requestSubscribers = useMemo(
     () => new Set<(request: NetworkRequest) => void>(),
@@ -25,9 +45,9 @@ export function useNetworkApi(): ApiCreator<
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     /** @ts-ignore */
     browser.devtools.network.getHAR((har) => {
-      setNetworkRequests(har.entries);
+      networkRequests.value = har.entries;
     });
-  }, []);
+  }, [networkRequests]);
 
   useEffect(() => {
     const listener = async (rawRequest: any) => {
@@ -39,7 +59,7 @@ export function useNetworkApi(): ApiCreator<
         request[property] = rawRequest[property];
       }
 
-      setNetworkRequests((prev) => [...prev, request]);
+      networkRequests.value = [...networkRequests.value, request];
 
       requestSubscribers.forEach((callback) => callback(request));
     };
@@ -48,7 +68,7 @@ export function useNetworkApi(): ApiCreator<
 
     return () =>
       browser.devtools.network.onRequestFinished.removeListener(listener);
-  }, [requestSubscribers]);
+  }, [networkRequests, requestSubscribers]);
 
   const onRequestFinished = useCallback(
     async (callback: any) => {
@@ -61,14 +81,9 @@ export function useNetworkApi(): ApiCreator<
     [requestSubscribers],
   );
 
-  const clear = useCallback(() => {
-    setNetworkRequests([]);
-  }, []);
-
   const reset = useCallback(() => {
     clearSubscription();
     requestSubscribers.clear();
-    setNetworkRequests([]);
   }, [clearSubscription, requestSubscribers]);
 
   const api: ApiCreator<StatelessExtensionApiOnHost['network']>['api'] =
@@ -76,13 +91,13 @@ export function useNetworkApi(): ApiCreator<
       () => async () =>
         [
           {
-            clear,
+            clear: clearSubscription,
             onRequestFinished,
             requests,
           },
           reset,
         ],
-      [clear, onRequestFinished, requests, reset],
+      [clearSubscription, onRequestFinished, requests, reset],
     );
 
   return useMemo(() => ({api, reset}), [api, reset]);
