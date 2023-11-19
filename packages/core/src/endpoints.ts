@@ -99,6 +99,7 @@ export interface ContentScriptApiForWebpage extends RemoteApi {
   setLocalStorage(items: {[key: string]: any}): Promise<void>;
   getApi(): Promise<StatelessExtensionApi>;
   showWebpageUsesAside(): void;
+  ready(): void;
 }
 
 export interface ContentScriptApiForDevtools extends RemoteApi {

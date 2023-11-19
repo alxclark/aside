@@ -52,6 +52,16 @@ export function Devtools() {
     [graphQLMonitor],
   );
 
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setReady(true);
+    }, 0);
+  }, []);
+
+  if (!ready) return null;
+
   return (
     <Aside>
       <AsideDevtools>
