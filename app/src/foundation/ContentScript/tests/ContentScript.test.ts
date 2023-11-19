@@ -71,13 +71,17 @@ describe('ContentScript', () => {
 
       contentScript();
 
-      expect(mockCreateEndpoint).not.toHaveBeenCalled();
+      expect(mockCreateEndpoint).not.toHaveBeenCalledWith(expect.anything(), {
+        callable: ['getRemoteChannel', 'getApi'],
+      });
 
       const onAcceptedPortListener = mockOnMessageListener.mock.calls[0][0];
 
       onAcceptedPortListener('hello', createPort());
 
-      expect(mockCreateEndpoint).not.toHaveBeenCalled();
+      expect(mockCreateEndpoint).not.toHaveBeenCalledWith(expect.anything(), {
+        callable: ['getRemoteChannel', 'getApi'],
+      });
     });
 
     describe('when the devtools sent a message to accept the port', () => {
@@ -99,7 +103,9 @@ describe('ContentScript', () => {
 
         contentScript();
 
-        expect(mockCreateEndpoint).not.toHaveBeenCalled();
+        expect(mockCreateEndpoint).not.toHaveBeenCalledWith(expect.anything(), {
+          callable: ['getRemoteChannel', 'getApi'],
+        });
 
         const onAcceptedPortListener = mockOnMessageListener.mock.calls[0][0];
 
@@ -130,15 +136,6 @@ describe('ContentScript', () => {
         });
 
         contentScript();
-
-        expect(mockCreateEndpoint).not.toHaveBeenCalled();
-
-        const onAcceptedPortListener = mockOnMessageListener.mock.calls[0][0];
-
-        await onAcceptedPortListener(
-          {type: 'accept-port', sender: 'dev'},
-          createPort(),
-        );
 
         expect(mockCreateEndpoint).toHaveBeenCalledWith(expect.anything(), {
           callable: ['mountDevtools', 'unmountDevtools', 'log'],

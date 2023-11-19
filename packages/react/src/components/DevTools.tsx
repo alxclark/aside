@@ -67,7 +67,8 @@ export function Devtools({children}: PropsWithChildren<{}>) {
     };
 
     contentScript.expose(webpageApi);
-  }, [setDevtoolsRoot, mountDevtools]);
+    contentScript.call.ready();
+  }, [mountDevtools]);
 
   const handleUnmount = useCallback(() => {
     release(channelRef.current);
@@ -176,6 +177,7 @@ function createContentScriptEndpoint() {
         'setLocalStorage',
         'getApi',
         'showWebpageUsesAside',
+        'ready',
       ],
     },
   );
