@@ -9,7 +9,7 @@
     "clean-vite": "rm -rf ./node_modules/.vite"
   },
   "dependencies": {
-    "@aside/react": "0.7.5",
+    "@aside/react": "0.7.6",
     "@aside/recoil": "0.7.5",
     "@aside/chrome-ui-remote": "0.1.5",
     "@aside/activity": "0.1.7",

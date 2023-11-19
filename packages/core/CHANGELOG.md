@@ -1,5 +1,11 @@
 # @aside/core
 
+## 0.7.5
+
+### Patch Changes
+
+- 3707214: Fix connection issue between webpage and content-script
+
 ## 0.7.4
 
 ### Patch Changes

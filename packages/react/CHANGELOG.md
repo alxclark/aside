@@ -1,5 +1,13 @@
 # @aside/react
 
+## 0.7.6
+
+### Patch Changes
+
+- 3707214: Fix connection issue between webpage and content-script
+- Updated dependencies [3707214]
+  - @aside/core@0.7.5
+
 ## 0.7.5
 
 ### Patch Changes
