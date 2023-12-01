@@ -1,5 +1,11 @@
 # @aside/core
 
+## 0.7.6
+
+### Patch Changes
+
+- 2f0ca59: Add capabilities support
+
 ## 0.7.5
 
 ### Patch Changes

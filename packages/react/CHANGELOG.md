@@ -1,5 +1,13 @@
 # @aside/react
 
+## 0.7.7
+
+### Patch Changes
+
+- 2f0ca59: Add capabilities support
+- Updated dependencies [2f0ca59]
+  - @aside/core@0.7.6
+
 ## 0.7.6
 
 ### Patch Changes
