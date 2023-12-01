@@ -22,8 +22,10 @@ export type GetterSetterStatefulSubscribableTuple<T> = [
   (value: SetStateAction<T>) => void,
 ];
 
+export type Capability = 'network';
+
 export interface ApiContext {
-  __futureApiContext: null;
+  capabilities?: Capability[];
 }
 
 type ResetFunction = () => void;
@@ -97,7 +99,9 @@ export interface ContentScriptApiForWebpage extends RemoteApi {
     keys?: string | {[key: string]: any} | string[] | null | undefined,
   ): Promise<{[key: string]: any}>;
   setLocalStorage(items: {[key: string]: any}): Promise<void>;
-  getApi(): Promise<StatelessExtensionApi>;
+  getApi(options?: {
+    capabilities?: Capability[];
+  }): Promise<StatelessExtensionApi>;
   showWebpageUsesAside(): void;
   ready(): void;
 }
@@ -112,7 +116,9 @@ export interface ContentScriptApiForDevtools extends RemoteApi {
 
 export interface DevtoolsApiForContentScript extends RemoteApi {
   getRemoteChannel(): RemoteChannel;
-  getApi(): Promise<StatelessExtensionApi>;
+  getApi(options?: {
+    capabilities?: Capability[];
+  }): Promise<StatelessExtensionApi>;
 }
 
 export interface WebpageApi extends RemoteApi {

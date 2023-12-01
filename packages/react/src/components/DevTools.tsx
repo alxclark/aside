@@ -10,6 +10,7 @@ import {
   WebpageApi,
   ContentScriptApiForWebpage,
   StatefullExtensionApi,
+  Capability,
 } from '@aside/core';
 import {RemoteRoot, createRemoteRoot} from '@remote-ui/react';
 import {createEndpoint, Endpoint, release, retain} from '@remote-ui/rpc';
@@ -24,7 +25,11 @@ import {ErrorBoundary} from './ErrorBoundary';
 
 const contentScript = createContentScriptEndpoint();
 
-export function Devtools({children}: PropsWithChildren<{}>) {
+export type DevtoolsProps = PropsWithChildren<{
+  capabilities?: Capability[];
+}>;
+
+export function Devtools({children, capabilities}: DevtoolsProps) {
   const [devToolsRoot, setDevtoolsRoot] = useState<RemoteRoot | undefined>();
   const channelRef = useRef<RemoteChannel | null>(null);
   const endpointRef = useRef<Endpoint<ContentScriptApiForWebpage> | null>(null);
@@ -79,7 +84,10 @@ export function Devtools({children}: PropsWithChildren<{}>) {
     return (
       <RemoteRenderer root={devToolsRoot} onUnmount={handleUnmount}>
         <ErrorBoundary>
-          <ExtensionApiProvider endpoint={endpointRef.current}>
+          <ExtensionApiProvider
+            endpoint={endpointRef.current}
+            capabilities={capabilities}
+          >
             {children}
           </ExtensionApiProvider>
         </ErrorBoundary>
@@ -93,14 +101,16 @@ export function Devtools({children}: PropsWithChildren<{}>) {
 function ExtensionApiProvider({
   endpoint,
   children,
+  capabilities,
 }: PropsWithChildren<{
   endpoint: Endpoint<ContentScriptApiForWebpage>;
+  capabilities?: Capability[];
 }>) {
   const [statefulApi, setStatefulApi] = useState<StatefullExtensionApi>();
 
   useEffect(() => {
     async function getApi() {
-      const api = await endpoint.call.getApi();
+      const api = await endpoint.call.getApi({capabilities});
       retain(api);
 
       // Make stateful all stateless subscribable received by the devtools
@@ -156,7 +166,7 @@ function ExtensionApiProvider({
     return () => {
       apiPromise.then((release) => release()).catch(() => {});
     };
-  }, [endpoint.call]);
+  }, [capabilities, endpoint.call]);
 
   if (!statefulApi) return null;
 
