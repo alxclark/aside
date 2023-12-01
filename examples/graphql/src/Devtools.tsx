@@ -16,6 +16,7 @@ import {
   TabsTrigger,
   TabsContent,
 } from '@aside/chrome-ui-remote';
+import {Capability} from '@aside/core';
 import {
   Aside,
   Devtools as AsideDevtools,
@@ -52,9 +53,11 @@ export function Devtools() {
     [graphQLMonitor],
   );
 
+  const capabilities: Capability[] = useMemo(() => ['network'], []);
+
   return (
     <Aside>
-      <AsideDevtools>
+      <AsideDevtools capabilities={capabilities}>
         <AppActivityProvider activity={appActivity} refreshCache={refreshCache}>
           <AsideApp />
         </AppActivityProvider>

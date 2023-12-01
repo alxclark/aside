@@ -50,12 +50,12 @@ export function exposeWebpage(
     setLocalStorage(items) {
       return browser.storage.local.set(items);
     },
-    async getApi() {
+    async getApi(options) {
       if (!devtools) {
         throw new Error('Cannot get api since no devtools is connected');
       }
 
-      const api = await devtools.call.getApi();
+      const api = await devtools.call.getApi(options);
       retain(api);
 
       return api;

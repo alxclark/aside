@@ -9,7 +9,6 @@ import {
   ContentScriptApiForDevtools,
   DevtoolsApiForContentScript,
   StatelessExtensionApi,
-  StatelessExtensionApiOnHost,
 } from '@aside/core';
 import {Runtime} from 'webextension-polyfill';
 
@@ -27,28 +26,10 @@ export function Host() {
     useRef<Endpoint<ContentScriptApiForDevtools | undefined>>();
   const hostCleanupRef = useRef<() => void | undefined>();
   const [connected, setConnected] = useState(false);
-  const [apiIsReady, setApiIsReady] = useState(false);
 
   const hostApi = useApi();
-  const statelessApiRef = useRef<StatelessExtensionApiOnHost | undefined>();
 
   useEffect(() => {
-    async function createApi() {
-      const [statelessApi, cleanup] = await hostApi.api({
-        __futureApiContext: null,
-      });
-
-      statelessApiRef.current = statelessApi;
-      hostCleanupRef.current = cleanup;
-      setApiIsReady(true);
-    }
-
-    createApi();
-  }, [hostApi]);
-
-  useEffect(() => {
-    if (!apiIsReady) return;
-
     // Attempt a connection in case content-script already loaded and can intercept the port.
     const contentScriptPort = browser.tabs.connect(
       browser.devtools.inspectedWindow.tabId,
@@ -88,7 +69,7 @@ export function Host() {
       contentScriptPort.onMessage.removeListener(onAcceptedPortListener);
       browser.runtime.onConnect.removeListener(onConnectListener);
     };
-  }, [apiIsReady]);
+  }, []);
 
   useEffect(() => {
     if (!port) return;
@@ -108,9 +89,23 @@ export function Host() {
         setConnected(true);
         return receiver.receive;
       },
-      async getApi() {
+      async getApi(options = {}) {
+        const {capabilities} = options;
+
+        // Cleanup previous host api
+        hostCleanupRef.current?.();
+
+        // Api could be cached based on a session identifier being passed to the host.
+        // For simplicity now, always recreate.
+        const [statelessApi, cleanup] = await hostApi.api({
+          capabilities,
+        });
+
+        // eslint-disable-next-line require-atomic-updates
+        hostCleanupRef.current = cleanup;
+
         // When passing the api over RPC it will wrap functions in proxies (function return wrapped in promise).
-        return statelessApiRef.current as StatelessExtensionApi;
+        return statelessApi as StatelessExtensionApi;
       },
     };
 
@@ -125,13 +120,13 @@ export function Host() {
 
     function listener() {
       setPort(undefined);
-      hostCleanupRef.current?.();
     }
 
     port.onDisconnect.addListener(listener);
 
     return () => {
       port.onDisconnect.removeListener(listener);
+      hostCleanupRef.current?.();
     };
   }, [hostApi, port]);
 
