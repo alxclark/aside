@@ -7,6 +7,7 @@ import {
   ActivityDetails,
   ActivityView,
   useMonitor,
+  Snapshot,
 } from '@aside/activity';
 import {
   Pane,
@@ -41,6 +42,8 @@ export function Devtools() {
 
   const graphQLMonitor = useMonitor(cache, [cache]);
 
+  const postMessageActivity = usePostMessageActivity();
+
   const appActivity: ActivityStoreDescriptor[] = useMemo(
     () => [
       {
@@ -49,8 +52,9 @@ export function Devtools() {
         monitor: graphQLMonitor,
         icon: 'https://graphql.org/img/logo.svg',
       },
+      postMessageActivity as any,
     ],
-    [graphQLMonitor],
+    [graphQLMonitor, postMessageActivity],
   );
 
   const capabilities: Capability[] = useMemo(() => ['network'], []);
@@ -141,6 +145,7 @@ function AsideApp() {
           >
             <ActivityDetails type="graphql" />
             <ActivityDetails type="network" />
+            <ActivityDetails type="post-message" />
           </Activity>
         </TabsContent>
         <TabsContent value="graphql">
@@ -149,4 +154,81 @@ function AsideApp() {
       </Tabs>
     </Pane>
   );
+}
+
+interface RemoteUIEvent {
+  operationName: string;
+  id: string;
+  variables?: any;
+  response?: any;
+}
+
+function usePostMessageActivity(): ActivityStoreDescriptor<
+  Snapshot<RemoteUIEvent>
+> {
+  const [snapshots, setSnapshots] = useState<Snapshot<RemoteUIEvent>[]>([]);
+
+  useEffect(() => {
+    function onMessage(event: MessageEvent) {
+      const {data} = event;
+
+      const isRemoteUICall = Array.isArray(data) && data[0] === 0;
+      const isRemoteUIResult = Array.isArray(data) && data[0] === 1;
+
+      if (isRemoteUICall) {
+        setSnapshots((snapshots) => [
+          ...snapshots,
+          {
+            id: data[1][0],
+            createdAt: Date.now().toString(),
+            nodes: {
+              id: data[1][0],
+              operationName: data[1][1],
+              variables: data[1][2],
+            },
+            initial: snapshots.length === 0,
+          },
+        ]);
+
+        return;
+      }
+
+      if (isRemoteUIResult) {
+        setSnapshots((snapshots) => {
+          const snapshotMatchingResponse = snapshots.find(
+            (snapshot) => snapshot.id === data[1][0],
+          );
+
+          if (!snapshotMatchingResponse) return snapshots;
+
+          return [
+            ...snapshots.filter((snapshot) => snapshot.id !== data[1][0]),
+            {
+              ...snapshotMatchingResponse,
+              nodes: {
+                ...snapshotMatchingResponse.nodes,
+                response: data[1][2],
+              },
+            },
+          ];
+        });
+      }
+    }
+
+    window.addEventListener('message', onMessage);
+
+    return () => {
+      window.removeEventListener('message', onMessage);
+    };
+  }, []);
+
+  return {
+    type: 'post-message',
+    displayName: 'PostMessage',
+    rowName: (row) => row.nodes.operationName,
+    monitor: {
+      snapshot: snapshots[snapshots.length - 1],
+      snapshots,
+    },
+  };
 }
