@@ -24,17 +24,17 @@ The chrome extension is powered by Shopify's [remote-ui](https://github.com/Shop
 1. Install dependencies.
 
 ```sh
-yarn add @aside/react @aside/chrome-ui
+yarn add @aside/react @aside/chrome-ui-remote
 ```
 
 2. Import the `Aside` and `Devtools` component and render a remote component in your application.
 
-In the example below, we are using `Button` from `@aside/chrome-ui`. Chrome UI is one of the UI packages that Aside offers. It mirrors the native Chrome look and feel and is our recommendation for new users.
+In the example below, we are using `Button` from `@aside/chrome-ui-remote`. Chrome UI is one of the UI packages that Aside offers. It mirrors the native Chrome look and feel and is our recommendation for new users.
 
 ```jsx
 import React, {useState} from 'react';
 import {Aside, Devtools} from '@aside/react';
-import {Button} from '@aside/chrome-ui';
+import {Button} from '@aside/chrome-ui-remote';
 
 export function App({children}) {
   const [count, setCount] = useState(0)
