@@ -1,2 +1,2 @@
 export const webstoreUrl =
-  'https://chrome.google.com/webstore/detail/aside/pecefkiefodjfkgfihkhkcbhlbgahoge';
+  'https://chromewebstore.google.com/detail/aside/pecefkiefodjfkgfihkhkcbhlbgahoge?pli=1';

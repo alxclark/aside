@@ -22,11 +22,11 @@ export function SidebarItem({
     <Link href={href}>
       <li
         className={classNames(
-          'text-sm flex gap-3 py-1 px-2 rounded-md',
+          'text-sm flex py-1 -my-1 px-2 -mx-2 rounded-md',
           active && 'dark:bg-dark-surface2 text-accent',
         )}
       >
-        {icon && (
+        {/* {icon && (
           <Image
             alt={icon}
             height={16}
@@ -34,7 +34,7 @@ export function SidebarItem({
             src={`/${icon}.svg`}
             className="grayscale"
           />
-        )}
+        )} */}
         {label}
       </li>
     </Link>

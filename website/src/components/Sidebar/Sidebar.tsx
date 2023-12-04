@@ -11,33 +11,20 @@ export interface Props {}
 
 export function Sidebar() {
   return (
-    <div className="hidden md:block min-w-[300px] border-r dark:border-dark-border px-10 overflow-auto">
+    <div className="hidden md:block min-w-[250px] border-r dark:border-dark-border px-10 overflow-auto">
       <Logo />
       <ul className="max-w-[170px]">
         <SidebarSection>
-          <SidebarItem icon="house" label="Home" url="docs" />
           <SidebarItem
             icon="play"
             label="Getting started"
             url="docs/guides/getting-started"
           />
-          <SidebarItem icon="features" label="Features" url="docs/features" />
-          <SidebarItem
-            icon="stack"
-            label="Architecture"
-            url="docs/architecture"
-          />
-        </SidebarSection>
-        <SidebarSection title="GUIDES">
-          <SidebarItem
-            icon="house"
-            label="State management"
-            url="docs/guides/state-management"
-          />
         </SidebarSection>
         <SidebarSection title="APIs">
           <SidebarItem icon="react" label="React" url="docs/apis/react" />
           <SidebarItem icon="storage" label="Storage" url="docs/apis/storage" />
+          <SidebarItem icon="storage" label="Network" url="docs/apis/network" />
         </SidebarSection>
         <SidebarSection title="UI">
           <SidebarCollapsibleItem label="Chrome" icon="chrome">

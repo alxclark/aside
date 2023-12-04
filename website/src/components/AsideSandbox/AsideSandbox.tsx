@@ -1,6 +1,6 @@
 'use client';
 
-import {AllComponents, PaneToolbar, Tabs, Tab} from '@aside/chrome-ui/react';
+import {AllComponents, Tabs} from '@aside/chrome-ui';
 import {themes} from 'prism-react-renderer';
 import React, {PropsWithChildren, useState} from 'react';
 import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live';
@@ -43,14 +43,7 @@ export function AsideSandbox({code, scope, height, display = 'all'}: Props) {
             <div className="z-10 text-xs rounded-full bg-dark-surface3 absolute left-[50%] top-0 translate-x-[-50%] translate-y-[-50%] px-2 py-0.5 text-accent font-semibold">
               Extension
             </div>
-            <div className="aside relative h-full">
-              <PaneToolbar>
-                <Tabs selected="aside" setSelected={() => {}}>
-                  <Tab id="aside" label="Aside" />
-                </Tabs>
-              </PaneToolbar>
-              {children}
-            </div>
+            <div className="aside relative h-full">{children}</div>
           </>
         ),
         ...AllComponents,
