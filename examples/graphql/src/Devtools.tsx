@@ -145,7 +145,7 @@ function AsideApp() {
           >
             <ActivityDetails type="graphql" />
             <ActivityDetails type="network" />
-            <ActivityDetails type="post-message" />
+            <ActivityDetails type="remote-ui" />
           </Activity>
         </TabsContent>
         <TabsContent value="graphql">
@@ -223,12 +223,13 @@ function usePostMessageActivity(): ActivityStoreDescriptor<
   }, []);
 
   return {
-    type: 'post-message',
-    displayName: 'PostMessage',
+    type: 'remote-ui',
+    displayName: 'Remote UI',
     rowName: (row) => row.nodes.operationName,
     monitor: {
       snapshot: snapshots[snapshots.length - 1],
       snapshots,
+      clearSnapshots: () => setSnapshots([]),
     },
   };
 }
