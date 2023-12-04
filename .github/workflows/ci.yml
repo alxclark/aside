@@ -31,11 +31,11 @@ jobs:
         - name: Install dependencies
           run: yarn
 
-        - name: Lint
+        - name: Typecheck
           run: yarn type-check
 
         - name: Build
           run: yarn build
 
-        # - name: Test
-        #   run: yarn test
+        - name: Test
+          run: yarn test

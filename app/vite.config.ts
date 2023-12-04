@@ -100,6 +100,7 @@ export default defineConfig(({command, mode}) => {
           ]
         : [...sharedConfig.plugins!, react({fastRefresh: false})],
     test: {
+      watch: false,
       globals: true,
       environment: 'jsdom',
       setupFiles: [`${r('../config/testing/setup.ts')}`],

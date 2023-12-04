@@ -38,6 +38,7 @@ export default defineConfig({
     },
   },
   test: {
+    watch: false,
     globals: true,
     environment: 'jsdom',
     setupFiles: [`${r('../config/testing/setup.ts')}`],
