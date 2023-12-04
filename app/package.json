@@ -3,7 +3,6 @@
   "displayName": "aside",
   "version": "0.0.12",
   "private": true,
-  "packageManager": "^yarn@1.22.21",
   "license": "BSD-3-Clause",
   "description": "A modular browser extension for developers",
   "scripts": {
