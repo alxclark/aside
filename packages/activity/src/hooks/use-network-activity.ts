@@ -48,7 +48,7 @@ function createSnapshot(request: NetworkRequest): Snapshot<NetworkRequest> {
       request.request.url +
       request?.time +
       request.request.method,
-    createdAt: request.startedDateTime,
+    createdAt: new Date(request.startedDateTime).getTime().toString(),
     nodes: request,
   };
 }
