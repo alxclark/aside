@@ -1,6 +1,6 @@
 'use client';
 
-import {AllComponents, Tabs} from '@aside/chrome-ui';
+import {AllComponents} from '@aside/chrome-ui';
 import {themes} from 'prism-react-renderer';
 import React, {PropsWithChildren, useState} from 'react';
 import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live';

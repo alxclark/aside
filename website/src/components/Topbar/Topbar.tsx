@@ -10,7 +10,7 @@ export function Topbar() {
     <>
       <header className="dark:bg-dark-surface flex sticky top-0 w-full h-[65px] items-center border-b dark:border-dark-border px-3 justify-end gap-6">
         <div className="md:hidden text-accent font-black text-3xl leading-4 relative grow">
-          aside
+          <div className="bg-accent h-4 w-4 rounded-full" />
         </div>
 
         <a href="https://github.com/alxclark/aside">

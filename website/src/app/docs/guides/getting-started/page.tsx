@@ -12,13 +12,21 @@ export default function GettingStarted() {
   return (
     <>
       <Heading level={1}>Getting started</Heading>
-      <p className="mt-3 text-lg">
-        Aside is a modular browser extension built to be a companion to any web
-        application. <br />
-        <br /> Users can use React&apos;s primitives to render UI directly into
-        the developer tools panel of the browser. Aside&apos;s npm packages
-        exposes UI components and utilities to access the Chrome extension APIs
-        from the comfort of your own web application.
+      <Heading level={2} className="mt-8">
+        Introduction
+      </Heading>
+      <p className="mt-3">
+        Aside is an extensible{' '}
+        <Link external to="https://developer.chrome.com/docs/extensions/">
+          Chrome extension
+        </Link>{' '}
+        that allows webpages to customize the interface of the{' '}
+        <Link external to="https://developer.chrome.com/docs/devtools/">
+          devtools panel
+        </Link>
+        . We make it easy for developers to enhance their development
+        experience, without the friction of having to build dedicated Chrome
+        extensions.
       </p>
 
       <Heading level={2} className="mt-8">

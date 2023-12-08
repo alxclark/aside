@@ -22,9 +22,9 @@ export function Sidebar() {
           />
         </SidebarSection>
         <SidebarSection title="APIs">
-          <SidebarItem icon="react" label="React" url="docs/apis/react" />
-          <SidebarItem icon="storage" label="Storage" url="docs/apis/storage" />
-          <SidebarItem icon="storage" label="Network" url="docs/apis/network" />
+          <SidebarItem label="Activity" url="docs/apis/activity" />
+          <SidebarItem label="Storage" url="docs/apis/storage" />
+          <SidebarItem label="Network" url="docs/apis/network" />
         </SidebarSection>
         <SidebarSection title="UI">
           <SidebarCollapsibleItem label="Chrome" icon="chrome">
