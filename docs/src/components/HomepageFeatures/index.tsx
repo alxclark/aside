@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
+
 import styles from './styles.module.css';
 
-type FeatureItem = {
+interface FeatureItem {
   title: string;
   Svg: React.ComponentType<React.ComponentProps<'svg'>>;
   description: JSX.Element;
-};
+}
 
 const FeatureList: FeatureItem[] = [
   {
@@ -61,6 +63,7 @@ export default function HomepageFeatures(): JSX.Element {
       <div className="container">
         <div className="row">
           {FeatureList.map((props, idx) => (
+            // eslint-disable-next-line react/no-array-index-key
             <Feature key={idx} {...props} />
           ))}
         </div>
