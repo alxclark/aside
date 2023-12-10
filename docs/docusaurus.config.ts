@@ -108,7 +108,7 @@ const config: Config = {
             },
             {
               label: '𝕏 (Twitter)',
-              href: 'https://x.com/aside.dev',
+              href: 'https://x.com/aside_dev',
             },
           ],
         },
