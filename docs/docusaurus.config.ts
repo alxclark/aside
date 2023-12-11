@@ -133,6 +133,56 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+
+  plugins: [
+    async function chromeUIPlugin(context, options) {
+      return {
+        name: 'chrome-ui',
+        configureWebpack: (config) => {
+          const updatedRules = config.module.rules.map((rule) => {
+            const isCSSRule = rule && typeof rule === 'object' && rule?.test?.toString() === /\.css$/i.toString()
+
+            if (isCSSRule) {
+              return {
+                ...rule,
+                exclude: (path) => {
+                  const originalExclude = (rule?.exclude as any)?.test(path)
+                  return originalExclude || path.includes('chrome-ui/build/css/styles.css')
+                },
+              }
+            }
+
+            return rule
+          })
+
+          const cssStyleSheetRule = {
+            assert: { type: "css" },
+            loader: "css-loader",
+            options: {
+              exportType: "css-style-sheet",
+            },
+            test: (path) => {
+              return path.includes('chrome-ui/build/css/styles.css')
+            },
+          };
+
+          return {
+            module: {
+              ...config.module,
+              rules: [
+                cssStyleSheetRule,
+                ...updatedRules,
+              ]
+            },
+            mergeStrategy: {
+              module: 'replace',
+              resolve: 'merge'
+            }
+          };
+        }
+      };
+    },
+  ]
 };
 
 export default config;

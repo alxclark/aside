@@ -9,7 +9,7 @@
 }
 
 @layer base {
-  :root {
+  :root, :host {
     font-size: 16px;
     background: var(--background);
     color-scheme: dark;
