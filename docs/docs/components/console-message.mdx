@@ -1,0 +1,84 @@
+import {AsideLive} from '../../src/components/AsideLive'
+
+# ConsoleMessage
+
+Console messages allows you to display data like the Chrome console.
+
+## Limitations
+
+Currently only the following types are supported:
+* `string`
+* `number`
+* `boolean`
+* `object`
+* `array`
+* `undefined`
+* `null`
+* `function`
+
+## Examples
+
+### Simple message
+
+<AsideLive
+  code={
+`function App() {
+  return (
+    <Aside>
+      <Devtools>
+        <ConsoleMessage value={{count: 0}} />
+      </Devtools>
+    </Aside>
+  )
+}`
+    }
+/>
+
+### Nested message
+
+<AsideLive
+  code={
+`function App() {
+  const value = {
+    nested: {
+      deeplyNested: {
+        count: 0,
+      },
+    },
+  };
+
+  return (
+    <Aside>
+      <Devtools>
+        <ConsoleMessage value={value} />
+      </Devtools>
+    </Aside>
+  )
+}`
+    }
+/>
+
+### Message with arrays
+
+<AsideLive
+  code={
+`function App() {
+  const value = {
+    todos: [
+      {id: 1, text: 'Learn React'},
+      {id: 2, text: 'Learn Signals'},
+      {id: 3, text: 'Learn Next.js'},
+    ]
+  };
+
+  return (
+    <Aside>
+      <Devtools>
+        <ConsoleMessage value={value} />
+      </Devtools>
+    </Aside>
+  )
+}`
+    }
+/>
+
