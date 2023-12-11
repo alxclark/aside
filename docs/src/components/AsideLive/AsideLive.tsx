@@ -1,4 +1,10 @@
-import {AllComponents} from '@aside/chrome-ui';
+import {
+  AllComponents,
+  PaneToolbar,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from '@aside/chrome-ui';
 import {themes} from 'prism-react-renderer';
 import React, {type PropsWithChildren, useRef, useEffect} from 'react';
 import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live';
@@ -52,12 +58,26 @@ export function AsideLive({code, scope, height}: Props) {
         ...React,
         Aside: ({children}: PropsWithChildren) => (
           <>
-            <div style={{paddingBottom: 10}}>{children}</div>
+            <div className={styles.container}>{children}</div>
           </>
         ),
         Devtools: ({children}: PropsWithChildren) => (
           <Shadow>
-            <div style={{minHeight: 100}} className="aside bg-background">
+            <div
+              style={{
+                minHeight: 100,
+                fontSize: 12,
+                fontFamily: 'Helvetica Neue',
+              }}
+              className="aside bg-background"
+            >
+              <Tabs defaultValue="aside">
+                <PaneToolbar>
+                  <TabsList>
+                    <TabsTrigger value="aside">Aside</TabsTrigger>
+                  </TabsList>
+                </PaneToolbar>
+              </Tabs>
               {children}
             </div>
           </Shadow>
