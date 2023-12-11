@@ -1,15 +1,8 @@
 import {AllComponents} from '@aside/chrome-ui';
 import {themes} from 'prism-react-renderer';
-import React, {
-  type PropsWithChildren,
-  useState,
-  useRef,
-  useEffect,
-} from 'react';
+import React, {type PropsWithChildren, useRef, useEffect} from 'react';
 import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live';
 import {createRoot} from 'react-dom/client';
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import sheet from '@aside/chrome-ui/css' assert {type: 'css'};
 
 import styles from './styles.module.css';

@@ -3,18 +3,21 @@
   "version": "0.7.5",
   "license": "BSD-3-Clause",
   "files": [
-    "build"
+    "build",
+    "css.d.ts"
   ],
   "main": "./build/js/chrome-ui.umd.js",
   "module": "./build/js/chrome-ui.es.js",
   "exports": {
     ".": {
       "import": "./build/js/chrome-ui.es.js",
-      "require": "./build/js/chrome-ui.umd.js"
+      "require": "./build/js/chrome-ui.umd.js",
+      "types": "./build/ts/index.d.ts"
     },
     "./css": {
       "import": "./build/css/styles.css",
-      "require": "./build/css/styles.css"
+      "require": "./build/css/styles.css",
+      "types": "./css.d.ts"
     }
   },
   "types": "build/ts/index.d.ts",
