@@ -7,7 +7,8 @@
       ],
       "outputs": [
         "build/**/js/**/*",
-        "build/**/css/**/*"
+        "build/**/css/**/*",
+        ".docusaurus/**"
       ]
     },
     "type-check": {
