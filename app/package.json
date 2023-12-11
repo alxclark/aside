@@ -48,8 +48,7 @@
     "unplugin-auto-import": "^0.11.2",
     "vite": "^3.0.9",
     "web-ext": "^7.2.0",
-    "webextension-polyfill": "^0.10.0",
-    "tslib": "latest"
+    "webextension-polyfill": "^0.10.0"
   },
   "dependencies": {
     "@aside/react": "0.7.7",
