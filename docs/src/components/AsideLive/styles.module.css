@@ -1,0 +1,13 @@
+.editor {}
+
+.editor > pre {
+  padding: var(--ifm-pre-padding) !important;
+  font-size: 15.2px !important;
+}
+
+.code {
+  border: none;
+  background: none;
+  padding: 0;
+  margin-top: 10px;
+}

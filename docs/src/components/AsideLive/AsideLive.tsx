@@ -12,14 +12,15 @@ import {createRoot} from 'react-dom/client';
 // @ts-ignore
 import sheet from '@aside/chrome-ui/css' assert {type: 'css'};
 
+import styles from './styles.module.css';
+
 export interface Props {
   code: string;
   scope?: {[key: string]: unknown} | undefined;
   height?: number;
-  display?: 'all' | 'code' | 'code-extension';
 }
 
-export function AsideLive(props: Props) {
+export function Shadow(props: PropsWithChildren) {
   const divRef = useRef<HTMLDivElement>();
   const shadowRef = useRef<ShadowRoot>();
   const elementForShadowRef = useRef<HTMLDivElement>();
@@ -37,7 +38,7 @@ export function AsideLive(props: Props) {
     }
 
     const root = createRoot(elementForShadowRef.current);
-    root.render(<AsideLiveInner {...props} />);
+    root.render(props.children);
 
     return () => {
       root.unmount();
@@ -47,11 +48,7 @@ export function AsideLive(props: Props) {
   return <div ref={divRef} />;
 }
 
-export function AsideLiveInner({code, scope, height, display = 'all'}: Props) {
-  const showExtensionPreview =
-    display === 'all' || display === 'code-extension';
-  const showWebpagePreview = display === 'all';
-
+export function AsideLive({code, scope, height}: Props) {
   return (
     <LiveProvider
       enableTypeScript
@@ -62,29 +59,25 @@ export function AsideLiveInner({code, scope, height, display = 'all'}: Props) {
         ...React,
         Aside: ({children}: PropsWithChildren) => (
           <>
-            {showWebpagePreview && (
-              <>
-                <div>{children}</div>
-                <div>Webpage</div>
-              </>
-            )}
+            <div style={{paddingBottom: 10}}>{children}</div>
           </>
         ),
         Devtools: ({children}: PropsWithChildren) => (
-          <>
-            <div>Extension</div>
-            <div style={{height: 100}} className="aside bg-background">
+          <Shadow>
+            <div style={{minHeight: 100}} className="aside bg-background">
               {children}
             </div>
-          </>
+          </Shadow>
         ),
         ...AllComponents,
         ...scope,
       }}
     >
-      <LiveEditor />
       <LiveError />
-      {showExtensionPreview && <LivePreview style={{height}} />}
+      <LivePreview style={{height}} />
+      <code className={styles.code}>
+        <LiveEditor tabMode="focus" className={styles.editor} />
+      </code>
     </LiveProvider>
   );
 }
