@@ -9,18 +9,11 @@ Buttons allow users to take actions, and make choices, with a single tap.
 Currently buttons are only transparent containers for icons to allow capturing interactions.
 
 <AsideLive
+  centered
   code={
-`function App() {
-  return (
-    <Aside>
-      <Devtools>
-        <Button title="Clear" size="icon" onClick={() => alert('clicked')}>
-          <Icon source="cancel" />
-        </Button>
-      </Devtools>
-    </Aside>
-  )
-}`
+`<Button title="Clear" size="icon" onClick={() => alert('clicked')}>
+  <Icon source="cancel" />
+</Button>`
     }
 />
 

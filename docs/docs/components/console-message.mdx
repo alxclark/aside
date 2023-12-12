@@ -22,23 +22,15 @@ Currently only the following types are supported:
 
 <AsideLive
   code={
-`function App() {
-  return (
-    <Aside>
-      <Devtools>
-        <ConsoleMessage value={{count: 0}} />
-      </Devtools>
-    </Aside>
-  )
-}`
-    }
+`<ConsoleMessage value={{count: 0}} />`
+  }
 />
 
 ### Nested message
 
 <AsideLive
   code={
-`function App() {
+`function Devtools() {
   const value = {
     nested: {
       deeplyNested: {
@@ -47,15 +39,9 @@ Currently only the following types are supported:
     },
   };
 
-  return (
-    <Aside>
-      <Devtools>
-        <ConsoleMessage value={value} />
-      </Devtools>
-    </Aside>
-  )
+  return <ConsoleMessage value={value} />;
 }`
-    }
+}
 />
 
 ### Message with arrays
@@ -71,13 +57,7 @@ Currently only the following types are supported:
     ]
   };
 
-  return (
-    <Aside>
-      <Devtools>
-        <ConsoleMessage value={value} />
-      </Devtools>
-    </Aside>
-  )
+  return <ConsoleMessage value={value} />;
 }`
     }
 />

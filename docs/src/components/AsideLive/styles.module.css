@@ -14,4 +14,6 @@
 
 .container {
   border: 1px solid #474747;
+  border-radius: 8px 8px 0 0 !important;
+  overflow: hidden;
 }
