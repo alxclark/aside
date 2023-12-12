@@ -1,0 +1,61 @@
+import {AsideLive} from '../../src/components/AsideLive'
+import {ComponentProps} from '../../src/components/ComponentProps/ComponentProps'
+
+# Icon
+
+## Examples
+
+<AsideLive
+  centered
+  code={
+`<View className="flex gap-2">
+  <Icon source='start' />
+  <Icon source='filter' />
+  <Icon source='filter-filled' />
+  <Icon source='cancel' />
+  <Icon source='cog' />
+  <Icon source='cog-filled' />
+  <Icon source='close' />
+  <Icon source='record-on' />
+  <Icon source='record-off' />
+  <Icon source='search' />
+  <Icon source='power-off' />
+  <Icon source='checkmark' />
+  <Icon source='file-script' />
+  <Icon source='vertical-ellipsis' size="sm" />
+</View>`
+    }
+/>
+
+## Variants
+
+<AsideLive
+  centered
+  code={
+`<View className="flex gap-2">
+  <Icon source='file-script' variant="default" />
+  <Icon source='file-script' variant="error" />
+  <Icon source='file-script' variant="toggled" />
+  <Icon source='file-script' variant="subdued" />
+  <Icon source='file-script' variant="yellow" />
+</View>`
+    }
+/>
+
+## Sizes
+
+<AsideLive
+  centered
+  code={
+`<View className="flex items-center gap-2">
+  <Icon source='cancel' size="sm" />
+  <Icon source='cancel' size="md" />
+  <Icon source='cancel' size="default" />
+  <Icon source='cancel' size="lg" />
+</View>`
+    }
+/>
+
+## IconProps
+
+<ComponentProps name="Icon" />
