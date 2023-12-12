@@ -1,0 +1,53 @@
+import {AsideLive} from '../../src/components/AsideLive'
+import {ComponentProps} from '../../src/components/ComponentProps/ComponentProps'
+
+# Table
+
+Tables display sets of data. They can be fully customized.
+
+## Examples
+
+<AsideLive
+  code={
+`<Table
+  columns={[{title: 'Name'}, {title: 'Status'}, {title: 'Type'}]}
+  border
+  scrollable
+  rowHeight="21px"
+  selected="3"
+>
+  <TableRow id="1">
+    <TableCell>react.js</TableCell>
+    <TableCell>200</TableCell>
+    <TableCell>javascript</TableCell>
+  </TableRow>
+  <TableRow id="2">
+    <TableCell>data.json</TableCell>
+    <TableCell>200</TableCell>
+    <TableCell>fetch</TableCell>
+  </TableRow>
+  <TableRow id="3">
+    <TableCell>aside.js</TableCell>
+    <TableCell>418</TableCell>
+    <TableCell>javascript</TableCell>
+  </TableRow>
+  <TableRow id="4">
+    <TableCell>docusaurus.js</TableCell>
+    <TableCell>304</TableCell>
+    <TableCell>script</TableCell>
+  </TableRow>
+</Table>`
+    }
+/>
+
+## TableProps
+
+<ComponentProps name="Table" />
+
+## TableCellProps
+
+<ComponentProps name="TableCell" />
+
+## TableRowProps
+
+<ComponentProps name="TableRow" />
