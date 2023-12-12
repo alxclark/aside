@@ -1,0 +1,52 @@
+import {AsideLive} from '../../src/components/AsideLive'
+import {ComponentProps} from '../../src/components/ComponentProps/ComponentProps'
+
+# Pane
+
+## Examples
+
+<AsideLive
+  code={
+`<Pane>
+  <PaneToolbar>
+    <View className="flex items-center flex-wrap">
+      <PaneToolbarSection>
+        <PaneToolbarItem>
+          <Icon source="record-on" variant="error" />
+        </PaneToolbarItem>
+      </PaneToolbarSection>
+      <PaneToolbarSection>
+        <PaneToolbarItem>
+          <Checkbox
+            id="log"
+            label="Preserve log"
+            checked
+            onChange={() => {}}
+          />
+        </PaneToolbarItem>
+      </PaneToolbarSection>
+    </View>
+  </PaneToolbar>
+</Pane>`
+    }
+/>
+
+## PaneProps
+
+<ComponentProps name="Pane" />
+
+## PaneContent
+
+<ComponentProps name="PaneContent" />
+
+## PaneToolbar
+
+<ComponentProps name="PaneToolbar" />
+
+## PaneToolbarSection
+
+<ComponentProps name="PaneToolbarSection" />
+
+## PaneToolbarItem
+
+<ComponentProps name="PaneToolbarItem" />
