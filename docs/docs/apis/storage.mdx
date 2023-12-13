@@ -1,1 +1,44 @@
 # Storage
+
+The storage api grants access to Chrome's [`extension storage API`](https://developer.chrome.com/docs/extensions/reference/api/storage). This allows webpages to persist and retrieve data scoped to aside. Common use-cases are:
+* Persisting state across page reloads.
+* Persisting state across different domains.
+* Persisting selected tabs.
+* Persisting user preferences.
+
+## `api.storage.local`
+
+The `api.storage.local` object exposes Chrome's [`chrome.storage.local`](https://developer.chrome.com/docs/extensions/reference/api/storage#property-local) object. It allows persisting large amount of data on the local machine of the user.
+
+:::tip
+For convenience, we recommend using the `useLocalStorageState` hook instead of directly accessing this API.
+:::
+
+### `get`
+
+```tsx
+const api = useExtensionApi();
+
+useEffect(() => {
+  async function queryStorage() {
+    // highlight-next-line
+    const result = await api.storage.local.get(['myKey']);
+
+    result['myKey']; // Value from extension storage
+  }
+  queryStorage();
+}, [api]);
+```
+
+### `set`
+
+```tsx
+const api = useExtensionApi();
+
+// highlight-next-line
+api.storage.local.set({myKey: 98})
+```
+
+## `useLocalStorageState`
+
+This hook wraps the `api.storage.local` api to make it easier for React components to integrate local and persisted state.
