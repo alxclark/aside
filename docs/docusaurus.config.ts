@@ -4,7 +4,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'aside',
-  tagline: 'Modern developer tools',
+  tagline: 'An extensible developer tools extension for Chrome',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -67,10 +67,11 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'aside',
+      // title: 'aside',
       logo: {
         alt: 'aside logo',
-        src: 'img/logo.svg',
+        src: 'img/curly.svg',
+        srcDark: 'img/curly-light.svg',
       },
       items: [
         {
