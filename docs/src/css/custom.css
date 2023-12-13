@@ -32,7 +32,7 @@
     color: #2f81f7;
   }
 
-  .table-of-contents a {
+  .table-of-contents a:not(.table-of-contents__link--active) {
     color: #a8afb8;
   }
 }
