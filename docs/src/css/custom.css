@@ -35,6 +35,10 @@
   .table-of-contents a:not(.table-of-contents__link--active) {
     color: #a8afb8;
   }
+
+  footer.footer {
+    background: #0a0a0a;
+  }
 }
 
 a {
@@ -51,4 +55,17 @@ nav .navbar__link:hover {
 
 footer a {
   font-weight: 400;
+}
+
+footer.footer {
+  background: #f6f8fa;
+  color: black;
+}
+
+footer.footer a {
+  color: black;
+}
+
+footer.footer .footer__title {
+  color: black;
 }
