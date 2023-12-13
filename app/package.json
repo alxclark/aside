@@ -8,12 +8,12 @@
   "type": "module",
   "scripts": {
     "dev": "npm run clear && cross-env NODE_ENV=development run-p dev:*",
-    "dev:prepare": "esno scripts/prepare.ts",
+    "dev:prepare": "tsx scripts/prepare.ts",
     "dev:web": "vite",
     "dev:content": "npm run build:content -- --mode development",
     "dev:background": "npm run build:background -- --mode development",
     "build": "cross-env NODE_ENV=production run-s clear build:web build:prepare build:content build:background",
-    "build:prepare": "esno scripts/prepare.ts",
+    "build:prepare": "tsx scripts/prepare.ts",
     "build:web": "vite build",
     "build:content": "vite build --config vite.config.content.ts",
     "build:background": "vite build --config vite.config.background.ts",
@@ -40,7 +40,6 @@
     "cross-env": "^7.0.3",
     "crx": "^5.0.1",
     "eslint": "^8.22.0",
-    "esno": "^0.16.3",
     "fs-extra": "^10.1.0",
     "jsdom": "^20.0.0",
     "kolorist": "^1.5.1",
@@ -50,7 +49,8 @@
     "vite": "^3.0.9",
     "web-ext": "^7.2.0",
     "webextension-polyfill": "^0.10.0",
-    "dotenv": "^16.3.0"
+    "dotenv": "^16.3.0",
+    "tsx": "^4.6.2"
   },
   "dependencies": {
     "@aside/react": "0.7.7",
