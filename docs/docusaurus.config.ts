@@ -188,7 +188,7 @@ const config: Config = {
       /** @type {import('docusaurus-plugin-react-docgen-typescript').Options} */
       {
         // pass in a single string or an array of strings
-        src: ['../packages/chrome-ui/src/components/**/*.tsx'],
+        src: ['../packages/**/*.tsx'],
         parserOptions: {
           // pass parserOptions to react-docgen-typescript
           // here is a good starting point which filters out all
