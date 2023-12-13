@@ -1,1 +1,66 @@
 # Network
+
+:::info
+The network api is currently only available when the [network capability](../components/Devtools) is enabled.
+:::
+
+The network api grants access to network requests made by the browser session. Internally, it uses [`chrome.devtools.network`](https://developer.chrome.com/docs/extensions/reference/api/devtools/network) to retrieve initial requests from the HAR log when your webpage connected to the devtools and append subsequent requests using [`onRequestFinished`](https://developer.chrome.com/docs/extensions/reference/api/devtools/network#event-onRequestFinished).
+
+## `useNetwork`
+
+The `useNetwork` hook returns three values:
+* `requests`: an array of request objects.
+* `onRequestFinished`: a function that accepts a callback to execute when a network request is finished.
+* `clear`: a function to clear the network requests.
+
+### Reading all requests
+
+:::warning
+Iterating over all requests on every re-render is extremely expensive, expecially with ES modules dev server like [Vite](https://vitejs.dev/) where there can be thousands of requests to render a single page.
+
+We recommend reading `requests` on the first render and then using `onRequestFinished` for all subsequent requests.
+:::
+
+```tsx
+const {requests} = useNetwork();
+
+return (
+  <View>
+    {requests.map(request => request._resourceType)}
+  </View>
+)
+```
+
+### Intercepting requests
+
+In some cases, it may be useful to intercept network requests and execute an action in your application (snapshotting state, extracting a cache, etc).
+
+```ts
+const {onRequestFinished} = useNetwork();
+
+useEffect(() => {
+  const result = onRequestFinished((request) => {
+    // Hypothetical example of refreshing a GraphQL cache
+    // when intercepting new GraphQL queriesin the network tab
+    if (
+      request._resourceType === 'fetch' &&
+      request.request.method === 'POST' &&
+      request.request.postData.mimeType === 'application/json'
+    ) {
+      const requestBody = JSON.parse(request.request.postData.text);
+      const isGraphQLQuery =
+        requestBody.operationName &&
+        requestBody.query &&
+        requestBody.variables;
+
+      if (isGraphQLQuery) {
+        refreshCache();
+      }
+    }
+  });
+
+  return () => {
+    result.then((unsubscribe) => unsubscribe());
+  };
+}, [onRequestFinished, refreshCache]);
+```
