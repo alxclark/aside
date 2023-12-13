@@ -5,6 +5,7 @@
   "private": true,
   "license": "BSD-3-Clause",
   "description": "A modular browser extension for developers",
+  "type": "module",
   "scripts": {
     "dev": "npm run clear && cross-env NODE_ENV=development run-p dev:*",
     "dev:prepare": "esno scripts/prepare.ts",
