@@ -41,6 +41,22 @@
   }
 }
 
+
+html:not([data-theme='dark']) {
+  footer.footer {
+    background: #f6f8fa;
+    color: black;
+  }
+
+  footer.footer a {
+    color: black;
+  }
+
+  footer.footer .footer__title {
+    color: black;
+  }
+}
+
 a {
   font-weight: 600;
 }
@@ -55,17 +71,4 @@ nav .navbar__link:hover {
 
 footer a {
   font-weight: 400;
-}
-
-footer.footer {
-  background: #f6f8fa;
-  color: black;
-}
-
-footer.footer a {
-  color: black;
-}
-
-footer.footer .footer__title {
-  color: black;
 }
