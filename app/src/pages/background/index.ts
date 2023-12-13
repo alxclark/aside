@@ -15,7 +15,7 @@ async function background() {
 
     if (isForbiddenUrl(url)) return;
 
-    browser.action.setBadgeText({text: 'OFF', tabId});
+    // browser.action.setBadgeText({text: 'OFF', tabId});
   });
 
   // When the content-script attempts to connect to the devtools panel,
@@ -26,7 +26,15 @@ async function background() {
 
   browser.runtime.onMessage.addListener(async (message, sender) => {
     if (message.type === WEBPAGE_INITIATED_CONNECTION) {
-      browser.action.setBadgeText({text: 'ON', tabId: sender?.tab?.id});
+      // This doesn't seem to work
+      // browser.action.setIcon({
+      //   tabId: sender?.tab?.id,
+      //   path: {
+      //     16: '/assets/logo-16-disabled.png',
+      //     48: '/assets/logo-16-disabled.png',
+      //     128: '/assets/logo-16-disabled.png',
+      //   },
+      // });
       return true;
     }
   });
