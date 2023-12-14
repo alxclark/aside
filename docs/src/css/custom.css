@@ -27,34 +27,31 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-
-  a:not(footer a):not(nav a):not(.table-of-contents a):not(.card) {
-    color: #2f81f7;
-  }
-
-  .table-of-contents a:not(.table-of-contents__link--active) {
-    color: #a8afb8;
-  }
-
-  footer.footer {
-    background: #0a0a0a;
-  }
 }
 
+[data-theme='dark'] a:not(footer a):not(nav a):not(.table-of-contents a):not(.card) {
+  color: #2f81f7;
+}
 
-[data-theme='light'] {
-  footer.footer {
-    background: #f6f8fa;
-    color: black;
-  }
+[data-theme='dark'] .table-of-contents a:not(.table-of-contents__link--active) {
+  color: #a8afb8;
+}
 
-  footer.footer a {
-    color: black;
-  }
+[data-theme='dark'] footer.footer {
+  background: #0a0a0a;
+}
 
-  footer.footer .footer__title {
-    color: black;
-  }
+[data-theme='light'] footer.footer {
+  background: #f6f8fa;
+  color: black;
+}
+
+[data-theme='light'] footer.footer a {
+  color: black;
+}
+
+[data-theme='light'] footer.footer .footer__title {
+  color: black;
 }
 
 a {
