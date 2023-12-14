@@ -1,8 +1,8 @@
 import {
-  WEBPAGE_INITIATED_CONNECTION,
+  // WEBPAGE_INITIATED_CONNECTION,
   setupContentScriptHMR,
 } from '../../foundation/ContentScript';
-import {isForbiddenUrl} from '../../env';
+// import {isForbiddenUrl} from '../../env';
 
 if (import.meta.env.DEV) {
   setupContentScriptHMR();
