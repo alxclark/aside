@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
+    "build": "vite build",
     "clean-vite": "rm -rf ./node_modules/.vite"
   },
   "dependencies": {
