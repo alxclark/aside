@@ -1,4 +1,4 @@
-# <div style='display: flex; align-items: center;'><span style="font-size: 100px; margin-top: -15px; margin-right: 10px">↬</span> aside  · ![License](https://img.shields.io/npm/l/%40aside%2Freact?style=social)</div>
+# ↬ aside · ![License](https://img.shields.io/npm/l/%40aside%2Freact?style=social)</div>
 
 ![Chrome Web Store](https://img.shields.io/chrome-web-store/v/pecefkiefodjfkgfihkhkcbhlbgahoge?style=social&logo=google-chrome)
 ![npm](https://img.shields.io/npm/v/%40aside%2Freact?style=social&logo=npm)
