@@ -39,4 +39,7 @@ export default defineConfig({
       '@aside/recoil': `${r('../../packages/recoil/src')}`,
     },
   },
+  build: {
+    outDir: r('build'),
+  },
 });
