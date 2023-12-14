@@ -11,6 +11,7 @@ import React, {type PropsWithChildren, useRef, useEffect} from 'react';
 import {LiveEditor, LiveError, LivePreview, LiveProvider} from 'react-live';
 import {Root, createRoot} from 'react-dom/client';
 import sheet from '@aside/chrome-ui/css' assert {type: 'css'};
+import {useColorMode} from '@docusaurus/theme-common';
 
 import styles from './styles.module.css';
 
@@ -50,10 +51,12 @@ export function Shadow(props: PropsWithChildren) {
 }
 
 export function AsideLive({code, scope, height, ...rest}: Props) {
+  const {isDarkTheme} = useColorMode();
+
   return (
     <LiveProvider
       enableTypeScript
-      theme={themes.dracula}
+      theme={isDarkTheme ? themes.vsDark : themes.github}
       code={code}
       scope={{
         React,
