@@ -42,7 +42,7 @@
 }
 
 
-html:not([data-theme='dark']) {
+[data-theme='light'] {
   footer.footer {
     background: #f6f8fa;
     color: black;
