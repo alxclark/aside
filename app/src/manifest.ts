@@ -47,6 +47,7 @@ export async function getManifest() {
     host_permissions: ['http://*/', 'https://*/'],
     content_scripts: [
       {
+        run_at: 'document_start',
         matches: ['<all_urls>'],
         js: ['./dist/contentScripts/index.global.js'],
       },
