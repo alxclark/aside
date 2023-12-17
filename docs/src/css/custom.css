@@ -69,3 +69,8 @@ nav .navbar__link:hover {
 footer a {
   font-weight: 400;
 }
+
+.navbar__logo {
+  height: 1.5rem;
+  margin-right: 0;
+}
