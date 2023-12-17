@@ -81,6 +81,7 @@ const config: Config = {
           label: 'Documentation',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/examples', label: 'Examples', position: 'left'},
         {
           href: 'https://github.com/alxclark/aside',
           label: 'GitHub',
