@@ -32,7 +32,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+        Click on the Preact and Aside logos to learn more
       </p>
       <Devtools />
     </>
