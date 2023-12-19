@@ -13,6 +13,11 @@ Since the Preact team are behind the library, they added first party support to 
 
 <!-- truncate -->
 
+:::tip
+You can preview the final result [here](https://signals.aside.dev/).
+:::
+
+
 :::info
 If you aren't familiar with signals, I highly recommend reading through the following articles:
 * https://preactjs.com/blog/introducing-signals/
@@ -192,6 +197,10 @@ function AsideApp() {
 
 ### 6. Render the devtools component in your app
 
+:::warning
+Currently, Aside does not work well with React's strict mode. If you are using strict mode, you will need to disable it for the devtools to work.
+:::
+
 ```tsx title="/src/App.tsx"
 // highlight-start
 import {Devtools} from './Devtools';
@@ -208,3 +217,14 @@ function App() {
   );
 }
 ```
+
+That's it! You have now the **activity** tab tracking state changes of your signals and the **signals** tab to see the current state.
+
+* [Full implementation](https://github.com/alxclark/aside/tree/main/examples/signals-react)
+* [Live demo](https://signals.aside.dev/)
+
+## What's next ?
+
+This example is a very basic implementation of what you can do with signals and aside. The real power of Aside comes from the ability of combining data sources from your application and easily composing UI.
+
+Read more about the activity feature to implement additional data stores [here](/docs/apis/activity).

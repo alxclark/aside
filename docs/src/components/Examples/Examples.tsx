@@ -16,6 +16,13 @@ const examples = [
     iconUrl: 'img/recoil.png',
     background: '#007af4',
   },
+  {
+    title: 'Signals',
+    description: 'Show signals and computed changes.',
+    href: 'https://signals.aside.dev',
+    iconUrl: 'img/preact.svg',
+    background: '#683bb8',
+  },
 ];
 
 export function Examples() {
