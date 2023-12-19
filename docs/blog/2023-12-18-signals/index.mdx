@@ -1,0 +1,206 @@
+---
+slug: preact-signals
+title: Integration with Preact signals
+authors: [alx]
+tags: [preact, signals, tutorial]
+---
+
+Signals are a state management primitive that has been taking over the web in the last year. Multiple Javascript frameworks have authored their own signals implementation to manage fine-grained reactivity. One of the popular implementation came from the Preact team in the form of [`@preact/signals`](https://github.com/preactjs/signals). This implementation was built with a focus on Preact, but also provides a React adapter that allows React application to use signals with the same api.
+
+Since the Preact team are behind the library, they added first party support to the Preact developer tools extension, but nothing was built for React users to inspect their signals state easily. This is a perfect use-case for Aside and that's what we'll build today!
+
+:::info
+If you aren't familiar with signals, I highly recommend reading through the following articles:
+* https://preactjs.com/blog/introducing-signals/
+* https://svelte.dev/blog/runes#signal-boost
+* https://www.solidjs.com/tutorial/introduction_signals
+* https://angular.io/guide/signals
+:::
+
+## Getting started
+
+:::note
+If you already have a React app using signals, you can skip to [this section](#4-install-asides-packages).
+:::
+
+### 1. Create a React app
+
+Let's start by creating a new React app using Vite's React and Typescript template.
+
+```bash
+yarn create vite signals-react --template react-ts
+```
+
+### 2. Install signals
+
+For this example, we will be using `signals-react-safe` a wrapper over Preact signals that does not patch React's internals.
+
+:::note
+None of the following implementation relies on features of `signals-react-safe`. If you prefer using the core signals package or the official React transform, this tutorial will be relevant.
+:::
+
+```bash npm2yarn
+npm install signals-react-safe
+```
+
+### 3. Create signals
+
+Let's create two signals:
+* A primitive signal `counter` that represents a number.
+* A computed signal `counterSquared` that is derived from `counter`.
+
+```tsx title="/src/signals.ts"
+import {signal, computed} from 'signals-react-safe';
+
+export const counter = signal(0);
+export const counterSquared = computed(() => counter.value ** 2);
+```
+
+```tsx title="/src/App.tsx"
+// highlight-start
+import {useSignalValue} from 'signals-react-safe';
+import {counter, counterSquared} from './signals';
+// highlight-end
+
+function App() {
+  // highlight-start
+  const counterValue = useSignalValue(counter);
+  const counterSquaredValue = useSignalValue(counterSquared);
+  // highlight-end
+
+  return (
+    <>
+      {/* ... */}
+      // highlight-start
+      <button onClick={() => counter.value++}>
+        count is {counterValue} (Squared is {counterSquaredValue})
+      </button>
+      // highlight-end
+    </>
+  );
+}
+```
+
+### 4. Install Aside's packages
+
+Now that we have a tiny app consuming signals, we'll integrate it with Aside's devtools.
+
+Let's install aside's main packages and `@aside/activity` to leverage the activity components.
+
+```bash npm2yarn
+npm install @aside/react, @aside/chrome-ui-remote, @aside/activity
+```
+
+### 5. Create a Devtools component
+
+```tsx title="/src/Devtools.tsx"
+import {
+  ActivityStoreDescriptor,
+  ActivityProvider,
+  Activity,
+  ActivityDetails,
+  ActivityView,
+  useMonitor,
+} from '@aside/activity';
+import {
+  Pane,
+  Tabs,
+  PaneToolbar,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from '@aside/chrome-ui-remote';
+import {
+  Aside,
+  Devtools as AsideDevtools,
+  useLocalStorageState,
+} from '@aside/react';
+import React, {useMemo} from 'react';
+import {useComputedValue} from 'signals-react-safe';
+import {counter, counterSquared} from './signals';
+
+export function Devtools() {
+  // Compose all signals into a single object
+  const signals = useComputedValue(() => ({
+    counter: counter.value,
+    counterSquared: counterSquared.value,
+  }));
+
+  // Create a monitor with all signals to track past states
+  const signalsMonitor = useMonitor(signals, [signals]);
+
+  // Create an activity store to customize how to display your signal state
+  const appActivity: ActivityStoreDescriptor[] = useMemo(
+    () => [
+      {
+        type: 'signals',
+        displayName: 'Signals',
+        monitor: signalsMonitor,
+        icon: 'https://graphql.org/img/logo.svg',
+      },
+    ],
+    [signalsMonitor],
+  );
+
+  // Render the aside devtools remote with the activity provider
+  return (
+    <Aside>
+      <AsideDevtools>
+        <ActivityProvider activity={appActivity}>
+          <AsideApp />
+        </ActivityProvider>
+      </AsideDevtools>
+    </Aside>
+  );
+}
+
+// Build the interface rendering in the devtools panel.
+function AsideApp() {
+  const [tab, setTab] = useLocalStorageState('activity', {
+    key: 'tab',
+  });
+
+  if (tab.loading) return null;
+
+  return (
+    <Pane>
+      <Tabs defaultValue={tab.data} onValueChange={setTab}>
+        <PaneToolbar>
+          <TabsList>
+            <TabsTrigger value="activity">Activity</TabsTrigger>
+            <TabsTrigger value="signals">Signals</TabsTrigger>
+          </TabsList>
+        </PaneToolbar>
+
+        <TabsContent value="activity">
+          <Activity>
+            <ActivityDetails type="signals" />
+          </Activity>
+        </TabsContent>
+        <TabsContent value="signals">
+          <ActivityView type="signals" />
+        </TabsContent>
+      </Tabs>
+    </Pane>
+  );
+}
+```
+
+### 6. Render the devtools component in your app
+
+```tsx title="/src/App.tsx"
+// highlight-start
+import {Devtools} from './Devtools';
+// highlight-end
+
+function App() {
+  return (
+    <>
+      {/* ... */}
+      // highlight-start
+      <Devtools />
+      // highlight-end
+    </>
+  );
+}
+```
