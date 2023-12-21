@@ -14,6 +14,8 @@ module.exports = {
       boxShadow: {
         table:
           'inset 0px -1px 0px 0px hsl(var(--border)), inset 0px 1px 0px 0px hsl(var(--border))',
+        picker:
+          '0 0 0 1px rgb(255 255 255/20%), 0 2px 4px 2px rgb(0 0 0/20%), 0 2px 6px 2px rgb(0 0 0/10%)',
       },
     },
     colors: {
