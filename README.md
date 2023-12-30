@@ -17,7 +17,7 @@ This notably allows developers to build developer tools that can evolve based on
 
 ## Resources
 
-- [Getting started](https://aside.dev/docs/getting-started)
+- [Getting started](https://aside.dev/docs/introduction/getting-started)
 - [Examples](https://aside.dev/examples)
 - [Documentation](https://aside.dev)
 - [Blog](https://aside.dev/blog)

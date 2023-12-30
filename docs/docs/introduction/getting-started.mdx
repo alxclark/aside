@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Getting started
@@ -7,6 +7,10 @@ sidebar_position: 1
 ## Introduction
 
 Aside is an extensible [Chrome extension](https://developer.chrome.com/docs/extensions/) that allows webpages to customize the interface of [the devtools panel](https://developer.chrome.com/docs/devtools/). We make it easy for developers to enhance their development experience, without the friction of having to build dedicated Chrome extensions.
+
+Aside uses [remote rendering](https://github.com/Shopify/remote-ui/tree/main) to allow your React application to render into the Chrome devtools panel instead of your webpage. This allows you to build a custom developer experience for your application like this one that looks native to Chrome:
+
+![Overview](../../blog/2023-12-18-signals/signals-overview.png)
 
 ## Installation
 
@@ -69,4 +73,8 @@ tools, and you should see the count you have provided through `ConsoleMessage`.
 ### Get creative!
 
 The power of Aside is that you can mix your own app code, state and logic and have it power what will render in the developer tools panel. You can even provide Aside&apos;s components callbacks to update your own app state and it will work as expected.
+
+View our examples to see how you can use Aside to build a custom developer experience for your application:
+* [Live examples](/examples)
+* [Examples code](https://github.com/alxclark/aside/tree/main/examples)
 

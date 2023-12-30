@@ -13,6 +13,8 @@
 
 .container {
   display: flex;
+  max-width: 1300px;
+  margin: auto;
 }
 
 @media screen and (max-width: 750px) {
@@ -22,11 +24,6 @@
 
   .arrow {
     display: none;
-  }
-
-  .buttons {
-    align-items: center;
-    justify-content: center;
   }
 
   .code {
@@ -72,6 +69,8 @@
   display: flex;
   gap: 30px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 .button {
@@ -92,3 +91,28 @@
 .page nav {
   position: unset;
 }
+
+.status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.status span {
+  border: 1px solid var(--ifm-color-primary);
+  padding: 0 1rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+}
+
+.status span::before {
+  content: '';
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ed9836;
+  margin-right: 0.5rem;
+}
+

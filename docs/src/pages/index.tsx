@@ -40,6 +40,9 @@ export default function Home(): JSX.Element {
             <Heading as="h1" className="hero__title">
               The extensible <br /> developer tools
             </Heading>
+            <div className={styles.status}>
+              <span>beta</span>
+            </div>
             <p className={styles.text}>
               Aside is a Chrome extension that can render{' '}
               <strong>UI natively in the developer tools panel</strong>,
@@ -49,7 +52,10 @@ export default function Home(): JSX.Element {
               without the friction of traditional Chrome extensions.
             </p>
             <div className={styles.buttons}>
-              <Link className={styles.button} to="/docs/getting-started">
+              <Link
+                className={styles.button}
+                to="/docs/introduction/getting-started"
+              >
                 Get started
               </Link>
               <Link
