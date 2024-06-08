@@ -8,6 +8,7 @@ import {
   ActivityView,
   useMonitor,
   Snapshot,
+  NetworkDetails,
 } from '@aside/activity';
 import {
   Pane,
@@ -144,7 +145,7 @@ function AsideApp() {
             }}
           >
             <ActivityDetails type="graphql" />
-            <ActivityDetails type="network" />
+            <NetworkDetails />
             <ActivityDetails type="remote-ui" />
           </Activity>
         </TabsContent>
