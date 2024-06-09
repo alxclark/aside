@@ -52,7 +52,7 @@
     "@wide-web/eslint-plugin": "^0.1.0",
     "babel-loader": "^8.3.0",
     "eslint": "^8.3.0",
-    "prettier": "^2.5.1",
+    "prettier": "^3.3.1",
     "ts-essentials": "^9.3.1",
     "turbo": "latest",
     "vitest": "^0.29.8",
