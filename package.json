@@ -10,7 +10,6 @@
     "dev:recoil": "yarn workspace recoil-example dev",
     "dev:graphql": "yarn workspace graphql-example dev",
     "dev:chrome-ui": "yarn workspace @aside/chrome-ui dev",
-    "dev:website": "yarn workspace website dev",
     "dev:docs": "yarn workspace docs start",
     "open-chrome": "yarn workspace app start:chromium",
     "clean-vite": "yarn workspace recoil-example clean-vite && yarn workspace app clean-vite && yarn workspace graphql-example clean-vite",
@@ -66,7 +65,6 @@
   },
   "workspaces": [
     "app",
-    "website",
     "packages/*",
     "examples/*",
     "docs"

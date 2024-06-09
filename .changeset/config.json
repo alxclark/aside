@@ -15,7 +15,6 @@
   "ignore": [
     "app",
     "recoil-example",
-    "website",
     "graphql-example"
   ]
 }
