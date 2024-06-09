@@ -68,5 +68,6 @@
     "packages/*",
     "examples/*",
     "docs"
-  ]
+  ],
+  "packageManager": "yarn@1.22.19"
 }
