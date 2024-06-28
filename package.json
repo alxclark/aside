@@ -1,0 +1,44 @@
+{
+  "name": "aside",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Composable browser extension",
+  "workspaces": [
+    "./extension",
+    "./packages/*"
+  ],
+  "scripts": {
+    "test": "vitest",
+    "build": "pnpm -r run build",
+    "format": "prettier --write --cache .",
+    "lint": "prettier --check --cache .",
+    "deploy": "pnpm publish -r"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alxclark/aside.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alxclark/aside/issues"
+  },
+  "author": "alxclark",
+  "license": "ISC",
+  "browserslist": [
+    "defaults and not dead"
+  ],
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "trailingComma": "all"
+  },
+  "dependencies": {
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.2",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}
