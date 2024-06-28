@@ -1,4 +1,10 @@
 {
-  "extends": "./tsconfig.build.json",
-  "include": ["config"],
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./extension" },
+    { "path": "./packages/ui" },
+    { "path": "./packages/remote" },
+    { "path": "./packages/react" }
+  ]
 }
