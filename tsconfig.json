@@ -1,10 +1,5 @@
 {
   "files": [],
   "include": [],
-  "references": [
-    {"path": "./extension"},
-    {"path": "./packages/ui"},
-    {"path": "./packages/remote"},
-    {"path": "./packages/react"}
-  ]
+  "references": [{"path": "./extension"}, {"path": "./packages/ui"}]
 }
