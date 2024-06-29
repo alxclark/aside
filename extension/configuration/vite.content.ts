@@ -14,13 +14,13 @@ export default defineConfig({
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,
     lib: {
-      entry: resolve('source/features/content/Content.ts'),
+      entry: resolve('source/features/content/content.ts'),
       name: packageJson.name,
       formats: ['iife'],
     },
     rollupOptions: {
       output: {
-        entryFileNames: 'entry.js',
+        entryFileNames: 'content.js',
         extend: true,
       },
     },

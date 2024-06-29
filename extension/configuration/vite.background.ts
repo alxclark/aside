@@ -1,25 +1,25 @@
 import {defineConfig} from 'vite';
 
-import {sharedConfig} from './vite.config';
-import {isDev, r} from './scripts/utils';
+import {baseConfig} from './shared';
+import {isDev, resolve} from './utilities';
 
 // bundling the content script using Vite
 export default defineConfig({
-  ...sharedConfig,
+  ...baseConfig,
   build: {
     watch: isDev ? {} : undefined,
-    outDir: r('build/background'),
+    outDir: resolve('build/background'),
     cssCodeSplit: false,
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,
     lib: {
-      entry: r('source/features/background/background.ts'),
+      entry: resolve('source/features/background/background.ts'),
       name: 'background',
       formats: ['iife'],
     },
     rollupOptions: {
       output: {
-        entryFileNames: 'index.global.js',
+        entryFileNames: 'background.js',
         extend: true,
       },
     },
@@ -32,8 +32,8 @@ export default defineConfig({
   define: {
     'process.env': {},
   },
-  plugins: [...sharedConfig.plugins!],
+  plugins: [...baseConfig.plugins!],
   optimizeDeps: {
-    exclude: ['@vite/client', '@vite/env'],
+    // exclude: ['@vite/client', '@vite/env'],
   },
 });

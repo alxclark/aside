@@ -13,20 +13,7 @@ export const baseConfig: UserConfig = {
   define: {
     __DEV__: isDev,
   },
-  // This probably can be removed since not all scripts will leverage it?
-  plugins: [
-    {
-      name: 'assets-rewrite',
-      enforce: 'post',
-      apply: 'build',
-      transformIndexHtml(html, {path}) {
-        return html.replace(
-          /"\/assets\//g,
-          `"${relative(dirname(path), '/assets')}/`,
-        );
-      },
-    },
-  ],
+  plugins: [],
   optimizeDeps: {
     include: [],
     exclude: [],
