@@ -1,0 +1,46 @@
+{
+  "name": "@aside/remote",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "version": "2.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alxclark/aside",
+    "directory": "packages/remote"
+  },
+  "publishConfig": {
+    "access": "public",
+    "@aside:registry": "https://registry.npmjs.org"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@remote-dom/core": "^1.0.1",
+    "react": "^18.3.1"
+  },
+  "browserslist": [
+    "defaults and not dead"
+  ],
+  "devDependencies": {
+    "@types/react": "^18.3.3"
+  },
+  "files": [
+    "source"
+  ],
+  "sideEffects": [
+    "./source/elements.ts",
+    "./source/elements/**/*.ts",
+    "./build/esnext/elements.esnext",
+    "./build/esnext/elements/**/*.esnext",
+    "./build/esm/elements.mjs",
+    "./build/esm/elements/**/*.mjs",
+    "./build/cjs/elements.cjs",
+    "./build/cjs/elements/**/*.cjs"
+  ],
+  "exports": {
+    ".": {
+      "types": "./build/typescript/index.d.ts",
+      "import": "./build/esm/index.mjs"
+    }
+  }
+}

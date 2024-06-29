@@ -1,5 +1,9 @@
 {
   "files": [],
   "include": [],
-  "references": [{"path": "./extension"}, {"path": "./packages/ui"}]
+  "references": [
+    {"path": "./extension"},
+    {"path": "./packages/ui"},
+    {"path": "./packages/remote"}
+  ]
 }

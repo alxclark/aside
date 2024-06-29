@@ -2,13 +2,11 @@
   "extends": "../../config/typescript/tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "source",
-    "outDir": "build/typescript"
+    "outDir": "build/typescript",
+    "lib": ["WebWorker", "DOM", "esnext"],
+    "types": []
   },
   "include": ["source"],
-  "exclude": [],
-  "references": [
-    {
-      "path": "../remote"
-    }
-  ]
+  "exclude": ["build"],
+  "references": []
 }
