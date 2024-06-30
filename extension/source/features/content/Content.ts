@@ -1,5 +1,5 @@
 export function run() {
-  console.log('Ran the content script');
+  console.log('Ran the content scriptttt');
 }
 
 run();

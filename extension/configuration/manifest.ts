@@ -1,16 +1,18 @@
 // Providing node's globals since this file will only be executed by Node when calling one of the scripts.
 /// <reference types="node" />
 
-import * as fs from 'fs-extra';
+import * as fs from 'fs-extra/esm';
 import type {Manifest} from 'webextension-polyfill';
 
 import type PackageJson from '../package.json';
-import {isDev, port, resolve} from './utilities';
+import {isDev, port, resolve as rootResolve} from './utilities';
 
 export async function createManifest() {
   const packageJson: typeof PackageJson = await fs.readJSON(
-    resolve('package.json'),
+    rootResolve('../package.json'),
   );
+
+  const resolve = rootResolve(isDev ? 'build/.dev' : 'build');
 
   const manifest: Manifest.WebExtensionManifest & {key?: string} = {
     manifest_version: 3,
@@ -18,20 +20,22 @@ export async function createManifest() {
     version: packageJson.version,
     description: packageJson.description,
     background: {
-      service_worker: './build/background/entry.js',
+      service_worker: isDev
+        ? `http://localhost:${port}/devtools.html`
+        : './background/background.js',
       type: 'module',
     },
     action: {
       default_icon: {
-        16: './assets/logo-16.png',
-        48: './assets/logo-48.png',
-        128: './assets/logo-128.png',
+        16: './icons/logo-16.png',
+        48: './icons/logo-48.png',
+        128: './icons/logo-128.png',
       },
     },
     icons: {
-      16: './assets/logo-16.png',
-      48: './assets/logo-48.png',
-      128: './assets/logo-128.png',
+      16: './icons/logo-16.png',
+      48: './icons/logo-48.png',
+      128: './icons/logo-128.png',
     },
     permissions: isDev
       ? ['storage', 'unlimitedStorage', 'webNavigation', 'scripting']
@@ -41,10 +45,12 @@ export async function createManifest() {
       {
         run_at: 'document_start',
         matches: ['<all_urls>'],
-        js: ['./build/content/entry.js'],
+        js: ['./content/content.js'],
       },
     ],
-    devtools_page: './build/devtools/index.html',
+    devtools_page: isDev
+      ? `http://localhost:${port}/devtools.html`
+      : './devtools/devtools.html',
   };
 
   if (process.env.MANIFEST_KEY) {

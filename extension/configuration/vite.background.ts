@@ -3,6 +3,8 @@ import {defineConfig} from 'vite';
 import {baseConfig} from './shared';
 import {isDev, resolve} from './utilities';
 
+throw new Error(isDev ? 'isDev' : 'isProd');
+
 // bundling the content script using Vite
 export default defineConfig({
   ...baseConfig,

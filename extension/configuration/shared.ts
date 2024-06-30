@@ -1,5 +1,5 @@
-import {dirname, relative} from 'path';
 import type {UserConfig} from 'vite';
+import AutoImport from 'unplugin-auto-import/vite';
 
 import {isDev, resolve} from './utilities';
 
@@ -13,7 +13,16 @@ export const baseConfig: UserConfig = {
   define: {
     __DEV__: isDev,
   },
-  plugins: [],
+  plugins: [
+    AutoImport({
+      imports: [
+        {
+          'webextension-polyfill': [['*', 'browser']],
+        },
+      ],
+      dts: false,
+    }),
+  ],
   optimizeDeps: {
     include: [],
     exclude: [],

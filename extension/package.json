@@ -15,15 +15,25 @@
     "directory": "extension"
   },
   "scripts": {
+    "dev": "pnpm dev:manifest && pnpm dev:devtools",
+    "dev:manifest": "NODE_ENV=development tsx ./scripts/create-manifest",
+    "dev:content": "",
+    "dev:background": "",
+    "dev:devtools": "NODE_ENV=development vite dev --mode development --config ./configuration/vite.devtools.ts",
+    "build": "pnpm run build:static && pnpm run build:content && pnpm run build:background && pnpm run build:devtools && pnpm run build:manifest",
     "build:content": "vite build --config ./configuration/vite.content.ts",
     "build:background": "vite build --config ./configuration/vite.background.ts",
-    "build:devtools": "vite build --config ./configuration/vite.devtools.ts"
+    "build:devtools": "vite build --config ./configuration/vite.devtools.ts",
+    "build:static": "tsx ./scripts/copy-static",
+    "build:manifest": "tsx ./scripts/create-manifest",
+    "start": "web-ext run --start-url http://aside.dev/ --source-dir ./build/.dev --target=chromium --devtools"
   },
   "dependencies": {
     "@aside/ui": "workspace:*",
     "fs-extra": "^11.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "web-ext": "^8.2.0",
     "webextension-polyfill": "^0.12.0"
   },
   "browserslist": [
@@ -35,6 +45,7 @@
     "@types/react-dom": "^18.3.0",
     "@types/webextension-polyfill": "^0.10.7",
     "@vitejs/plugin-react": "^4.3.1",
+    "unplugin-auto-import": "^0.17.6",
     "vite": "^5.3.2"
   }
 }
