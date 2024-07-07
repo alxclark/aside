@@ -11,7 +11,7 @@ export default defineConfig({
     watch: isDev ? {} : undefined,
     outDir: resolve('build/content'),
     cssCodeSplit: false,
-    emptyOutDir: false,
+    emptyOutDir: true,
     sourcemap: isDev ? 'inline' : false,
     lib: {
       entry: resolve('source/features/content/content.ts'),

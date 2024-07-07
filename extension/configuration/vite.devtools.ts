@@ -17,7 +17,7 @@ export default defineConfig(({command, mode}) => {
     },
     build: {
       outDir: resolve('build/devtools'),
-      emptyOutDir: false,
+      emptyOutDir: true,
       sourcemap: isDev ? 'inline' : false,
       // https://developer.chrome.com/docs/webstore/program_policies/#:~:text=Code%20Readability%20Requirements
       terserOptions: {

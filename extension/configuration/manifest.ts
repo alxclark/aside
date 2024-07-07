@@ -20,9 +20,7 @@ export async function createManifest() {
     version: packageJson.version,
     description: packageJson.description,
     background: {
-      service_worker: isDev
-        ? `http://localhost:${port}/devtools.html`
-        : './background/background.js',
+      service_worker: './background/background.js',
       type: 'module',
     },
     action: {

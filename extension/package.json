@@ -25,8 +25,8 @@
     "build:background": "vite build --config ./configuration/vite.background.ts",
     "build:devtools": "vite build --config ./configuration/vite.devtools.ts",
     "build:static": "tsx ./scripts/copy-static",
-    "build:manifest": "tsx ./scripts/create-manifest",
-    "start": "web-ext run --start-url http://aside.dev/ --source-dir ./build/.dev --target=chromium --devtools"
+    "build:manifest": "NODE_ENV=production tsx ./scripts/create-manifest",
+    "start:prod": "web-ext run --start-url http://aside.dev/ --source-dir ./build --target=chromium --devtools"
   },
   "dependencies": {
     "@aside/ui": "workspace:*",
