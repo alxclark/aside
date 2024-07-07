@@ -20,7 +20,7 @@
     "dev:content": "",
     "dev:background": "",
     "dev:devtools": "NODE_ENV=development vite dev --mode development --config ./configuration/vite.devtools.ts",
-    "build": "pnpm run build:scripts && pnpm run build:devtools && pnpm run build:static && pnpm run build:manifest",
+    "build": "pnpm run build:content && pnpm run build:scripts && pnpm run build:devtools && pnpm run build:static && pnpm run build:manifest",
     "build:content": "vite build --config ./configuration/vite.content.ts",
     "build:scripts": "vite build --config ./configuration/vite.scripts.ts",
     "build:devtools": "vite build --config ./configuration/vite.devtools.ts",
@@ -45,6 +45,7 @@
     "@types/react-dom": "^18.3.0",
     "@types/webextension-polyfill": "^0.10.7",
     "@vitejs/plugin-react": "^4.3.1",
+    "chrome-types": "^0.1.291",
     "unplugin-auto-import": "^0.17.6",
     "vite": "^5.3.2"
   }

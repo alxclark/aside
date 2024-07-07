@@ -43,7 +43,7 @@ export async function createManifest() {
       {
         run_at: 'document_start',
         matches: ['<all_urls>'],
-        js: ['./content-entry.cjs'],
+        js: ['./content-entry.iife.js'],
       },
     ],
     devtools_page: isDev

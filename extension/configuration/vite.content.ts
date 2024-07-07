@@ -3,7 +3,6 @@ import {defineConfig} from 'vite';
 import {baseConfig} from './shared';
 import {isDev, resolve} from './utilities';
 
-// bundling the content script using Vite
 export default defineConfig({
   ...baseConfig,
   build: {
@@ -14,16 +13,10 @@ export default defineConfig({
     sourcemap: isDev ? 'inline' : false,
     lib: {
       entry: {
-        background: resolve('source/features/background/background.ts'),
-        content: resolve('source/features/content/content.ts'),
+        'content-entry': resolve('source/features/content/entry.ts'),
       },
       name: 'background',
-      formats: ['es'],
-    },
-  },
-  server: {
-    hmr: {
-      host: 'localhost',
+      formats: ['iife'],
     },
   },
   define: {
