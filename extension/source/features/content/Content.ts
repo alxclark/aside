@@ -1,5 +1,5 @@
-export function run() {
-  console.log('Ran the content scriptttt');
+export async function run() {
+  console.log('ran content script as ESM');
 }
 
 run();

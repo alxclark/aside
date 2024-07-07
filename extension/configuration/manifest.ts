@@ -20,7 +20,7 @@ export async function createManifest() {
     version: packageJson.version,
     description: packageJson.description,
     background: {
-      service_worker: './background/background.js',
+      service_worker: './background.js',
       type: 'module',
     },
     action: {
@@ -43,12 +43,18 @@ export async function createManifest() {
       {
         run_at: 'document_start',
         matches: ['<all_urls>'],
-        js: ['./content/content.js'],
+        js: ['./content-entry.cjs'],
       },
     ],
     devtools_page: isDev
       ? `http://localhost:${port}/devtools.html`
       : './devtools/devtools.html',
+    web_accessible_resources: [
+      {
+        matches: ['<all_urls>'],
+        resources: ['content.js'],
+      },
+    ],
   };
 
   if (process.env.MANIFEST_KEY) {
