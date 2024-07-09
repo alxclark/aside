@@ -1,5 +1,5 @@
 build/
-dev/
+.dev/
 node_modules/
 .DS_STORE
 *.log

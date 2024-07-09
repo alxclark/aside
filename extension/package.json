@@ -15,11 +15,12 @@
     "directory": "extension"
   },
   "scripts": {
-    "dev": "pnpm dev:manifest && pnpm dev:devtools",
-    "dev:manifest": "NODE_ENV=development tsx ./scripts/create-manifest",
-    "dev:content": "",
-    "dev:background": "",
-    "dev:devtools": "NODE_ENV=development vite dev --mode development --config ./configuration/vite.devtools.ts",
+    "dev": "concurrently -c auto pnpm:dev:*",
+    "dev:manifest": "NODE_ENV=development tsx watch ./scripts/create-manifest",
+    "dev:content": "NODE_ENV=development vite build --mode development --config ./configuration/vite.content.ts",
+    "dev:static": "pnpm run build:static",
+    "dev:scripts": "vite --mode development --config ./configuration/vite.scripts.ts",
+    "xdev:devtools": "NODE_ENV=development vite dev --mode development --config ./configuration/vite.devtools.ts",
     "build": "pnpm run build:content && pnpm run build:scripts && pnpm run build:devtools && pnpm run build:static && pnpm run build:manifest",
     "build:content": "vite build --config ./configuration/vite.content.ts",
     "build:scripts": "vite build --config ./configuration/vite.scripts.ts",

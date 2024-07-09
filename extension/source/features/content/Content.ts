@@ -1,3 +1,3 @@
-export async function run() {
-  console.log('ran content script as ESM');
+export async function run(optional?: string) {
+  console.log('ran content script as ESM', optional);
 }

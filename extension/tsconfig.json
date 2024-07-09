@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": "source",
     "outDir": "build/typescript",
-    "types": []
+    "types": ["vite/client"]
   },
   "include": ["./typescript", "source"],
   "exclude": [],

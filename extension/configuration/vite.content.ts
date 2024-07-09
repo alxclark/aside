@@ -7,7 +7,7 @@ export default defineConfig({
   ...baseConfig,
   build: {
     watch: isDev ? {} : undefined,
-    outDir: resolve('build'),
+    outDir: isDev ? resolve('.dev') : resolve('build'),
     cssCodeSplit: false,
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,

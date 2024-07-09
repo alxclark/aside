@@ -12,14 +12,15 @@ export default defineConfig({
     cssCodeSplit: false,
     emptyOutDir: false,
     sourcemap: isDev ? 'inline' : false,
-    lib: {
-      entry: {
-        background: resolve('source/features/background/background.ts'),
-        content: resolve('source/features/content/content.ts'),
-      },
-      name: 'background',
-      formats: ['es'],
-    },
+    lib: isDev
+      ? false
+      : {
+          entry: {
+            background: resolve('source/features/background/background.ts'),
+            content: resolve('source/features/content/content.ts'),
+          },
+          formats: ['es'],
+        },
   },
   server: {
     hmr: {

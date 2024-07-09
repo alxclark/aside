@@ -1,17 +1,12 @@
 // Providing node's globals since this file will only be executed by Node when calling one of the scripts.
 /// <reference types="node" />
 
-import * as fs from 'fs-extra/esm';
 import type {Manifest} from 'webextension-polyfill';
 
-import type PackageJson from '../package.json';
+import packageJson from '../package.json';
 import {isDev, port, resolve as rootResolve} from './utilities';
 
 export async function createManifest() {
-  const packageJson: typeof PackageJson = await fs.readJSON(
-    rootResolve('../package.json'),
-  );
-
   const resolve = rootResolve(isDev ? 'build/.dev' : 'build');
 
   const manifest: Manifest.WebExtensionManifest & {key?: string} = {
